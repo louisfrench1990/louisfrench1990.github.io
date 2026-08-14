@@ -357,7 +357,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-14 14:01</span>
+    <span class="verstamp" title="app build">build 2026-08-14 14:20</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="tabs" id="tabs" style="display:none"></div>
@@ -880,12 +880,13 @@ function qtyPrefix(s){var m=s.match(/^(\d+(?:[×x\/]\d+)*(?:\.\d+)?(?:\s?(?:sec|
 function linesHtml(raw,setsN){return itemLines(clean(raw),setsN).map(function(x){return qtyPrefix(esc(x));}).join('<br>');}
 function blkHtml(b,i,opt){opt=opt||{};var wide=(b.label==='THEN'||b.kind==='pre');
   var raw=b.body.join('\n').trim(),setsN=null;
-  if(b.kind==='phase'){var m=raw.match(/^\((\d+)\s*(?:rounds?|sets?)\)\s*:?\s*/i);
-    if(m){setsN=m[1];raw=raw.slice(m[0].length);}
+  var qual='';
+  if(b.kind==='phase'){var m=raw.match(/^\((\d+)\s*(?:rounds?|sets?)([^)]*)\)\s*:?\s*/i);
+    if(m){setsN=m[1];qual=(m[2]||'').replace(/^[,\s]+/,'').trim();raw=raw.slice(m[0].length);}
     else{var m2=raw.match(/^(\d+)\s*sets?\s*(?:\n|$)/i);if(m2){setsN=m2[1];raw=raw.slice(m2[0].length);}}}
   var num=opt.num?(opt.num+'. '):((!opt.noNum&&PHNUM[b.label])?(PHNUM[b.label]+'. '):'');
   var head=b.kind==='ab'?esc(b.marker):(b.label?num+esc(opt.label||b.label):(opt.label?esc(opt.label):''));
-  var setsLine=setsN?'<div class="bksets">'+setsN+' Sets</div>':'';
+  var setsLine=setsN?('<div class="bksets">'+setsN+' Sets'+(qual?' · '+esc(qual):'')+'</div>'):(qual?('<div class="bksets">'+esc(qual)+'</div>'):'');
   var cls=opt.cls||(b.kind==='ab'?(['b-raise','b-mob','b-act','b-prime'][i%4]):phaseCls(b.label,i));
   return '<div class="bk '+cls+(wide?' wide':'')+(opt.big?' bkbig':'')+'">'+(head?'<div class="bkh">'+head+'</div>':'')+setsLine+'<div class="bkc">'+linesHtml(raw,setsN)+'</div></div>';}
 function blocksHtml(src,type){var bl=splitBlocks(src);
@@ -965,9 +966,9 @@ function bandBlocks(p){var order=wodBandOrder(p);var rec=recBand(p);
   return '<div class="bkgrid wodgrid'+(rec?' has-rec':'')+'">'+order.map(function(b){return bandCell(p,b,rec);}).join('')+'</div>';}
 // ---- full-screen FOCUS view (single block / single band) — big, centred, for the gym TV ----
 function focusView(kick,cls,bodyHtml,sub){return '<div class="focus '+(cls||'')+'"><div class="focus-kick">'+esc(kick)+'</div><div class="focus-body">'+bodyHtml+'</div>'+(sub?'<div class="focus-sub">'+esc(sub)+'</div>':'')+'</div>';}
-function blockFocus(b,cls,kickName){var raw=b.body.join('\n').trim(),setsN=null;
-  var m=raw.match(/^\((\d+)\s*(?:rounds?|sets?)\)\s*:?\s*/i);if(m){setsN=m[1];raw=raw.slice(m[0].length);}else{var m2=raw.match(/^(\d+)\s*sets?\s*(?:\n|$)/i);if(m2){setsN=m2[1];raw=raw.slice(m2[0].length);}}
-  var kick=capWord(kickName||b._lab||b.label||'')+(setsN?(' · '+setsN+' SETS'):'');
+function blockFocus(b,cls,kickName){var raw=b.body.join('\n').trim(),setsN=null,qual='';
+  var m=raw.match(/^\((\d+)\s*(?:rounds?|sets?)([^)]*)\)\s*:?\s*/i);if(m){setsN=m[1];qual=(m[2]||'').replace(/^[,\s]+/,'').trim();raw=raw.slice(m[0].length);}else{var m2=raw.match(/^(\d+)\s*sets?\s*(?:\n|$)/i);if(m2){setsN=m2[1];raw=raw.slice(m2[0].length);}}
+  var kick=capWord(kickName||b._lab||b.label||'')+(setsN?(' · '+setsN+' SETS'):'')+(qual?(' · '+qual.toUpperCase()):'');
   return focusView(kick,cls,linesHtml(raw,setsN),'');}
 function bandFocus(p,b,rec){var bv=vb(p)[b]||{};
   var body=bandBody(p,b).split('\n').map(function(ln){return qtyPrefix(ln);}).join('<br>');
