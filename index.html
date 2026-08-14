@@ -133,8 +133,9 @@ body.boardmode .trow{margin:.1em 0}
 .escbtn,.escLog{display:none;position:fixed;top:10px;z-index:70;font-size:13px;font-weight:800;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:rgba(20,20,30,.92);color:var(--txt);cursor:pointer;backdrop-filter:blur(3px)}
 .escbtn{left:10px}
 .escLog{left:112px;border-color:var(--mag);color:var(--mag)}
+body.focusmode .body{padding-top:52px}   /* the floating Back/Logbook bar is fixed at the top — reserve its height so it never sits on the title */
 body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
-body.focusmode .escLog{display:inline-flex}
+body.focusmode.canlog .escLog{display:inline-flex}   /* logbook only for the athlete/member tier — never the coach whiteboard login */
 body.boardmode .boardtop{padding-left:104px}
 .logchip{display:inline-block;margin-left:10px;font-size:12px;font-weight:800;padding:5px 11px;border-radius:8px;border:1px solid var(--acc2);background:rgba(53,208,127,.12);color:var(--acc2);cursor:pointer;vertical-align:middle}
 .logchip.done{border-color:var(--acc);color:var(--acc);background:rgba(255,193,7,.10)}
@@ -279,7 +280,7 @@ body.boardmode .boardtop{position:fixed;left:0;right:0;top:0;z-index:60;display:
   .bb-band{font-size:13px;padding:7px 11px}
   body.boardmode .body{padding-bottom:150px}
 }
-@media(max-width:640px){.subchip{font-size:12px;padding:8px 14px}.focus{min-height:60vh}.focus-body{font-size:26px}.focus-kick{font-size:15px}.focus-sub{font-size:13px;max-width:90%}}
+@media(max-width:640px){.subchip{font-size:12px;padding:8px 14px}.focus{min-height:44vh;padding-top:0}.focus-body{font-size:26px}.focus-kick{font-size:15px}.focus-sub{font-size:13px;max-width:90%}}
 .nb{font-size:18px;font-weight:800;padding:11px 24px;background:var(--panel2);border:1px solid var(--acc);border-radius:12px;color:var(--txt);cursor:pointer}
 .nb:disabled{opacity:.28;border-color:var(--line);cursor:default}
 .dots{flex:1;display:flex;gap:6px;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -308,7 +309,27 @@ body.boardmode .boardtop{position:fixed;left:0;right:0;top:0;z-index:60;display:
 .modebanner .mb-note{font-weight:500;color:var(--dim);font-size:11.5px}
 @media(max-width:640px){.modebanner{font-size:11.5px}.modebanner .mb-note{display:none}
  #modeBanner,.top .meta{display:none!important}   /* declutter the member/mobile view: the mode banner and the duplicate date (already shown in the day-nav) */
- .logchip{margin-left:8px;font-size:11px;padding:4px 9px}}
+ .logchip{margin-left:8px;font-size:11px;padding:4px 9px}
+ /* ---- phone header: one compact block instead of 5 wrapping rows ---- */
+ .top{gap:8px 10px;margin-bottom:.6vmin;align-items:center}
+ .brand{font-size:20px}
+ .verstamp{font-size:9px;opacity:.45;margin-left:auto}
+ .coach,.rmbtn,.mbtn{font-size:11.5px;padding:7px 10px}
+ .tabs{gap:6px;margin:.35em 0;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+ .tabs::-webkit-scrollbar{display:none}
+ .tabs button{flex:none;font-size:12px;padding:8px 12px}
+ .tabspacer{display:none}
+ .viewtog{flex:none;margin-left:6px}
+ #rpe{font-size:11.5px;padding:5px 9px}
+ .stepnum{font-size:11px;margin:.2em 0 .4em}
+ /* ---- bottom nav: give the section chips the room, shrink Prev/Next ---- */
+ .foot{padding-left:10px;padding-right:10px}
+ .footrow{gap:7px}
+ .footrow .nb{font-size:12px;padding:9px 11px;flex:none}
+ .dot{font-size:10.5px;padding:9px 11px;min-height:36px}
+ .escbtn,.escLog{font-size:12px;padding:7px 11px}
+ .escLog{left:96px}
+ body.focusmode .body{padding-top:46px}}
 </style></head><body>
 <div class="wrap">
   <div class="top">
@@ -324,7 +345,7 @@ body.boardmode .boardtop{position:fixed;left:0;right:0;top:0;z-index:60;display:
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-14 11:00</span>
+    <span class="verstamp" title="app build">build 2026-08-14 11:24</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="tabs" id="tabs" style="display:none"></div>
@@ -334,7 +355,7 @@ body.boardmode .boardtop{position:fixed;left:0;right:0;top:0;z-index:60;display:
 </div>
 <div class="foot" id="foot" style="display:none"></div>
 <button class="escbtn" id="escBtn" onclick="escapeView()" title="Back (Esc)">✕ Back</button>
-<button class="escLog" id="escLog" onclick="openMyLog()" title="Your logbook">📓 Log</button>
+<button class="escLog" id="escLog" onclick="openMyLog()" title="Your logbook">📓 Logbook</button>
 <div class="boardtop" id="boardtop"><span class="bt-bands" id="btBands"></span><span class="bt-zoom"><span class="zlab2">Size</span><button onclick="zoomBody(-1)" title="Smaller">A−</button><button onclick="zoomBody(1)" title="Bigger">A+</button></span></div>
 <div class="boardbar" id="boardbar" style="display:none">
   <span class="bb-bands" id="bbBands"></span>
@@ -589,7 +610,8 @@ function saveLOG(){try{localStorage.setItem('unranked-log',JSON.stringify(LOG));
 function dstr(x){return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');}
 function todayStr(){return dstr(new Date());}
 function fmtDate(ds){var dd=new Date(ds+'T00:00:00');var DW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return DW[dd.getDay()]+' '+dd.getDate()+' '+MO[dd.getMonth()];}
-function logChip(p){if(boardMode||viewMode!=='day'||!unlocked||!p)return '';   // contextual log button, sits next to a loggable section's title
+function canLog(){return unlocked&&!coachMode();}   // logging is an athlete/member thing; the coach login is the shared whiteboard, not a person
+function logChip(p){if(boardMode||viewMode!=='day'||!canLog()||!p)return '';   // contextual log button, sits next to a loggable section's title
   if(!(p.type==='strength'||clsFor(p)==='wod'||p.type==='skill'))return '';
   var lg=LOG[todayStr()]&&LOG[todayStr()].pieces&&LOG[todayStr()].pieces[p.id];
   return '<button class="logchip'+(lg?' done':'')+'" onclick="event.stopPropagation();openLog()">'+(lg?'✓ Logged':'📓 Log this')+'</button>';}
@@ -702,7 +724,11 @@ function clsFor(p){return p&&p.type==='wod'&&!p.engineOk?'wod':'';}
 function pv(p){const V=vb(p);const v=(V&&(V[variant]||V.rx))||{};let pres=v.prescription,note='';
   if(p.type==='strength'&&p.classLift&&p.classLift[variant]){pres=p.classLift[variant].prescription;}
   if(p.type==='wod'&&p.classNote)note=p.classNote;return {prescription:pres,target:v.target,note};}
-function clean(s){s=String(s||'');s=s.split('...').join('').split('…').join('');s=s.replace(/ *[·•] */g,', ');s=s.replace(/(\d(?::\d+)?)\s*[—–-]\s*(\d)/g,'$1-$2');s=s.replace(/ *[—–-]+ +/g,': ');s=s.replace(/→/g,'').replace(/  +/g,' ');return s;}
+function clean(s){s=String(s||'');s=s.split('...').join('').split('…').join('');s=s.replace(/ *[·•] */g,', ');
+  s=s.replace(/(^|\n)(\s*(?:Min|Minute)\s*\d+)\s*[—–-]\s*/gi,'$1$2\u0001');            // protect EMOM minute labels: "Min 1 — 3 snatches" must NOT collapse to "Min 1-3" (reads as minutes 1 to 3)
+  s=s.replace(/(\d(?::\d+)?)\s*[—–-]\s*(\d)/g,'$1-$2');s=s.replace(/ *[—–-]+ +/g,': ');
+  s=s.replace(/\u0001/g,': ');
+  s=s.replace(/→/g,'').replace(/  +/g,' ');return s;}
 function wodMain(s){return String(s||'').split('\n\n')[0].trim();}   // just the workout — drop the trailing coaching paragraph so board text goes big
 function ergify(txt){var lines=String(txt||'').split('\n');for(var i=0;i<lines.length;i++){if(/^\s*RAISE/i.test(lines[i]))lines[i]=lines[i].replace(/\b(ski-?erg|ski|echo ?bike|assault ?bike|air ?bike|bike|rower|rowing|row)\b/gi,'erg');}return lines.join('\n');}
 function labelBold(h){h=h.replace(/^(RAISE|MOBILISE|ACTIVATE|PRIME|THEN|SKILL PREP|RAMP|BUILD|COOL ?DOWN|FLUSH)([^\n:]*:)/gim,'<b>$1$2</b>');h=h.replace(/^(\s*(?:\d+\.\s*)?[A-H]\)\s*[^\n]*?)(?=\s-\s|\s@|\s\d|:|$)/gim,'<b>$1</b>');return h;}
@@ -1023,10 +1049,13 @@ function fitBody(){ // grow #body font to FILL the screen (gym display), then ap
 window.zoomBody=dir=>{var k=zoomKey();var z=zoomBySec[k]||1;zoomBySec[k]=Math.max(0.6,Math.min(2.4,Math.round((z+dir*0.12)*100)/100));fitBody()};
 function dayHasClassWod(){try{if(!cur||!cur.d)return false;var ids=(cur.d.tracks&&cur.d.tracks.class)||[];return ids.some(function(id){var pp=piece(id);return pp&&clsFor(pp)==='wod';});}catch(e){return false;}}
 function render(){renderInner();var bb=document.getElementById('boardBtn');if(bb)bb.style.display=(viewMode==='day'&&!boardMode&&dayHasClassWod())?'':'none';
-  var showLog=(unlocked&&viewMode==='day'&&!boardMode);   // athlete/member tier (the logging audience); not public, not the coach whiteboard login
+  document.body.classList.toggle('canlog',canLog());
+  var showLog=(canLog()&&viewMode==='day'&&!boardMode);   // athlete/member tier (the logging audience); not public, not the coach whiteboard login
   var mb=document.getElementById('myLogBtn');if(mb){mb.style.display=showLog?'':'none';var sn=document.getElementById('streakN');if(sn)sn.textContent=statTotals().streak;}
   var rmb=document.getElementById('rmBtn');if(rmb){var hasP=!!(athleteSex||Object.keys(oneRM).length||gymSet||athleteAge);rmb.textContent=hasP?'Update profile':'Set up my profile';}
-  try{sclApply()}catch(_){}if(viewMode!=='week'&&viewMode!=='season'){try{fitBody()}catch(_){}}}
+  try{sclApply()}catch(_){}if(viewMode!=='week'&&viewMode!=='season'){try{fitBody()}catch(_){}}
+  try{var ad=document.querySelector('.foot .dot.on,.foot .dotsel');if(ad&&ad.scrollIntoView)ad.scrollIntoView({block:'nearest',inline:'center'});}catch(_){}   // keep the section you're on visible in the scrolling nav row
+}
 function curSel(){   // coach day-nav: current {weekPos,wd} — from selDay, else today, else week1 MON
   if(selDay)return selDay;
   var info=todayInfo();
