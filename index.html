@@ -424,6 +424,19 @@ body.hasnav #foot{bottom:60px}
 .cs-bar{position:relative}
 .cs-bar u{position:absolute;left:0;top:0;height:100%;background:rgba(255,194,59,.32);border-radius:5px}
 .cs-pend{font-style:normal;font-size:10px;margin-left:2px;vertical-align:middle}
+.clschip-wrap{text-align:center;margin:13px 0 2px}
+.clschip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:20px;padding:5px 13px;font-family:var(--ui);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt)}
+.clschip i{width:8px;height:8px;border-radius:50%;background:var(--tc,var(--acc2))}
+.tphero{position:relative;margin:12px 0 4px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:13px;padding:12px 13px;overflow:hidden}
+.tphero:before{content:"";position:absolute;inset:0;background:var(--tc,var(--acc));opacity:.09;pointer-events:none}
+.tphero>*{position:relative;z-index:1}
+.tphero-top{display:flex;justify-content:space-between;align-items:baseline}
+.tphero-tp{font-family:var(--disp);font-weight:800;font-size:32px;line-height:.9;color:var(--tc,var(--acc))}
+.tphero-k{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.tphero-to{font-size:11px;font-weight:700;color:var(--dim);text-align:right;line-height:1.3}
+.tphero-to b{color:var(--txt);font-size:15px}
+.tphero-bar{height:11px;border-radius:7px;background:var(--bg);border:1px solid var(--line);overflow:hidden;margin-top:9px}
+.tphero-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--tc,var(--acc)),#ffffff55);border-radius:7px}
 .pphint{margin:0;padding:12px 16px;background:rgba(80,160,255,.10);border-bottom:1px solid var(--line);font-size:13px;line-height:1.45;color:var(--txt)}
 .pphint b{color:var(--acc2)}
 .minibtn2.pulse{animation:btnpulse 1.9s ease-in-out infinite}
@@ -815,7 +828,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-16 12:05</span>
+    <span class="verstamp" title="app build">build 2026-08-16 12:56</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="viewtogrow" id="viewtogrow" style="display:none"></div>
@@ -1393,15 +1406,15 @@ function moveMult(id,tm){var tk=_MOVE_TREE[id];return (tk&&tm[tk])?tm[tk]:1;}
 // Your card class = the class in the tree where you're STRONGEST (most verified points), at the deepest rank you've
 // unlocked there. Ties within a tree break to the sub-path you score highest on. Louis 2026-08-16 — before this it
 // showed whatever tree was defined first (gymnast), so a lifter could read "Zen Master" by accident.
-function currentClass(){var st=classStates();var pick=null,pickScore=-1;
+function currentClass(){var st=classStates();var pick=null,pickScore=-1,pickTree=null;
   SCORING.trees.forEach(function(tr){
     var pts=0;SCORING.moves.forEach(function(m){if(_MOVE_TREE[m.id]===tr.key)pts+=ratingOf(m.id);});   // strength in this archetype
     var best=null,bestRq=-1;
     tr.classes.forEach(function(c){if(st[c.slug]&&st[c.slug].unlocked){var rq=0;for(var mid in c.req)rq+=ratingOf(mid);
       if(!best||_RANK[c.rank]>_RANK[best.rank]||(_RANK[c.rank]===_RANK[best.rank]&&rq>bestRq)){best=c;bestRq=rq;}}});
-    if(best&&pts>pickScore){pickScore=pts;pick=best;}
+    if(best&&pts>pickScore){pickScore=pts;pick=best;pickTree=tr;}
   });
-  if(pick)return {name:pick.name,colour:pick.colour};
+  if(pick)return {name:pick.name,colour:pick.colour,tree:pickTree?pickTree.name:''};
   if(typeof noviceAllVerified==='function'&&noviceAllVerified())return {name:'Apprentice',colour:'white'};   // all 8 Novice tests verified, no tree class yet
   return {name:'Novice',colour:'white'};}
 var LBANDS=['rxPlus','rx','intermediate','scaled'];
@@ -1551,8 +1564,10 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
     var prisTxt=ccD.prismatic?(' · '+esc(ccD.prismatic.name)):'';
     var nextTxt=ccD.nextTier?('Total Power '+ccD.tp+' · '+(ccD.nextTier.tp-ccD.tp)+' to '+esc(ccD.nextTier.name)):('Total Power '+ccD.tp+' · top tier');
     var tpPct=ccD.nextTier?Math.max(3,Math.round((ccD.tp-ccD.tier.tp)/((ccD.nextTier.tp-ccD.tier.tp)||1)*100)):100;
+    var tpFmt=String(ccD.tp).replace(/B(?=(d{3})+(?!d))/g,',');
+    var tpHeroRight=ccD.nextTier?('<b>'+(ccD.nextTier.tp-ccD.tp)+'</b><br>to '+esc(ccD.nextTier.name)):'Top tier';
     var statHtml=SCORING.stats.filter(function(s){return s.card!==false;}).map(function(s){var v=ccD.stats[s.key];var pot=isLeg?v:ccD.statsPot[s.key];var pend=isLeg?0:ccD.statPending[s.key];
-      return '<div class="cs-row">'+statIco(s.key)+'<span class="cs-k">'+s.key+'</span><div class="cs-bar">'+((pot>v)?'<u style="width:'+Math.min(100,pot)+'%"></u>':'')+'<i style="width:'+Math.min(100,v)+'%"></i></div><span class="cs-p">'+v+(pend?'<em class="cs-pend" title="'+pend+' pending verification">⏳</em>':'')+'</span></div>';}).join('');
+      return '<div class="cs-row">'+'<span class="cs-k">'+s.key+'</span><div class="cs-bar">'+((pot>v)?'<u style="width:'+Math.min(100,pot)+'%"></u>':'')+'<i style="width:'+Math.min(100,v)+'%"></i></div><span class="cs-p">'+v+(pend?'<em class="cs-pend" title="'+pend+' pending verification">⏳</em>':'')+'</span></div>';}).join('');
     // no photo yet? at the Novice/Apprentice stage, show the stage emblem instead of a blank silhouette
     var _emblem=(cur.name==='Novice'&&ASSET.novice)?ASSET.novice:((cur.name==='Apprentice'&&ASSET.apprentice)?ASSET.apprentice:'');
     var photoHtml=athletePhoto?('<img class="acph-img" id="acphImg" src="'+athletePhoto+'" alt="" style="object-position:center '+athletePhotoY+'%" draggable="false"><button class="acph-edit" onclick="event.stopPropagation();pickPhoto()" title="Change photo">✎</button><span class="acph-drag">⇅ drag to fit</span>')
@@ -1566,14 +1581,14 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
       +'<div class="acph'+(athletePhoto?' has-img':'')+'"'+(athletePhoto?'':' onclick="pickPhoto()"')+'>'+photoHtml
         +'<span class="acph-tier">'+esc(ccD.tier.name)+' · '+(SCORING.tiers.indexOf(ccD.tier)+1)+'/'+SCORING.tiers.length+prisTxt+(isLeg?' · LEGACY':'')+'</span>'
         +'<div class="acph-ov">'+ccD.overall+'</div><div class="acph-ovl">Overall</div>'
-        +'<div class="acph-name">'+(athleteName?esc(athleteName):'')+'<small>'+esc(cur.name)+'</small></div></div>'
+        +'<div class="acph-name">'+(athleteName?esc(athleteName):'')+'</div></div>'
       +'<div class="acbody">'
         +(isLeg?'<div class="card-leg">🏅 Legacy — your best-ever verified scores. Display only; your ranked card stays on Form.</div>':'')
-        +'<div class="cstats">'+statHtml+'</div>'
+        +'<div class="clschip-wrap"><span class="clschip"><i></i>'+esc(cur.name)+(cur.tree?' · '+esc(cur.tree)+' tree':'')+'</span></div>'
+        +'<div class="tphero"><div class="tphero-top"><div><div class="tphero-tp">'+tpFmt+'</div><div class="tphero-k">Total Power</div></div><div class="tphero-to">'+tpHeroRight+'</div></div><div class="tphero-bar"><i style="width:'+tpPct+'%"></i></div></div>'
         +(!isLeg&&cc.pending>0?'<div class="card-pend">⏳ '+cc.pending+' score'+(cc.pending===1?'':'s')+' awaiting coach verification — your rating updates once a coach verifies.</div>':'')
-        +'<div class="acard-tpbar"><i style="width:'+tpPct+'%"></i></div><div class="acard-tplab">'+nextTxt+'</div>'
-        +'<div class="acard-btns"><button class="minibtn2" onclick="goNav(&#39;submit&#39;)">'+cc.verified+' verified · '+cc.entered+' entered · edit</button>'
-        +(cc.pending>0?'<button class="minibtn2 alt" onclick="openVerify()">🔒 Coach verify</button>':'')+'</div></div></div>';
+        +'<div class="cstats">'+statHtml+'</div>'
+        +'</div></div>';
   } else {
     card='<div class="acard empty" onclick="goNav(&#39;submit&#39;)"><div class="acard-top"><span class="acard-tier">UNRANKED</span><div class="acard-ovwrap"><div class="acard-ov">—</div><div class="acard-ovlab">Overall</div></div></div>'
       +'<div class="acard-stats">'+SCORING.stats.filter(function(s){return s.card!==false;}).map(function(s){return '<div class="acard-stat"><b>—</b><span>'+s.key+'</span></div>';}).join('')+'</div>'
