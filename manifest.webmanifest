@@ -1,6 +1,6 @@
 {
-  "name": "Unranked — Get Ranked",
-  "short_name": "Unranked",
+  "name": "Unranked BETA — Get Ranked",
+  "short_name": "Unranked BETA",
   "description": "The gym's WOD board, strength work and athlete tracks — today's session, always.",
   "start_url": "./",
   "scope": "./",
