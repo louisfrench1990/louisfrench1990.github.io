@@ -93,6 +93,24 @@
 .cp-rq-ic .ico{width:15px;height:15px;color:var(--green)}
 .cp-o{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--dim);display:block}
 .cp-foot{font-size:11.5px;color:var(--dim);margin-top:11px;line-height:1.4}.cp-foot b{color:var(--cc)}
+.cp-head{cursor:pointer}
+.cp-status{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
+.cp-st{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--dim);letter-spacing:.01em}
+.cp-st.up{color:var(--green);background:rgba(34,197,94,.13)}
+.cp-st.dn{color:var(--crimson);background:rgba(228,50,58,.14)}
+.cp-st.pend{color:var(--gold);background:rgba(255,194,71,.13)}
+.cp-metline{font-size:11.5px;color:var(--dim);margin:2px 0 9px}.cp-metline b{color:var(--cc)}
+.cp-acts{display:flex;flex-direction:column;gap:6px}
+.cp-act{display:flex!important;align-items:center;gap:9px;width:100%;text-align:left;background:rgba(255,255,255,.03)!important;border:1px solid var(--line)!important;border-radius:var(--r-md)!important;padding:9px 11px!important;cursor:pointer;min-height:0!important;box-shadow:none!important;font-family:var(--ui)!important}
+.cp-act:active{background:rgba(255,255,255,.06)!important}
+.cp-a-o{width:11px;height:11px;flex:none;border-radius:50%;border:1.5px solid var(--cc);box-sizing:border-box}
+.cp-a-nm{flex:1;font-size:13px;font-weight:700;color:var(--txt);display:flex;align-items:center;gap:7px;min-width:0}
+.cp-a-do{flex:none;font-size:12px;font-weight:800;color:var(--cc);white-space:nowrap}
+.cp-close{font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--bg);background:var(--cc);padding:2px 6px;border-radius:999px}
+.cp-need .cp-a-do{color:var(--mag)}.cp-need .cp-a-o{border-color:var(--mag)}
+.cp-pend .cp-a-do{color:var(--gold)}.cp-pend .cp-a-o{border-color:var(--gold)}
+.cp-done{display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:11px}
+.cp-dn-chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--green);opacity:.85}.cp-dn-chip .ico{width:13px;height:13px}
 /* segmented control (Form/Legacy, RX tiers, etc.) */
 .seg{display:flex;gap:4px;background:var(--s2);border:1px solid var(--line);border-radius:var(--r-pill);padding:4px}
 .seg-b{flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;border:0!important;background:none!important;color:var(--dim)!important;font-family:var(--ui);font-weight:700;font-size:13px;padding:9px 10px;border-radius:var(--r-pill);cursor:pointer;letter-spacing:.02em;transition:background .14s,color .14s}   /* min 44px touch target */
@@ -405,7 +423,7 @@ body.sclalarm #sclTime{color:#ff283c!important}
 .xp-tip:last-child{border-bottom:0}
 .xp-tip b{font-family:var(--disp);font-size:16px;color:var(--mag);min-width:44px}
 .xp-tip span{font-size:13px;color:var(--txt)}
-.npcard{background:linear-gradient(165deg,#1a1330,#120d1a);border:1px solid rgba(255,45,138,.28);border-radius:14px;padding:13px 14px}
+.npcard{background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:13px 14px}
 .np-h{display:flex;align-items:center;gap:8px;font-family:var(--disp);text-transform:uppercase;font-size:15px;letter-spacing:.03em}
 .np-h .ico{width:18px;height:18px;color:var(--mag)}
 .np-sub{color:var(--dim);font-size:11.5px;margin:2px 0 10px}
@@ -513,11 +531,11 @@ body.hasnav #foot{bottom:60px}
 .achip.got .ico{color:var(--acc2)}
 /* ===== THE VAULT ===== */
 .vaultsec{padding-top:2px}
-.vlvl{display:flex;align-items:center;gap:11px;background:linear-gradient(160deg,#221a2e,#14101a);border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin-bottom:13px}
+.vlvl{display:flex;align-items:center;gap:11px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:11px 12px;margin-bottom:13px}
 .vlvl-b{width:46px;height:46px;flex:0 0 46px;border-radius:12px;background:linear-gradient(135deg,var(--mag),#8a2be2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:22px;color:#fff;line-height:.8}
 .vlvl-b span{font-size:7px;letter-spacing:.12em;text-transform:uppercase;font-family:var(--ui);font-weight:800}
 .vlvl-m{flex:1;min-width:0}
-.vlvl-r{display:flex;justify-content:space-between;align-items:baseline}
+.vlvl-r{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .vlvl-r b{font-family:var(--disp);font-weight:800;font-size:16px;text-transform:uppercase}
 .vlvl-ti{color:var(--acc);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
 .vlvl-bar{height:6px;background:#2a2536;border-radius:4px;margin:6px 0 3px;overflow:hidden}
@@ -808,6 +826,8 @@ body.hasnav #foot{bottom:60px}
 .ts-intro{font-size:12.5px;color:var(--dim);line-height:1.45;margin:0;padding:12px 16px 4px}
 .ts-page .ts-prog,.ts-page .ts-grouphdr,.ts-page .ts-row,.ts-page .ts-locked{margin-left:16px;margin-right:16px}
 .ts-actions{position:sticky;bottom:0;display:flex;gap:8px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0));background:linear-gradient(0deg,var(--panel) 72%,transparent);margin-top:8px}
+/* When the member nav bar is showing it fixed-overlays the bottom ~54px; lift the sticky Save bar above it so it's reachable. */
+body.hasnav #myLogMask .ts-actions{bottom:calc(54px + env(safe-area-inset-bottom,0));padding-bottom:12px}
 .ts-actions .minibtn2{margin-top:0}
 .pphead h3{margin:0;font-size:18px}
 .ppage .ppclose{background:rgba(255,255,255,.08)!important;border:none!important;box-shadow:none!important;width:40px!important;height:40px!important;min-width:40px!important;border-radius:50%!important;flex:none;color:var(--txt);font-size:20px;line-height:1;cursor:pointer;padding:0!important;font-weight:800;display:flex;align-items:center;justify-content:center}
@@ -1217,7 +1237,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-21 10:17</span>
+    <span class="verstamp" title="app build">build 2026-08-21 10:49</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="viewtogrow" id="viewtogrow" style="display:none"></div>
@@ -1968,7 +1988,7 @@ window.saveLog=function(){var ds=todayStr();var pieces=(LOG[ds]&&LOG[ds].pieces)
   saveLOG();closeLog();render();};
 window.closeLog=function(){var m=document.getElementById('logMask');if(m)m.classList.remove('on');};
 /* ===== THE VAULT — Moments · Achievements · Trophies + the Level/Credits strip ===== */
-function levelTitle(L){return L>=50?'Prestige':L>=40?'Elite':L>=30?'Veteran':L>=20?'Seasoned':L>=10?'Committed':L>=5?'Regular':'Rookie';}
+function levelTitle(L){return L>=50?'Prestige':L>=40?'Elite':L>=30?'Veteran':L>=20?'Seasoned':L>=10?'Committed':L>=5?'Rising':'Rookie';}
 function curStreak(){try{return statTotals().streak;}catch(e){return 0;}}
 function tierIdxNow(){var cc=computeCard();return cc.entered>0?SCORING.tiers.indexOf(cc.tier):-1;}
 // fuller achievement set (auto, no photo) — grouped
@@ -2142,22 +2162,42 @@ function nearestClass(){var st=classStates();var best=null;
     if(c.prereq&&!c.prereq.every(function(p){return st[p]&&st[p].unlocked;}))return;
     var reqs=Object.keys(c.req||{});if(!reqs.length)return;
     var met=0,progSum=0,items=[];
-    reqs.forEach(function(id){var mv=scMove(id);var sc=isVerified(id)?scoreOf(TESTS[id],mv):0;var need=c.req[id]||1;var ok=sc>=need;
-      if(ok)met++;progSum+=Math.min(1,sc/need);items.push({name:mv?mv.name:id,ok:ok});});
+    reqs.forEach(function(id){var mv=scMove(id);var vf=isVerified(id);var ent=(typeof TESTS!=='undefined'&&TESTS[id]!=null);var sc=vf?scoreOf(TESTS[id],mv):0;var need=c.req[id]||1;var ok=sc>=need;var prog=Math.min(1,sc/need);
+      if(ok)met++;progSum+=prog;items.push({id:id,mv:mv,name:mv?mv.name:id,ok:ok,prog:prog,verified:vf,entered:ent});});
     var cand={tree:tr,cls:c,met:met,total:reqs.length,pct:Math.round(progSum/reqs.length*100),rank:_RANK[c.rank],items:items};
     if(!best||cand.pct>best.pct||(cand.pct===best.pct&&cand.rank<best.rank))best=cand;
   });});
   return best;}
+// CURRENT PURSUIT — merged with the old Pulse. One directional block: the class you're closest to, plus the exact
+// next action for each remaining prerequisite (what to lift/improve, and which one you're closest to). No thresholds exposed.
 function pursuitHTML(){var cc=computeCard();if(cc.entered===0)return '';
-  var n=nearestClass();if(!n)return '';
-  var items=n.items.slice().sort(function(a,b){return (a.ok===b.ok)?0:(a.ok?-1:1);});
-  var rows=items.map(function(it){return '<div class="cp-req'+(it.ok?' ok':'')+'"><span class="cp-rq-ic">'+(it.ok?ICO.check:'<span class="cp-o"></span>')+'</span><span class="cp-rq-nm">'+esc(it.name)+'</span></div>';}).join('');
+  var n=nearestClass();if(!n)return '';snapshotRating();
+  var done=n.items.filter(function(it){return it.ok;});
+  var todo=n.items.filter(function(it){return !it.ok;}).sort(function(a,b){return b.prog-a.prog;});
+  // Merged Pulse signals: form movement + scores blocking progress.
+  var chips='';var fd=formDelta();
+  if(fd&&fd.delta>0)chips+='<span class="cp-st up">\u2191 Form +'+fd.delta+' this week</span>';
+  else if(fd&&fd.delta<0)chips+='<span class="cp-st dn">\u2193 Form '+fd.delta+' — re-verify to hold</span>';
+  if(cc.pending>0)chips+='<span class="cp-st pend">'+cc.pending+' score'+(cc.pending===1?'':'s')+' awaiting coach \u2713</span>';
+  // A concrete do-this-next line for each remaining prerequisite.
+  var acts=todo.map(function(it,i){
+    var doTxt,cls;
+    if(!it.entered){doTxt='Log your score';cls='need';}
+    else if(!it.verified){doTxt='Awaiting coach \u2713';cls='pend';}
+    else{var np=it.mv?nextPoint(it.mv):null;doTxt=np?(fmtDelta(np)+' \u2192 next point'):'Keep pushing';cls='go';}
+    var tag=(i===0&&todo.length>1)?'<span class="cp-close">Closest</span>':'';
+    return '<button class="cp-act cp-'+cls+'" onclick="event.stopPropagation();goNav(&#39;submit&#39;)">'
+      +'<span class="cp-a-o"></span><span class="cp-a-nm">'+esc(it.name)+tag+'</span><span class="cp-a-do">'+doTxt+' \u203a</span></button>';}).join('');
+  var body=todo.length
+    ? '<div class="cp-metline"><b>'+n.met+' of '+n.total+'</b> prerequisites done · do these next</div><div class="cp-acts">'+acts+'</div>'
+    : '<div class="cp-metline">All prerequisites met — <b>'+esc(n.cls.name)+'</b> unlocks next. Keep them verified.</div>';
+  var doneRow=done.length?'<div class="cp-done">'+done.map(function(it){return '<span class="cp-dn-chip">'+ICO.check+esc(it.name)+'</span>';}).join('')+'</div>':'';
   return '<div class="dsec">Current pursuit</div>'
-    +'<div class="cp-card cc-'+esc(n.cls.colour)+'" onclick="goNav(&#39;tree&#39;)">'
-    +'<div class="cp-head"><div><div class="cp-tree">'+esc(n.tree.name)+' path</div><div class="cp-cls">Unlock '+esc(n.cls.name)+'</div></div><span class="cp-chev">›</span></div>'
+    +'<div class="cp-card cc-'+esc(n.cls.colour)+'">'
+    +'<div class="cp-head" onclick="goNav(&#39;tree&#39;)"><div><div class="cp-tree">'+esc(n.tree.name)+' path</div><div class="cp-cls">Unlock '+esc(n.cls.name)+'</div></div><span class="cp-chev">›</span></div>'
+    +(chips?'<div class="cp-status">'+chips+'</div>':'')
     +'<div class="cp-bar"><i style="width:'+Math.max(6,Math.min(100,n.pct))+'%"></i></div>'
-    +'<div class="cp-reqs">'+rows+'</div>'
-    +'<div class="cp-foot"><b>'+n.met+' of '+n.total+'</b> prerequisites done — keep training &amp; get your scores verified</div></div>';}
+    +body+doneRow+'</div>';}
 // Today's programme status — a reason to open on any day
 function todayHomeHTML(){var info=todayInfo();var d=new Date();var DY=['SUN','MON','TUE','WED','THU','FRI','SAT'];var dn=DY[d.getDay()];
   var ttl,sub,rest=false;
@@ -2173,7 +2213,7 @@ function todayHomeHTML(){var info=todayInfo();var d=new Date();var DY=['SUN','MO
   return '<div class="dsec">Today</div><div class="th-card"><div class="th-top"><span class="th-day">'+dn+'</span><span class="th-badge'+(rest?'':' on')+'">'+(rest?'Recovery':'Training day')+'</span></div>'
     +'<div class="th-ttl">'+esc(ttl)+'</div><div class="th-sub">'+esc(sub)+'</div>'+action+'</div>';}
 // Daily quest — ONE small optional athletic action chosen from the programme context. Reward = credits (cosmetic), NEVER rating.
-var QUEST_CREDITS=25;
+var QUEST_CREDITS=10;
 function todaysQuest(){var info=todayInfo();var d=new Date();var wd=info.wd||['SUN','MON','TUE','WED','THU','FRI','SAT'][d.getDay()];
   if(info.state==='pre'||info.state==='post'||wd==='SAT'||wd==='SUN')
     return {id:'walk',title:'Zone-1 walk',detail:'25–30 min easy, nasal breathing. Flush today, prime tomorrow.'};
@@ -2205,14 +2245,15 @@ function buildHomeHTML(hint,cardToggle,card,tree){
     +hubBtn(null,'goNav(&#39;vault&#39;)','Vault','Your history and progress',ICO.vault)
     +hubBtn(null,'openShop()','Shop','Spend credits on card cosmetics',ICO.shop)
     +'</div>';
-  var npc=nextPointHTML();var pulse=pulseHTML(),today=todayHomeHTML(),quest=questHTML(),pursuit=pursuitHTML();
+  // Home order (user spec): CARD → LEVEL → TODAY → DAILY QUEST → CURRENT PURSUIT → CLASS TREE/VAULT/SHOP → CLOSEST TO NEXT POINT.
+  var npc=nextPointHTML(),today=todayHomeHTML(),quest=questHTML(),pursuit=pursuitHTML();
   return hint+cardToggle+'<div class="ppsec">'+card+'</div>'
-    +(pulse?'<div class="ppsec">'+pulse+'</div>':'')
+    +'<div class="ppsec">'+levelStripHTML()+'</div>'
     +(today?'<div class="ppsec">'+today+'</div>':'')
     +(quest?'<div class="ppsec">'+quest+'</div>':'')
     +(pursuit?'<div class="ppsec">'+pursuit+'</div>':'')
-    +(npc?'<div class="ppsec">'+npc+'</div>':'')
-    +'<div class="ppsec">'+levelStripHTML()+links+'</div>';
+    +'<div class="ppsec">'+links+'</div>'
+    +(npc?'<div class="ppsec">'+npc+'</div>':'');
 }
 // CLASS TREE — its own page: Novice→Apprentice spine, 4 specialisation family-trees, Prismatic ladder
 function buildTreePageHTML(){
