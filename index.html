@@ -711,10 +711,21 @@ body.hasnav #foot{bottom:60px}
 .pc2-vf.pend{color:#ffcf6a;border-color:var(--gold)}
 .pc2-top .pc-hero{height:236px}
 /* Brighter arena so the stadium reads behind a transparent cutout */
-.pc2-top .pc-stage{background:radial-gradient(125% 60% at 50% 116%,var(--tc),transparent 60%),radial-gradient(95% 46% at 50% 40%,rgba(255,255,255,.14),transparent 62%),linear-gradient(180deg,#14141f,#0c0c16 52%,#08080f)}
-.pc2-top .pc-stage:before{opacity:.6;background-size:22px 22px;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.95),transparent 50%);mask-image:linear-gradient(180deg,rgba(0,0,0,.95),transparent 50%)}
-.pc2-top .pc-stage:after{content:"";position:absolute;left:0;right:0;top:53%;height:1px;background:linear-gradient(90deg,transparent,var(--tc),transparent);opacity:.55}
-.pc2-top .pc-cut{object-position:center 12%}
+/* Arena stage — lit stadium (floodlights + beams + tier haze + floor glow + crowd) so it reads like an arena, not black. Shows through a TRANSPARENT cutout. */
+.pc2-top .pc-stage{background:
+  radial-gradient(26% 20% at 17% 6%,rgba(255,255,255,.72),rgba(255,255,255,0) 60%),
+  radial-gradient(26% 20% at 83% 6%,rgba(255,255,255,.62),rgba(255,255,255,0) 60%),
+  radial-gradient(78% 50% at 50% -2%,var(--tc),transparent 58%),
+  radial-gradient(96% 58% at 50% 126%,var(--tc),transparent 56%),
+  radial-gradient(120% 66% at 50% 44%,rgba(120,130,170,.16),transparent 60%),
+  linear-gradient(180deg,#1c1c29 0%,#141420 40%,#0d0d16 74%,#08080f 100%)}
+.pc2-top .pc-stage:before{opacity:.5;background-size:20px 20px;-webkit-mask-image:radial-gradient(120% 60% at 50% 0%,rgba(0,0,0,.9),transparent 55%);mask-image:radial-gradient(120% 60% at 50% 0%,rgba(0,0,0,.9),transparent 55%)}
+/* diagonal floodlight beams from the top corners + faint haze band */
+.pc2-top .pc-stage:after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(122deg,transparent 22%,rgba(255,255,255,.07) 30%,transparent 37%),
+  linear-gradient(-122deg,transparent 22%,rgba(255,255,255,.06) 30%,transparent 37%);
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 72%);mask-image:linear-gradient(180deg,#000,transparent 72%)}
+.pc2-top .pc-cut{object-position:center 10%}
 .pc-wm{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:132px;letter-spacing:-.04em;color:rgba(255,255,255,.06);pointer-events:none}
 .pc2-bot{display:grid;grid-template-columns:112px 1fr;gap:10px;align-items:start}
 .pc2-pw{padding-top:2px;overflow:hidden}
@@ -735,6 +746,14 @@ body.hasnav #foot{bottom:60px}
 .pc2-st-bar i{display:block;height:100%;border-radius:3px;background:var(--tc)}
 .pc2-st-empty{opacity:.42}
 .pc2-ov-empty{color:#33333e;font-size:44px}
+/* Shop cosmetics ported to the v3 card (were only wired to the old .acard). Shine overlay sits over the whole card, clipped by the frame. */
+.pcard .pc-cosl{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0}
+.pcard.cos-shine-holo .pc-cosl{opacity:.42;background:conic-gradient(from 0deg,#ff5bd066,#ffc23b44,#35d07f44,#3c8cfa44,#965cf466,#ff5bd066);mix-blend-mode:overlay;animation:cosrot 9s linear infinite}
+.pcard.cos-shine-gold .pc-cosl{opacity:.4;background:linear-gradient(120deg,transparent 30%,#ffe9a860 50%,transparent 70%);mix-blend-mode:overlay;background-size:250% 100%;animation:cardsheen 5s ease-in-out infinite}
+.pcard.cos-shine-sweep .pc-cosl{opacity:.6;background:linear-gradient(115deg,transparent 42%,#ffffff55 50%,transparent 58%);background-size:250% 100%;animation:cardsheen 3.4s ease-in-out infinite}
+.pcard.cos-name-grad .pc2-nm{background:linear-gradient(90deg,#ff2d8a,#3aa0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pcard.cos-glow-gold .pc2-ov{color:#ffe38a;text-shadow:0 0 16px #ffc23b,0 2px 22px #ffc23b}
+.pcard.cos-bg-carbon{background:repeating-linear-gradient(45deg,#131019,#131019 8px,#1d1727 8px,#1d1727 16px)}
 /* single-column stat rows — icon · name+descriptor · tier-coloured bar · value (all one tier colour) */
 .pc-stats2{display:flex;flex-direction:column;gap:7px;margin-top:2px}
 .pc-st2{display:flex;align-items:center;gap:10px}
@@ -874,6 +893,7 @@ body.hasnav #myLogMask .ts-actions{bottom:calc(54px + env(safe-area-inset-bottom
 .ppgear:active{background:rgba(255,255,255,.2)!important}
 .ppage .mlbody{flex:1;overflow:auto;padding:0;min-height:0}
 .ppsec{padding:16px;border-bottom:8px solid var(--bg)}
+.pp-gap{height:2px}
 .ppsec:last-child{border-bottom:none}
 .pprow{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line);flex:none}
 /* ---- test entry ---- */
@@ -1064,6 +1084,7 @@ body.hasnav #myLogMask .ts-actions{bottom:calc(54px + env(safe-area-inset-bottom
 .feed.on{opacity:1;border-color:var(--acc2);color:var(--acc2)}
 .bk.rec{box-shadow:0 0 0 2px var(--mag),0 0 26px -6px var(--mag)}
 .recbadge{font-family:var(--ui);font-size:.5em;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--mag);border-radius:1em;padding:.2em .7em;margin-left:.55em;vertical-align:middle}
+.recwhy{font-family:var(--ui);font-size:.62em;font-weight:700;letter-spacing:.01em;text-transform:none;color:var(--mag);margin:-.05em 0 .5em;line-height:1.3}
 .trow{display:flex;gap:.4em;flex-wrap:wrap;margin:0 0 .5em}
 .tchip{font-size:.6em;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:#1b1826;border:1px solid var(--line);border-radius:1.2em;padding:.3em .85em;color:var(--txt)}
 .tchip.cap{border-color:var(--acc);color:var(--acc)}
@@ -1274,7 +1295,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-21 11:16</span>
+    <span class="verstamp" title="app build">build 2026-08-21 12:14</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="viewtogrow" id="viewtogrow" style="display:none"></div>
@@ -1613,14 +1634,34 @@ function rxplusLoadOk(p){   // Rx+ fixed barbell load must sit within ~5% of the
     if(!mv){ if(/kg/i.test(ln)&&!/carry|farmer|sandbag|yoke|\blog\b|keg|sled|d-ball|dumbbell|\bdb\b|kettlebell|\bkb\b|wall ball/i.test(ln))return false; continue; }   // unrecognised barbell load -> can't verify Rx+ is safe -> don't recommend it
     var rm=oneRM[mv.lift];if(!rm)return false;var load=athleteSex==='F'?parseFloat(lm[2]):parseFloat(lm[1]);if(load/rm>pct)return false;}
   return true;}
-function recBand(p){if(!gymActive()||p.type!=='wod')return null;
-  // Rx+ is an opt-in for those pushing on — never auto-recommended (recommending it needs a verified load+skill ceiling we don't have; default was firing for everyone on sandbag/gymnastics/engine WODs). Athletes pick it manually.
-  var order=['rx','intermediate'];                                // scaled is the fallback, not a match target
+// ---- "For you" WOD variant recommender ----
+// Card TIER sets the ceiling (White/Green→Scaled, Blue→Intermediate, Purple/Crimson+→Rx). Movement gate can only pull it DOWN
+// (can't do the Rx gymnastics → drop). Low readiness drops one more. Rx+ stays a manual opt-in (needs a verified load+skill ceiling).
+var _BANDRANK={scaled:0,intermediate:1,rx:2,rxPlus:3};
+function tierCeilBand(){var cc=computeCard();if(cc.entered===0)return null;var ti=SCORING.tiers.indexOf(cc.tier);
+  return (ti<=1)?'scaled':(ti===2)?'intermediate':'rx';}   // white/green→scaled · blue→intermediate · purple/crimson+→rx
+function capableBand(p){   // highest band whose gymnastics the athlete can actually perform (movement gate)
+  var order=['rx','intermediate'];
   for(var i=0;i<order.length;i++){var b=order[i];var pr=p.variants[b]&&p.variants[b].prescription;if(!pr)continue;if(bandGymList(pr).length===0)return b;if(bandAllOk(pr))return b;}
-  // pulling-family fallback: can't do the Rx/Int gymnastic, but can pull-ups -> Intermediate (movements auto-substitute to pull-ups)
   var ip=p.variants.intermediate&&p.variants.intermediate.prescription;
   if(ip&&/muscle-up|chest-to-bar|pull-up/i.test(ip.split('\n\n')[0])&&gcap('pullup')>=needReps(bandGymReps(ip)))return 'intermediate';
   return 'scaled';}
+function _recCalc(p){if(!p||p.type!=='wod')return {band:null,why:''};
+  var ceil=tierCeilBand();                                   // tier anchor (null if not carded)
+  var cap=gymActive()?capableBand(p):(ceil?'rx':null);       // movement gate (needs gym/test data); no data → don't gate above tier
+  if(ceil==null&&cap==null)return {band:null,why:''};
+  var cr=(ceil==null)?99:_BANDRANK[ceil], pr=(cap==null)?99:_BANDRANK[cap];
+  var rank=Math.min(cr,pr),why='';
+  if(readinessOn()&&readiness.score<=4&&rank>0){rank=rank-1;why='eased back — you flagged low readiness today';}
+  else if(cap!=null&&pr<cr)why='build these movements first';
+  else if(ceil!=null){why='matched to your '+computeCard().tier.name+' card';}
+  var names=['scaled','intermediate','rx'];rank=Math.max(0,Math.min(2,rank));
+  var avail=wodBandOrder(p),band='';
+  for(var r=rank;r>=0;r--){if(avail.indexOf(names[r])>=0){band=names[r];break;}}
+  if(!band)band=avail.indexOf('rx')>=0?'rx':(avail[0]||'rx');
+  return {band:band,why:why};}
+function recBand(p){return _recCalc(p).band;}
+function recWhy(p){return _recCalc(p).why;}
 window.setSex=function(s){athleteSex=s;try{localStorage.setItem('unranked-sex',s)}catch(e){}var bs=document.querySelectorAll('.sexb');for(var i=0;i<bs.length;i++)bs[i].classList.toggle('on',bs[i].textContent===s);};
 window.openRM=function(){var m=document.getElementById('rmMask');
   var nameRow='<label class="rmrow"><span>Name (shown on your card)</span><input type="text" id="rm-name" value="'+esc(athleteName||'')+'" placeholder="e.g. A. Fowler" maxlength="24"></label>';
@@ -2290,15 +2331,14 @@ function buildHomeHTML(hint,cardToggle,card,tree){
     +hubBtn(null,'goNav(&#39;vault&#39;)','Vault','Your history and progress',ICO.vault)
     +hubBtn(null,'openShop()','Shop','Spend credits on card cosmetics',ICO.shop)
     +'</div>';
-  // Home order (user spec): CARD → LEVEL → TODAY → DAILY QUEST → CURRENT PURSUIT → CLASS TREE/VAULT/SHOP → CLOSEST TO NEXT POINT.
+  // Home order: CARD → LEVEL → TODAY → DAILY QUEST → CURRENT PURSUIT + CLOSEST TO NEXT POINT (grouped — similar "what to do next" jobs) → CLASS TREE/VAULT/SHOP.
   var npc=nextPointHTML(),today=todayHomeHTML(),quest=questHTML(),pursuit=pursuitHTML();
   return hint+cardToggle+'<div class="ppsec">'+card+'</div>'
     +'<div class="ppsec">'+levelStripHTML()+'</div>'
     +(today?'<div class="ppsec">'+today+'</div>':'')
     +(quest?'<div class="ppsec">'+quest+'</div>':'')
-    +(pursuit?'<div class="ppsec">'+pursuit+'</div>':'')
-    +'<div class="ppsec">'+links+'</div>'
-    +(npc?'<div class="ppsec">'+npc+'</div>':'');
+    +((pursuit||npc)?'<div class="ppsec">'+pursuit+(npc?(pursuit?'<div class="pp-gap"></div>':'')+npc:'')+'</div>':'')
+    +'<div class="ppsec">'+links+'</div>';
 }
 // CLASS TREE — its own page: Novice→Apprentice spine, 4 specialisation family-trees, Prismatic ladder
 function buildTreePageHTML(){
@@ -2425,6 +2465,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
     var vfBadge=verified?('<span class="pc2-vf">'+ICO.check+' Verified athlete</span>'):(cc.pending>0?('<span class="pc2-vf pend">'+ICO.clock+' Pending</span>'):'');
     card='<div class="pc-frame tier-'+ccD.tier.key+'"><div class="pcard tier-'+ccD.tier.key+shineCls+(isLeg?' legacy':'')+' '+cosClasses()+'">'
       +'<span class="pc-cnr tl"></span><span class="pc-cnr tr"></span><span class="pc-cnr bl"></span><span class="pc-cnr br"></span>'
+      +'<div class="pc-cosl"></div>'
       +'<div class="lvlup" id="cardLvlup"><span>TIER UP!</span></div><div class="ring" id="cardRing"></div>'
       +'<div class="pc-topline"><span class="pc-tierpill">'+esc(ccD.tier.name)+' · '+tierIdx+'/'+tierN+(ccD.prismatic?' · '+esc(ccD.prismatic.name):'')+(isLeg?' · LEGACY':'')+'</span><span class="pc-serial">'+esc(serial)+' · '+tpFmt+'</span></div>'
       +'<div class="pc2-top">'
@@ -3025,17 +3066,18 @@ function bandBody(p,b){var bv=vb(p)[b]||{};var src=overrides[p.id+'|'+b]!=null?o
   var cleaned=clean(personal?applyRM(raw):raw);
   var html=cleaned.split('\n').map(function(ln){if(!ln.trim())return '';return '<div class="wodln">'+qtyPrefix(esc(ln.replace(/\s+$/,'')))+'</div>';}).join('');
   return html.replace(/«sf:([^»]*)»/g,'<span class="subnote">scaled from $1</span>').replace(/«pl:([^»]*)»/g,'<span class="loadnote">← scaled to your 1RM · class Rx $1kg</span>');}
-function bandCell(p,b,rec){var bv=vb(p)[b]||{};
+function bandCell(p,b,rec,why){var bv=vb(p)[b]||{};
   var isEd=coachMode()&&editing&&editing.id===p.id&&editing.key===b;
   var src=overrides[p.id+'|'+b]!=null?overrides[p.id+'|'+b]:(bv.prescription||'');
   var body=isEd?editorHtml(src):bandBody(p,b);
   var tgt=(bv.target&&bv.target.length<90)?'<div class="bkt">'+esc(clean(bv.target))+'</div>':'';
   var ctrl=coachMode()?editCtrl(p.id,b,isEd,overrides[p.id+'|'+b]!=null):'';
   var isRec=(b===rec);
-  return '<div class="bk wodbk '+BANDCLS[b]+(isRec?' rec':'')+'"><div class="bkh">'+VL[b]+(isRec?'<span class="recbadge">For you</span>':'')+'</div><div class="bkc">'+body+'</div>'+ctrl+tgt+'</div>';}
-function bandBlocks(p){var order=wodBandOrder(p);var rec=recBand(p);
+  var whyEl=(isRec&&why&&!coachMode()&&!boardMode)?'<div class="recwhy">'+esc(why)+'</div>':'';
+  return '<div class="bk wodbk '+BANDCLS[b]+(isRec?' rec':'')+'"><div class="bkh">'+VL[b]+(isRec?'<span class="recbadge">For you</span>':'')+'</div>'+whyEl+'<div class="bkc">'+body+'</div>'+ctrl+tgt+'</div>';}
+function bandBlocks(p){var order=wodBandOrder(p);var ri=_recCalc(p),rec=ri.band;
   if(!coachMode()&&!boardMode)order=order.filter(function(b){return b!=='rxPlus';});   // members: Rx+ is a deliberate opt-in via the level toggle. The BOARD is the shared class display — it always shows every level.
-  return '<div class="bkgrid wodgrid'+(rec?' has-rec':'')+'">'+order.map(function(b){return bandCell(p,b,rec);}).join('')+'</div>';}
+  return '<div class="bkgrid wodgrid'+(rec?' has-rec':'')+'">'+order.map(function(b){return bandCell(p,b,rec,ri.why);}).join('')+'</div>';}
 // ---- full-screen FOCUS view (single block / single band) — big, centred, for the gym TV ----
 function focusView(kick,cls,bodyHtml,sub){return '<div class="focus '+(cls||'')+'"><div class="focus-kick">'+esc(kick)+'</div><div class="focus-body">'+bodyHtml+'</div>'+(sub?'<div class="focus-sub">'+esc(sub)+'</div>':'')+'</div>';}
 function blockFocus(b,cls,kickName){var raw=b.body.join('\n').trim(),setsN=null,qual='';
