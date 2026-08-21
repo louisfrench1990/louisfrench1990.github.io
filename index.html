@@ -230,6 +230,12 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 /* the ✕ Back pill is fixed at top-left — the board's level bar must start clear of it (set with the shorthand below, not here) */
 .logchip{display:inline-block;margin-left:10px;font-size:13px;font-weight:800;padding:7px 15px;border-radius:9px;border:1px solid var(--acc2);background:rgba(53,208,127,.16);color:var(--acc2);cursor:pointer;vertical-align:middle}
 .logchip.done{border-color:var(--acc);color:var(--acc);background:rgba(255,193,7,.10)}
+/* one consistent, prominent session-log button pinned at the bottom of the programme body */
+.logbar{margin:18px 0 6px}
+.logbtn{width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--green);background:rgba(34,197,94,.13);color:#7ee6ab;font-family:var(--ui);font-weight:800;font-size:15px;letter-spacing:.01em;border-radius:var(--r-md);cursor:pointer;transition:background .12s,transform .06s}
+.logbtn .ico{width:19px;height:19px}
+.logbtn:active{transform:scale(.99)}
+.logbtn.done{background:rgba(34,197,94,.22);color:#9af0c1;border-color:var(--green)}
 .dotsel{-webkit-appearance:none;appearance:none;padding-right:26px!important;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='white' stroke-width='2' fill='none'/></svg>");background-repeat:no-repeat;background-position:right 8px center;cursor:pointer}
 .mbtn.done{border-color:var(--acc2);color:var(--acc2);background:rgba(53,208,127,.08)}
 #myLogBtn{color:var(--mag);border-color:var(--mag)}
@@ -263,10 +269,14 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 .cal-c.has i{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--mag)}
 .cal-c.today{outline:1px solid rgba(255,255,255,.35)}
 .cal-c.sel{background:var(--mag)!important;color:#fff}.cal-c.sel i{background:#fff}
+.cal-sum{text-align:center;font-size:12.5px;color:var(--dim);margin-top:11px}.cal-sum b{color:var(--mag);font-weight:800}
 .ml-day{border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:8px 0;background:var(--bg)}
 .ml-date{font-size:11px;font-weight:800;color:var(--mag);letter-spacing:.06em;margin-bottom:4px}
-.ml-line{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:2px 0}
+.ml-line{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0 2px}
 .ml-line span:first-child{color:var(--txt)}.ml-res{color:var(--dim);text-align:right;flex-shrink:0}
+.ml-nm{font-weight:700}.ml-tag{font-style:normal;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);background:rgba(255,255,255,.06);border-radius:5px;padding:1px 6px;margin-left:4px;vertical-align:middle}
+.ml-detail{font-size:12px;line-height:1.5;color:var(--dim);margin:0 0 6px;padding:6px 9px;background:rgba(255,255,255,.03);border-left:2px solid var(--line);border-radius:0 6px 6px 0;white-space:normal}
+.ml-note{font-size:12px;color:var(--dim);font-style:italic;margin:0 0 6px}.ml-note:before{content:"\201C"}.ml-note:after{content:"\201D"}
 .rmnote{font-size:12px;color:var(--dim);line-height:1.4;margin:0 0 10px}.rmnote b{color:var(--txt)}
 .gymb{padding:6px 18px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--dim);font-weight:800;cursor:pointer;min-width:60px}.gymb.on{background:var(--mag);border-color:var(--mag);color:#fff}
 .brand .bt{font-family:var(--ui);font-size:9px;font-weight:800;letter-spacing:.12em;color:#0a0a11;background:var(--acc);border-radius:5px;padding:2px 5px;margin-left:6px;vertical-align:middle}
@@ -1095,7 +1105,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-21 06:55</span>
+    <span class="verstamp" title="app build">build 2026-08-21 08:02</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="viewtogrow" id="viewtogrow" style="display:none"></div>
@@ -1481,6 +1491,13 @@ function logChip(p){if(boardMode||viewMode!=='day'||!canLog()||!p)return '';   /
   if(!(p.type==='strength'||clsFor(p)==='wod'||p.type==='skill'))return '';
   var lg=LOG[todayStr()]&&LOG[todayStr()].pieces&&LOG[todayStr()].pieces[p.id];
   return '<button class="logchip'+(lg?' done':'')+'" onclick="event.stopPropagation();openLog()">'+(lg?ICO.check+' Logged':'Log this')+'</button>';}
+// ONE consistent, prominent session-log button — pinned at the bottom of the programme body on every step (replaces the per-title chips)
+function logBtnHTML(){if(boardMode||viewMode!=='day'||!canLog())return '';
+  var items=logLoggable();if(!items.length)return '';   // only when today has something loggable (strength / skill / WOD)
+  var ent=(LOG[todayStr()]&&LOG[todayStr()].pieces)||{};
+  var done=items.filter(function(p){return ent[p.id];}).length,all=done>=items.length;
+  var lbl=all?(ICO.check+' Session logged — tap to edit'):(done>0?(ICO.check+' Logged '+done+' of '+items.length+' — tap to finish'):(ICO.check+' Log this session'));
+  return '<div class="logbar"><button class="logbtn'+(all?' done':'')+'" onclick="openLog()">'+lbl+'</button></div>';}
 function logLoggable(){var d=cur&&cur.d;if(!d||!d.tracks)return [];var out=[];(d.tracks.class||[]).forEach(function(id){var p=piece(id);if(p&&(p.type==='strength'||clsFor(p)==='wod'||p.type==='skill'))out.push(p);});return out;}
 function liftKeyOf(p){if(!p||p.type!=='strength')return null;var m=(p.id||'').match(/^lift-([a-z0-9_]+)-/i);return m?m[1].replace(/_/g,' '):String(p.title||'').split('—')[0].trim().toLowerCase();}
 function parseRes(s){s=String(s||'');var lm=s.match(/(\d+(?:\.\d+)?)\s*kg/i);if(!lm)return null;var rm=s.match(/[x×]\s*(\d+)/i)||s.match(/(\d+)\s*reps?/i);var load=parseFloat(lm[1]);var reps=rm?parseInt(rm[1],10):1;return {load:load,reps:reps,e1rm:Math.round(load*(1+reps/30))};}
@@ -1789,11 +1806,30 @@ window.openLog=function(){var m=document.getElementById('logMask');if(!m)return;
       +'<input class="lg-note" placeholder="Note (optional)" value="'+esc(e.note||'')+'"></div>';}).join('');
   m.querySelector('.logbody').innerHTML=html;m.classList.add('on');};
 window.logPick=function(el){var w=el.parentNode;[].forEach.call(w.children,function(c){c.classList.remove('on');});el.classList.add('on');};
+// snapshot WHAT the athlete actually did (movements/reps of the band they logged) so history is self-contained & permanent — never just a name
+function logSummary(p,band){if(!p)return '';
+  var V=(clsFor(p)==='wod')?p.variants:vb(p);
+  var b=(V&&(V[band]||V.rx||V.intermediate||V.scaled||V.rxPlus))||{};
+  var pres=b.prescription||'';
+  if(p.type==='strength'&&p.classLift&&p.classLift[band]&&p.classLift[band].prescription)pres=p.classLift[band].prescription;
+  var s=clean(wodMain(pres||'')).replace(/\s+$/,'');
+  return s.length>320?(s.slice(0,318)+'…'):s;}
+// render one logged entry for history — uses the stored snapshot (title/tag/detail), falling back to a live lookup for older entries
+function logEntryHTML(pid,e){e=e||{};var pc=piece(pid);
+  var title=e.title||(pc?clean(boardTitle(pc)):pid);
+  var tag=e.tag||(pc?labelFor(pc):'');
+  var detail=e.detail||(pc?logSummary(pc,e.band||'rx'):'');
+  var meta=[];if(e.band&&VL[e.band])meta.push(VL[e.band]);if(e.result)meta.push(esc(e.result));if(e.rpe)meta.push('RPE '+e.rpe);
+  var res=meta.join(' · ')||(e.note?esc(e.note):'\u2713');
+  var det=detail?('<div class="ml-detail">'+esc(detail).replace(/\n/g,'<br>')+'</div>'):'';
+  var noteLn=(e.note&&(e.result||e.rpe))?('<div class="ml-note">'+esc(e.note)+'</div>'):'';
+  return '<div class="ml-line"><span class="ml-nm">'+esc(title)+(tag?' <em class="ml-tag">'+esc(tag)+'</em>':'')+'</span><span class="ml-res">'+res+'</span></div>'+det+noteLn;}
 window.saveLog=function(){var ds=todayStr();var pieces=(LOG[ds]&&LOG[ds].pieces)||{};
   [].forEach.call(document.querySelectorAll('#logMask .lg-card'),function(c){var pid=c.getAttribute('data-pid');var lift=c.getAttribute('data-lift')||null;
     var bEl=c.querySelector('.lg-band.on');var band=bEl?bEl.getAttribute('data-band'):'';
     var res=(c.querySelector('.lg-res')||{}).value||'';var rEl=c.querySelector('.lg-rpe.on');var rpe=rEl?parseInt(rEl.getAttribute('data-rpe'),10):0;var note=(c.querySelector('.lg-note')||{}).value||'';
-    if(res.trim()||note.trim()||rpe){pieces[pid]={band:band,result:res.trim(),rpe:rpe,note:note.trim(),lift:lift,ts:Date.now()};}else{delete pieces[pid];}});
+    if(res.trim()||note.trim()||rpe){var pc=piece(pid);pieces[pid]={band:band,result:res.trim(),rpe:rpe,note:note.trim(),lift:lift,ts:Date.now(),
+      title:pc?clean(boardTitle(pc)):(pieces[pid]&&pieces[pid].title)||'',tag:pc?labelFor(pc):(pieces[pid]&&pieces[pid].tag)||'',detail:logSummary(pc,band||'rx')||((pieces[pid]&&pieces[pid].detail)||'')};}else{delete pieces[pid];}});
   if(Object.keys(pieces).length)LOG[ds]={pieces:pieces,ts:Date.now()};else delete LOG[ds];
   if(Object.keys(pieces).length)grantXP('logday',ds,XP_AMT.logday,true);   // XP for logging a session (engagement, daily-capped)
   saveLOG();closeLog();render();};
@@ -1859,13 +1895,15 @@ function buildCalendarHTML(){
     var cls='cal-c'+(logged[ds]?' has':'')+(ds===tstr?' today':'')+(ds===calSel?' sel':'');
     cells+='<button class="'+cls+'"'+(logged[ds]?' onclick="calPick(&#39;'+ds+'&#39;)"':' disabled')+'>'+d+(logged[ds]?'<i></i>':'')+'</button>';}
   var grid='<div class="cal-grid">'+cells+'</div>';
+  var monthCount=0;for(var dm=1;dm<=ndays;dm++){if(logged[y+'-'+p2(mo+1)+'-'+p2(dm)])monthCount++;}   // sessions in the visible month → makes back-navigation meaningful
+  var sum='<div class="cal-sum">'+(monthCount?('<b>'+monthCount+'</b> session'+(monthCount===1?'':'s')+' logged in '+MON[mo]):('No sessions logged in '+MON[mo]))+'</div>';
   var detail='';
   if(calSel&&LOG[calSel]&&LOG[calSel].pieces){var pcs=LOG[calSel].pieces;
-    var lines=Object.keys(pcs).map(function(pid){var e=pcs[pid];var pp=piece(pid);return '<div class="ml-line"><span>'+esc(pp?clean(boardTitle(pp)):pid)+'</span><span class="ml-res">'+esc(e.result||e.note||'✓')+(e.rpe?' · RPE '+e.rpe:'')+'</span></div>';}).join('');
+    var lines=Object.keys(pcs).map(function(pid){return logEntryHTML(pid,pcs[pid]);}).join('');
     detail='<div class="ml-day"><div class="ml-date">'+esc(fmtDate(calSel))+'</div>'+lines+'</div>';
   } else { var n=Object.keys(logged).length;
     detail='<p class="vnote">'+(n?'Tap a highlighted day to see what you logged. You have <b>'+n+'</b> logged session'+(n===1?'':'s')+'.':'No sessions logged yet — tap “Log this” on a training day and your history fills in here.')+'</p>';}
-  return '<div class="cal-wrap">'+head+dow+grid+'</div>'+detail;
+  return '<div class="cal-wrap">'+head+dow+grid+sum+'</div>'+detail;
 }
 var _mintTarget=null;
 window.mintMoment=function(id){_mintTarget=id;var inp=document.getElementById('momentPhotoInput');if(inp)inp.click();};
@@ -2033,7 +2071,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
   var seen={},prs=[];logDates().forEach(function(d){var pcs=LOG[d].pieces;for(var pid in pcs){var lk=pcs[pid].lift;if(lk&&!seen[lk]){seen[lk]=1;var pr=prFor(lk);if(pr)prs.push({lift:lk,pr:pr});}}});
   var prHtml=prs.length?('<div class="rmhdr">Personal records</div>'+prs.map(function(x){return '<div class="ml-line"><span>'+esc(capWord(x.lift))+'</span><span class="ml-res">'+x.pr.load+'kg × '+x.pr.reps+' · ~'+x.pr.e1rm+'kg</span></div>';}).join('')):'';
   var allD=logDates().sort().reverse();
-  var hist=allD.map(function(d){var pcs=LOG[d].pieces;var lines=Object.keys(pcs).map(function(pid){var e=pcs[pid];var p=piece(pid);return '<div class="ml-line"><span>'+esc(p?clean(boardTitle(p)):pid)+'</span><span class="ml-res">'+esc(e.result||e.note||'✓')+(e.band?' · '+VL[e.band]:'')+(e.rpe?' · RPE '+e.rpe:'')+'</span></div>';}).join('');return '<div class="ml-day"><div class="ml-date">'+esc(fmtDate(d))+'</div>'+lines+'</div>';}).join('')||'<p class="rmnote">No sessions logged yet — tap “Log” on a training day to start.</p>';
+  var hist=allD.map(function(d){var pcs=LOG[d].pieces;var lines=Object.keys(pcs).map(function(pid){return logEntryHTML(pid,pcs[pid]);}).join('');return '<div class="ml-day"><div class="ml-date">'+esc(fmtDate(d))+'</div>'+lines+'</div>';}).join('')||'<p class="rmnote">No sessions logged yet — tap “Log” on a training day to start.</p>';
   // ---- athlete card: live once tests are entered, else the UNRANKED shell ----
   var cc=computeCard();
   var card;var cardToggle='';
@@ -2611,7 +2649,7 @@ function renderBlockNav(g,gs){var blocks=stepBlocks(g,gs);if(!blocks||blocks.len
 function renderWodNav(g){var p=piece(g.find(function(id){return clsFor(piece(id))==='wod';})||g[0]);if(!p||!hasBands(p))return '';
   return chipRow(wodBandOrder(p).map(function(b){return VL[b];}));}
 function renderSectionStep(g,gs){var blocks=stepBlocks(g,gs);var t=stepType(g);var p=piece(g[0]);
-  var title='<div class="secttl">'+esc(boardTitle(p))+logChip(p)+'</div>';   // strength/skill get the contextual Log button here too (was WOD-only); logChip returns '' for warm-up/flush
+  var title='<div class="secttl">'+esc(boardTitle(p))+'</div>';   // log button now lives in one consistent bottom bar (logBtnHTML), not the title
   if(coachMode()&&editing&&editing.id===p.id&&editing.key==='sec'){var vv=pv(p);var esrc=(overrides[p.id+'|sec']!=null?overrides[p.id+'|sec']:(vv.prescription||''));
     return '<div class="sec">'+title+'<div class="rx">'+editorHtml(esrc)+'</div>'+equipHtml(p)+'</div>';}
   function bh(b,i,big,num){return blkHtml(b._lab?{label:'',kind:'phase',body:b.body}:b,i,{big:big,label:b._lab||undefined,noNum:!!b._lab,cls:b._cls||undefined,num:num});}
@@ -2630,9 +2668,9 @@ function renderWodStep(g){var p=bandPieceOf(g);var isW=p&&clsFor(p)==='wod';
   if(!p||!hasBands(p)||g.length>1)return g.map(isW?wodSec:sec).join('');   // fall back for benchmarks-without-bands / multi-piece
   var order=wodBandOrder(p),rec=recBand(p);
   var ttl=isW?('WOD: '+esc(clean(p.title))):esc(clean(boardTitle(p)));
-  if(subStep>0&&subStep<=order.length){return '<div class="wodttl">'+ttl+logChip(p)+'</div>'+(isW?wodTargetLine(p):'')+bandFocus(p,order[subStep-1],rec);}
+  if(subStep>0&&subStep<=order.length){return '<div class="wodttl">'+ttl+'</div>'+(isW?wodTargetLine(p):'')+bandFocus(p,order[subStep-1],rec);}
   var note=(p.classNote&&track==='class')?'<div class="note">'+esc(clean(p.classNote))+'</div>':'';
-  return '<div class="wodttl">'+ttl+logChip(p)+'</div>'+(isW?(wodTargetLine(p)+whyLine(p)):'')+bandBlocks(p)+cueLine(p)+note+equipHtml(p);}
+  return '<div class="wodttl">'+ttl+'</div>'+(isW?(wodTargetLine(p)+whyLine(p)):'')+bandBlocks(p)+cueLine(p)+note+equipHtml(p);}
 function hasBands(p){var V=vb(p);if(!V)return false;var b=['rx','intermediate','scaled','rxPlus'].filter(function(k){return V[k]&&V[k].prescription;});if(b.length<2)return false;var f=V[b[0]].prescription;for(var i=1;i<b.length;i++)if(V[b[i]].prescription!==f)return true;return false;}
 var BANDCLS={rxPlus:'b-rxp',rx:'b-rx',intermediate:'b-int',scaled:'b-scaled'};
 function wodBandOrder(p){var V=vb(p);return ['rxPlus','rx','intermediate','scaled'].filter(function(b){return V&&V[b];});}
@@ -2679,12 +2717,12 @@ function cueLine(p){if(!p||!p.cues||!p.cues.length)return '';   // structured co
 function sec(id){const p=piece(id);if(!p||p.type==='header')return '';const v=pv(p);
   var it=(p.type==='strength'||p.type==='skill')?shortIntent(p):'';
   if(p.type==='skill'&&hasBands(p))   // gymnastics / skill: 4 variant blocks
-    return '<div class="sec"><div class="ttl">'+esc(boardTitle(p))+logChip(p)+'</div>'+bandBlocks(p)+it+equipHtml(p)+'</div>';
+    return '<div class="sec"><div class="ttl">'+esc(boardTitle(p))+'</div>'+bandBlocks(p)+it+equipHtml(p)+'</div>';
   const ok=p.id+'|sec';const src=overrides[ok]!=null?overrides[ok]:(v.prescription||'');
   const isEd=coachMode()&&editing&&editing.id===p.id&&editing.key==='sec';
   const inner=isEd?('<div class="rx">'+editorHtml(src)+'</div>'):blocksHtml(applyRM(p.type==='warmup'?ergify(src):src),p.type);
   const ctrl=coachMode()?editCtrl(p.id,'sec',isEd,overrides[ok]!=null):'';
-  return '<div class="sec '+(clsFor(p)==='wod'?'wodsec':'')+'"><div class="ttl">'+esc(boardTitle(p))+logChip(p)+'</div>'+inner+it+ctrl+equipHtml(p)+'</div>';}
+  return '<div class="sec '+(clsFor(p)==='wod'?'wodsec':'')+'"><div class="ttl">'+esc(boardTitle(p))+'</div>'+inner+it+ctrl+equipHtml(p)+'</div>';}
 function mergeRxPlus(rx,plus){const RL=(rx||'').split('\n'),PL=(plus||'').split('\n'),n=Math.max(RL.length,PL.length),out=[];
   for(let i=0;i<n;i++){const r=(RL[i]||'').trim(),p=(PL[i]||'').trim();
     if(!p||p===r){out.push(esc(r));continue;}
@@ -2868,7 +2906,7 @@ function renderInner(){
     const gs=groups();if(step>=gs.length)step=gs.length-1;if(step<0)step=0;
     if(!gs.length){document.getElementById('body').innerHTML='<div class="centre"><div class="bd">Nothing here</div><div>This track has no session on this day.</div></div>';foot.style.display='none';return;}
     const g=gs[step],isWod=g.some(id=>clsFor(piece(id))==='wod');
-    document.getElementById('body').innerHTML=isWod?g.map(wodSec).join(''):('<div class="stepnum">Step '+(step+1)+' <b>of '+gs.length+'</b> · '+esc(stepLabel(g))+'</div>'+g.map(sec).join(''));
+    document.getElementById('body').innerHTML=(isWod?g.map(wodSec).join(''):('<div class="stepnum">Step '+(step+1)+' <b>of '+gs.length+'</b> · '+esc(stepLabel(g))+'</div>'+g.map(sec).join('')))+logBtnHTML();
     const dots=gs.map((gg,i)=>'<button class="dot '+(i===step?'on':'')+'" onclick="go('+i+')">'+esc(stepLabel(gg))+'</button>').join('');
     foot.style.display='flex';foot.innerHTML='<div class="footrow"><button class="nb" '+(step<=0?'disabled':'')+' onclick="stepBy(-1)">‹ Prev</button><div class="dots">'+dots+'</div><button class="nb" '+(step>=gs.length-1?'disabled':'')+' onclick="stepBy(1)">Next ›</button></div>';
     var _on=foot.querySelector('.dot.on');if(_on)try{_on.scrollIntoView({inline:'center',block:'nearest'});}catch(e){}
@@ -2900,7 +2938,7 @@ function renderInner(){
   (function(){var sb=drill?stepBlocks(g,gs):null;if(sb){subMax=sb.length;}else if(bandy){var wp=bandPieceOf(g);subMax=(wp&&hasBands(wp)&&g.length===1)?wodBandOrder(wp).length:0;}else{subMax=0;}})();
   var nudge=(subStep>0||!(!athleteSex&&!Object.keys(oneRM).length&&!gymActive()&&!athleteAge))?'':'<div class="setupnudge" onclick="openRM()">Tap to set up your profile — get your own weights, movement levels and a "for you" pick.</div>';
   var head=(subStep>0)?'':'<div class="stepnum">Step '+(step+1)+' <b>of '+gs.length+'</b> · '+esc(stepLabel(g))+'</div>';   // focus view = no chrome
-  document.getElementById('body').innerHTML=nudge+head+(bandy?renderWodStep(g):(drill?renderSectionStep(g,gs):g.map(sec).join('')));
+  document.getElementById('body').innerHTML=nudge+head+(bandy?renderWodStep(g):(drill?renderSectionStep(g,gs):g.map(sec).join('')))+logBtnHTML();
   const dots=gs.map(function(gg,i){   // one nav row: the active section becomes a dropdown of its parts (coach) or levels (WOD), no second sub-nav row
     if(i===step){var g2=gs[i];
       if(isBandStep(g2)){var p2=bandPieceOf(g2);var order=(p2&&hasBands(p2))?wodBandOrder(p2):[];
