@@ -52,6 +52,31 @@
 .th-ttl{font-family:var(--disp);font-size:24px;line-height:1;color:var(--txt);text-transform:uppercase;letter-spacing:.01em}
 .th-sub{font-size:12.5px;color:var(--dim);margin-top:5px}
 .th-go{margin-top:13px}
+/* Home — The Pulse */
+.pl-card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:6px 14px}
+.pl-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.pl-row:last-child{border-bottom:0}
+.pl-ic{width:22px;height:22px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--mag)}
+.pl-ic .ico{width:18px;height:18px}
+.pl-tx{font-size:13px;color:var(--dim);line-height:1.35}.pl-tx b{color:var(--txt);font-weight:800}
+.pl-arw{font-size:17px;font-weight:900;line-height:1}.pl-arw.up{color:var(--green)}.pl-arw.dn{color:var(--crimson)}
+.pl-up .pl-ic{color:var(--green)}.pl-up .pl-tx b{color:var(--green)}
+.pl-go .pl-ic{color:var(--mag)}
+.pl-pend .pl-ic{color:var(--gold)}
+.pl-streak .pl-ic{color:var(--gold)}
+.pl-stale .pl-ic{color:var(--dim)}
+.pl-tier .pl-ic{color:var(--gold)}.pl-tier .pl-tx b{color:var(--gold)}
+/* Home — Daily quest */
+.q-card{display:flex;align-items:center;gap:11px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:13px 14px}
+.q-card.done{border-color:var(--green);background:rgba(34,197,94,.06)}
+.q-ic{width:26px;height:26px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--gold)}.q-ic .ico{width:20px;height:20px}
+.q-card.done .q-ic{color:var(--green)}
+.q-t{flex:1;min-width:0}
+.q-nm{display:block;font-family:var(--disp);font-size:18px;letter-spacing:.01em;color:var(--txt);text-transform:uppercase;line-height:1}
+.q-d{display:block;font-size:11.5px;color:var(--dim);margin-top:3px;line-height:1.35}
+.q-btn{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 13px;border-radius:var(--r-md);border:1px solid var(--gold)!important;background:rgba(255,194,71,.10)!important;color:var(--gold)!important;font-family:var(--ui);font-weight:800;font-size:13px;cursor:pointer}
+.q-btn em{font-style:normal;font-weight:800;opacity:.85}
+.q-badge{flex:none;display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--green)}.q-badge .ico{width:15px;height:15px}
 /* Home — Current pursuit block */
 .cp-card{--cc:var(--mag);background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--cc);border-radius:var(--r-lg);padding:14px 15px;cursor:pointer}
 .cp-card.cc-blue{--cc:#3aa0ff}.cp-card.cc-purple{--cc:#a86bff}.cp-card.cc-crimson{--cc:#ff3b6b}.cp-card.cc-gold{--cc:#ffc23b}.cp-card.cc-green{--cc:#38d66b}.cp-card.cc-white{--cc:#cfd2dc}
@@ -295,6 +320,9 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 .cal-c.today{outline:1px solid rgba(255,255,255,.35)}
 .cal-c.sel{background:var(--mag)!important;color:#fff}.cal-c.sel i{background:#fff}
 .cal-sum{text-align:center;font-size:12.5px;color:var(--dim);margin-top:11px}.cal-sum b{color:var(--mag);font-weight:800}
+.cal-c.rdy{background:rgba(139,92,246,.14)!important;color:var(--txt);cursor:pointer}
+.cal-c.rdy i.rdydot{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--purple)}
+.cal-rdy{font-size:12px;color:var(--purple);margin:0 0 6px;font-weight:700}.cal-rdy b{color:var(--txt)}
 .ml-day{border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:8px 0;background:var(--bg)}
 .ml-date{font-size:11px;font-weight:800;color:var(--mag);letter-spacing:.06em;margin-bottom:4px}
 .ml-line{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0 2px}
@@ -675,6 +703,10 @@ body.hasnav #foot{bottom:60px}
 .pc-fver>span{color:#7ee6ab;margin-top:0}
 .pc-fver.pend{color:#ffcf6a;border-color:var(--gold)}.pc-fver.pend>span{color:#ffcf6a}
 .pc-note{font-size:11px;color:var(--dim);text-align:center;margin-top:10px;line-height:1.4}
+.pc-empty{cursor:pointer}.pc-st2-empty{opacity:.42}
+.pc-empty-cta{margin-top:13px;padding-top:13px;border-top:1px solid var(--line);font-size:12.5px;color:var(--dim);line-height:1.5;text-align:center}
+.pc-empty-cta b{color:var(--txt);display:block;margin-bottom:2px}
+.pc-empty-cta .btn-primary{margin-top:12px}
 .skt-sub{color:var(--dim);font-size:12.5px;line-height:1.5;margin:2px 2px 10px}.skt-sub b{color:var(--txt)}
 .skt-legend{display:flex;gap:12px;flex-wrap:wrap;margin:0 2px 14px;font-size:10.5px;color:var(--dim)}.skt-legend b{display:inline-flex;align-items:center;gap:5px;font-weight:600}
 .skt-dot{width:10px;height:10px;border-radius:50%;display:inline-block}.skt-dl{background:#2c2a38;border:1px dashed rgba(255,255,255,.3)}.skt-do{background:transparent;border:2px solid var(--acc)}.skt-dd{background:var(--acc)}
@@ -1185,7 +1217,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-21 10:02</span>
+    <span class="verstamp" title="app build">build 2026-08-21 10:17</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="viewtogrow" id="viewtogrow" style="display:none"></div>
@@ -1637,6 +1669,7 @@ function grantDailyLogin(){try{grantXP('login',todayStr(),XP_AMT.login,true);}ca
 /* ===== Daily readiness check-in — a "how are you feeling 1–10" that trims TODAY's recommended weights. Opt-in per day; WOD/strength loads only, never the card. ===== */
 var readiness=(function(){try{var o=JSON.parse(localStorage.getItem('unranked-readiness')||'null');if(o&&o.date===todayStr()&&typeof o.score==='number')return o;}catch(e){}return null;})();
 function saveReadiness(){try{localStorage.setItem('unranked-readiness',JSON.stringify(readiness));}catch(e){}}
+var readyHist=lsObj('unranked-readiness-hist');   // {dateStr: score} — per-day readiness, feeds the calendar
 function readinessPct(score){return Math.min(25,Math.max(0,(10-score)*2.5));}   // % lighter: ~2.5%/point below 10, capped 25% (6→10%, 3→17.5%)
 function readinessOn(){return !!(readiness&&readiness.date===todayStr()&&readiness.apply&&typeof readiness.score==='number'&&readiness.score<10);}
 function readinessFactor(){return readinessOn()?(1-readinessPct(readiness.score)/100):1;}   // load multiplier applied to personalized WOD + strength loads
@@ -1652,7 +1685,9 @@ window.openReadiness=function(){var m=document.getElementById('readyMask');if(!m
 window.pickReadiness=function(n){_readyPick=n;readyRender();};
 window.closeReadiness=function(){var m=document.getElementById('readyMask');if(m)m.classList.remove('on');};
 window.applyReadiness=function(apply){if(apply&&!_readyPick){var out=document.getElementById('readyOut');if(out)out.innerHTML='<b>Pick a number first</b>';return;}
-  readiness={date:todayStr(),score:_readyPick||null,apply:!!apply};saveReadiness();closeReadiness();
+  readiness={date:todayStr(),score:_readyPick||null,apply:!!apply};saveReadiness();
+  if(_readyPick){readyHist[todayStr()]=_readyPick;try{localStorage.setItem('unranked-readiness-hist',JSON.stringify(readyHist));}catch(e){}}   // record for the calendar
+  closeReadiness();
   try{render();}catch(e){}
   if(apply&&_readyPick&&_readyPick<10)showToast('Got it — today\'s weights are ~'+Math.round(readinessPct(_readyPick))+'% lighter');};
 function maybeReadiness(){if(coachMode())return;if(!(athleteSex||Object.keys(TESTS).length))return;   // brand-new members onboard first
@@ -1989,16 +2024,17 @@ function buildCalendarHTML(){
   var head='<div class="cal-head"><button class="cal-nav" onclick="calNav(1)" aria-label="Previous month">‹</button><span>'+MON[mo]+' '+y+'</span><button class="cal-nav" onclick="calNav(-1)" aria-label="Next month"'+(calOffset<=0?' disabled':'')+'>›</button></div>';
   var dow='<div class="cal-dow">'+['M','T','W','T','F','S','S'].map(function(x){return '<span>'+x+'</span>';}).join('')+'</div>';
   var cells='';for(var i=0;i<startCol;i++)cells+='<span class="cal-c empty"></span>';
-  for(var d=1;d<=ndays;d++){var ds=y+'-'+p2(mo+1)+'-'+p2(d);
-    var cls='cal-c'+(logged[ds]?' has':'')+(ds===tstr?' today':'')+(ds===calSel?' sel':'');
-    cells+='<button class="'+cls+'"'+(logged[ds]?' onclick="calPick(&#39;'+ds+'&#39;)"':' disabled')+'>'+d+(logged[ds]?'<i></i>':'')+'</button>';}
+  for(var d=1;d<=ndays;d++){var ds=y+'-'+p2(mo+1)+'-'+p2(d);var hasData=logged[ds]||readyHist[ds];
+    var cls='cal-c'+(logged[ds]?' has':(readyHist[ds]?' rdy':''))+(ds===tstr?' today':'')+(ds===calSel?' sel':'');
+    cells+='<button class="'+cls+'"'+(hasData?' onclick="calPick(&#39;'+ds+'&#39;)"':' disabled')+'>'+d+(logged[ds]?'<i></i>':(readyHist[ds]?'<i class="rdydot"></i>':''))+'</button>';}
   var grid='<div class="cal-grid">'+cells+'</div>';
   var monthCount=0;for(var dm=1;dm<=ndays;dm++){if(logged[y+'-'+p2(mo+1)+'-'+p2(dm)])monthCount++;}   // sessions in the visible month → makes back-navigation meaningful
   var sum='<div class="cal-sum">'+(monthCount?('<b>'+monthCount+'</b> session'+(monthCount===1?'':'s')+' logged in '+MON[mo]):('No sessions logged in '+MON[mo]))+'</div>';
   var detail='';
-  if(calSel&&LOG[calSel]&&LOG[calSel].pieces){var pcs=LOG[calSel].pieces;
-    var lines=Object.keys(pcs).map(function(pid){return logEntryHTML(pid,pcs[pid]);}).join('');
-    detail='<div class="ml-day"><div class="ml-date">'+esc(fmtDate(calSel))+'</div>'+lines+'</div>';
+  var rdyLine=(calSel&&readyHist[calSel])?('<div class="cal-rdy">Felt <b>'+readyHist[calSel]+'/10</b> that day</div>'):'';
+  if(calSel&&((LOG[calSel]&&LOG[calSel].pieces)||readyHist[calSel])){var pcs=(LOG[calSel]&&LOG[calSel].pieces)||{};
+    var lines=Object.keys(pcs).map(function(pid){return logEntryHTML(pid,pcs[pid]);}).join('')||'<p class="rmnote" style="margin:2px 0 0">No session logged this day.</p>';
+    detail='<div class="ml-day"><div class="ml-date">'+esc(fmtDate(calSel))+'</div>'+rdyLine+lines+'</div>';
   } else { var n=Object.keys(logged).length;
     detail='<p class="vnote">'+(n?'Tap a highlighted day to see what you logged. You have <b>'+n+'</b> logged session'+(n===1?'':'s')+'.':'No sessions logged yet — tap “Log this” on a training day and your history fills in here.')+'</p>';}
   return '<div class="cal-wrap">'+head+dow+grid+sum+'</div>'+detail;
@@ -2073,6 +2109,32 @@ function nextPointHTML(){var arr=[];SCORING.moves.forEach(function(mv){if(typeof
     +'</div>';}
 // HOME — the profile hub: card + level/credits + Vault/Shop links + class tree
 // ===== Home engagement blocks (single-player, from the athlete's own data — no backend) =====
+// The Pulse — "what has changed about ME" — computed from local data + a lightweight daily rating snapshot
+var RATEHIST=(function(){try{var h=JSON.parse(localStorage.getItem('unranked-ratehist')||'[]');return Array.isArray(h)?h:[];}catch(e){return [];}})();
+var TESTTS=lsObj('unranked-tests-ts');
+function daysBetween(a,b){return Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/86400000);}
+function snapshotRating(){var cc=computeCard();if(cc.entered===0)return;var t=todayStr();var last=RATEHIST[RATEHIST.length-1];
+  if(last&&last.d===t){last.o=cc.overall;last.tp=cc.tp;}else{RATEHIST.push({d:t,o:cc.overall,tp:cc.tp});if(RATEHIST.length>120)RATEHIST=RATEHIST.slice(-120);}
+  try{localStorage.setItem('unranked-ratehist',JSON.stringify(RATEHIST));}catch(e){}}
+function formDelta(){if(RATEHIST.length<2)return null;var cur=RATEHIST[RATEHIST.length-1],base=RATEHIST[0];
+  for(var i=RATEHIST.length-1;i>=0;i--){if(daysBetween(RATEHIST[i].d,cur.d)>=7){base=RATEHIST[i];break;}}
+  if(base===cur||base.o===cur.o)return base===cur?null:{delta:0,cur:cur.o};return {delta:cur.o-base.o,from:base.o,cur:cur.o,days:Math.max(1,daysBetween(base.d,cur.d))};}
+function backfillTS(){var ch=false;for(var id in TESTS){if(isVerified(id)&&!TESTTS[id]){TESTTS[id]=Date.now();ch=true;}}if(ch){try{localStorage.setItem('unranked-tests-ts',JSON.stringify(TESTTS));}catch(e){}}}
+function staleTest(){backfillTS();var STALE=45*86400000,now=Date.now(),oldest=null;for(var id in TESTS){if(!isVerified(id))continue;var ts=TESTTS[id];if(!ts)continue;var age=now-ts;if(age>STALE&&(!oldest||ts<oldest.ts)){var mv=scMove(id);oldest={name:mv?mv.name:id,days:Math.round(age/86400000),ts:ts};}}return oldest;}
+function pulseHTML(){var cc=computeCard();if(cc.entered===0)return '';snapshotRating();
+  var items=[];var fd=formDelta();
+  if(fd&&fd.delta>0)items.push({t:'up',ic:'<span class="pl-arw up">\u2191</span>',tx:'Form <b>+'+fd.delta+'</b> — up from '+fd.from+' over '+fd.days+' days'});
+  else if(fd&&fd.delta<0)items.push({t:'dn',ic:'<span class="pl-arw dn">\u2193</span>',tx:'Form <b>'+fd.delta+'</b> this week — re-verify to hold your rating'});
+  var n=nearestClass();
+  if(n){var left=n.total-n.met;if(left===1)items.push({t:'go',ic:ICO.target,tx:'One prerequisite from <b>'+esc(n.cls.name)+'</b>'});
+    else if(n.pct>=55)items.push({t:'go',ic:ICO.target,tx:'<b>'+esc(n.cls.name)+'</b> within reach — '+left+' to go'});}
+  if(cc.pending>0)items.push({t:'pend',ic:ICO.clock,tx:'<b>'+cc.pending+'</b> score'+(cc.pending===1?'':'s')+' waiting for coach verification'});
+  var strk=curStreak();if(strk>=2)items.push({t:'streak',ic:ICO.history,tx:'<b>'+strk+'-day</b> training streak — keep it alive'});
+  var stx=staleTest();if(stx)items.push({t:'stale',ic:ICO.clock,tx:'Your <b>'+esc(stx.name)+'</b> score is ageing ('+stx.days+'d) — retest to keep it sharp'});
+  if(cc.nextTier){var gap=cc.nextTier.tp-cc.tp;if(gap<=250)items.push({t:'tier',ic:ICO.star,tx:'<b>'+gap+'</b> Total Power from <b>'+esc(cc.nextTier.name)+'</b> tier'});}
+  if(!items.length)return '';
+  var rows=items.slice(0,4).map(function(it){return '<div class="pl-row pl-'+it.t+'"><span class="pl-ic">'+(it.ic||'')+'</span><span class="pl-tx">'+it.tx+'</span></div>';}).join('');
+  return '<div class="dsec">The Pulse</div><div class="pl-card">'+rows+'</div>';}
 // Nearest reachable locked class the athlete is closest to unlocking (prereqs met, best completion). No thresholds exposed (beta hides the tree calc).
 function nearestClass(){var st=classStates();var best=null;
   SCORING.trees.forEach(function(tr){tr.classes.forEach(function(c){
@@ -2110,6 +2172,27 @@ function todayHomeHTML(){var info=todayInfo();var d=new Date();var DY=['SUN','MO
   var action=rest?'':'<button class="btn-primary th-go" onclick="goNav(&#39;program&#39;)">Open today\'s session <span class="arw">→</span></button>';
   return '<div class="dsec">Today</div><div class="th-card"><div class="th-top"><span class="th-day">'+dn+'</span><span class="th-badge'+(rest?'':' on')+'">'+(rest?'Recovery':'Training day')+'</span></div>'
     +'<div class="th-ttl">'+esc(ttl)+'</div><div class="th-sub">'+esc(sub)+'</div>'+action+'</div>';}
+// Daily quest — ONE small optional athletic action chosen from the programme context. Reward = credits (cosmetic), NEVER rating.
+var QUEST_CREDITS=25;
+function todaysQuest(){var info=todayInfo();var d=new Date();var wd=info.wd||['SUN','MON','TUE','WED','THU','FRI','SAT'][d.getDay()];
+  if(info.state==='pre'||info.state==='post'||wd==='SAT'||wd==='SUN')
+    return {id:'walk',title:'Zone-1 walk',detail:'25–30 min easy, nasal breathing. Flush today, prime tomorrow.'};
+  var w=D.weeks&&D.weeks.find(function(x){return x.week===info.week;});var day=w&&w.days&&w.days[wd];
+  var focus=((day&&(day.focus||day.movement))||'').toString().toLowerCase();
+  if(/olympic|clean|snatch|squat|deadlift|hinge|press|bench/.test(focus))
+    return {id:'mob',title:'Mobility flow',detail:'10 min — hips, ankles & thoracic. Supports today’s lifting.'};
+  if(/gymnast|skill|pull|handstand|muscle/.test(focus))
+    return {id:'shoulder',title:'Shoulder & wrist prep',detail:'8 min band work + wrist prep for today’s skill work.'};
+  return {id:'prime',title:'Move & breathe',detail:'8 min easy mobility + 5 min box breathing. Keep the engine ticking.'};}
+function questState(){try{var q=JSON.parse(localStorage.getItem('unranked-quest')||'null');if(q&&q.date===todayStr())return q;}catch(e){}return null;}
+function questHTML(){var cc=computeCard();if(cc.entered===0)return '';
+  var q=todaysQuest();var st=questState();var done=!!(st&&st.done);
+  return '<div class="dsec">Daily quest</div><div class="q-card'+(done?' done':'')+'"><span class="q-ic">'+(done?ICO.check:ICO.target)+'</span>'
+    +'<div class="q-t"><span class="q-nm">'+esc(q.title)+'</span><span class="q-d">'+esc(q.detail)+'</span></div>'
+    +(done?'<span class="q-badge">'+ICO.check+' +'+QUEST_CREDITS+'</span>':'<button class="q-btn" onclick="claimQuest()">Done <em>+'+QUEST_CREDITS+'</em></button>')+'</div>';}
+window.claimQuest=function(){var st=questState();if(st&&st.done)return;
+  try{localStorage.setItem('unranked-quest',JSON.stringify({date:todayStr(),done:true,id:todaysQuest().id}));}catch(e){}
+  XP.credits=(XP.credits||0)+QUEST_CREDITS;saveXP();try{render();}catch(e){}showToast('Quest complete — +'+QUEST_CREDITS+' credits');};
 function buildHomeHTML(hint,cardToggle,card,tree){
   syncMoments();
   // Neon pill buttons (Louis's art) for the home hub; falls back to icon+text rows if an asset is missing.
@@ -2122,9 +2205,11 @@ function buildHomeHTML(hint,cardToggle,card,tree){
     +hubBtn(null,'goNav(&#39;vault&#39;)','Vault','Your history and progress',ICO.vault)
     +hubBtn(null,'openShop()','Shop','Spend credits on card cosmetics',ICO.shop)
     +'</div>';
-  var npc=nextPointHTML();var today=todayHomeHTML(),pursuit=pursuitHTML();
+  var npc=nextPointHTML();var pulse=pulseHTML(),today=todayHomeHTML(),quest=questHTML(),pursuit=pursuitHTML();
   return hint+cardToggle+'<div class="ppsec">'+card+'</div>'
+    +(pulse?'<div class="ppsec">'+pulse+'</div>':'')
     +(today?'<div class="ppsec">'+today+'</div>':'')
+    +(quest?'<div class="ppsec">'+quest+'</div>':'')
     +(pursuit?'<div class="ppsec">'+pursuit+'</div>':'')
     +(npc?'<div class="ppsec">'+npc+'</div>':'')
     +'<div class="ppsec">'+levelStripHTML()+links+'</div>';
@@ -2269,11 +2354,19 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
       +(isLeg?'<div class="pc-note">Legacy — your best-ever verified scores. Display only; your ranked card stays on Form.</div>':(cc.pending>0?'<div class="pc-note">'+cc.pending+' score'+(cc.pending===1?'':'s')+' awaiting coach verification — your rating updates once a coach verifies.</div>':''))
       +'</div></div>';
   } else {
-    card='<div class="acard empty" onclick="goNav(&#39;submit&#39;)"><div class="acard-top"><span class="acard-tier">UNRANKED</span><div class="acard-ovwrap"><div class="acard-ov">—</div><div class="acard-ovlab">Overall</div></div></div>'
-      +'<div class="acard-stats">'+SCORING.stats.filter(function(s){return s.card!==false;}).map(function(s){return '<div class="acard-stat"><b>—</b><span>'+s.key+'</span></div>';}).join('')+'</div>'
-      +'<div class="acard-tpbar"><i style="width:0%"></i></div><div class="acard-tplab">Total Power — locked</div>'
-      +'<div class="acard-note"><b>Your card is empty.</b> Enter your first score and a coach verifies it to light up your stats, Total Power and class. Get ranked.</div>'
-      +'<button class="minibtn2 pulse" onclick="goNav(&#39;submit&#39;)">Enter your first score</button></div>';
+    var emptyStats=PC_STATS.map(function(k){var m=STAT_META[k]||{};
+      return '<div class="pc-st2 pc-st2-empty"><span class="pc-i2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(m.i||'')+'</svg></span>'
+        +'<div class="pc-st2-t"><span class="pc-st2-nm">'+esc(PC_LABEL[k]||k)+'</span><span class="pc-st2-d">'+esc(m.d||'')+'</span></div>'
+        +'<div class="pc-st2-bar"><i style="width:0%"></i></div><span class="pc-st2-v">—</span></div>';}).join('');
+    card='<div class="pc-frame tier-white"><div class="pcard tier-white pc-empty" onclick="goNav(&#39;submit&#39;)">'
+      +'<span class="pc-cnr tl"></span><span class="pc-cnr tr"></span><span class="pc-cnr bl"></span><span class="pc-cnr br"></span>'
+      +'<div class="pc-topline"><span class="pc-tierpill">UNRANKED · 0/8</span><span class="pc-serial">UR-—-— · 0</span></div>'
+      +'<div class="pc-hero"><div class="pc-stage"></div><div class="pc-nophoto"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="74" r="38" fill="rgba(255,255,255,.10)"/><path d="M34 200 C34 134 64 106 100 106 C136 106 166 134 166 200 Z" fill="rgba(255,255,255,.10)"/></svg><span class="pc-addph">Enter a score to reveal your card</span></div>'
+        +'<div class="pc-heroL"><div class="pc-name">'+(athleteName?esc(athleteName):'YOUR NAME')+'</div><div class="pc-class">Unranked</div></div>'
+        +'<div class="pc-heroR"><div class="pc-ov">—</div><div class="pc-ovl">Overall</div></div></div>'
+      +'<div class="pc-stats2">'+emptyStats+'</div>'
+      +'<div class="pc-empty-cta"><b>Your card is empty.</b> Enter your first score and get it verified to light up your stats, Total Power and class.<button class="btn-primary" onclick="event.stopPropagation();goNav(&#39;submit&#39;)">Enter your first score <span class="arw">→</span></button></div>'
+      +'</div></div>';
   }
   // ---- class tree (archetypes) ----
   var cst=classStates();
