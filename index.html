@@ -698,6 +698,43 @@ body.hasnav #foot{bottom:60px}
 .pc-herover.pend{color:#ffcf6a;border-color:var(--gold)}
 .pc-tagline{text-align:center;font-size:12px;color:var(--dim);margin:11px 6px 13px}
 .pc-tagline:before,.pc-tagline:after{content:"+";color:var(--tc);margin:0 8px;font-weight:800}
+/* ===== Card v3 — FIFA-style quadrant layout ===== */
+.pc2-top{display:grid;grid-template-columns:112px 1fr;gap:10px;margin-bottom:12px}
+.pc2-idn{display:flex;flex-direction:column;padding-top:2px;min-width:0}
+.pc2-ovl{font-family:var(--ui);font-weight:800;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.pc2-ov{font-family:var(--disp);font-weight:800;font-size:66px;line-height:.76;color:#fff;margin:2px 0 7px}
+.pc2-rule{width:40px;height:2px;background:var(--tc);border-radius:2px;margin-bottom:9px}
+.pc2-nm{font-family:var(--disp);font-weight:800;font-size:25px;line-height:.9;text-transform:uppercase;color:#fff;letter-spacing:.01em;word-break:break-word}
+.pc2-cls{font-family:var(--disp);font-weight:800;font-size:16px;letter-spacing:.05em;text-transform:uppercase;color:var(--tc);margin-top:4px}
+.pc2-vf{margin-top:11px;align-self:flex-start;display:inline-flex;align-items:center;gap:5px;font-family:var(--ui);font-weight:800;font-size:9px;letter-spacing:.02em;color:#7ee6ab;border:1px solid var(--green);border-radius:20px;padding:4px 8px;white-space:nowrap}
+.pc2-vf .ico{width:11px;height:11px}
+.pc2-vf.pend{color:#ffcf6a;border-color:var(--gold)}
+.pc2-top .pc-hero{height:236px}
+/* Brighter arena so the stadium reads behind a transparent cutout */
+.pc2-top .pc-stage{background:radial-gradient(125% 60% at 50% 116%,var(--tc),transparent 60%),radial-gradient(95% 46% at 50% 40%,rgba(255,255,255,.14),transparent 62%),linear-gradient(180deg,#14141f,#0c0c16 52%,#08080f)}
+.pc2-top .pc-stage:before{opacity:.6;background-size:22px 22px;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.95),transparent 50%);mask-image:linear-gradient(180deg,rgba(0,0,0,.95),transparent 50%)}
+.pc2-top .pc-stage:after{content:"";position:absolute;left:0;right:0;top:53%;height:1px;background:linear-gradient(90deg,transparent,var(--tc),transparent);opacity:.55}
+.pc2-top .pc-cut{object-position:center 12%}
+.pc-wm{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:132px;letter-spacing:-.04em;color:rgba(255,255,255,.06);pointer-events:none}
+.pc2-bot{display:grid;grid-template-columns:112px 1fr;gap:10px;align-items:start}
+.pc2-pw{padding-top:2px;overflow:hidden}
+.pc2-pw-l{display:block;font-family:var(--ui);font-weight:800;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);line-height:1.2}
+.pc2-pw-v{display:block;font-family:var(--disp);font-weight:800;font-size:32px;line-height:.85;color:var(--tc);margin:4px 0 9px;letter-spacing:.01em}
+.pc2-togold{display:inline-flex;align-items:center;gap:4px;font-family:var(--ui);font-weight:800;font-size:10px;color:var(--gold);border:1px solid rgba(255,194,71,.45);border-radius:20px;padding:3px 8px}
+.pc2-season{margin-top:11px;font-family:var(--ui);font-weight:700;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.pc2-form{margin-top:7px;display:inline-flex;align-items:center;gap:4px;font-family:var(--ui);font-weight:800;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--dim)}
+.pc2-form b{font-weight:900;font-size:11px}
+.pc2-flame{font-size:11px;-webkit-text-fill-color:initial}
+.pc2-form-hot{color:var(--crimson)}.pc2-form-rising{color:var(--green)}.pc2-form-cooling{color:#3aa0ff}.pc2-form-cold{color:#6f86c9}.pc2-form-normal{color:var(--dim)}
+.pc2-stats{display:flex;flex-direction:column;gap:8px}
+.pc2-st{display:grid;grid-template-columns:18px 1fr auto;grid-template-areas:"ic l v" "ic bar bar";column-gap:8px;row-gap:3px;align-items:center}
+.pc2-st-ic{grid-area:ic;width:18px;height:18px;color:var(--tc)}.pc2-st-ic svg{width:18px;height:18px}
+.pc2-st-l{grid-area:l;font-family:var(--ui);font-weight:800;font-size:12px;letter-spacing:.03em;text-transform:uppercase;color:#e8e9ee}
+.pc2-st-v{grid-area:v;font-family:var(--disp);font-weight:800;font-size:19px;color:#fff;line-height:1}
+.pc2-st-bar{grid-area:bar;height:4px;border-radius:3px;background:rgba(255,255,255,.09);overflow:hidden;margin-top:1px}
+.pc2-st-bar i{display:block;height:100%;border-radius:3px;background:var(--tc)}
+.pc2-st-empty{opacity:.42}
+.pc2-ov-empty{color:#33333e;font-size:44px}
 /* single-column stat rows — icon · name+descriptor · tier-coloured bar · value (all one tier colour) */
 .pc-stats2{display:flex;flex-direction:column;gap:7px;margin-top:2px}
 .pc-st2{display:flex;align-items:center;gap:10px}
@@ -1237,7 +1274,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-21 10:49</span>
+    <span class="verstamp" title="app build">build 2026-08-21 11:16</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="viewtogrow" id="viewtogrow" style="display:none"></div>
@@ -2139,6 +2176,14 @@ function snapshotRating(){var cc=computeCard();if(cc.entered===0)return;var t=to
 function formDelta(){if(RATEHIST.length<2)return null;var cur=RATEHIST[RATEHIST.length-1],base=RATEHIST[0];
   for(var i=RATEHIST.length-1;i>=0;i--){if(daysBetween(RATEHIST[i].d,cur.d)>=7){base=RATEHIST[i];break;}}
   if(base===cur||base.o===cur.o)return base===cur?null:{delta:0,cur:cur.o};return {delta:cur.o-base.o,from:base.o,cur:cur.o,days:Math.max(1,daysBetween(base.d,cur.d))};}
+// Card FORM state. Interim source = the athlete's own recent rating trend (local). When Compete/league goes live this swaps to competition performance.
+function formState(){snapshotRating();var fd=(typeof formDelta==='function')?formDelta():null;
+  if(!fd||fd.delta==null||fd.delta===0)return {k:'normal',t:'Normal',flame:false};
+  var d=fd.delta;
+  if(d>=3)return {k:'hot',t:'Hot',flame:true};
+  if(d>0)return {k:'rising',t:'Rising',flame:false};
+  if(d<=-3)return {k:'cold',t:'Cold',flame:false};
+  return {k:'cooling',t:'Cooling',flame:false};}
 function backfillTS(){var ch=false;for(var id in TESTS){if(isVerified(id)&&!TESTTS[id]){TESTTS[id]=Date.now();ch=true;}}if(ch){try{localStorage.setItem('unranked-tests-ts',JSON.stringify(TESTTS));}catch(e){}}}
 function staleTest(){backfillTS();var STALE=45*86400000,now=Date.now(),oldest=null;for(var id in TESTS){if(!isVerified(id))continue;var ts=TESTTS[id];if(!ts)continue;var age=now-ts;if(age>STALE&&(!oldest||ts<oldest.ts)){var mv=scMove(id);oldest={name:mv?mv.name:id,days:Math.round(age/86400000),ts:ts};}}return oldest;}
 function pulseHTML(){var cc=computeCard();if(cc.entered===0)return '';snapshotRating();
@@ -2370,42 +2415,51 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
     var nextGap=ccD.nextTier?(ccD.nextTier.tp-ccD.tp):0;
     var heroImg=athletePhoto
       ?('<img class="pc-cut" id="acphImg" src="'+athletePhoto+'" alt="" style="object-position:center '+athletePhotoY+'%" draggable="false"><button class="pc-editph" onclick="event.stopPropagation();pickPhoto()" title="Change photo">✎</button>')
-      :('<div class="pc-nophoto"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="74" r="38" fill="rgba(255,255,255,.12)"/><path d="M34 200 C34 134 64 106 100 106 C136 106 166 134 166 200 Z" fill="rgba(255,255,255,.12)"/></svg><span class="pc-addph">＋ add your photo</span></div>');
+      :('<div class="pc-nophoto"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="74" r="38" fill="rgba(255,255,255,.12)"/><path d="M34 200 C34 134 64 106 100 106 C136 106 166 134 166 200 Z" fill="rgba(255,255,255,.12)"/></svg><span class="pc-addph">＋ add photo</span></div>');
     var statCells=PC_STATS.map(function(k){var v=ccD.stats[k]||0;var pend=isLeg?0:(ccD.statPending[k]||0);var m=STAT_META[k]||{};
-      return '<div class="pc-st2"><span class="pc-i2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(m.i||'')+'</svg></span>'
-        +'<div class="pc-st2-t"><span class="pc-st2-nm">'+esc(PC_LABEL[k]||k)+'</span><span class="pc-st2-d">'+esc(m.d||'')+'</span></div>'
-        +'<div class="pc-st2-bar"><i style="width:'+Math.min(100,v)+'%"></i></div>'
-        +'<span class="pc-st2-v">'+v+(pend?'<em class="pc-st-pend" title="'+pend+' pending">⏳</em>':'')+'</span></div>';}).join('');
+      return '<div class="pc2-st"><span class="pc2-st-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(m.i||'')+'</svg></span>'
+        +'<span class="pc2-st-l">'+esc(PC_LABEL[k]||k)+'</span>'
+        +'<span class="pc2-st-v">'+v+(pend?'<em class="pc-st-pend" title="'+pend+' pending">⏳</em>':'')+'</span>'
+        +'<span class="pc2-st-bar"><i style="width:'+Math.min(100,v)+'%"></i></span></div>';}).join('');
+    var fst=formState();
+    var vfBadge=verified?('<span class="pc2-vf">'+ICO.check+' Verified athlete</span>'):(cc.pending>0?('<span class="pc2-vf pend">'+ICO.clock+' Pending</span>'):'');
     card='<div class="pc-frame tier-'+ccD.tier.key+'"><div class="pcard tier-'+ccD.tier.key+shineCls+(isLeg?' legacy':'')+' '+cosClasses()+'">'
       +'<span class="pc-cnr tl"></span><span class="pc-cnr tr"></span><span class="pc-cnr bl"></span><span class="pc-cnr br"></span>'
       +'<div class="lvlup" id="cardLvlup"><span>TIER UP!</span></div><div class="ring" id="cardRing"></div>'
       +'<div class="pc-topline"><span class="pc-tierpill">'+esc(ccD.tier.name)+' · '+tierIdx+'/'+tierN+(ccD.prismatic?' · '+esc(ccD.prismatic.name):'')+(isLeg?' · LEGACY':'')+'</span><span class="pc-serial">'+esc(serial)+' · '+tpFmt+'</span></div>'
-      +'<div class="pc-hero'+(athletePhoto?' has-img':'')+'"'+(athletePhoto?'':' onclick="pickPhoto()"')+'><div class="pc-stage"></div>'+heroImg
-        +'<div class="pc-heroL"><div class="pc-name">'+(athleteName?esc(athleteName):'YOUR NAME')+'</div><div class="pc-class">'+esc(clsName)+(cur.tree?' · '+esc(cur.tree)+' tree':'')+'</div></div>'
-        +'<div class="pc-heroR"><div class="pc-ov">'+ccD.overall+'</div><div class="pc-ovl">Overall</div></div>'
-        +(verified?'<div class="pc-herover">'+ICO.check+' Verified athlete</div>':(cc.pending>0?'<div class="pc-herover pend">'+ICO.clock+' Pending</div>':''))
+      +'<div class="pc2-top">'
+        +'<div class="pc2-idn"><span class="pc2-ovl">Overall</span><span class="pc2-ov">'+ccD.overall+'</span><span class="pc2-rule"></span>'
+          +'<span class="pc2-nm">'+(athleteName?esc(athleteName):'YOUR NAME')+'</span>'
+          +'<span class="pc2-cls">'+esc(clsName)+'</span>'+vfBadge+'</div>'
+        +'<div class="pc-hero'+(athletePhoto?' has-img':'')+'"'+(athletePhoto?'':' onclick="pickPhoto()"')+'><div class="pc-stage"></div><div class="pc-wm">UR</div>'+heroImg+'</div>'
       +'</div>'
-      +'<div class="pc-stats2">'+statCells+'</div>'
-      +'<div class="pc-foot">'
-        +'<div class="pc-fcell pc-ftp"><b>'+tpFmt+'</b><span>Total Power</span></div>'
-        +'<div class="pc-fcell pc-fnext"><b>'+(ccD.nextTier?nextGap:'★')+'</b><span>'+(ccD.nextTier?('to '+esc(ccD.nextTier.name)):'Top tier')+'</span></div>'
-        +'<div class="pc-fcell pc-fseason"><b>01</b><span>Season</span></div>'
-        +'<div class="pc-fcell pc-fver'+(verified?'':' pend')+'">'+(verified?ICO.check:ICO.clock)+'<span>'+(verified?'Verified':'Pending')+'</span></div>'
+      +'<div class="pc2-bot">'
+        +'<div class="pc2-pw"><span class="pc2-pw-l">Total Power</span><span class="pc2-pw-v">'+tpFmt+'</span>'
+          +(ccD.nextTier?'<span class="pc2-togold">'+nextGap+' to '+esc(ccD.nextTier.name)+'</span>':'<span class="pc2-togold">Top tier</span>')
+          +'<div class="pc2-season">Season 01</div>'
+          +'<div class="pc2-form pc2-form-'+fst.k+'">Form <b>'+fst.t+'</b>'+(fst.flame?' <span class="pc2-flame">🔥</span>':'')+'</div></div>'
+        +'<div class="pc2-stats">'+statCells+'</div>'
       +'</div>'
       +(isLeg?'<div class="pc-note">Legacy — your best-ever verified scores. Display only; your ranked card stays on Form.</div>':(cc.pending>0?'<div class="pc-note">'+cc.pending+' score'+(cc.pending===1?'':'s')+' awaiting coach verification — your rating updates once a coach verifies.</div>':''))
       +'</div></div>';
   } else {
     var emptyStats=PC_STATS.map(function(k){var m=STAT_META[k]||{};
-      return '<div class="pc-st2 pc-st2-empty"><span class="pc-i2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(m.i||'')+'</svg></span>'
-        +'<div class="pc-st2-t"><span class="pc-st2-nm">'+esc(PC_LABEL[k]||k)+'</span><span class="pc-st2-d">'+esc(m.d||'')+'</span></div>'
-        +'<div class="pc-st2-bar"><i style="width:0%"></i></div><span class="pc-st2-v">—</span></div>';}).join('');
+      return '<div class="pc2-st pc2-st-empty"><span class="pc2-st-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(m.i||'')+'</svg></span>'
+        +'<span class="pc2-st-l">'+esc(PC_LABEL[k]||k)+'</span><span class="pc2-st-v">—</span>'
+        +'<span class="pc2-st-bar"><i style="width:0%"></i></span></div>';}).join('');
     card='<div class="pc-frame tier-white"><div class="pcard tier-white pc-empty" onclick="goNav(&#39;submit&#39;)">'
       +'<span class="pc-cnr tl"></span><span class="pc-cnr tr"></span><span class="pc-cnr bl"></span><span class="pc-cnr br"></span>'
       +'<div class="pc-topline"><span class="pc-tierpill">UNRANKED · 0/8</span><span class="pc-serial">UR-—-— · 0</span></div>'
-      +'<div class="pc-hero"><div class="pc-stage"></div><div class="pc-nophoto"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="74" r="38" fill="rgba(255,255,255,.10)"/><path d="M34 200 C34 134 64 106 100 106 C136 106 166 134 166 200 Z" fill="rgba(255,255,255,.10)"/></svg><span class="pc-addph">Enter a score to reveal your card</span></div>'
-        +'<div class="pc-heroL"><div class="pc-name">'+(athleteName?esc(athleteName):'YOUR NAME')+'</div><div class="pc-class">Unranked</div></div>'
-        +'<div class="pc-heroR"><div class="pc-ov">—</div><div class="pc-ovl">Overall</div></div></div>'
-      +'<div class="pc-stats2">'+emptyStats+'</div>'
+      +'<div class="pc2-top">'
+        +'<div class="pc2-idn"><span class="pc2-ovl">Overall</span><span class="pc2-ov pc2-ov-empty">—</span><span class="pc2-rule"></span>'
+          +'<span class="pc2-nm">'+(athleteName?esc(athleteName):'YOUR NAME')+'</span><span class="pc2-cls">Unranked</span></div>'
+        +'<div class="pc-hero" onclick="event.stopPropagation();pickPhoto()"><div class="pc-stage"></div><div class="pc-wm">UR</div>'
+          +'<div class="pc-nophoto"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="74" r="38" fill="rgba(255,255,255,.10)"/><path d="M34 200 C34 134 64 106 100 106 C136 106 166 134 166 200 Z" fill="rgba(255,255,255,.10)"/></svg><span class="pc-addph">＋ add photo</span></div></div>'
+      +'</div>'
+      +'<div class="pc2-bot">'
+        +'<div class="pc2-pw"><span class="pc2-pw-l">Total Power</span><span class="pc2-pw-v">0</span><div class="pc2-season">Season 01</div></div>'
+        +'<div class="pc2-stats">'+emptyStats+'</div>'
+      +'</div>'
       +'<div class="pc-empty-cta"><b>Your card is empty.</b> Enter your first score and get it verified to light up your stats, Total Power and class.<button class="btn-primary" onclick="event.stopPropagation();goNav(&#39;submit&#39;)">Enter your first score <span class="arw">→</span></button></div>'
       +'</div></div>';
   }
