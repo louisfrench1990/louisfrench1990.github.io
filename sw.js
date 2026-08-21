@@ -1,5 +1,5 @@
 /* Unranked service worker — network-first for the page (never stuck on a stale deploy), cache fallback for offline */
-const CACHE = 'unranked-20260821111623';
+const CACHE = 'unranked-20260821121414';
 // no './' entry — it resolves to the same 5MB document as './index.html'; the navigate handler caches './index.html' and serves it for './' too.
 const CORE = ['./index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => Promise.allSettled(CORE.map(u => c.add(u)))).then(() => self.skipWaiting())); });  // non-atomic: one missing file no longer voids the whole precache
