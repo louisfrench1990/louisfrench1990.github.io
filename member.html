@@ -43,6 +43,31 @@
 .dgrid .dcard{flex-direction:column;align-items:flex-start;gap:9px}
 .dgrid .dcard .dc-chev{display:none}
 .dsec{font-family:var(--disp);letter-spacing:.04em;font-size:15px;color:var(--dim);text-transform:uppercase;margin:18px 2px 8px}
+/* Home — Today block */
+.th-card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 15px}
+.th-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.th-day{font-family:var(--disp);font-size:16px;letter-spacing:.08em;color:var(--dim)}
+.th-badge{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:20px;padding:3px 10px}
+.th-badge.on{color:var(--mag);border-color:var(--mag);background:rgba(255,45,138,.08)}
+.th-ttl{font-family:var(--disp);font-size:24px;line-height:1;color:var(--txt);text-transform:uppercase;letter-spacing:.01em}
+.th-sub{font-size:12.5px;color:var(--dim);margin-top:5px}
+.th-go{margin-top:13px}
+/* Home — Current pursuit block */
+.cp-card{--cc:var(--mag);background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--cc);border-radius:var(--r-lg);padding:14px 15px;cursor:pointer}
+.cp-card.cc-blue{--cc:#3aa0ff}.cp-card.cc-purple{--cc:#a86bff}.cp-card.cc-crimson{--cc:#ff3b6b}.cp-card.cc-gold{--cc:#ffc23b}.cp-card.cc-green{--cc:#38d66b}.cp-card.cc-white{--cc:#cfd2dc}
+.cp-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.cp-tree{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--cc)}
+.cp-cls{font-family:var(--disp);font-size:22px;line-height:1;color:var(--txt);text-transform:uppercase;margin-top:3px}
+.cp-chev{color:var(--dim);font-size:20px;line-height:1}
+.cp-bar{height:7px;border-radius:5px;background:rgba(255,255,255,.09);overflow:hidden;margin:11px 0 12px}
+.cp-bar i{display:block;height:100%;border-radius:5px;background:var(--cc)}
+.cp-reqs{display:flex;flex-wrap:wrap;gap:6px 10px}
+.cp-req{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim)}
+.cp-req.ok{color:var(--txt)}
+.cp-rq-ic{display:inline-flex;width:16px;height:16px;align-items:center;justify-content:center}
+.cp-rq-ic .ico{width:15px;height:15px;color:var(--green)}
+.cp-o{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--dim);display:block}
+.cp-foot{font-size:11.5px;color:var(--dim);margin-top:11px;line-height:1.4}.cp-foot b{color:var(--cc)}
 /* segmented control (Form/Legacy, RX tiers, etc.) */
 .seg{display:flex;gap:4px;background:var(--s2);border:1px solid var(--line);border-radius:var(--r-pill);padding:4px}
 .seg-b{flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;border:0!important;background:none!important;color:var(--dim)!important;font-family:var(--ui);font-weight:700;font-size:13px;padding:9px 10px;border-radius:var(--r-pill);cursor:pointer;letter-spacing:.02em;transition:background .14s,color .14s}   /* min 44px touch target */
@@ -596,7 +621,12 @@ body.hasnav #foot{bottom:60px}
 .tphero-bar{height:11px;border-radius:7px;background:var(--bg);border:1px solid var(--line);overflow:hidden;margin-top:9px}
 .tphero-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--mag),#ff8fc2);border-radius:7px}
 /* ===== PREMIUM ATHLETE CARD (pcard) ===== */
-.pcard{--tc:#cfd2dc;position:relative;background:linear-gradient(180deg,#12121b,#0b0b12);border:1.5px solid var(--tc);border-radius:18px;padding:12px;box-shadow:0 0 34px -12px var(--tc),inset 0 1px 0 rgba(255,255,255,.05);overflow:hidden}
+.pc-frame{--tc:#cfd2dc;--cut:16px;position:relative;padding:3px;background:linear-gradient(150deg,var(--tc),#20202a 40%,#16161e 55%,var(--tc));filter:drop-shadow(0 0 10px var(--tc));clip-path:polygon(var(--cut) 0,calc(100% - var(--cut)) 0,100% var(--cut),100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,var(--cut) 100%,0 calc(100% - var(--cut)),0 var(--cut))}
+.pc-frame.tier-white{--tc:#cfd2dc}.pc-frame.tier-green{--tc:#38d66b}.pc-frame.tier-blue{--tc:#3aa0ff}.pc-frame.tier-purple{--tc:#a86bff}.pc-frame.tier-crimson{--tc:#ff3b6b}.pc-frame.tier-gold{--tc:#ffc23b}.pc-frame.tier-legendary{--tc:#ff8a3b}.pc-frame.tier-mythic{--tc:#ff5bd0}
+.pcard{--tc:#cfd2dc;--cut:14px;position:relative;background:linear-gradient(180deg,#12121b,#0a0a11);padding:13px 12px;overflow:hidden;clip-path:polygon(var(--cut) 0,calc(100% - var(--cut)) 0,100% var(--cut),100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,var(--cut) 100%,0 calc(100% - var(--cut)),0 var(--cut))}
+.pc-cnr{position:absolute;z-index:5;width:11px;height:11px;border:2px solid var(--tc);opacity:.55;pointer-events:none}
+.pc-cnr.tl{top:8px;left:8px;border-right:0;border-bottom:0}.pc-cnr.tr{top:8px;right:8px;border-left:0;border-bottom:0}
+.pc-cnr.bl{bottom:8px;left:8px;border-right:0;border-top:0}.pc-cnr.br{bottom:8px;right:8px;border-left:0;border-top:0}
 .pcard.tier-white{--tc:#cfd2dc}.pcard.tier-green{--tc:#38d66b}.pcard.tier-blue{--tc:#3aa0ff}.pcard.tier-purple{--tc:#a86bff}.pcard.tier-crimson{--tc:#ff3b6b}.pcard.tier-gold{--tc:#ffc23b}.pcard.tier-legendary{--tc:#ff8a3b}.pcard.tier-mythic{--tc:#ff5bd0}
 .pc-topline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 2px 10px}
 .pc-tierpill{font-family:var(--ui);font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);border:1px solid var(--tc);border-radius:20px;padding:4px 11px;white-space:nowrap}
@@ -622,15 +652,17 @@ body.hasnav #foot{bottom:60px}
 .pc-herover.pend{color:#ffcf6a;border-color:var(--gold)}
 .pc-tagline{text-align:center;font-size:12px;color:var(--dim);margin:11px 6px 13px}
 .pc-tagline:before,.pc-tagline:after{content:"+";color:var(--tc);margin:0 8px;font-weight:800}
-.pc-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px 12px}
-.pc-st{display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;align-items:center;column-gap:7px;row-gap:3px}
-.pc-st-ic{grid-row:1/3;width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05)}
-.pc-st-ic .cs-ico,.pc-st-ic svg{width:15px;height:15px}
-.pc-dot{width:11px;height:11px;border-radius:50%;background:currentColor;display:block}
-.pc-st-lab{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);align-self:end}
-.pc-st-v{font-family:var(--disp);font-weight:800;font-size:22px;line-height:1;text-align:right;align-self:end}
-.pc-st-bar{grid-column:2/4;height:5px;border-radius:4px;background:rgba(255,255,255,.09);overflow:hidden}
-.pc-st-bar i{display:block;height:100%;border-radius:4px;background:currentColor}
+/* single-column stat rows — icon · name+descriptor · tier-coloured bar · value (all one tier colour) */
+.pc-stats2{display:flex;flex-direction:column;gap:7px;margin-top:2px}
+.pc-st2{display:flex;align-items:center;gap:10px}
+.pc-i2{width:30px;height:30px;flex:none;border-radius:8px;border:1px solid var(--tc);display:flex;align-items:center;justify-content:center;color:var(--tc);background:rgba(255,255,255,.02)}
+.pc-i2 svg{width:17px;height:17px}
+.pc-st2-t{width:118px;flex:none;min-width:0}
+.pc-st2-nm{display:block;font-family:var(--ui);font-weight:800;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tc);line-height:1.05}
+.pc-st2-d{display:block;font-size:9px;color:var(--dim);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-st2-bar{flex:1;height:8px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden}
+.pc-st2-bar i{display:block;height:100%;border-radius:5px;background:var(--tc)}
+.pc-st2-v{width:32px;flex:none;text-align:right;font-family:var(--disp);font-weight:800;font-size:22px;color:var(--txt)}
 .pc-st-pend{font-style:normal;font-size:10px;margin-left:1px}
 .pc-foot{display:grid;grid-template-columns:1.25fr 1fr .75fr auto;gap:8px;align-items:center;margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
 .pc-fcell b{display:block;font-family:var(--disp);font-weight:800;line-height:1}
@@ -1153,7 +1185,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-21 08:16</span>
+    <span class="verstamp" title="app build">build 2026-08-21 10:02</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="viewtogrow" id="viewtogrow" style="display:none"></div>
@@ -1806,7 +1838,16 @@ function computeLegacyCard(){return computeCard(ratingBest,function(id){return B
 function hasLegacy(){for(var k in BEST){if(BEST[k]!=null)return true;}return false;}
 /* ===== premium card helpers ===== */
 var PC_LABEL={STR:'Strength',PWR:'Power',SPD:'Speed',END:'Engine',SKL:'Skill',CAP:'Capacity'};   // END shows as "Engine" on the card
-var PC_STATS=['STR','END','PWR','SKL','SPD','CAP'];   // row-major fill for the 2-column grid → STR|ENGINE / POWER|SKILL / SPEED|CAPACITY
+var PC_STATS=['STR','PWR','SPD','END','SKL'];   // 5 card stats (CAP is card:false — off the card by design). Single-column rows, all tier-coloured.
+// consistent matched line-icon set + a short descriptor per stat (collector-card style)
+var STAT_META={
+ STR:{d:'Force production', i:'<path d="M4 9v6M7 7.5v9M17 7.5v9M20 9v6M7 12h10"/>'},
+ PWR:{d:'Explosive output', i:'<path d="M13 2.5 6.5 13H11l-1 8.5L18 10h-4.5z"/>'},
+ SPD:{d:'Sprint & agility', i:'<path d="M4.5 6l6 6-6 6M12 6l6 6-6 6"/>'},
+ END:{d:'Sustained work', i:'<path d="M2.5 12h3.5l2-5 3 10 2-5h4.5"/>'},
+ SKL:{d:'Movement mastery', i:'<path d="M12 3l7.5 4.3v9.4L12 21l-7.5-4.3V7.3z"/><circle cx="12" cy="12" r="2.4"/>'},
+ CAP:{d:'Repeat effort', i:'<path d="M4.5 12a7.5 7.5 0 0 1 12.8-5.3M19.5 12a7.5 7.5 0 0 1-12.8 5.3M17 4v3h-3M7 20v-3h3"/>'}
+};
 function cardSerial(name,tierKey){var s=String(name||'')+'|'+String(tierKey||'');var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=(h*16777619)>>>0;}var n=(h%900)+100;return ('00'+n).slice(-3);}   // stable per-athlete 3-digit
 function cardTagline(stats){var arr=SCORING.stats.map(function(s){return {n:PC_LABEL[s.key]||s.name,v:stats[s.key]||0};}).sort(function(a,b){return b.v-a.v;});
   if(!arr.length||arr[0].v<=0)return 'Get ranked — verify your scores';
@@ -2031,6 +2072,44 @@ function nextPointHTML(){var arr=[];SCORING.moves.forEach(function(mv){if(typeof
     +top.map(function(np){return '<button class="np-row" onclick="goNav(&#39;submit&#39;)"><span class="np-nm">'+esc(np.name)+'</span><span class="np-d">'+fmtDelta(np)+'</span><span class="np-sc">'+np.score+'<i>→</i>'+np.next+'</span></button>';}).join('')
     +'</div>';}
 // HOME — the profile hub: card + level/credits + Vault/Shop links + class tree
+// ===== Home engagement blocks (single-player, from the athlete's own data — no backend) =====
+// Nearest reachable locked class the athlete is closest to unlocking (prereqs met, best completion). No thresholds exposed (beta hides the tree calc).
+function nearestClass(){var st=classStates();var best=null;
+  SCORING.trees.forEach(function(tr){tr.classes.forEach(function(c){
+    if(st[c.slug]&&st[c.slug].unlocked)return;
+    if(c.prereq&&!c.prereq.every(function(p){return st[p]&&st[p].unlocked;}))return;
+    var reqs=Object.keys(c.req||{});if(!reqs.length)return;
+    var met=0,progSum=0,items=[];
+    reqs.forEach(function(id){var mv=scMove(id);var sc=isVerified(id)?scoreOf(TESTS[id],mv):0;var need=c.req[id]||1;var ok=sc>=need;
+      if(ok)met++;progSum+=Math.min(1,sc/need);items.push({name:mv?mv.name:id,ok:ok});});
+    var cand={tree:tr,cls:c,met:met,total:reqs.length,pct:Math.round(progSum/reqs.length*100),rank:_RANK[c.rank],items:items};
+    if(!best||cand.pct>best.pct||(cand.pct===best.pct&&cand.rank<best.rank))best=cand;
+  });});
+  return best;}
+function pursuitHTML(){var cc=computeCard();if(cc.entered===0)return '';
+  var n=nearestClass();if(!n)return '';
+  var items=n.items.slice().sort(function(a,b){return (a.ok===b.ok)?0:(a.ok?-1:1);});
+  var rows=items.map(function(it){return '<div class="cp-req'+(it.ok?' ok':'')+'"><span class="cp-rq-ic">'+(it.ok?ICO.check:'<span class="cp-o"></span>')+'</span><span class="cp-rq-nm">'+esc(it.name)+'</span></div>';}).join('');
+  return '<div class="dsec">Current pursuit</div>'
+    +'<div class="cp-card cc-'+esc(n.cls.colour)+'" onclick="goNav(&#39;tree&#39;)">'
+    +'<div class="cp-head"><div><div class="cp-tree">'+esc(n.tree.name)+' path</div><div class="cp-cls">Unlock '+esc(n.cls.name)+'</div></div><span class="cp-chev">›</span></div>'
+    +'<div class="cp-bar"><i style="width:'+Math.max(6,Math.min(100,n.pct))+'%"></i></div>'
+    +'<div class="cp-reqs">'+rows+'</div>'
+    +'<div class="cp-foot"><b>'+n.met+' of '+n.total+'</b> prerequisites done — keep training &amp; get your scores verified</div></div>';}
+// Today's programme status — a reason to open on any day
+function todayHomeHTML(){var info=todayInfo();var d=new Date();var DY=['SUN','MON','TUE','WED','THU','FRI','SAT'];var dn=DY[d.getDay()];
+  var ttl,sub,rest=false;
+  if(info.state==='pre'){ttl='Season starts soon';sub='Your programme opens on day one.';rest=true;}
+  else if(info.state==='post'){ttl='Season complete';sub='Combine time.';rest=true;}
+  else{var wd=info.wd||dn;
+    if(wd==='SAT'){ttl='Coach\'s choice';sub='Your coach sets today\'s session in class.';rest=true;}
+    else if(wd==='SUN'){ttl='Recovery day';sub='Zone-2 + prehab / rehab — nothing heavy into Monday.';rest=true;}
+    else{var w=D.weeks&&D.weeks.find(function(x){return x.week===info.week;});var day=w&&w.days&&w.days[wd];
+      var mv=day&&(day.movement||day.focus);ttl=mv?clean(String(mv)):'Today\'s session';
+      sub='Week '+(info.week||'')+(day&&day.stimulus?' · '+capWord(day.stimulus)+' focus':'');}}
+  var action=rest?'':'<button class="btn-primary th-go" onclick="goNav(&#39;program&#39;)">Open today\'s session <span class="arw">→</span></button>';
+  return '<div class="dsec">Today</div><div class="th-card"><div class="th-top"><span class="th-day">'+dn+'</span><span class="th-badge'+(rest?'':' on')+'">'+(rest?'Recovery':'Training day')+'</span></div>'
+    +'<div class="th-ttl">'+esc(ttl)+'</div><div class="th-sub">'+esc(sub)+'</div>'+action+'</div>';}
 function buildHomeHTML(hint,cardToggle,card,tree){
   syncMoments();
   // Neon pill buttons (Louis's art) for the home hub; falls back to icon+text rows if an asset is missing.
@@ -2043,8 +2122,10 @@ function buildHomeHTML(hint,cardToggle,card,tree){
     +hubBtn(null,'goNav(&#39;vault&#39;)','Vault','Your history and progress',ICO.vault)
     +hubBtn(null,'openShop()','Shop','Spend credits on card cosmetics',ICO.shop)
     +'</div>';
-  var npc=nextPointHTML();
+  var npc=nextPointHTML();var today=todayHomeHTML(),pursuit=pursuitHTML();
   return hint+cardToggle+'<div class="ppsec">'+card+'</div>'
+    +(today?'<div class="ppsec">'+today+'</div>':'')
+    +(pursuit?'<div class="ppsec">'+pursuit+'</div>':'')
     +(npc?'<div class="ppsec">'+npc+'</div>':'')
     +'<div class="ppsec">'+levelStripHTML()+links+'</div>';
 }
@@ -2164,11 +2245,13 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
     var heroImg=athletePhoto
       ?('<img class="pc-cut" id="acphImg" src="'+athletePhoto+'" alt="" style="object-position:center '+athletePhotoY+'%" draggable="false"><button class="pc-editph" onclick="event.stopPropagation();pickPhoto()" title="Change photo">✎</button>')
       :('<div class="pc-nophoto"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="74" r="38" fill="rgba(255,255,255,.12)"/><path d="M34 200 C34 134 64 106 100 106 C136 106 166 134 166 200 Z" fill="rgba(255,255,255,.12)"/></svg><span class="pc-addph">＋ add your photo</span></div>');
-    var statCells=PC_STATS.map(function(k){var v=ccD.stats[k]||0;var pend=isLeg?0:(ccD.statPending[k]||0);var ic=statIco(k)||('<span class="pc-dot cs-'+k+'"></span>');
-      return '<div class="pc-st"><span class="pc-st-ic cs-'+k+'">'+ic+'</span><span class="pc-st-lab">'+esc(PC_LABEL[k]||k)+'</span>'
-        +'<span class="pc-st-v cs-'+k+'">'+v+(pend?'<em class="pc-st-pend" title="'+pend+' pending">⏳</em>':'')+'</span>'
-        +'<div class="pc-st-bar cs-'+k+'"><i style="width:'+Math.min(100,v)+'%"></i></div></div>';}).join('');
-    card='<div class="pcard tier-'+ccD.tier.key+shineCls+(isLeg?' legacy':'')+' '+cosClasses()+'">'
+    var statCells=PC_STATS.map(function(k){var v=ccD.stats[k]||0;var pend=isLeg?0:(ccD.statPending[k]||0);var m=STAT_META[k]||{};
+      return '<div class="pc-st2"><span class="pc-i2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(m.i||'')+'</svg></span>'
+        +'<div class="pc-st2-t"><span class="pc-st2-nm">'+esc(PC_LABEL[k]||k)+'</span><span class="pc-st2-d">'+esc(m.d||'')+'</span></div>'
+        +'<div class="pc-st2-bar"><i style="width:'+Math.min(100,v)+'%"></i></div>'
+        +'<span class="pc-st2-v">'+v+(pend?'<em class="pc-st-pend" title="'+pend+' pending">⏳</em>':'')+'</span></div>';}).join('');
+    card='<div class="pc-frame tier-'+ccD.tier.key+'"><div class="pcard tier-'+ccD.tier.key+shineCls+(isLeg?' legacy':'')+' '+cosClasses()+'">'
+      +'<span class="pc-cnr tl"></span><span class="pc-cnr tr"></span><span class="pc-cnr bl"></span><span class="pc-cnr br"></span>'
       +'<div class="lvlup" id="cardLvlup"><span>TIER UP!</span></div><div class="ring" id="cardRing"></div>'
       +'<div class="pc-topline"><span class="pc-tierpill">'+esc(ccD.tier.name)+' · '+tierIdx+'/'+tierN+(ccD.prismatic?' · '+esc(ccD.prismatic.name):'')+(isLeg?' · LEGACY':'')+'</span><span class="pc-serial">'+esc(serial)+' · '+tpFmt+'</span></div>'
       +'<div class="pc-hero'+(athletePhoto?' has-img':'')+'"'+(athletePhoto?'':' onclick="pickPhoto()"')+'><div class="pc-stage"></div>'+heroImg
@@ -2176,8 +2259,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
         +'<div class="pc-heroR"><div class="pc-ov">'+ccD.overall+'</div><div class="pc-ovl">Overall</div></div>'
         +(verified?'<div class="pc-herover">'+ICO.check+' Verified athlete</div>':(cc.pending>0?'<div class="pc-herover pend">'+ICO.clock+' Pending</div>':''))
       +'</div>'
-      +'<div class="pc-tagline">'+esc(tagline)+'</div>'
-      +'<div class="pc-stats">'+statCells+'</div>'
+      +'<div class="pc-stats2">'+statCells+'</div>'
       +'<div class="pc-foot">'
         +'<div class="pc-fcell pc-ftp"><b>'+tpFmt+'</b><span>Total Power</span></div>'
         +'<div class="pc-fcell pc-fnext"><b>'+(ccD.nextTier?nextGap:'★')+'</b><span>'+(ccD.nextTier?('to '+esc(ccD.nextTier.name)):'Top tier')+'</span></div>'
@@ -2185,7 +2267,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
         +'<div class="pc-fcell pc-fver'+(verified?'':' pend')+'">'+(verified?ICO.check:ICO.clock)+'<span>'+(verified?'Verified':'Pending')+'</span></div>'
       +'</div>'
       +(isLeg?'<div class="pc-note">Legacy — your best-ever verified scores. Display only; your ranked card stays on Form.</div>':(cc.pending>0?'<div class="pc-note">'+cc.pending+' score'+(cc.pending===1?'':'s')+' awaiting coach verification — your rating updates once a coach verifies.</div>':''))
-      +'</div>';
+      +'</div></div>';
   } else {
     card='<div class="acard empty" onclick="goNav(&#39;submit&#39;)"><div class="acard-top"><span class="acard-tier">UNRANKED</span><div class="acard-ovwrap"><div class="acard-ov">—</div><div class="acard-ovlab">Overall</div></div></div>'
       +'<div class="acard-stats">'+SCORING.stats.filter(function(s){return s.card!==false;}).map(function(s){return '<div class="acard-stat"><b>—</b><span>'+s.key+'</span></div>';}).join('')+'</div>'
