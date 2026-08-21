@@ -561,14 +561,14 @@ body.hasnav #foot{bottom:60px}
 .acbody{padding:14px 16px 16px}
 .acard.v2 .cs-bar i{background:linear-gradient(90deg,var(--tc,var(--mag)),#ff8fc2)!important}
 .acard.v2 .acard-tpbar i{background:var(--tc,var(--acc))}
-.acard .lvlup{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0}
-.acard .lvlup.on{animation:lvburst 1.7s ease-out}
-.acard .lvlup span{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:.05em;color:#fff;text-shadow:0 0 24px var(--tc,#fff),0 0 8px #fff}
+.acard .lvlup,.pcard .lvlup{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0}
+.acard .lvlup.on,.pcard .lvlup.on{animation:lvburst 1.7s ease-out}
+.acard .lvlup span,.pcard .lvlup span{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:.05em;color:#fff;text-shadow:0 0 24px var(--tc,#fff),0 0 8px #fff}
 @keyframes lvburst{0%{opacity:0}10%,22%{opacity:1}100%{opacity:0}}
-.acard .lvlup.on span{animation:lvpop 1.7s cubic-bezier(.2,1.5,.4,1)}
+.acard .lvlup.on span,.pcard .lvlup.on span{animation:lvpop 1.7s cubic-bezier(.2,1.5,.4,1)}
 @keyframes lvpop{0%{transform:scale(.5)}20%{transform:scale(1.14)}42%{transform:scale(1)}100%{transform:scale(1.05)}}
-.acard .ring{position:absolute;inset:0;z-index:8;border-radius:16px;pointer-events:none;opacity:0;border:2px solid var(--tc,#fff)}
-.acard .ring.on{animation:lvring 1.7s ease-out}
+.acard .ring,.pcard .ring{position:absolute;inset:0;z-index:8;border-radius:16px;pointer-events:none;opacity:0;border:2px solid var(--tc,#fff)}
+.acard .ring.on,.pcard .ring.on{animation:lvring 1.7s ease-out}
 @keyframes lvring{0%{opacity:.9;transform:scale(.9)}100%{opacity:0;transform:scale(1.05)}}
 .cstats{margin:12px 0 10px;display:flex;flex-direction:column;gap:5px}
 .cs-row{display:flex;align-items:center;gap:8px}
@@ -595,6 +595,54 @@ body.hasnav #foot{bottom:60px}
 .tphero-to b{color:var(--txt);font-size:15px}
 .tphero-bar{height:11px;border-radius:7px;background:var(--bg);border:1px solid var(--line);overflow:hidden;margin-top:9px}
 .tphero-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--mag),#ff8fc2);border-radius:7px}
+/* ===== PREMIUM ATHLETE CARD (pcard) ===== */
+.pcard{--tc:#cfd2dc;position:relative;background:linear-gradient(180deg,#12121b,#0b0b12);border:1.5px solid var(--tc);border-radius:18px;padding:12px;box-shadow:0 0 34px -12px var(--tc),inset 0 1px 0 rgba(255,255,255,.05);overflow:hidden}
+.pcard.tier-white{--tc:#cfd2dc}.pcard.tier-green{--tc:#38d66b}.pcard.tier-blue{--tc:#3aa0ff}.pcard.tier-purple{--tc:#a86bff}.pcard.tier-crimson{--tc:#ff3b6b}.pcard.tier-gold{--tc:#ffc23b}.pcard.tier-legendary{--tc:#ff8a3b}.pcard.tier-mythic{--tc:#ff5bd0}
+.pc-topline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 2px 10px}
+.pc-tierpill{font-family:var(--ui);font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);border:1px solid var(--tc);border-radius:20px;padding:4px 11px;white-space:nowrap}
+.pc-serial{font-family:var(--ui);font-size:10.5px;font-weight:700;letter-spacing:.07em;color:var(--dim);white-space:nowrap}
+.pc-hero{position:relative;height:300px;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.pc-stage{position:absolute;inset:0;z-index:0;background:radial-gradient(120% 62% at 50% 122%,var(--tc),transparent 60%),radial-gradient(85% 55% at 50% -12%,rgba(255,255,255,.18),transparent 60%),linear-gradient(180deg,#0e0e17,#0a0a12 60%,#07070d)}
+.pc-stage:before{content:"";position:absolute;inset:0;opacity:.45;background-image:radial-gradient(circle,rgba(255,255,255,.55) 1px,transparent 1.5px);background-size:27px 27px;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 42%);mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 42%)}
+.pc-cut{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1}
+.pc-hero:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.55),transparent 30%,transparent 76%,rgba(0,0,0,.5))}
+.pc-shield{position:absolute;right:10px;top:44px;width:38px;height:auto;z-index:3;opacity:.95;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6))}
+.pc-nophoto{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.pc-nophoto svg{width:118px;height:118px;opacity:.5}
+.pc-addph{font-size:12px;color:var(--dim);font-weight:700}
+.pc-editph{position:absolute;left:10px;bottom:10px;z-index:4;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:rgba(0,0,0,.55);color:#fff;cursor:pointer;font-size:14px}
+.pc-heroL{position:absolute;left:13px;top:11px;z-index:3;max-width:60%}
+.pc-name{font-family:var(--disp);font-weight:800;font-size:30px;line-height:.9;color:#fff;letter-spacing:.01em;text-transform:uppercase;text-shadow:0 2px 12px rgba(0,0,0,.85)}
+.pc-class{margin-top:4px;font-family:var(--ui);font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--tc);text-shadow:0 1px 7px rgba(0,0,0,.9)}
+.pc-heroR{position:absolute;right:13px;top:9px;z-index:3;text-align:right}
+.pc-ov{font-family:var(--disp);font-weight:800;font-size:52px;line-height:.82;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.9)}
+.pc-ovl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--tc);font-weight:800}
+.pc-herover{position:absolute;right:10px;bottom:10px;z-index:3;display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:800;color:#7ee6ab;background:rgba(0,0,0,.55);border:1px solid var(--green);border-radius:20px;padding:4px 9px}
+.pc-herover .ico{width:13px;height:13px}
+.pc-herover.pend{color:#ffcf6a;border-color:var(--gold)}
+.pc-tagline{text-align:center;font-size:12px;color:var(--dim);margin:11px 6px 13px}
+.pc-tagline:before,.pc-tagline:after{content:"+";color:var(--tc);margin:0 8px;font-weight:800}
+.pc-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px 12px}
+.pc-st{display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;align-items:center;column-gap:7px;row-gap:3px}
+.pc-st-ic{grid-row:1/3;width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05)}
+.pc-st-ic .cs-ico,.pc-st-ic svg{width:15px;height:15px}
+.pc-dot{width:11px;height:11px;border-radius:50%;background:currentColor;display:block}
+.pc-st-lab{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);align-self:end}
+.pc-st-v{font-family:var(--disp);font-weight:800;font-size:22px;line-height:1;text-align:right;align-self:end}
+.pc-st-bar{grid-column:2/4;height:5px;border-radius:4px;background:rgba(255,255,255,.09);overflow:hidden}
+.pc-st-bar i{display:block;height:100%;border-radius:4px;background:currentColor}
+.pc-st-pend{font-style:normal;font-size:10px;margin-left:1px}
+.pc-foot{display:grid;grid-template-columns:1.25fr 1fr .75fr auto;gap:8px;align-items:center;margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+.pc-fcell b{display:block;font-family:var(--disp);font-weight:800;line-height:1}
+.pc-fcell>span{display:block;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-top:3px}
+.pc-ftp b{font-size:24px;color:var(--tc)}
+.pc-fnext b{font-size:19px;color:var(--gold)}
+.pc-fseason b{font-size:19px;color:var(--txt)}
+.pc-fver{display:flex;flex-direction:column;align-items:center;gap:2px;color:#7ee6ab;border:1px solid var(--green);border-radius:9px;padding:6px 9px}
+.pc-fver .ico{width:16px;height:16px}
+.pc-fver>span{color:#7ee6ab;margin-top:0}
+.pc-fver.pend{color:#ffcf6a;border-color:var(--gold)}.pc-fver.pend>span{color:#ffcf6a}
+.pc-note{font-size:11px;color:var(--dim);text-align:center;margin-top:10px;line-height:1.4}
 .skt-sub{color:var(--dim);font-size:12.5px;line-height:1.5;margin:2px 2px 10px}.skt-sub b{color:var(--txt)}
 .skt-legend{display:flex;gap:12px;flex-wrap:wrap;margin:0 2px 14px;font-size:10.5px;color:var(--dim)}.skt-legend b{display:inline-flex;align-items:center;gap:5px;font-weight:600}
 .skt-dot{width:10px;height:10px;border-radius:50%;display:inline-block}.skt-dl{background:#2c2a38;border:1px dashed rgba(255,255,255,.3)}.skt-do{background:transparent;border:2px solid var(--acc)}.skt-dd{background:var(--acc)}
@@ -1105,7 +1153,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-21 08:02</span>
+    <span class="verstamp" title="app build">build 2026-08-21 08:16</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="viewtogrow" id="viewtogrow" style="display:none"></div>
@@ -1756,6 +1804,15 @@ function computeCard(rate,counts){rate=rate||ratingOf;counts=counts||isVerified;
   return {stats:stats,statsPot:statsPot,statPending:statPending,overall:overall,tp:tp,tier:tier,nextTier:nextTier,prismatic:pris,entered:entered,verified:verified,pending:pending};}
 function computeLegacyCard(){return computeCard(ratingBest,function(id){return BEST[id]!=null;});}   // best-ever card (display only)
 function hasLegacy(){for(var k in BEST){if(BEST[k]!=null)return true;}return false;}
+/* ===== premium card helpers ===== */
+var PC_LABEL={STR:'Strength',PWR:'Power',SPD:'Speed',END:'Engine',SKL:'Skill',CAP:'Capacity'};   // END shows as "Engine" on the card
+var PC_STATS=['STR','END','PWR','SKL','SPD','CAP'];   // row-major fill for the 2-column grid → STR|ENGINE / POWER|SKILL / SPEED|CAPACITY
+function cardSerial(name,tierKey){var s=String(name||'')+'|'+String(tierKey||'');var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=(h*16777619)>>>0;}var n=(h%900)+100;return ('00'+n).slice(-3);}   // stable per-athlete 3-digit
+function cardTagline(stats){var arr=SCORING.stats.map(function(s){return {n:PC_LABEL[s.key]||s.name,v:stats[s.key]||0};}).sort(function(a,b){return b.v-a.v;});
+  if(!arr.length||arr[0].v<=0)return 'Get ranked — verify your scores';
+  var spread=arr[0].v-arr[arr.length-1].v;
+  if(spread<=8)return 'Balanced across '+arr[0].n.toLowerCase()+', '+arr[1].n.toLowerCase()+' and '+arr[2].n.toLowerCase();
+  return 'Built on '+arr[0].n.toLowerCase()+' and '+arr[1].n.toLowerCase();}
 // class tree — a class UNLOCKS when every requirement movement's rating ≥ its threshold; apex also needs its prereq classes unlocked.
 function classStatesFor(rate){var out={};
   SCORING.trees.forEach(function(tree){tree.classes.forEach(function(cl){var ok=true;
@@ -2097,21 +2154,38 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
     if(hasLegacy()){
       cardToggle='<div class="seg cardseg"><button class="seg-b'+(isLeg?'':' on')+'" onclick="setCardMode(&#39;form&#39;)">Form</button><button class="seg-b'+(isLeg?' on':'')+'" onclick="setCardMode(&#39;legacy&#39;)">Legacy</button></div>';
     } else cardToggle='';
-    card='<div class="acard v2 tier-'+ccD.tier.key+shineCls+(isLeg?' legacy':'')+' '+cosClasses()+'">'
-      +'<div class="cosl"></div>'
+    var tierIdx=SCORING.tiers.indexOf(ccD.tier)+1,tierN=SCORING.tiers.length;
+    var tLetter=(ccD.tier.name||'?').charAt(0).toUpperCase();
+    var serial='UR-'+tLetter+'-'+cardSerial(athleteName,ccD.tier.key);
+    var clsName=(cur.name||'').toUpperCase();
+    var verified=(!isLeg&&cc.verified>0);
+    var tagline=cardTagline(ccD.stats);
+    var nextGap=ccD.nextTier?(ccD.nextTier.tp-ccD.tp):0;
+    var heroImg=athletePhoto
+      ?('<img class="pc-cut" id="acphImg" src="'+athletePhoto+'" alt="" style="object-position:center '+athletePhotoY+'%" draggable="false"><button class="pc-editph" onclick="event.stopPropagation();pickPhoto()" title="Change photo">✎</button>')
+      :('<div class="pc-nophoto"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="74" r="38" fill="rgba(255,255,255,.12)"/><path d="M34 200 C34 134 64 106 100 106 C136 106 166 134 166 200 Z" fill="rgba(255,255,255,.12)"/></svg><span class="pc-addph">＋ add your photo</span></div>');
+    var statCells=PC_STATS.map(function(k){var v=ccD.stats[k]||0;var pend=isLeg?0:(ccD.statPending[k]||0);var ic=statIco(k)||('<span class="pc-dot cs-'+k+'"></span>');
+      return '<div class="pc-st"><span class="pc-st-ic cs-'+k+'">'+ic+'</span><span class="pc-st-lab">'+esc(PC_LABEL[k]||k)+'</span>'
+        +'<span class="pc-st-v cs-'+k+'">'+v+(pend?'<em class="pc-st-pend" title="'+pend+' pending">⏳</em>':'')+'</span>'
+        +'<div class="pc-st-bar cs-'+k+'"><i style="width:'+Math.min(100,v)+'%"></i></div></div>';}).join('');
+    card='<div class="pcard tier-'+ccD.tier.key+shineCls+(isLeg?' legacy':'')+' '+cosClasses()+'">'
       +'<div class="lvlup" id="cardLvlup"><span>TIER UP!</span></div><div class="ring" id="cardRing"></div>'
-      +'<div class="acph'+(athletePhoto?' has-img':'')+'"'+(athletePhoto?'':' onclick="pickPhoto()"')+'>'+photoHtml
-        +((ASSET.tiers&&ASSET.tiers[ccD.tier.key])?'<img class="acph-shield" src="'+ASSET.tiers[ccD.tier.key]+'" alt="'+esc(ccD.tier.name)+' tier">':'')
-        +'<span class="acph-tier">'+esc(ccD.tier.name)+' · '+(SCORING.tiers.indexOf(ccD.tier)+1)+'/'+SCORING.tiers.length+prisTxt+(isLeg?' · LEGACY':'')+'</span>'
-        +'<div class="acph-ov">'+ccD.overall+'</div><div class="acph-ovl">Overall</div>'
-        +'<div class="acph-name">'+(athleteName?esc(athleteName):'')+'</div></div>'
-      +'<div class="acbody">'
-        +(isLeg?'<div class="card-leg">Legacy — your best-ever verified scores. Display only; your ranked card stays on Form.</div>':'')
-        +'<div class="clschip-wrap"><span class="clschip"><i></i>'+esc(cur.name)+(cur.tree?' · '+esc(cur.tree)+' tree':'')+'</span></div>'
-        +'<div class="tphero"><div class="tphero-top"><div><div class="tphero-tp">'+tpFmt+'</div><div class="tphero-k">Total Power</div></div><div class="tphero-to">'+tpHeroRight+'</div></div><div class="tphero-bar"><i style="width:'+tpPct+'%"></i></div></div>'
-        +(!isLeg&&cc.pending>0?'<div class="card-pend">⏳ '+cc.pending+' score'+(cc.pending===1?'':'s')+' awaiting coach verification — your rating updates once a coach verifies.</div>':'')
-        +'<div class="cstats">'+statHtml+'</div>'
-        +'</div></div>';
+      +'<div class="pc-topline"><span class="pc-tierpill">'+esc(ccD.tier.name)+' · '+tierIdx+'/'+tierN+(ccD.prismatic?' · '+esc(ccD.prismatic.name):'')+(isLeg?' · LEGACY':'')+'</span><span class="pc-serial">'+esc(serial)+' · '+tpFmt+'</span></div>'
+      +'<div class="pc-hero'+(athletePhoto?' has-img':'')+'"'+(athletePhoto?'':' onclick="pickPhoto()"')+'><div class="pc-stage"></div>'+heroImg
+        +'<div class="pc-heroL"><div class="pc-name">'+(athleteName?esc(athleteName):'YOUR NAME')+'</div><div class="pc-class">'+esc(clsName)+(cur.tree?' · '+esc(cur.tree)+' tree':'')+'</div></div>'
+        +'<div class="pc-heroR"><div class="pc-ov">'+ccD.overall+'</div><div class="pc-ovl">Overall</div></div>'
+        +(verified?'<div class="pc-herover">'+ICO.check+' Verified athlete</div>':(cc.pending>0?'<div class="pc-herover pend">'+ICO.clock+' Pending</div>':''))
+      +'</div>'
+      +'<div class="pc-tagline">'+esc(tagline)+'</div>'
+      +'<div class="pc-stats">'+statCells+'</div>'
+      +'<div class="pc-foot">'
+        +'<div class="pc-fcell pc-ftp"><b>'+tpFmt+'</b><span>Total Power</span></div>'
+        +'<div class="pc-fcell pc-fnext"><b>'+(ccD.nextTier?nextGap:'★')+'</b><span>'+(ccD.nextTier?('to '+esc(ccD.nextTier.name)):'Top tier')+'</span></div>'
+        +'<div class="pc-fcell pc-fseason"><b>01</b><span>Season</span></div>'
+        +'<div class="pc-fcell pc-fver'+(verified?'':' pend')+'">'+(verified?ICO.check:ICO.clock)+'<span>'+(verified?'Verified':'Pending')+'</span></div>'
+      +'</div>'
+      +(isLeg?'<div class="pc-note">Legacy — your best-ever verified scores. Display only; your ranked card stays on Form.</div>':(cc.pending>0?'<div class="pc-note">'+cc.pending+' score'+(cc.pending===1?'':'s')+' awaiting coach verification — your rating updates once a coach verifies.</div>':''))
+      +'</div>';
   } else {
     card='<div class="acard empty" onclick="goNav(&#39;submit&#39;)"><div class="acard-top"><span class="acard-tier">UNRANKED</span><div class="acard-ovwrap"><div class="acard-ov">—</div><div class="acard-ovlab">Overall</div></div></div>'
       +'<div class="acard-stats">'+SCORING.stats.filter(function(s){return s.card!==false;}).map(function(s){return '<div class="acard-stat"><b>—</b><span>'+s.key+'</span></div>';}).join('')+'</div>'
