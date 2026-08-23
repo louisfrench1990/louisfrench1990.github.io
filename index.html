@@ -1470,7 +1470,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
     <button class="coach" id="athleteBtn" onclick="askAthlete()">🏋️ Athlete tracks</button>
     <button class="coach" id="coachBtn" onclick="askCoach()">🔧 Coach</button>
     <button class="coach" id="lockBtn" onclick="lockOut()" style="display:none">🔓 Lock</button>
-    <span class="verstamp" title="app build">build 2026-08-23 16:23</span>
+    <span class="verstamp" title="app build">build 2026-08-23 16:48</span>
   </div>
   <div class="modebanner" id="modeBanner" style="display:none"></div>
   <div class="viewtogrow" id="viewtogrow" style="display:none"></div>
@@ -2183,7 +2183,9 @@ function _stdev(a){if(a.length<2)return 0;var m=_mean(a),s=0;for(var i=0;i<a.len
 // the breadth-driven Overall (a partial card reads low across the board, not deceptively high on a couple of tests).
 // The consistency/spread bonus only applies once EVERY test in the stat is in (a complete, even stat earns the polish).
 function _statFrom(key,rate,counts){var all=[],done=[];
-  SCORING.moves.forEach(function(m){if(m.stat!==key)return;var c=counts(m.id);all.push(c?rate(m.id):0);if(c)done.push(rate(m.id));});
+  SCORING.moves.forEach(function(m){if(m.stat!==key)return;var c=counts(m.id);
+    if(!c&&!moveAvail(m))return;   // a test that's LOCKED and not yet done doesn't count as a 0 — you can't be penalised for a test the tree won't let you attempt. Available-but-untested still counts as 0 (breadth incentive); a verified score always counts even if its node was later relocated behind a lock.
+    all.push(c?rate(m.id):0);if(c)done.push(rate(m.id));});
   if(!all.length)return 0;
   var avg=_mean(all),cons=0,spr=0;
   if(done.length>=3&&done.length===all.length){var mn=Math.min.apply(null,done),sd=_stdev(done);
@@ -2966,7 +2968,7 @@ function pendingPreviewHTML(){
     +'</div>';
 }
 function buildTestsHTML(noLegacy){
-  function avail(mv){return moveAvail(mv);}
+  function avail(mv){return moveAvail(mv)||isVerified(mv.id);}   // a test you've already verified is never "locked", even if its tree node was relocated deeper (keeps counts a clean partition, shows the done row in its group)
   var byStat={};SCORING.stats.forEach(function(s){byStat[s.key]=[];});var treeMoves=[];
   SCORING.moves.forEach(function(mv){if(mv.stat&&byStat[mv.stat])byStat[mv.stat].push(mv);else treeMoves.push(mv);});
   var groups=[];SCORING.stats.forEach(function(s){if(byStat[s.key].length)groups.push([s.name,byStat[s.key]]);});
