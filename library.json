@@ -14230,15 +14230,15 @@
   "intent": "Adaptation: max sprint speed & change-of-direction \u2014 the 100m/400m sprint & 5-10-5 agility tests. Optional aerobic work \u2014 it does not run in the class hour.",
   "variants": {
    "rx": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 210m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 200m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "aerobic \u2014 hold the prescribed pace/effort"
    },
    "intermediate": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 210m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 200m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it honest but controlled"
    },
    "scaled": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 210m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 200m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it easy \u2014 build the base"
    }
   }
@@ -15341,15 +15341,15 @@
   "intent": "Adaptation: max sprint speed & change-of-direction \u2014 the 100m/400m sprint & 5-10-5 agility tests. Optional aerobic work \u2014 it does not run in the class hour.",
   "variants": {
    "rx": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 270m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 250m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "aerobic \u2014 hold the prescribed pace/effort"
    },
    "intermediate": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 270m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 250m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it honest but controlled"
    },
    "scaled": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 270m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 250m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it easy \u2014 build the base"
    }
   }
@@ -17207,15 +17207,15 @@
   "intent": "Adaptation: max sprint speed & change-of-direction \u2014 the 100m/400m sprint & 5-10-5 agility tests. Optional aerobic work \u2014 it does not run in the class hour.",
   "variants": {
    "rx": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 330m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 300m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "aerobic \u2014 hold the prescribed pace/effort"
    },
    "intermediate": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 330m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 300m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it honest but controlled"
    },
    "scaled": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 330m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 300m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it easy \u2014 build the base"
    }
   }
@@ -18318,15 +18318,15 @@
   "intent": "Adaptation: max sprint speed & change-of-direction \u2014 the 100m/400m sprint & 5-10-5 agility tests. Optional aerobic work \u2014 it does not run in the class hour.",
   "variants": {
    "rx": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 390m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 350m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "aerobic \u2014 hold the prescribed pace/effort"
    },
    "intermediate": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 390m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 350m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it honest but controlled"
    },
    "scaled": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 390m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 350m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it easy \u2014 build the base"
    }
   }
@@ -26602,15 +26602,15 @@
   "intent": "Adaptation: max sprint speed & change-of-direction \u2014 the 100m/400m sprint & 5-10-5 agility tests. Optional aerobic work \u2014 it does not run in the class hour.",
   "variants": {
    "rx": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 210m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 200m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "aerobic \u2014 hold the prescribed pace/effort"
    },
    "intermediate": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 210m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 200m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it honest but controlled"
    },
    "scaled": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 210m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 200m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it easy \u2014 build the base"
    }
   }
@@ -27713,15 +27713,15 @@
   "intent": "Adaptation: max sprint speed & change-of-direction \u2014 the 100m/400m sprint & 5-10-5 agility tests. Optional aerobic work \u2014 it does not run in the class hour.",
   "variants": {
    "rx": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 270m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 250m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "aerobic \u2014 hold the prescribed pace/effort"
    },
    "intermediate": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 270m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 250m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it honest but controlled"
    },
    "scaled": {
-    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 270m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
+    "prescription": "AGILITY: 5-10-5 pro-agility shuttle \u00d75 \u2014 max change of direction, full recovery (the 5-10-5 test).\nSPRINTS: 5 \u00d7 250m @ 90\u201395%, walk-back full recovery \u2014 speed-endurance (the 400m sprint test)",
     "target": "keep it easy \u2014 build the base"
    }
   }
