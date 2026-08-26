@@ -1,0 +1,7509 @@
+{
+ "weeks": [
+  {
+   "week": 1,
+   "start": "2026-08-03",
+   "block": "PRE-SEASON",
+   "emphasis": "transition",
+   "intensity": "light",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "6\u20137",
+     "rpeNote": "Target RPE 6\u20137 \u2014 steady, conversational",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w1-d0",
+     "c0": "lift-back_squat-w1-d0",
+     "c1": "nw-thr-001",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-butterfly-w1-d0",
+     "engine": "eng-w1-d0",
+     "lift": "lift-back_squat-w1-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w1-d0",
+       "lift-back_squat-w1-d0",
+       "armour-lift-w1-d0",
+       "wp-w1-d0",
+       "eng-w1-d0",
+       "hdr-pm",
+       "wu-pull-skill-w1-d0",
+       "gym-butterfly-w1-d0",
+       "nw-thr-001",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w1-d0",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-squat-lift-w1-d0",
+       "lift-back_squat-w1-d0",
+       "wp-w1-d0",
+       "nw-thr-001",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w1-d0",
+       "lift-back_squat-w1-d0",
+       "splus-w1-d0",
+       "armour-lift-w1-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w1-d0",
+       "gym-butterfly-w1-d0",
+       "armour-gym-w1-d0"
+      ],
+      "engine": [
+       "eng-w1-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 11,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 54
+     }
+    },
+    "TUE": {
+     "focus": "press",
+     "movement": "STRICT PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-ohead-lift-w1-d1",
+     "c0": "lift-strict_press-w1-d1",
+     "c1": "nw-an-001",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-toes-to-bar-w1-d1",
+     "engine": "eng-w1-d1",
+     "lift": "lift-strict_press-w1-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w1-d1",
+       "lift-strict_press-w1-d1",
+       "sled-w1-d1",
+       "armour-lift-w1-d1",
+       "wp-w1-d1",
+       "eng-w1-d1",
+       "hdr-pm",
+       "wu-pull-skill-w1-d1",
+       "gym-toes-to-bar-w1-d1",
+       "nw-an-001",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w1-d1",
+       "gym-rope-w1-d1",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-ohead-lift-w1-d1",
+       "lift-strict_press-w1-d1",
+       "wp-w1-d1",
+       "nw-an-001",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w1-d1",
+       "lift-strict_press-w1-d1",
+       "sled-w1-d1",
+       "splus-w1-d1",
+       "armour-lift-w1-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w1-d1",
+       "gym-toes-to-bar-w1-d1",
+       "gym-rope-w1-d1",
+       "armour-gym-w1-d1"
+      ],
+      "engine": [
+       "eng-w1-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 13,
+      "prep": 4,
+      "wod": 8,
+      "flush": 6,
+      "transitions": 7,
+      "total": 48
+     }
+    },
+    "WED": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w1-d2",
+     "c0": "lift-deadlift-w1-d2",
+     "c1": "nw-partner-01",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-butterfly-w1-d2",
+     "engine": "eng-w1-d2",
+     "lift": "lift-deadlift-w1-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w1-d2",
+       "lift-deadlift-w1-d2",
+       "armour-lift-w1-d2",
+       "wp-w1-d2",
+       "eng-w1-d2",
+       "hdr-pm",
+       "wu-pull-skill-w1-d2",
+       "gym-butterfly-w1-d2",
+       "nw-se-004",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w1-d2",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-hinge-lift-w1-d2",
+       "lift-deadlift-w1-d2",
+       "wp-w1-d2",
+       "nw-partner-01",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w1-d2",
+       "lift-deadlift-w1-d2",
+       "splus-w1-d2",
+       "armour-lift-w1-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w1-d2",
+       "gym-butterfly-w1-d2",
+       "armour-gym-w1-d2"
+      ],
+      "engine": [
+       "eng-w1-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 12,
+      "prep": 4,
+      "wod": 20,
+      "flush": 2,
+      "transitions": 7,
+      "total": 55
+     }
+    },
+    "THU": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Toes-to-Bar line",
+     "stimulus": "aerobic-power",
+     "rpe": "6",
+     "rpeNote": "Target RPE 6 \u2014 steady, conversational",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w1-d3",
+     "c0": "gym-toes-to-bar-w1-d3",
+     "c1": "nw-ap-001",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-toes-to-bar-w1-d3",
+     "engine": "eng-w1-d3",
+     "lift": "lift-bench_press-w1-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w1-d3",
+       "lift-bench_press-w1-d3",
+       "armour-lift-w1-d3",
+       "wp-w1-d3",
+       "eng-w1-d3",
+       "hdr-pm",
+       "wu-pull-skill-w1-d3",
+       "gym-toes-to-bar-w1-d3",
+       "nw-ap-001",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w1-d3",
+       "gym-l-sit-w1-d3",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-pull-skill-w1-d3",
+       "gym-toes-to-bar-w1-d3",
+       "wp-w1-d3",
+       "nw-ap-001",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w1-d3",
+       "lift-bench_press-w1-d3",
+       "splus-w1-d3",
+       "armour-lift-w1-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w1-d3",
+       "gym-toes-to-bar-w1-d3",
+       "gym-l-sit-w1-d3",
+       "armour-gym-w1-d3"
+      ],
+      "engine": [
+       "eng-w1-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 10,
+      "prep": 4,
+      "wod": 17,
+      "flush": 6,
+      "transitions": 7,
+      "total": 54
+     }
+    },
+    "FRI": {
+     "focus": "olympic",
+     "movement": "SNATCH \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "6\u20137",
+     "rpeNote": "Target RPE 6\u20137 \u2014 steady, conversational",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w1-d4",
+     "c0": "lift-snatch-w1-d4",
+     "c1": "nw-mx-001",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-butterfly-w1-d4",
+     "engine": "eng-w1-d4",
+     "lift": "lift-snatch-w1-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w1-d4",
+       "lift-snatch-w1-d4",
+       "armour-lift-w1-d4",
+       "wp-w1-d4",
+       "eng-w1-d4",
+       "hdr-pm",
+       "wu-pull-skill-w1-d4",
+       "gym-butterfly-w1-d4",
+       "nw-mx-001",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w1-d4",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-oly-lift-w1-d4",
+       "lift-snatch-w1-d4",
+       "wp-w1-d4",
+       "nw-mx-001",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w1-d4",
+       "lift-snatch-w1-d4",
+       "splus-w1-d4",
+       "armour-lift-w1-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w1-d4",
+       "gym-butterfly-w1-d4",
+       "armour-gym-w1-d4"
+      ],
+      "engine": [
+       "eng-w1-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 11,
+      "prep": 4,
+      "wod": 6,
+      "flush": 6,
+      "transitions": 7,
+      "total": 46
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-w1-partner",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 2,
+   "start": "2026-08-10",
+   "block": "PRE-SEASON",
+   "emphasis": "accumulation",
+   "intensity": "moderate",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w2-d0",
+     "c0": "lift-back_squat-w2-d0",
+     "c1": "nw-thr-002",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-butterfly-w2-d0",
+     "engine": "eng-w2-d0",
+     "lift": "lift-back_squat-w2-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w2-d0",
+       "lift-back_squat-w2-d0",
+       "armour-lift-w2-d0",
+       "wp-w2-d0",
+       "eng-w2-d0",
+       "hdr-pm",
+       "wu-pull-skill-w2-d0",
+       "gym-butterfly-w2-d0",
+       "nw-thr-002",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w2-d0",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-squat-lift-w2-d0",
+       "lift-back_squat-w2-d0",
+       "wp-w2-d0",
+       "nw-thr-002",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w2-d0",
+       "lift-back_squat-w2-d0",
+       "splus-w2-d0",
+       "armour-lift-w2-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w2-d0",
+       "gym-butterfly-w2-d0",
+       "armour-gym-w2-d0"
+      ],
+      "engine": [
+       "eng-w2-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 10,
+      "prep": 4,
+      "wod": 20,
+      "flush": 6,
+      "transitions": 7,
+      "total": 60
+     }
+    },
+    "TUE": {
+     "focus": "press",
+     "movement": "BENCH PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-hpress-lift-w2-d1",
+     "c0": "lift-bench_press-w2-d1",
+     "c1": "nw-an-002",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-toes-to-bar-w2-d1",
+     "engine": "eng-w2-d1",
+     "lift": "lift-bench_press-w2-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w2-d1",
+       "lift-bench_press-w2-d1",
+       "sled-w2-d1",
+       "armour-lift-w2-d1",
+       "wp-w2-d1",
+       "eng-w2-d1",
+       "hdr-pm",
+       "wu-pull-skill-w2-d1",
+       "gym-toes-to-bar-w2-d1",
+       "nw-an-002",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w2-d1",
+       "gym-bar-muscle-up-w2-d1",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-hpress-lift-w2-d1",
+       "lift-bench_press-w2-d1",
+       "wp-w2-d1",
+       "nw-an-002",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w2-d1",
+       "lift-bench_press-w2-d1",
+       "sled-w2-d1",
+       "splus-w2-d1",
+       "armour-lift-w2-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w2-d1",
+       "gym-toes-to-bar-w2-d1",
+       "gym-bar-muscle-up-w2-d1",
+       "armour-gym-w2-d1"
+      ],
+      "engine": [
+       "eng-w2-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 15,
+      "prep": 4,
+      "wod": 4,
+      "flush": 6,
+      "transitions": 7,
+      "total": 46
+     }
+    },
+    "WED": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w2-d2",
+     "c0": "lift-deadlift-w2-d2",
+     "c1": "nw-partner-02",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-butterfly-w2-d2",
+     "engine": "eng-w2-d2",
+     "lift": "lift-deadlift-w2-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w2-d2",
+       "lift-deadlift-w2-d2",
+       "armour-lift-w2-d2",
+       "wp-w2-d2",
+       "eng-w2-d2",
+       "hdr-pm",
+       "wu-pull-skill-w2-d2",
+       "gym-butterfly-w2-d2",
+       "nw-se-005",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w2-d2",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-hinge-lift-w2-d2",
+       "lift-deadlift-w2-d2",
+       "wp-w2-d2",
+       "nw-partner-02",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w2-d2",
+       "lift-deadlift-w2-d2",
+       "splus-w2-d2",
+       "armour-lift-w2-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w2-d2",
+       "gym-butterfly-w2-d2",
+       "armour-gym-w2-d2"
+      ],
+      "engine": [
+       "eng-w2-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 15,
+      "prep": 4,
+      "wod": 20,
+      "flush": 2,
+      "transitions": 7,
+      "total": 58
+     }
+    },
+    "THU": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Toes-to-Bar line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w2-d3",
+     "c0": "gym-toes-to-bar-w2-d3",
+     "c1": "nw-ap-004",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-toes-to-bar-w2-d3",
+     "engine": "eng-w2-d3",
+     "lift": "lift-strict_press-w2-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w2-d3",
+       "lift-strict_press-w2-d3",
+       "armour-lift-w2-d3",
+       "wp-w2-d3",
+       "eng-w2-d3",
+       "hdr-pm",
+       "wu-pull-skill-w2-d3",
+       "gym-toes-to-bar-w2-d3",
+       "nw-ap-004",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w2-d3",
+       "gym-rope-w2-d3",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-pull-skill-w2-d3",
+       "gym-toes-to-bar-w2-d3",
+       "wp-w2-d3",
+       "nw-ap-004",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w2-d3",
+       "lift-strict_press-w2-d3",
+       "splus-w2-d3",
+       "armour-lift-w2-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w2-d3",
+       "gym-toes-to-bar-w2-d3",
+       "gym-rope-w2-d3",
+       "armour-gym-w2-d3"
+      ],
+      "engine": [
+       "eng-w2-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 8,
+      "prep": 4,
+      "wod": 21,
+      "flush": 6,
+      "transitions": 7,
+      "total": 56
+     }
+    },
+    "FRI": {
+     "focus": "olympic",
+     "movement": "CLEAN & JERK \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w2-d4",
+     "c0": "lift-clean_and_jerk-w2-d4",
+     "c1": "nw-mx-013",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-butterfly-w2-d4",
+     "engine": "eng-w2-d4",
+     "lift": "lift-clean_and_jerk-w2-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w2-d4",
+       "lift-clean_and_jerk-w2-d4",
+       "armour-lift-w2-d4",
+       "wp-w2-d4",
+       "eng-w2-d4",
+       "hdr-pm",
+       "wu-pull-skill-w2-d4",
+       "gym-butterfly-w2-d4",
+       "nw-mx-013",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w2-d4",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-oly-lift-w2-d4",
+       "lift-clean_and_jerk-w2-d4",
+       "wp-w2-d4",
+       "nw-mx-013",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w2-d4",
+       "lift-clean_and_jerk-w2-d4",
+       "splus-w2-d4",
+       "armour-lift-w2-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w2-d4",
+       "gym-butterfly-w2-d4",
+       "armour-gym-w2-d4"
+      ],
+      "engine": [
+       "eng-w2-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 15,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-custom-w2-today",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 3,
+   "start": "2026-08-17",
+   "block": "PRE-SEASON",
+   "emphasis": "accumulation",
+   "intensity": "moderate",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w3-d0",
+     "c0": "lift-back_squat-w3-d0",
+     "c1": "nw-thr-004",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-butterfly-w3-d0",
+     "engine": "eng-w3-d0",
+     "lift": "lift-back_squat-w3-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w3-d0",
+       "lift-back_squat-w3-d0",
+       "armour-lift-w3-d0",
+       "wp-w3-d0",
+       "eng-w3-d0",
+       "hdr-pm",
+       "wu-pull-skill-w3-d0",
+       "gym-butterfly-w3-d0",
+       "nw-thr-004",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w3-d0",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-squat-lift-w3-d0",
+       "lift-back_squat-w3-d0",
+       "wp-w3-d0",
+       "nw-thr-004",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w3-d0",
+       "lift-back_squat-w3-d0",
+       "splus-w3-d0",
+       "armour-lift-w3-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w3-d0",
+       "gym-butterfly-w3-d0",
+       "armour-gym-w3-d0"
+      ],
+      "engine": [
+       "eng-w3-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 12,
+      "prep": 4,
+      "wod": 15,
+      "flush": 6,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "TUE": {
+     "focus": "press",
+     "movement": "STRICT PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-ohead-lift-w3-d1",
+     "c0": "lift-strict_press-w3-d1",
+     "c1": "nw-an-003",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-toes-to-bar-w3-d1",
+     "engine": "eng-w3-d1",
+     "lift": "lift-strict_press-w3-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w3-d1",
+       "lift-strict_press-w3-d1",
+       "sled-w3-d1",
+       "armour-lift-w3-d1",
+       "wp-w3-d1",
+       "eng-w3-d1",
+       "hdr-pm",
+       "wu-pull-skill-w3-d1",
+       "gym-toes-to-bar-w3-d1",
+       "nw-an-003",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w3-d1",
+       "gym-ring-muscle-up-w3-d1",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-ohead-lift-w3-d1",
+       "lift-strict_press-w3-d1",
+       "wp-w3-d1",
+       "nw-an-003",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w3-d1",
+       "lift-strict_press-w3-d1",
+       "sled-w3-d1",
+       "splus-w3-d1",
+       "armour-lift-w3-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w3-d1",
+       "gym-toes-to-bar-w3-d1",
+       "gym-ring-muscle-up-w3-d1",
+       "armour-gym-w3-d1"
+      ],
+      "engine": [
+       "eng-w3-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 16,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 53
+     }
+    },
+    "WED": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w3-d2",
+     "c0": "lift-deadlift-w3-d2",
+     "c1": "nw-partner-03",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-butterfly-w3-d2",
+     "engine": "eng-w3-d2",
+     "lift": "lift-deadlift-w3-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w3-d2",
+       "lift-deadlift-w3-d2",
+       "armour-lift-w3-d2",
+       "wp-w3-d2",
+       "eng-w3-d2",
+       "hdr-pm",
+       "wu-pull-skill-w3-d2",
+       "gym-butterfly-w3-d2",
+       "nw-se-006",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w3-d2",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-hinge-lift-w3-d2",
+       "lift-deadlift-w3-d2",
+       "wp-w3-d2",
+       "nw-partner-03",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w3-d2",
+       "lift-deadlift-w3-d2",
+       "splus-w3-d2",
+       "armour-lift-w3-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w3-d2",
+       "gym-butterfly-w3-d2",
+       "armour-gym-w3-d2"
+      ],
+      "engine": [
+       "eng-w3-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 17,
+      "prep": 4,
+      "wod": 18,
+      "flush": 2,
+      "transitions": 7,
+      "total": 58
+     }
+    },
+    "THU": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Toes-to-Bar line",
+     "stimulus": "aerobic-power",
+     "rpe": "8",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": "bm-cindy",
+     "warmup": "wu-pull-skill-w3-d3",
+     "c0": "gym-toes-to-bar-w3-d3",
+     "c1": "bm-cindy",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-toes-to-bar-w3-d3",
+     "engine": "eng-w3-d3",
+     "lift": "lift-bench_press-w3-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w3-d3",
+       "lift-bench_press-w3-d3",
+       "armour-lift-w3-d3",
+       "wp-w3-d3",
+       "eng-w3-d3",
+       "hdr-pm",
+       "wu-pull-skill-w3-d3",
+       "bm-cindy",
+       "gym-toes-to-bar-w3-d3",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w3-d3",
+       "gym-planche-w3-d3",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-pull-skill-w3-d3",
+       "wp-w3-d3",
+       "bm-cindy",
+       "gym-toes-to-bar-w3-d3",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w3-d3",
+       "lift-bench_press-w3-d3",
+       "splus-w3-d3",
+       "armour-lift-w3-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w3-d3",
+       "gym-toes-to-bar-w3-d3",
+       "gym-planche-w3-d3",
+       "armour-gym-w3-d3"
+      ],
+      "engine": [
+       "eng-w3-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 9,
+      "prep": 4,
+      "wod": 20,
+      "flush": 6,
+      "transitions": 7,
+      "total": 56
+     }
+    },
+    "FRI": {
+     "focus": "olympic",
+     "movement": "SNATCH \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w3-d4",
+     "c0": "lift-snatch-w3-d4",
+     "c1": "nw-mx-019",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-butterfly-w3-d4",
+     "engine": "eng-w3-d4",
+     "lift": "lift-snatch-w3-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w3-d4",
+       "lift-snatch-w3-d4",
+       "armour-lift-w3-d4",
+       "wp-w3-d4",
+       "eng-w3-d4",
+       "hdr-pm",
+       "wu-pull-skill-w3-d4",
+       "gym-butterfly-w3-d4",
+       "nw-mx-019",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w3-d4",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-oly-lift-w3-d4",
+       "lift-snatch-w3-d4",
+       "wp-w3-d4",
+       "nw-mx-019",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w3-d4",
+       "lift-snatch-w3-d4",
+       "splus-w3-d4",
+       "armour-lift-w3-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w3-d4",
+       "gym-butterfly-w3-d4",
+       "armour-gym-w3-d4"
+      ],
+      "engine": [
+       "eng-w3-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 17,
+      "prep": 4,
+      "wod": 8,
+      "flush": 6,
+      "transitions": 7,
+      "total": 54
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-custom-w3-today",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 4,
+   "start": "2026-08-24",
+   "block": "PRE-SEASON",
+   "emphasis": "accumulation",
+   "intensity": "moderate-high",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w4-d0",
+     "c0": "lift-back_squat-w4-d0",
+     "c1": "nw-thr-026",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-butterfly-w4-d0",
+     "engine": "eng-w4-d0",
+     "lift": "lift-back_squat-w4-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w4-d0",
+       "lift-back_squat-w4-d0",
+       "armour-lift-w4-d0",
+       "wp-w4-d0",
+       "eng-w4-d0",
+       "hdr-pm",
+       "wu-pull-skill-w4-d0",
+       "gym-butterfly-w4-d0",
+       "nw-thr-026",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w4-d0",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-squat-lift-w4-d0",
+       "lift-back_squat-w4-d0",
+       "wp-w4-d0",
+       "nw-thr-026",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w4-d0",
+       "lift-back_squat-w4-d0",
+       "splus-w4-d0",
+       "armour-lift-w4-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w4-d0",
+       "gym-butterfly-w4-d0",
+       "armour-gym-w4-d0"
+      ],
+      "engine": [
+       "eng-w4-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 15,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "TUE": {
+     "focus": "press",
+     "movement": "BENCH PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-hpress-lift-w4-d1",
+     "c0": "lift-bench_press-w4-d1",
+     "c1": "nw-an-007",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-toes-to-bar-w4-d1",
+     "engine": "eng-w4-d1",
+     "lift": "lift-bench_press-w4-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w4-d1",
+       "lift-bench_press-w4-d1",
+       "sled-w4-d1",
+       "armour-lift-w4-d1",
+       "wp-w4-d1",
+       "eng-w4-d1",
+       "hdr-pm",
+       "wu-pull-skill-w4-d1",
+       "gym-toes-to-bar-w4-d1",
+       "nw-an-007",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w4-d1",
+       "gym-handstand-walk-w4-d1",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-hpress-lift-w4-d1",
+       "lift-bench_press-w4-d1",
+       "wp-w4-d1",
+       "nw-an-007",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w4-d1",
+       "lift-bench_press-w4-d1",
+       "sled-w4-d1",
+       "splus-w4-d1",
+       "armour-lift-w4-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w4-d1",
+       "gym-toes-to-bar-w4-d1",
+       "gym-handstand-walk-w4-d1",
+       "armour-gym-w4-d1"
+      ],
+      "engine": [
+       "eng-w4-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 19,
+      "prep": 4,
+      "wod": 7,
+      "flush": 6,
+      "transitions": 7,
+      "total": 53
+     }
+    },
+    "WED": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w4-d2",
+     "c0": "lift-deadlift-w4-d2",
+     "c1": "nw-partner-04",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-butterfly-w4-d2",
+     "engine": "eng-w4-d2",
+     "lift": "lift-deadlift-w4-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w4-d2",
+       "lift-deadlift-w4-d2",
+       "armour-lift-w4-d2",
+       "wp-w4-d2",
+       "eng-w4-d2",
+       "hdr-pm",
+       "wu-pull-skill-w4-d2",
+       "gym-butterfly-w4-d2",
+       "nw-se-024",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w4-d2",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-hinge-lift-w4-d2",
+       "lift-deadlift-w4-d2",
+       "wp-w4-d2",
+       "nw-partner-04",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w4-d2",
+       "lift-deadlift-w4-d2",
+       "splus-w4-d2",
+       "armour-lift-w4-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w4-d2",
+       "gym-butterfly-w4-d2",
+       "armour-gym-w4-d2"
+      ],
+      "engine": [
+       "eng-w4-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 20,
+      "prep": 4,
+      "wod": 10,
+      "flush": 2,
+      "transitions": 7,
+      "total": 53
+     }
+    },
+    "THU": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Toes-to-Bar line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w4-d3",
+     "c0": "gym-toes-to-bar-w4-d3",
+     "c1": "nw-ap-026",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-toes-to-bar-w4-d3",
+     "engine": "eng-w4-d3",
+     "lift": "lift-strict_press-w4-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w4-d3",
+       "lift-strict_press-w4-d3",
+       "armour-lift-w4-d3",
+       "wp-w4-d3",
+       "eng-w4-d3",
+       "hdr-pm",
+       "wu-pull-skill-w4-d3",
+       "gym-toes-to-bar-w4-d3",
+       "nw-ap-026",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w4-d3",
+       "gym-ring-muscle-up-w4-d3",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-pull-skill-w4-d3",
+       "gym-toes-to-bar-w4-d3",
+       "wp-w4-d3",
+       "nw-ap-026",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w4-d3",
+       "lift-strict_press-w4-d3",
+       "splus-w4-d3",
+       "armour-lift-w4-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w4-d3",
+       "gym-toes-to-bar-w4-d3",
+       "gym-ring-muscle-up-w4-d3",
+       "armour-gym-w4-d3"
+      ],
+      "engine": [
+       "eng-w4-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 15,
+      "prep": 4,
+      "wod": 18,
+      "flush": 6,
+      "transitions": 7,
+      "total": 60
+     }
+    },
+    "FRI": {
+     "focus": "olympic",
+     "movement": "CLEAN & JERK \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w4-d4",
+     "c0": "lift-clean_and_jerk-w4-d4",
+     "c1": "nw-mx-005",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-butterfly-w4-d4",
+     "engine": "eng-w4-d4",
+     "lift": "lift-clean_and_jerk-w4-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w4-d4",
+       "lift-clean_and_jerk-w4-d4",
+       "armour-lift-w4-d4",
+       "wp-w4-d4",
+       "eng-w4-d4",
+       "hdr-pm",
+       "wu-pull-skill-w4-d4",
+       "gym-butterfly-w4-d4",
+       "nw-mx-005",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w4-d4",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-oly-lift-w4-d4",
+       "lift-clean_and_jerk-w4-d4",
+       "wp-w4-d4",
+       "nw-mx-005",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w4-d4",
+       "lift-clean_and_jerk-w4-d4",
+       "splus-w4-d4",
+       "armour-lift-w4-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w4-d4",
+       "gym-butterfly-w4-d4",
+       "armour-gym-w4-d4"
+      ],
+      "engine": [
+       "eng-w4-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 15,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-001",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 5,
+   "start": "2026-08-31",
+   "block": "LEAGUE",
+   "emphasis": "build",
+   "intensity": "moderate",
+   "scored": true,
+   "days": {
+    "MON": {
+     "focus": "press",
+     "movement": "STRICT PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-ohead-lift-w5-d0",
+     "c0": "lift-strict_press-w5-d0",
+     "c1": "nw-an-005",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w5-d0",
+     "engine": "eng-w5-d0",
+     "lift": "lift-strict_press-w5-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w5-d0",
+       "lift-strict_press-w5-d0",
+       "sled-w5-d0",
+       "armour-lift-w5-d0",
+       "wp-w5-d0",
+       "eng-w5-d0",
+       "hdr-pm",
+       "wu-pull-skill-w5-d0",
+       "gym-bar-muscle-up-w5-d0",
+       "nw-an-005",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w5-d0",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-ohead-lift-w5-d0",
+       "lift-strict_press-w5-d0",
+       "wp-w5-d0",
+       "nw-an-005",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w5-d0",
+       "lift-strict_press-w5-d0",
+       "sled-w5-d0",
+       "splus-w5-d0",
+       "armour-lift-w5-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w5-d0",
+       "gym-bar-muscle-up-w5-d0",
+       "armour-gym-w5-d0"
+      ],
+      "engine": [
+       "eng-w5-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 14,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 54
+     }
+    },
+    "TUE": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w5-d1",
+     "c0": "lift-deadlift-w5-d1",
+     "c1": "nw-se-009",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-rope-w5-d1",
+     "engine": "eng-w5-d1",
+     "lift": "lift-deadlift-w5-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w5-d1",
+       "lift-deadlift-w5-d1",
+       "armour-lift-w5-d1",
+       "wp-w5-d1",
+       "eng-w5-d1",
+       "hdr-pm",
+       "wu-pull-skill-w5-d1",
+       "gym-rope-w5-d1",
+       "nw-se-009",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w5-d1",
+       "gym-front-lever-w5-d1",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-hinge-lift-w5-d1",
+       "lift-deadlift-w5-d1",
+       "wp-w5-d1",
+       "nw-se-009",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w5-d1",
+       "lift-deadlift-w5-d1",
+       "splus-w5-d1",
+       "armour-lift-w5-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w5-d1",
+       "gym-rope-w5-d1",
+       "gym-front-lever-w5-d1",
+       "armour-gym-w5-d1"
+      ],
+      "engine": [
+       "eng-w5-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 14,
+      "prep": 4,
+      "wod": 19,
+      "flush": 6,
+      "transitions": 7,
+      "total": 60
+     }
+    },
+    "WED": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Bar Muscle-Up line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w5-d2",
+     "c0": "gym-bar-muscle-up-w5-d2",
+     "c1": "nw-ap-006",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-bar-muscle-up-w5-d2",
+     "engine": "eng-w5-d2",
+     "lift": "lift-bench_press-w5-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w5-d2",
+       "lift-bench_press-w5-d2",
+       "armour-lift-w5-d2",
+       "wp-w5-d2",
+       "eng-w5-d2",
+       "hdr-pm",
+       "wu-pull-skill-w5-d2",
+       "gym-bar-muscle-up-w5-d2",
+       "nw-ap-006",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w5-d2",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-pull-skill-w5-d2",
+       "gym-bar-muscle-up-w5-d2",
+       "wp-w5-d2",
+       "nw-ap-006",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w5-d2",
+       "lift-bench_press-w5-d2",
+       "splus-w5-d2",
+       "armour-lift-w5-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w5-d2",
+       "gym-bar-muscle-up-w5-d2",
+       "armour-gym-w5-d2"
+      ],
+      "engine": [
+       "eng-w5-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 15,
+      "prep": 4,
+      "wod": 7,
+      "flush": 2,
+      "transitions": 7,
+      "total": 45
+     }
+    },
+    "THU": {
+     "focus": "olympic",
+     "movement": "SNATCH \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w5-d3",
+     "c0": "lift-snatch-w5-d3",
+     "c1": "nw-partner-05",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-rope-w5-d3",
+     "engine": "eng-w5-d3",
+     "lift": "lift-snatch-w5-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w5-d3",
+       "lift-snatch-w5-d3",
+       "armour-lift-w5-d3",
+       "wp-w5-d3",
+       "eng-w5-d3",
+       "hdr-pm",
+       "wu-pull-skill-w5-d3",
+       "gym-rope-w5-d3",
+       "nw-mx-015",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w5-d3",
+       "gym-front-lever-w5-d3",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-oly-lift-w5-d3",
+       "lift-snatch-w5-d3",
+       "wp-w5-d3",
+       "nw-partner-05",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w5-d3",
+       "lift-snatch-w5-d3",
+       "splus-w5-d3",
+       "armour-lift-w5-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w5-d3",
+       "gym-rope-w5-d3",
+       "gym-front-lever-w5-d3",
+       "armour-gym-w5-d3"
+      ],
+      "engine": [
+       "eng-w5-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 16,
+      "prep": 4,
+      "wod": 15,
+      "flush": 6,
+      "transitions": 7,
+      "total": 60
+     }
+    },
+    "FRI": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w5-d4",
+     "c0": "lift-back_squat-w5-d4",
+     "c1": "nw-thr-027",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w5-d4",
+     "engine": "eng-w5-d4",
+     "lift": "lift-back_squat-w5-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w5-d4",
+       "lift-back_squat-w5-d4",
+       "armour-lift-w5-d4",
+       "wp-w5-d4",
+       "eng-w5-d4",
+       "hdr-pm",
+       "wu-pull-skill-w5-d4",
+       "gym-ring-muscle-up-w5-d4",
+       "nw-thr-027",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w5-d4",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-squat-lift-w5-d4",
+       "lift-back_squat-w5-d4",
+       "wp-w5-d4",
+       "nw-thr-027",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w5-d4",
+       "lift-back_squat-w5-d4",
+       "splus-w5-d4",
+       "armour-lift-w5-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w5-d4",
+       "gym-ring-muscle-up-w5-d4",
+       "armour-gym-w5-d4"
+      ],
+      "engine": [
+       "eng-w5-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 14,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 7,
+      "total": 56
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-002",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 6,
+   "start": "2026-09-07",
+   "block": "LEAGUE",
+   "emphasis": "build",
+   "intensity": "moderate-high",
+   "scored": true,
+   "days": {
+    "MON": {
+     "focus": "press",
+     "movement": "HELEN \u2014 scored test",
+     "stimulus": "anaerobic",
+     "rpe": "10",
+     "rpeNote": "RPE 10 \u2014 scored test: all-out. Rest as needed to hit your best time/score.",
+     "benchmark": "bm-helen",
+     "warmup": "wu-hpress-lift-w6-d0",
+     "c0": "lift-bench_press-w6-d0",
+     "c1": "bm-helen",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w6-d0",
+     "engine": "eng-w6-d0",
+     "lift": "lift-bench_press-w6-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w6-d0",
+       "sled-w6-d0",
+       "armour-lift-w6-d0",
+       "wp-w6-d0",
+       "eng-w6-d0",
+       "hdr-pm",
+       "wu-pull-skill-w6-d0",
+       "gym-bar-muscle-up-w6-d0",
+       "bm-helen",
+       "lift-bench_press-w6-d0",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w6-d0",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-hpress-lift-w6-d0",
+       "wp-w6-d0",
+       "bm-helen",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w6-d0",
+       "lift-bench_press-w6-d0",
+       "sled-w6-d0",
+       "splus-w6-d0",
+       "armour-lift-w6-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w6-d0",
+       "gym-bar-muscle-up-w6-d0",
+       "armour-gym-w6-d0"
+      ],
+      "engine": [
+       "eng-w6-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 0,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 6,
+      "total": 38
+     }
+    },
+    "TUE": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w6-d1",
+     "c0": "lift-deadlift-w6-d1",
+     "c1": "nw-se-011",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-rope-w6-d1",
+     "engine": "eng-w6-d1",
+     "lift": "lift-deadlift-w6-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w6-d1",
+       "lift-deadlift-w6-d1",
+       "armour-lift-w6-d1",
+       "wp-w6-d1",
+       "eng-w6-d1",
+       "hdr-pm",
+       "wu-pull-skill-w6-d1",
+       "gym-rope-w6-d1",
+       "nw-se-011",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w6-d1",
+       "gym-front-lever-w6-d1",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-hinge-lift-w6-d1",
+       "lift-deadlift-w6-d1",
+       "wp-w6-d1",
+       "nw-se-011",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w6-d1",
+       "lift-deadlift-w6-d1",
+       "splus-w6-d1",
+       "armour-lift-w6-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w6-d1",
+       "gym-rope-w6-d1",
+       "gym-front-lever-w6-d1",
+       "armour-gym-w6-d1"
+      ],
+      "engine": [
+       "eng-w6-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 20,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 7,
+      "total": 59
+     }
+    },
+    "WED": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Bar Muscle-Up line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w6-d2",
+     "c0": "gym-bar-muscle-up-w6-d2",
+     "c1": "nw-ap-012",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-bar-muscle-up-w6-d2",
+     "engine": "eng-w6-d2",
+     "lift": "lift-strict_press-w6-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w6-d2",
+       "lift-strict_press-w6-d2",
+       "armour-lift-w6-d2",
+       "wp-w6-d2",
+       "eng-w6-d2",
+       "hdr-pm",
+       "wu-pull-skill-w6-d2",
+       "gym-bar-muscle-up-w6-d2",
+       "nw-ap-012",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w6-d2",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-pull-skill-w6-d2",
+       "gym-bar-muscle-up-w6-d2",
+       "wp-w6-d2",
+       "nw-ap-012",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w6-d2",
+       "lift-strict_press-w6-d2",
+       "splus-w6-d2",
+       "armour-lift-w6-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w6-d2",
+       "gym-bar-muscle-up-w6-d2",
+       "armour-gym-w6-d2"
+      ],
+      "engine": [
+       "eng-w6-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 16,
+      "prep": 4,
+      "wod": 13,
+      "flush": 2,
+      "transitions": 7,
+      "total": 52
+     }
+    },
+    "THU": {
+     "focus": "olympic",
+     "movement": "CLEAN & JERK \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w6-d3",
+     "c0": "lift-clean_and_jerk-w6-d3",
+     "c1": "nw-partner-06",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-rope-w6-d3",
+     "engine": "eng-w6-d3",
+     "lift": "lift-clean_and_jerk-w6-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w6-d3",
+       "lift-clean_and_jerk-w6-d3",
+       "armour-lift-w6-d3",
+       "wp-w6-d3",
+       "eng-w6-d3",
+       "hdr-pm",
+       "wu-pull-skill-w6-d3",
+       "gym-rope-w6-d3",
+       "nw-mx-009",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w6-d3",
+       "gym-front-lever-w6-d3",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-oly-lift-w6-d3",
+       "lift-clean_and_jerk-w6-d3",
+       "wp-w6-d3",
+       "nw-partner-06",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w6-d3",
+       "lift-clean_and_jerk-w6-d3",
+       "splus-w6-d3",
+       "armour-lift-w6-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w6-d3",
+       "gym-rope-w6-d3",
+       "gym-front-lever-w6-d3",
+       "armour-gym-w6-d3"
+      ],
+      "engine": [
+       "eng-w6-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 18,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "FRI": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w6-d4",
+     "c0": "lift-back_squat-w6-d4",
+     "c1": "nw-thr-028",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w6-d4",
+     "engine": "eng-w6-d4",
+     "lift": "lift-back_squat-w6-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w6-d4",
+       "lift-back_squat-w6-d4",
+       "armour-lift-w6-d4",
+       "wp-w6-d4",
+       "eng-w6-d4",
+       "hdr-pm",
+       "wu-pull-skill-w6-d4",
+       "gym-bar-muscle-up-w6-d4",
+       "nw-thr-028",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w6-d4",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-squat-lift-w6-d4",
+       "lift-back_squat-w6-d4",
+       "wp-w6-d4",
+       "nw-thr-028",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w6-d4",
+       "lift-back_squat-w6-d4",
+       "splus-w6-d4",
+       "armour-lift-w6-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w6-d4",
+       "gym-bar-muscle-up-w6-d4",
+       "armour-gym-w6-d4"
+      ],
+      "engine": [
+       "eng-w6-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 19,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 59
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-003",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 7,
+   "start": "2026-09-14",
+   "block": "LEAGUE",
+   "emphasis": "build",
+   "intensity": "high",
+   "scored": true,
+   "days": {
+    "MON": {
+     "focus": "press",
+     "movement": "STRICT PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-ohead-lift-w7-d0",
+     "c0": "lift-strict_press-w7-d0",
+     "c1": "nw-an-006",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w7-d0",
+     "engine": "eng-w7-d0",
+     "lift": "lift-strict_press-w7-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w7-d0",
+       "lift-strict_press-w7-d0",
+       "sled-w7-d0",
+       "armour-lift-w7-d0",
+       "wp-w7-d0",
+       "eng-w7-d0",
+       "hdr-pm",
+       "wu-pull-skill-w7-d0",
+       "gym-bar-muscle-up-w7-d0",
+       "nw-an-006",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w7-d0",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-ohead-lift-w7-d0",
+       "lift-strict_press-w7-d0",
+       "wp-w7-d0",
+       "nw-an-006",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w7-d0",
+       "lift-strict_press-w7-d0",
+       "sled-w7-d0",
+       "splus-w7-d0",
+       "armour-lift-w7-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w7-d0",
+       "gym-bar-muscle-up-w7-d0",
+       "armour-gym-w7-d0"
+      ],
+      "engine": [
+       "eng-w7-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 20,
+      "prep": 4,
+      "wod": 8,
+      "flush": 6,
+      "transitions": 7,
+      "total": 55
+     }
+    },
+    "TUE": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w7-d1",
+     "c0": "lift-deadlift-w7-d1",
+     "c1": "nw-se-013",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-rope-w7-d1",
+     "engine": "eng-w7-d1",
+     "lift": "lift-deadlift-w7-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w7-d1",
+       "lift-deadlift-w7-d1",
+       "armour-lift-w7-d1",
+       "wp-w7-d1",
+       "eng-w7-d1",
+       "hdr-pm",
+       "wu-pull-skill-w7-d1",
+       "gym-rope-w7-d1",
+       "nw-se-013",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w7-d1",
+       "gym-toes-to-bar-w7-d1",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-hinge-lift-w7-d1",
+       "lift-deadlift-w7-d1",
+       "wp-w7-d1",
+       "nw-se-013",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w7-d1",
+       "lift-deadlift-w7-d1",
+       "splus-w7-d1",
+       "armour-lift-w7-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w7-d1",
+       "gym-rope-w7-d1",
+       "gym-toes-to-bar-w7-d1",
+       "armour-gym-w7-d1"
+      ],
+      "engine": [
+       "eng-w7-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 19,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 7,
+      "total": 58
+     }
+    },
+    "WED": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Bar Muscle-Up line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w7-d2",
+     "c0": "gym-bar-muscle-up-w7-d2",
+     "c1": "nw-ap-008",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-bar-muscle-up-w7-d2",
+     "engine": "eng-w7-d2",
+     "lift": "lift-bench_press-w7-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w7-d2",
+       "lift-bench_press-w7-d2",
+       "armour-lift-w7-d2",
+       "wp-w7-d2",
+       "eng-w7-d2",
+       "hdr-pm",
+       "wu-pull-skill-w7-d2",
+       "gym-bar-muscle-up-w7-d2",
+       "nw-ap-008",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w7-d2",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-pull-skill-w7-d2",
+       "gym-bar-muscle-up-w7-d2",
+       "wp-w7-d2",
+       "nw-ap-008",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w7-d2",
+       "lift-bench_press-w7-d2",
+       "splus-w7-d2",
+       "armour-lift-w7-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w7-d2",
+       "gym-bar-muscle-up-w7-d2",
+       "armour-gym-w7-d2"
+      ],
+      "engine": [
+       "eng-w7-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 17,
+      "prep": 4,
+      "wod": 20,
+      "flush": 2,
+      "transitions": 7,
+      "total": 60
+     }
+    },
+    "THU": {
+     "focus": "olympic",
+     "movement": "SNATCH \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w7-d3",
+     "c0": "lift-snatch-w7-d3",
+     "c1": "nw-partner-01",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-rope-w7-d3",
+     "engine": "eng-w7-d3",
+     "lift": "lift-snatch-w7-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w7-d3",
+       "lift-snatch-w7-d3",
+       "armour-lift-w7-d3",
+       "wp-w7-d3",
+       "eng-w7-d3",
+       "hdr-pm",
+       "wu-pull-skill-w7-d3",
+       "gym-rope-w7-d3",
+       "nw-mx-017",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w7-d3",
+       "gym-planche-w7-d3",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-oly-lift-w7-d3",
+       "lift-snatch-w7-d3",
+       "wp-w7-d3",
+       "nw-partner-01",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w7-d3",
+       "lift-snatch-w7-d3",
+       "splus-w7-d3",
+       "armour-lift-w7-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w7-d3",
+       "gym-rope-w7-d3",
+       "gym-planche-w7-d3",
+       "armour-gym-w7-d3"
+      ],
+      "engine": [
+       "eng-w7-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 16,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "FRI": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w7-d4",
+     "c0": "lift-back_squat-w7-d4",
+     "c1": "nw-thr-005",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w7-d4",
+     "engine": "eng-w7-d4",
+     "lift": "lift-back_squat-w7-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w7-d4",
+       "lift-back_squat-w7-d4",
+       "armour-lift-w7-d4",
+       "wp-w7-d4",
+       "eng-w7-d4",
+       "hdr-pm",
+       "wu-pull-skill-w7-d4",
+       "gym-ring-muscle-up-w7-d4",
+       "nw-thr-005",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w7-d4",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-squat-lift-w7-d4",
+       "lift-back_squat-w7-d4",
+       "wp-w7-d4",
+       "nw-thr-005",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w7-d4",
+       "lift-back_squat-w7-d4",
+       "splus-w7-d4",
+       "armour-lift-w7-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w7-d4",
+       "gym-ring-muscle-up-w7-d4",
+       "armour-gym-w7-d4"
+      ],
+      "engine": [
+       "eng-w7-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 14,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-004",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 8,
+   "start": "2026-09-21",
+   "block": "LEAGUE",
+   "emphasis": "deload",
+   "intensity": "light",
+   "scored": true,
+   "days": {
+    "MON": {
+     "focus": "press",
+     "movement": "BENCH PRESS \u2014 session",
+     "stimulus": "aerobic-power",
+     "rpe": "5",
+     "rpeNote": "Target RPE 5 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-hpress-lift-w8-d0",
+     "c0": "lift-bench_press-w8-d0",
+     "c1": "nw-ap-009",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w8-d0",
+     "engine": "eng-w8-d0",
+     "lift": "lift-bench_press-w8-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w8-d0",
+       "lift-bench_press-w8-d0",
+       "sled-w8-d0",
+       "armour-lift-w8-d0",
+       "wp-w8-d0",
+       "eng-w8-d0",
+       "hdr-pm",
+       "wu-pull-skill-w8-d0",
+       "gym-bar-muscle-up-w8-d0",
+       "nw-ap-009",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-hpress-lift-w8-d0",
+       "lift-bench_press-w8-d0",
+       "wp-w8-d0",
+       "nw-ap-009",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w8-d0",
+       "lift-bench_press-w8-d0",
+       "sled-w8-d0",
+       "armour-lift-w8-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w8-d0",
+       "gym-bar-muscle-up-w8-d0",
+       "armour-gym-w8-d0"
+      ],
+      "engine": [
+       "eng-w8-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 5,
+      "prep": 4,
+      "wod": 11,
+      "flush": 6,
+      "transitions": 7,
+      "total": 43
+     }
+    },
+    "TUE": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "6",
+     "rpeNote": "Target RPE 6 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w8-d1",
+     "c0": "lift-deadlift-w8-d1",
+     "c1": "nw-se-014",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-rope-w8-d1",
+     "engine": "eng-w8-d1",
+     "lift": "lift-deadlift-w8-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w8-d1",
+       "lift-deadlift-w8-d1",
+       "armour-lift-w8-d1",
+       "wp-w8-d1",
+       "eng-w8-d1",
+       "hdr-pm",
+       "wu-pull-skill-w8-d1",
+       "gym-rope-w8-d1",
+       "nw-se-014",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "gym-handstand-push-w8-d1",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-hinge-lift-w8-d1",
+       "lift-deadlift-w8-d1",
+       "wp-w8-d1",
+       "nw-se-014",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w8-d1",
+       "lift-deadlift-w8-d1",
+       "armour-lift-w8-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w8-d1",
+       "gym-rope-w8-d1",
+       "gym-handstand-push-w8-d1",
+       "armour-gym-w8-d1"
+      ],
+      "engine": [
+       "eng-w8-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 5,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 7,
+      "total": 44
+     }
+    },
+    "WED": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Bar Muscle-Up line",
+     "stimulus": "aerobic-power",
+     "rpe": "5",
+     "rpeNote": "Target RPE 5 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w8-d2",
+     "c0": "gym-bar-muscle-up-w8-d2",
+     "c1": "nw-ap-010",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-bar-muscle-up-w8-d2",
+     "engine": "eng-w8-d2",
+     "lift": "lift-strict_press-w8-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w8-d2",
+       "lift-strict_press-w8-d2",
+       "armour-lift-w8-d2",
+       "wp-w8-d2",
+       "eng-w8-d2",
+       "hdr-pm",
+       "wu-pull-skill-w8-d2",
+       "gym-bar-muscle-up-w8-d2",
+       "nw-ap-010",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-pull-skill-w8-d2",
+       "gym-bar-muscle-up-w8-d2",
+       "wp-w8-d2",
+       "nw-ap-010",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w8-d2",
+       "lift-strict_press-w8-d2",
+       "armour-lift-w8-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w8-d2",
+       "gym-bar-muscle-up-w8-d2",
+       "armour-gym-w8-d2"
+      ],
+      "engine": [
+       "eng-w8-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 10,
+      "prep": 4,
+      "wod": 12,
+      "flush": 2,
+      "transitions": 7,
+      "total": 45
+     }
+    },
+    "THU": {
+     "focus": "olympic",
+     "movement": "CLEAN & JERK \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "5\u20136",
+     "rpeNote": "Target RPE 5\u20136 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w8-d3",
+     "c0": "lift-clean_and_jerk-w8-d3",
+     "c1": "nw-partner-02",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-rope-w8-d3",
+     "engine": "eng-w8-d3",
+     "lift": "lift-clean_and_jerk-w8-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w8-d3",
+       "lift-clean_and_jerk-w8-d3",
+       "armour-lift-w8-d3",
+       "wp-w8-d3",
+       "eng-w8-d3",
+       "hdr-pm",
+       "wu-pull-skill-w8-d3",
+       "gym-rope-w8-d3",
+       "nw-mx-008",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "gym-toes-to-bar-w8-d3",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-oly-lift-w8-d3",
+       "lift-clean_and_jerk-w8-d3",
+       "wp-w8-d3",
+       "nw-partner-02",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w8-d3",
+       "lift-clean_and_jerk-w8-d3",
+       "armour-lift-w8-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w8-d3",
+       "gym-rope-w8-d3",
+       "gym-toes-to-bar-w8-d3",
+       "armour-gym-w8-d3"
+      ],
+      "engine": [
+       "eng-w8-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 5,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 7,
+      "total": 46
+     }
+    },
+    "FRI": {
+     "focus": "squat",
+     "movement": "FRONT SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "5\u20136",
+     "rpeNote": "Target RPE 5\u20136 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w8-d4",
+     "c0": "lift-front_squat-w8-d4",
+     "c1": "nw-thr-003",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w8-d4",
+     "engine": "eng-w8-d4",
+     "lift": "lift-front_squat-w8-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w8-d4",
+       "lift-front_squat-w8-d4",
+       "armour-lift-w8-d4",
+       "wp-w8-d4",
+       "eng-w8-d4",
+       "hdr-pm",
+       "wu-pull-skill-w8-d4",
+       "gym-l-sit-w8-d4",
+       "nw-thr-003",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-squat-lift-w8-d4",
+       "lift-front_squat-w8-d4",
+       "wp-w8-d4",
+       "nw-thr-003",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w8-d4",
+       "lift-front_squat-w8-d4",
+       "armour-lift-w8-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w8-d4",
+       "gym-l-sit-w8-d4",
+       "armour-gym-w8-d4"
+      ],
+      "engine": [
+       "eng-w8-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 5,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 7,
+      "total": 47
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-001",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 9,
+   "start": "2026-09-28",
+   "block": "LEAGUE",
+   "emphasis": "build",
+   "intensity": "moderate-high",
+   "scored": true,
+   "days": {
+    "MON": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w9-d0",
+     "c0": "lift-deadlift-w9-d0",
+     "c1": "nw-se-012",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-handstand-push-w9-d0",
+     "engine": "eng-w9-d0",
+     "lift": "lift-deadlift-w9-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w9-d0",
+       "lift-deadlift-w9-d0",
+       "armour-lift-w9-d0",
+       "wp-w9-d0",
+       "eng-w9-d0",
+       "hdr-pm",
+       "wu-ohead-skill-w9-d0",
+       "gym-handstand-push-w9-d0",
+       "nw-se-012",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w9-d0",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-hinge-lift-w9-d0",
+       "lift-deadlift-w9-d0",
+       "wp-w9-d0",
+       "nw-se-012",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w9-d0",
+       "lift-deadlift-w9-d0",
+       "splus-w9-d0",
+       "armour-lift-w9-d0"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w9-d0",
+       "gym-handstand-push-w9-d0",
+       "armour-gym-w9-d0"
+      ],
+      "engine": [
+       "eng-w9-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 21,
+      "prep": 4,
+      "wod": 11,
+      "flush": 6,
+      "transitions": 7,
+      "total": 59
+     }
+    },
+    "TUE": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Butterfly line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w9-d1",
+     "c0": "gym-butterfly-w9-d1",
+     "c1": "nw-ap-011",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-butterfly-w9-d1",
+     "engine": "eng-w9-d1",
+     "lift": "lift-bench_press-w9-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w9-d1",
+       "lift-bench_press-w9-d1",
+       "armour-lift-w9-d1",
+       "wp-w9-d1",
+       "eng-w9-d1",
+       "hdr-pm",
+       "wu-pull-skill-w9-d1",
+       "gym-butterfly-w9-d1",
+       "nw-ap-011",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w9-d1",
+       "gym-rope-w9-d1",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-pull-skill-w9-d1",
+       "gym-butterfly-w9-d1",
+       "wp-w9-d1",
+       "nw-ap-011",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w9-d1",
+       "lift-bench_press-w9-d1",
+       "splus-w9-d1",
+       "armour-lift-w9-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w9-d1",
+       "gym-butterfly-w9-d1",
+       "gym-rope-w9-d1",
+       "armour-gym-w9-d1"
+      ],
+      "engine": [
+       "eng-w9-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 11,
+      "prep": 4,
+      "wod": 19,
+      "flush": 6,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "WED": {
+     "focus": "olympic",
+     "movement": "SNATCH \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w9-d2",
+     "c0": "lift-snatch-w9-d2",
+     "c1": "nw-mx-007",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-toes-to-bar-w9-d2",
+     "engine": "eng-w9-d2",
+     "lift": "lift-snatch-w9-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w9-d2",
+       "lift-snatch-w9-d2",
+       "armour-lift-w9-d2",
+       "wp-w9-d2",
+       "eng-w9-d2",
+       "hdr-pm",
+       "wu-pull-skill-w9-d2",
+       "gym-toes-to-bar-w9-d2",
+       "nw-mx-007",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w9-d2",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-oly-lift-w9-d2",
+       "lift-snatch-w9-d2",
+       "wp-w9-d2",
+       "nw-mx-007",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w9-d2",
+       "lift-snatch-w9-d2",
+       "splus-w9-d2",
+       "armour-lift-w9-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w9-d2",
+       "gym-toes-to-bar-w9-d2",
+       "armour-gym-w9-d2"
+      ],
+      "engine": [
+       "eng-w9-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 20,
+      "prep": 4,
+      "wod": 8,
+      "flush": 2,
+      "transitions": 7,
+      "total": 53
+     }
+    },
+    "THU": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w9-d3",
+     "c0": "lift-back_squat-w9-d3",
+     "c1": "nw-partner-03",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-butterfly-w9-d3",
+     "engine": "eng-w9-d3",
+     "lift": "lift-back_squat-w9-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w9-d3",
+       "lift-back_squat-w9-d3",
+       "armour-lift-w9-d3",
+       "wp-w9-d3",
+       "eng-w9-d3",
+       "hdr-pm",
+       "wu-pull-skill-w9-d3",
+       "gym-ring-muscle-up-w9-d3",
+       "nw-thr-009",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w9-d3",
+       "gym-handstand-walk-w9-d3",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-squat-lift-w9-d3",
+       "lift-back_squat-w9-d3",
+       "wp-w9-d3",
+       "nw-partner-03",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w9-d3",
+       "lift-back_squat-w9-d3",
+       "splus-w9-d3",
+       "armour-lift-w9-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w9-d3",
+       "gym-ring-muscle-up-w9-d3",
+       "gym-handstand-walk-w9-d3",
+       "armour-gym-w9-d3"
+      ],
+      "engine": [
+       "eng-w9-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 16,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 7,
+      "total": 58
+     }
+    },
+    "FRI": {
+     "focus": "press",
+     "movement": "AMANDA \u2014 scored test",
+     "stimulus": "anaerobic",
+     "rpe": "10",
+     "rpeNote": "RPE 10 \u2014 scored test: all-out. Rest as needed to hit your best time/score.",
+     "benchmark": "bm-amanda",
+     "warmup": "wu-ohead-lift-w9-d4",
+     "c0": "lift-strict_press-w9-d4",
+     "c1": "bm-amanda",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-front-lever-w9-d4",
+     "engine": "eng-w9-d4",
+     "lift": "lift-strict_press-w9-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w9-d4",
+       "sled-w9-d4",
+       "armour-lift-w9-d4",
+       "wp-w9-d4",
+       "eng-w9-d4",
+       "hdr-pm",
+       "wu-pull-skill-w9-d4",
+       "gym-front-lever-w9-d4",
+       "bm-amanda",
+       "lift-strict_press-w9-d4",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w9-d4",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-ohead-lift-w9-d4",
+       "wp-w9-d4",
+       "bm-amanda",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w9-d4",
+       "lift-strict_press-w9-d4",
+       "sled-w9-d4",
+       "splus-w9-d4",
+       "armour-lift-w9-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w9-d4",
+       "gym-front-lever-w9-d4",
+       "armour-gym-w9-d4"
+      ],
+      "engine": [
+       "eng-w9-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 0,
+      "prep": 4,
+      "wod": 6,
+      "flush": 6,
+      "transitions": 6,
+      "total": 32
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-002",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 10,
+   "start": "2026-10-05",
+   "block": "LEAGUE",
+   "emphasis": "build",
+   "intensity": "high",
+   "scored": true,
+   "days": {
+    "MON": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w10-d0",
+     "c0": "lift-deadlift-w10-d0",
+     "c1": "nw-se-019",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-handstand-push-w10-d0",
+     "engine": "eng-w10-d0",
+     "lift": "lift-deadlift-w10-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w10-d0",
+       "lift-deadlift-w10-d0",
+       "armour-lift-w10-d0",
+       "wp-w10-d0",
+       "eng-w10-d0",
+       "hdr-pm",
+       "wu-ohead-skill-w10-d0",
+       "gym-handstand-push-w10-d0",
+       "nw-se-019",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w10-d0",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-hinge-lift-w10-d0",
+       "lift-deadlift-w10-d0",
+       "wp-w10-d0",
+       "nw-se-019",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w10-d0",
+       "lift-deadlift-w10-d0",
+       "splus-w10-d0",
+       "armour-lift-w10-d0"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w10-d0",
+       "gym-handstand-push-w10-d0",
+       "armour-gym-w10-d0"
+      ],
+      "engine": [
+       "eng-w10-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 18,
+      "prep": 4,
+      "wod": 15,
+      "flush": 6,
+      "transitions": 7,
+      "total": 60
+     }
+    },
+    "TUE": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Butterfly line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w10-d1",
+     "c0": "gym-butterfly-w10-d1",
+     "c1": "nw-ap-014",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-butterfly-w10-d1",
+     "engine": "eng-w10-d1",
+     "lift": "lift-strict_press-w10-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w10-d1",
+       "lift-strict_press-w10-d1",
+       "armour-lift-w10-d1",
+       "wp-w10-d1",
+       "eng-w10-d1",
+       "hdr-pm",
+       "wu-pull-skill-w10-d1",
+       "gym-butterfly-w10-d1",
+       "nw-ap-014",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w10-d1",
+       "gym-planche-w10-d1",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-pull-skill-w10-d1",
+       "gym-butterfly-w10-d1",
+       "wp-w10-d1",
+       "nw-ap-014",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w10-d1",
+       "lift-strict_press-w10-d1",
+       "splus-w10-d1",
+       "armour-lift-w10-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w10-d1",
+       "gym-butterfly-w10-d1",
+       "gym-planche-w10-d1",
+       "armour-gym-w10-d1"
+      ],
+      "engine": [
+       "eng-w10-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 12,
+      "prep": 4,
+      "wod": 20,
+      "flush": 6,
+      "transitions": 7,
+      "total": 59
+     }
+    },
+    "WED": {
+     "focus": "olympic",
+     "movement": "CLEAN & JERK \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w10-d2",
+     "c0": "lift-clean_and_jerk-w10-d2",
+     "c1": "nw-mx-012",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-front-lever-w10-d2",
+     "engine": "eng-w10-d2",
+     "lift": "lift-clean_and_jerk-w10-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w10-d2",
+       "lift-clean_and_jerk-w10-d2",
+       "armour-lift-w10-d2",
+       "wp-w10-d2",
+       "eng-w10-d2",
+       "hdr-pm",
+       "wu-pull-skill-w10-d2",
+       "gym-front-lever-w10-d2",
+       "nw-mx-012",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w10-d2",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-oly-lift-w10-d2",
+       "lift-clean_and_jerk-w10-d2",
+       "wp-w10-d2",
+       "nw-mx-012",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w10-d2",
+       "lift-clean_and_jerk-w10-d2",
+       "splus-w10-d2",
+       "armour-lift-w10-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w10-d2",
+       "gym-front-lever-w10-d2",
+       "armour-gym-w10-d2"
+      ],
+      "engine": [
+       "eng-w10-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 18,
+      "prep": 4,
+      "wod": 10,
+      "flush": 2,
+      "transitions": 7,
+      "total": 53
+     }
+    },
+    "THU": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w10-d3",
+     "c0": "lift-back_squat-w10-d3",
+     "c1": "nw-partner-04",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-butterfly-w10-d3",
+     "engine": "eng-w10-d3",
+     "lift": "lift-back_squat-w10-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w10-d3",
+       "lift-back_squat-w10-d3",
+       "armour-lift-w10-d3",
+       "wp-w10-d3",
+       "eng-w10-d3",
+       "hdr-pm",
+       "wu-pull-skill-w10-d3",
+       "gym-l-sit-w10-d3",
+       "nw-thr-008",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w10-d3",
+       "gym-rope-w10-d3",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-squat-lift-w10-d3",
+       "lift-back_squat-w10-d3",
+       "wp-w10-d3",
+       "nw-partner-04",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w10-d3",
+       "lift-back_squat-w10-d3",
+       "splus-w10-d3",
+       "armour-lift-w10-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w10-d3",
+       "gym-l-sit-w10-d3",
+       "gym-rope-w10-d3",
+       "armour-gym-w10-d3"
+      ],
+      "engine": [
+       "eng-w10-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 13,
+      "prep": 4,
+      "wod": 17,
+      "flush": 6,
+      "transitions": 7,
+      "total": 60
+     }
+    },
+    "FRI": {
+     "focus": "press",
+     "movement": "BENCH PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-hpress-lift-w10-d4",
+     "c0": "lift-bench_press-w10-d4",
+     "c1": "nw-an-010",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-handstand-push-w10-d4",
+     "engine": "eng-w10-d4",
+     "lift": "lift-bench_press-w10-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w10-d4",
+       "lift-bench_press-w10-d4",
+       "sled-w10-d4",
+       "armour-lift-w10-d4",
+       "wp-w10-d4",
+       "eng-w10-d4",
+       "hdr-pm",
+       "wu-ohead-skill-w10-d4",
+       "gym-handstand-push-w10-d4",
+       "nw-an-010",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w10-d4",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-hpress-lift-w10-d4",
+       "lift-bench_press-w10-d4",
+       "wp-w10-d4",
+       "nw-an-010",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w10-d4",
+       "lift-bench_press-w10-d4",
+       "sled-w10-d4",
+       "splus-w10-d4",
+       "armour-lift-w10-d4"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w10-d4",
+       "gym-handstand-push-w10-d4",
+       "armour-gym-w10-d4"
+      ],
+      "engine": [
+       "eng-w10-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 13,
+      "prep": 4,
+      "wod": 16,
+      "flush": 6,
+      "transitions": 7,
+      "total": 56
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-003",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 11,
+   "start": "2026-10-12",
+   "block": "LEAGUE",
+   "emphasis": "build",
+   "intensity": "high",
+   "scored": true,
+   "days": {
+    "MON": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w11-d0",
+     "c0": "lift-deadlift-w11-d0",
+     "c1": "nw-se-021",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-handstand-push-w11-d0",
+     "engine": "eng-w11-d0",
+     "lift": "lift-deadlift-w11-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w11-d0",
+       "lift-deadlift-w11-d0",
+       "armour-lift-w11-d0",
+       "wp-w11-d0",
+       "eng-w11-d0",
+       "hdr-pm",
+       "wu-ohead-skill-w11-d0",
+       "gym-handstand-push-w11-d0",
+       "nw-se-021",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w11-d0",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-hinge-lift-w11-d0",
+       "lift-deadlift-w11-d0",
+       "wp-w11-d0",
+       "nw-se-021",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w11-d0",
+       "lift-deadlift-w11-d0",
+       "splus-w11-d0",
+       "armour-lift-w11-d0"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w11-d0",
+       "gym-handstand-push-w11-d0",
+       "armour-gym-w11-d0"
+      ],
+      "engine": [
+       "eng-w11-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 13,
+      "prep": 4,
+      "wod": 18,
+      "flush": 6,
+      "transitions": 7,
+      "total": 58
+     }
+    },
+    "TUE": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Butterfly line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w11-d1",
+     "c0": "gym-butterfly-w11-d1",
+     "c1": "nw-ap-016",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-butterfly-w11-d1",
+     "engine": "eng-w11-d1",
+     "lift": "lift-bench_press-w11-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w11-d1",
+       "lift-bench_press-w11-d1",
+       "armour-lift-w11-d1",
+       "wp-w11-d1",
+       "eng-w11-d1",
+       "hdr-pm",
+       "wu-pull-skill-w11-d1",
+       "gym-butterfly-w11-d1",
+       "nw-ap-016",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w11-d1",
+       "gym-toes-to-bar-w11-d1",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-pull-skill-w11-d1",
+       "gym-butterfly-w11-d1",
+       "wp-w11-d1",
+       "nw-ap-016",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w11-d1",
+       "lift-bench_press-w11-d1",
+       "splus-w11-d1",
+       "armour-lift-w11-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w11-d1",
+       "gym-butterfly-w11-d1",
+       "gym-toes-to-bar-w11-d1",
+       "armour-gym-w11-d1"
+      ],
+      "engine": [
+       "eng-w11-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 3,
+      "prep": 4,
+      "wod": 24,
+      "flush": 6,
+      "transitions": 7,
+      "total": 54
+     }
+    },
+    "WED": {
+     "focus": "olympic",
+     "movement": "FRAN \u2014 scored test",
+     "stimulus": "mixed",
+     "rpe": "10",
+     "rpeNote": "RPE 10 \u2014 scored test: all-out. Rest as needed to hit your best time/score.",
+     "benchmark": "bm-fran",
+     "warmup": "wu-oly-lift-w11-d2",
+     "c0": "lift-snatch-w11-d2",
+     "c1": "bm-fran",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-front-lever-w11-d2",
+     "engine": "eng-w11-d2",
+     "lift": "lift-snatch-w11-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w11-d2",
+       "armour-lift-w11-d2",
+       "wp-w11-d2",
+       "eng-w11-d2",
+       "hdr-pm",
+       "wu-pull-skill-w11-d2",
+       "gym-front-lever-w11-d2",
+       "bm-fran",
+       "lift-snatch-w11-d2",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w11-d2",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-oly-lift-w11-d2",
+       "wp-w11-d2",
+       "bm-fran",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w11-d2",
+       "lift-snatch-w11-d2",
+       "splus-w11-d2",
+       "armour-lift-w11-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w11-d2",
+       "gym-front-lever-w11-d2",
+       "armour-gym-w11-d2"
+      ],
+      "engine": [
+       "eng-w11-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 0,
+      "prep": 4,
+      "wod": 7,
+      "flush": 2,
+      "transitions": 6,
+      "total": 31
+     }
+    },
+    "THU": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w11-d3",
+     "c0": "lift-back_squat-w11-d3",
+     "c1": "nw-partner-05",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-butterfly-w11-d3",
+     "engine": "eng-w11-d3",
+     "lift": "lift-back_squat-w11-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w11-d3",
+       "lift-back_squat-w11-d3",
+       "armour-lift-w11-d3",
+       "wp-w11-d3",
+       "eng-w11-d3",
+       "hdr-pm",
+       "wu-pull-skill-w11-d3",
+       "gym-butterfly-w11-d3",
+       "nw-thr-010",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w11-d3",
+       "gym-rope-w11-d3",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-squat-lift-w11-d3",
+       "lift-back_squat-w11-d3",
+       "wp-w11-d3",
+       "nw-partner-05",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w11-d3",
+       "lift-back_squat-w11-d3",
+       "splus-w11-d3",
+       "armour-lift-w11-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w11-d3",
+       "gym-butterfly-w11-d3",
+       "gym-rope-w11-d3",
+       "armour-gym-w11-d3"
+      ],
+      "engine": [
+       "eng-w11-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 13,
+      "prep": 4,
+      "wod": 16,
+      "flush": 6,
+      "transitions": 7,
+      "total": 59
+     }
+    },
+    "FRI": {
+     "focus": "press",
+     "movement": "STRICT PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-ohead-lift-w11-d4",
+     "c0": "lift-strict_press-w11-d4",
+     "c1": "nw-an-011",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w11-d4",
+     "engine": "eng-w11-d4",
+     "lift": "lift-strict_press-w11-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w11-d4",
+       "lift-strict_press-w11-d4",
+       "sled-w11-d4",
+       "armour-lift-w11-d4",
+       "wp-w11-d4",
+       "eng-w11-d4",
+       "hdr-pm",
+       "wu-pull-skill-w11-d4",
+       "gym-bar-muscle-up-w11-d4",
+       "nw-an-011",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w11-d4",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-ohead-lift-w11-d4",
+       "lift-strict_press-w11-d4",
+       "wp-w11-d4",
+       "nw-an-011",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w11-d4",
+       "lift-strict_press-w11-d4",
+       "sled-w11-d4",
+       "splus-w11-d4",
+       "armour-lift-w11-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w11-d4",
+       "gym-bar-muscle-up-w11-d4",
+       "armour-gym-w11-d4"
+      ],
+      "engine": [
+       "eng-w11-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 19,
+      "prep": 4,
+      "wod": 7,
+      "flush": 6,
+      "transitions": 7,
+      "total": 53
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-004",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 12,
+   "start": "2026-10-19",
+   "block": "LEAGUE",
+   "emphasis": "deload",
+   "intensity": "light",
+   "scored": true,
+   "days": {
+    "MON": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "6",
+     "rpeNote": "Target RPE 6 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w12-d0",
+     "c0": "lift-deadlift-w12-d0",
+     "c1": "nw-se-001",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-handstand-push-w12-d0",
+     "engine": "eng-w12-d0",
+     "lift": "lift-deadlift-w12-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w12-d0",
+       "lift-deadlift-w12-d0",
+       "armour-lift-w12-d0",
+       "wp-w12-d0",
+       "eng-w12-d0",
+       "hdr-pm",
+       "wu-ohead-skill-w12-d0",
+       "gym-handstand-push-w12-d0",
+       "nw-se-001",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-hinge-lift-w12-d0",
+       "lift-deadlift-w12-d0",
+       "wp-w12-d0",
+       "nw-se-001",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w12-d0",
+       "lift-deadlift-w12-d0",
+       "armour-lift-w12-d0"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w12-d0",
+       "gym-handstand-push-w12-d0",
+       "armour-gym-w12-d0"
+      ],
+      "engine": [
+       "eng-w12-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 5,
+      "prep": 4,
+      "wod": 8,
+      "flush": 6,
+      "transitions": 7,
+      "total": 40
+     }
+    },
+    "TUE": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Butterfly line",
+     "stimulus": "aerobic-power",
+     "rpe": "5",
+     "rpeNote": "Target RPE 5 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w12-d1",
+     "c0": "gym-butterfly-w12-d1",
+     "c1": "nw-ap-020",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-butterfly-w12-d1",
+     "engine": "eng-w12-d1",
+     "lift": "lift-strict_press-w12-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w12-d1",
+       "lift-strict_press-w12-d1",
+       "armour-lift-w12-d1",
+       "wp-w12-d1",
+       "eng-w12-d1",
+       "hdr-pm",
+       "wu-pull-skill-w12-d1",
+       "gym-butterfly-w12-d1",
+       "nw-ap-020",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "gym-front-lever-w12-d1",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-pull-skill-w12-d1",
+       "gym-butterfly-w12-d1",
+       "wp-w12-d1",
+       "nw-ap-020",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w12-d1",
+       "lift-strict_press-w12-d1",
+       "armour-lift-w12-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w12-d1",
+       "gym-butterfly-w12-d1",
+       "gym-front-lever-w12-d1",
+       "armour-gym-w12-d1"
+      ],
+      "engine": [
+       "eng-w12-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 10,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 47
+     }
+    },
+    "WED": {
+     "focus": "olympic",
+     "movement": "CLEAN & JERK \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "5\u20136",
+     "rpeNote": "Target RPE 5\u20136 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w12-d2",
+     "c0": "lift-clean_and_jerk-w12-d2",
+     "c1": "nw-mx-016",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-rope-w12-d2",
+     "engine": "eng-w12-d2",
+     "lift": "lift-clean_and_jerk-w12-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w12-d2",
+       "lift-clean_and_jerk-w12-d2",
+       "armour-lift-w12-d2",
+       "wp-w12-d2",
+       "eng-w12-d2",
+       "hdr-pm",
+       "wu-pull-skill-w12-d2",
+       "gym-rope-w12-d2",
+       "nw-mx-016",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-oly-lift-w12-d2",
+       "lift-clean_and_jerk-w12-d2",
+       "wp-w12-d2",
+       "nw-mx-016",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w12-d2",
+       "lift-clean_and_jerk-w12-d2",
+       "armour-lift-w12-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w12-d2",
+       "gym-rope-w12-d2",
+       "armour-gym-w12-d2"
+      ],
+      "engine": [
+       "eng-w12-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 5,
+      "prep": 4,
+      "wod": 8,
+      "flush": 2,
+      "transitions": 7,
+      "total": 38
+     }
+    },
+    "THU": {
+     "focus": "squat",
+     "movement": "FRONT SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "5\u20136",
+     "rpeNote": "Target RPE 5\u20136 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w12-d3",
+     "c0": "lift-front_squat-w12-d3",
+     "c1": "nw-partner-06",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-butterfly-w12-d3",
+     "engine": "eng-w12-d3",
+     "lift": "lift-front_squat-w12-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w12-d3",
+       "lift-front_squat-w12-d3",
+       "armour-lift-w12-d3",
+       "wp-w12-d3",
+       "eng-w12-d3",
+       "hdr-pm",
+       "wu-pull-skill-w12-d3",
+       "gym-l-sit-w12-d3",
+       "nw-thr-012",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "gym-ring-muscle-up-w12-d3",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-squat-lift-w12-d3",
+       "lift-front_squat-w12-d3",
+       "wp-w12-d3",
+       "nw-partner-06",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w12-d3",
+       "lift-front_squat-w12-d3",
+       "armour-lift-w12-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w12-d3",
+       "gym-l-sit-w12-d3",
+       "gym-ring-muscle-up-w12-d3",
+       "armour-gym-w12-d3"
+      ],
+      "engine": [
+       "eng-w12-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 5,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 48
+     }
+    },
+    "FRI": {
+     "focus": "press",
+     "movement": "BENCH PRESS \u2014 session",
+     "stimulus": "aerobic-power",
+     "rpe": "5",
+     "rpeNote": "Target RPE 5 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-hpress-lift-w12-d4",
+     "c0": "lift-bench_press-w12-d4",
+     "c1": "nw-ap-017",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-handstand-push-w12-d4",
+     "engine": "eng-w12-d4",
+     "lift": "lift-bench_press-w12-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w12-d4",
+       "lift-bench_press-w12-d4",
+       "sled-w12-d4",
+       "armour-lift-w12-d4",
+       "wp-w12-d4",
+       "eng-w12-d4",
+       "hdr-pm",
+       "wu-ohead-skill-w12-d4",
+       "gym-handstand-push-w12-d4",
+       "nw-ap-017",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-hpress-lift-w12-d4",
+       "lift-bench_press-w12-d4",
+       "wp-w12-d4",
+       "nw-ap-017",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w12-d4",
+       "lift-bench_press-w12-d4",
+       "sled-w12-d4",
+       "armour-lift-w12-d4"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w12-d4",
+       "gym-handstand-push-w12-d4",
+       "armour-gym-w12-d4"
+      ],
+      "engine": [
+       "eng-w12-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 5,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 42
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-001",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 13,
+   "start": "2026-10-26",
+   "block": "LEAGUE",
+   "emphasis": "sharpen",
+   "intensity": "high",
+   "scored": true,
+   "days": {
+    "MON": {
+     "focus": "skill",
+     "movement": "DT \u2014 scored test",
+     "stimulus": "aerobic-power",
+     "rpe": "10",
+     "rpeNote": "RPE 10 \u2014 scored test: all-out. Rest as needed to hit your best time/score.",
+     "benchmark": "bm-dt",
+     "warmup": "wu-pull-skill-w13-d0",
+     "c0": "gym-front-lever-w13-d0",
+     "c1": "bm-dt",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-front-lever-w13-d0",
+     "engine": "eng-w13-d0",
+     "lift": "lift-bench_press-w13-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w13-d0",
+       "lift-bench_press-w13-d0",
+       "armour-lift-w13-d0",
+       "wp-w13-d0",
+       "eng-w13-d0",
+       "hdr-pm",
+       "wu-pull-skill-w13-d0",
+       "bm-dt",
+       "gym-front-lever-w13-d0",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w13-d0",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-pull-skill-w13-d0",
+       "wp-w13-d0",
+       "bm-dt",
+       "gym-front-lever-w13-d0",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w13-d0",
+       "lift-bench_press-w13-d0",
+       "splus-w13-d0",
+       "armour-lift-w13-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w13-d0",
+       "gym-front-lever-w13-d0",
+       "armour-gym-w13-d0"
+      ],
+      "engine": [
+       "eng-w13-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 10,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 50
+     }
+    },
+    "TUE": {
+     "focus": "olympic",
+     "movement": "SNATCH \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "8\u20139",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w13-d1",
+     "c0": "lift-snatch-w13-d1",
+     "c1": "nw-mx-024",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-toes-to-bar-w13-d1",
+     "engine": "eng-w13-d1",
+     "lift": "lift-snatch-w13-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w13-d1",
+       "lift-snatch-w13-d1",
+       "armour-lift-w13-d1",
+       "wp-w13-d1",
+       "eng-w13-d1",
+       "hdr-pm",
+       "wu-pull-skill-w13-d1",
+       "gym-toes-to-bar-w13-d1",
+       "nw-mx-024",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w13-d1",
+       "gym-l-sit-w13-d1",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-oly-lift-w13-d1",
+       "lift-snatch-w13-d1",
+       "wp-w13-d1",
+       "nw-mx-024",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w13-d1",
+       "lift-snatch-w13-d1",
+       "splus-w13-d1",
+       "armour-lift-w13-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w13-d1",
+       "gym-toes-to-bar-w13-d1",
+       "gym-l-sit-w13-d1",
+       "armour-gym-w13-d1"
+      ],
+      "engine": [
+       "eng-w13-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 10,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 49
+     }
+    },
+    "WED": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w13-d2",
+     "c0": "lift-back_squat-w13-d2",
+     "c1": "nw-thr-020",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-front-lever-w13-d2",
+     "engine": "eng-w13-d2",
+     "lift": "lift-back_squat-w13-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w13-d2",
+       "lift-back_squat-w13-d2",
+       "armour-lift-w13-d2",
+       "wp-w13-d2",
+       "eng-w13-d2",
+       "hdr-pm",
+       "wu-pull-skill-w13-d2",
+       "gym-front-lever-w13-d2",
+       "nw-thr-020",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w13-d2",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-squat-lift-w13-d2",
+       "lift-back_squat-w13-d2",
+       "wp-w13-d2",
+       "nw-thr-020",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w13-d2",
+       "lift-back_squat-w13-d2",
+       "splus-w13-d2",
+       "armour-lift-w13-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w13-d2",
+       "gym-front-lever-w13-d2",
+       "armour-gym-w13-d2"
+      ],
+      "engine": [
+       "eng-w13-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 14,
+      "prep": 4,
+      "wod": 19,
+      "flush": 2,
+      "transitions": 7,
+      "total": 59
+     }
+    },
+    "THU": {
+     "focus": "press",
+     "movement": "STRICT PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-ohead-lift-w13-d3",
+     "c0": "lift-strict_press-w13-d3",
+     "c1": "nw-partner-01",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-toes-to-bar-w13-d3",
+     "engine": "eng-w13-d3",
+     "lift": "lift-strict_press-w13-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w13-d3",
+       "lift-strict_press-w13-d3",
+       "sled-w13-d3",
+       "armour-lift-w13-d3",
+       "wp-w13-d3",
+       "eng-w13-d3",
+       "hdr-pm",
+       "wu-pull-skill-w13-d3",
+       "gym-toes-to-bar-w13-d3",
+       "nw-an-012",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w13-d3",
+       "gym-rope-w13-d3",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-ohead-lift-w13-d3",
+       "lift-strict_press-w13-d3",
+       "wp-w13-d3",
+       "nw-partner-01",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w13-d3",
+       "lift-strict_press-w13-d3",
+       "sled-w13-d3",
+       "splus-w13-d3",
+       "armour-lift-w13-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w13-d3",
+       "gym-toes-to-bar-w13-d3",
+       "gym-rope-w13-d3",
+       "armour-gym-w13-d3"
+      ],
+      "engine": [
+       "eng-w13-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 16,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 56
+     }
+    },
+    "FRI": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w13-d4",
+     "c0": "lift-deadlift-w13-d4",
+     "c1": "nw-se-023",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-front-lever-w13-d4",
+     "engine": "eng-w13-d4",
+     "lift": "lift-deadlift-w13-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w13-d4",
+       "lift-deadlift-w13-d4",
+       "armour-lift-w13-d4",
+       "wp-w13-d4",
+       "eng-w13-d4",
+       "hdr-pm",
+       "wu-pull-skill-w13-d4",
+       "gym-front-lever-w13-d4",
+       "nw-se-023",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w13-d4",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-hinge-lift-w13-d4",
+       "lift-deadlift-w13-d4",
+       "wp-w13-d4",
+       "nw-se-023",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w13-d4",
+       "lift-deadlift-w13-d4",
+       "splus-w13-d4",
+       "armour-lift-w13-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w13-d4",
+       "gym-front-lever-w13-d4",
+       "armour-gym-w13-d4"
+      ],
+      "engine": [
+       "eng-w13-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 9,
+      "prep": 4,
+      "wod": 21,
+      "flush": 6,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-002",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 14,
+   "start": "2026-11-02",
+   "block": "LEAGUE",
+   "emphasis": "sharpen",
+   "intensity": "high",
+   "scored": true,
+   "days": {
+    "MON": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Front-Lever / Straight-Arm line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w14-d0",
+     "c0": "gym-front-lever-w14-d0",
+     "c1": "nw-ap-015",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-front-lever-w14-d0",
+     "engine": "eng-w14-d0",
+     "lift": "lift-strict_press-w14-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w14-d0",
+       "lift-strict_press-w14-d0",
+       "armour-lift-w14-d0",
+       "wp-w14-d0",
+       "eng-w14-d0",
+       "hdr-pm",
+       "wu-pull-skill-w14-d0",
+       "gym-front-lever-w14-d0",
+       "nw-ap-015",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w14-d0",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-pull-skill-w14-d0",
+       "gym-front-lever-w14-d0",
+       "wp-w14-d0",
+       "nw-ap-015",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w14-d0",
+       "lift-strict_press-w14-d0",
+       "splus-w14-d0",
+       "armour-lift-w14-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w14-d0",
+       "gym-front-lever-w14-d0",
+       "armour-gym-w14-d0"
+      ],
+      "engine": [
+       "eng-w14-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 11,
+      "prep": 4,
+      "wod": 17,
+      "flush": 6,
+      "transitions": 7,
+      "total": 55
+     }
+    },
+    "TUE": {
+     "focus": "olympic",
+     "movement": "CLEAN & JERK \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w14-d1",
+     "c0": "lift-clean_and_jerk-w14-d1",
+     "c1": "nw-mx-003",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-toes-to-bar-w14-d1",
+     "engine": "eng-w14-d1",
+     "lift": "lift-clean_and_jerk-w14-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w14-d1",
+       "lift-clean_and_jerk-w14-d1",
+       "armour-lift-w14-d1",
+       "wp-w14-d1",
+       "eng-w14-d1",
+       "hdr-pm",
+       "wu-pull-skill-w14-d1",
+       "gym-toes-to-bar-w14-d1",
+       "nw-mx-003",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w14-d1",
+       "gym-l-sit-w14-d1",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-oly-lift-w14-d1",
+       "lift-clean_and_jerk-w14-d1",
+       "wp-w14-d1",
+       "nw-mx-003",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w14-d1",
+       "lift-clean_and_jerk-w14-d1",
+       "splus-w14-d1",
+       "armour-lift-w14-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w14-d1",
+       "gym-toes-to-bar-w14-d1",
+       "gym-l-sit-w14-d1",
+       "armour-gym-w14-d1"
+      ],
+      "engine": [
+       "eng-w14-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 10,
+      "prep": 4,
+      "wod": 20,
+      "flush": 6,
+      "transitions": 7,
+      "total": 59
+     }
+    },
+    "WED": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w14-d2",
+     "c0": "lift-back_squat-w14-d2",
+     "c1": "nw-thr-013",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-front-lever-w14-d2",
+     "engine": "eng-w14-d2",
+     "lift": "lift-back_squat-w14-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w14-d2",
+       "lift-back_squat-w14-d2",
+       "armour-lift-w14-d2",
+       "wp-w14-d2",
+       "eng-w14-d2",
+       "hdr-pm",
+       "wu-pull-skill-w14-d2",
+       "gym-front-lever-w14-d2",
+       "nw-thr-013",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w14-d2",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-squat-lift-w14-d2",
+       "lift-back_squat-w14-d2",
+       "wp-w14-d2",
+       "nw-thr-013",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w14-d2",
+       "lift-back_squat-w14-d2",
+       "splus-w14-d2",
+       "armour-lift-w14-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w14-d2",
+       "gym-front-lever-w14-d2",
+       "armour-gym-w14-d2"
+      ],
+      "engine": [
+       "eng-w14-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 9,
+      "prep": 4,
+      "wod": 24,
+      "flush": 2,
+      "transitions": 7,
+      "total": 59
+     }
+    },
+    "THU": {
+     "focus": "press",
+     "movement": "BENCH PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-hpress-lift-w14-d3",
+     "c0": "lift-bench_press-w14-d3",
+     "c1": "nw-partner-02",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-toes-to-bar-w14-d3",
+     "engine": "eng-w14-d3",
+     "lift": "lift-bench_press-w14-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w14-d3",
+       "lift-bench_press-w14-d3",
+       "sled-w14-d3",
+       "armour-lift-w14-d3",
+       "wp-w14-d3",
+       "eng-w14-d3",
+       "hdr-pm",
+       "wu-pull-skill-w14-d3",
+       "gym-toes-to-bar-w14-d3",
+       "nw-an-013",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w14-d3",
+       "gym-planche-w14-d3",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-hpress-lift-w14-d3",
+       "lift-bench_press-w14-d3",
+       "wp-w14-d3",
+       "nw-partner-02",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w14-d3",
+       "lift-bench_press-w14-d3",
+       "sled-w14-d3",
+       "splus-w14-d3",
+       "armour-lift-w14-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w14-d3",
+       "gym-toes-to-bar-w14-d3",
+       "gym-planche-w14-d3",
+       "armour-gym-w14-d3"
+      ],
+      "engine": [
+       "eng-w14-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 14,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 54
+     }
+    },
+    "FRI": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w14-d4",
+     "c0": "lift-deadlift-w14-d4",
+     "c1": "nw-se-003",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-front-lever-w14-d4",
+     "engine": "eng-w14-d4",
+     "lift": "lift-deadlift-w14-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w14-d4",
+       "lift-deadlift-w14-d4",
+       "armour-lift-w14-d4",
+       "wp-w14-d4",
+       "eng-w14-d4",
+       "hdr-pm",
+       "wu-pull-skill-w14-d4",
+       "gym-front-lever-w14-d4",
+       "nw-se-003",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w14-d4",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-hinge-lift-w14-d4",
+       "lift-deadlift-w14-d4",
+       "wp-w14-d4",
+       "nw-se-003",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w14-d4",
+       "lift-deadlift-w14-d4",
+       "splus-w14-d4",
+       "armour-lift-w14-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w14-d4",
+       "gym-front-lever-w14-d4",
+       "armour-gym-w14-d4"
+      ],
+      "engine": [
+       "eng-w14-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 15,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 52
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-003",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 15,
+   "start": "2026-11-09",
+   "block": "RE-BUILD",
+   "emphasis": "deload",
+   "intensity": "light",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Front-Lever / Straight-Arm line",
+     "stimulus": "aerobic-power",
+     "rpe": "5",
+     "rpeNote": "Target RPE 5 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w15-d0",
+     "c0": "gym-front-lever-w15-d0",
+     "c1": "nw-ap-018",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-front-lever-w15-d0",
+     "engine": "eng-w15-d0",
+     "lift": "lift-bench_press-w15-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w15-d0",
+       "lift-bench_press-w15-d0",
+       "armour-lift-w15-d0",
+       "wp-w15-d0",
+       "eng-w15-d0",
+       "hdr-pm",
+       "wu-pull-skill-w15-d0",
+       "gym-front-lever-w15-d0",
+       "nw-ap-018",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-pull-skill-w15-d0",
+       "gym-front-lever-w15-d0",
+       "wp-w15-d0",
+       "nw-ap-018",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w15-d0",
+       "lift-bench_press-w15-d0",
+       "armour-lift-w15-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w15-d0",
+       "gym-front-lever-w15-d0",
+       "armour-gym-w15-d0"
+      ],
+      "engine": [
+       "eng-w15-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 3,
+      "prep": 4,
+      "wod": 8,
+      "flush": 6,
+      "transitions": 7,
+      "total": 38
+     }
+    },
+    "TUE": {
+     "focus": "olympic",
+     "movement": "SNATCH \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "5\u20136",
+     "rpeNote": "Target RPE 5\u20136 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w15-d1",
+     "c0": "lift-snatch-w15-d1",
+     "c1": "nw-mx-004",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-toes-to-bar-w15-d1",
+     "engine": "eng-w15-d1",
+     "lift": "lift-snatch-w15-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w15-d1",
+       "lift-snatch-w15-d1",
+       "armour-lift-w15-d1",
+       "wp-w15-d1",
+       "eng-w15-d1",
+       "hdr-pm",
+       "wu-pull-skill-w15-d1",
+       "gym-toes-to-bar-w15-d1",
+       "nw-mx-004",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "gym-bar-muscle-up-w15-d1",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-oly-lift-w15-d1",
+       "lift-snatch-w15-d1",
+       "wp-w15-d1",
+       "nw-mx-004",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w15-d1",
+       "lift-snatch-w15-d1",
+       "armour-lift-w15-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w15-d1",
+       "gym-toes-to-bar-w15-d1",
+       "gym-bar-muscle-up-w15-d1",
+       "armour-gym-w15-d1"
+      ],
+      "engine": [
+       "eng-w15-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 5,
+      "prep": 4,
+      "wod": 11,
+      "flush": 6,
+      "transitions": 7,
+      "total": 45
+     }
+    },
+    "WED": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "5\u20136",
+     "rpeNote": "Target RPE 5\u20136 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w15-d2",
+     "c0": "lift-back_squat-w15-d2",
+     "c1": "nw-thr-015",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-front-lever-w15-d2",
+     "engine": "eng-w15-d2",
+     "lift": "lift-back_squat-w15-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w15-d2",
+       "lift-back_squat-w15-d2",
+       "armour-lift-w15-d2",
+       "wp-w15-d2",
+       "eng-w15-d2",
+       "hdr-pm",
+       "wu-pull-skill-w15-d2",
+       "gym-front-lever-w15-d2",
+       "nw-thr-015",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-squat-lift-w15-d2",
+       "lift-back_squat-w15-d2",
+       "wp-w15-d2",
+       "nw-thr-015",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w15-d2",
+       "lift-back_squat-w15-d2",
+       "armour-lift-w15-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w15-d2",
+       "gym-front-lever-w15-d2",
+       "armour-gym-w15-d2"
+      ],
+      "engine": [
+       "eng-w15-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 5,
+      "prep": 4,
+      "wod": 17,
+      "flush": 2,
+      "transitions": 7,
+      "total": 48
+     }
+    },
+    "THU": {
+     "focus": "press",
+     "movement": "STRICT PRESS \u2014 session",
+     "stimulus": "aerobic-power",
+     "rpe": "5",
+     "rpeNote": "Target RPE 5 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-ohead-lift-w15-d3",
+     "c0": "lift-strict_press-w15-d3",
+     "c1": "nw-ap-025",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-toes-to-bar-w15-d3",
+     "engine": "eng-w15-d3",
+     "lift": "lift-strict_press-w15-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w15-d3",
+       "lift-strict_press-w15-d3",
+       "sled-w15-d3",
+       "armour-lift-w15-d3",
+       "wp-w15-d3",
+       "eng-w15-d3",
+       "hdr-pm",
+       "wu-pull-skill-w15-d3",
+       "gym-toes-to-bar-w15-d3",
+       "nw-ap-025",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "gym-planche-w15-d3",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-ohead-lift-w15-d3",
+       "lift-strict_press-w15-d3",
+       "wp-w15-d3",
+       "nw-ap-025",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w15-d3",
+       "lift-strict_press-w15-d3",
+       "sled-w15-d3",
+       "armour-lift-w15-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w15-d3",
+       "gym-toes-to-bar-w15-d3",
+       "gym-planche-w15-d3",
+       "armour-gym-w15-d3"
+      ],
+      "engine": [
+       "eng-w15-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 5,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 45
+     }
+    },
+    "FRI": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "6",
+     "rpeNote": "Target RPE 6 \u2014 deload week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w15-d4",
+     "c0": "lift-deadlift-w15-d4",
+     "c1": "nw-partner-03",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-front-lever-w15-d4",
+     "engine": "eng-w15-d4",
+     "lift": "lift-deadlift-w15-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w15-d4",
+       "lift-deadlift-w15-d4",
+       "armour-lift-w15-d4",
+       "wp-w15-d4",
+       "eng-w15-d4",
+       "hdr-pm",
+       "wu-pull-skill-w15-d4",
+       "gym-front-lever-w15-d4",
+       "nw-se-007",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-hinge-lift-w15-d4",
+       "lift-deadlift-w15-d4",
+       "wp-w15-d4",
+       "nw-partner-03",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w15-d4",
+       "lift-deadlift-w15-d4",
+       "armour-lift-w15-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w15-d4",
+       "gym-front-lever-w15-d4",
+       "armour-gym-w15-d4"
+      ],
+      "engine": [
+       "eng-w15-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 5,
+      "prep": 4,
+      "wod": 8,
+      "flush": 6,
+      "transitions": 7,
+      "total": 40
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-004",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 16,
+   "start": "2026-11-16",
+   "block": "RE-BUILD",
+   "emphasis": "build",
+   "intensity": "moderate",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "skill",
+     "movement": "HEAVY GRACE \u2014 scored test",
+     "stimulus": "aerobic-power",
+     "rpe": "10",
+     "rpeNote": "RPE 10 \u2014 scored test: all-out. Rest as needed to hit your best time/score.",
+     "benchmark": "bm-heavy-grace",
+     "warmup": "wu-pull-skill-w16-d0",
+     "c0": "gym-front-lever-w16-d0",
+     "c1": "bm-heavy-grace",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-front-lever-w16-d0",
+     "engine": "eng-w16-d0",
+     "lift": "lift-strict_press-w16-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w16-d0",
+       "lift-strict_press-w16-d0",
+       "armour-lift-w16-d0",
+       "wp-w16-d0",
+       "eng-w16-d0",
+       "hdr-pm",
+       "wu-pull-skill-w16-d0",
+       "bm-heavy-grace",
+       "gym-front-lever-w16-d0",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w16-d0",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-pull-skill-w16-d0",
+       "wp-w16-d0",
+       "bm-heavy-grace",
+       "gym-front-lever-w16-d0",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w16-d0",
+       "lift-strict_press-w16-d0",
+       "splus-w16-d0",
+       "armour-lift-w16-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w16-d0",
+       "gym-front-lever-w16-d0",
+       "armour-gym-w16-d0"
+      ],
+      "engine": [
+       "eng-w16-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 10,
+      "prep": 4,
+      "wod": 6,
+      "flush": 6,
+      "transitions": 7,
+      "total": 43
+     }
+    },
+    "TUE": {
+     "focus": "olympic",
+     "movement": "CLEAN & JERK \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w16-d1",
+     "c0": "lift-clean_and_jerk-w16-d1",
+     "c1": "nw-mx-018",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-toes-to-bar-w16-d1",
+     "engine": "eng-w16-d1",
+     "lift": "lift-clean_and_jerk-w16-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w16-d1",
+       "lift-clean_and_jerk-w16-d1",
+       "armour-lift-w16-d1",
+       "wp-w16-d1",
+       "eng-w16-d1",
+       "hdr-pm",
+       "wu-pull-skill-w16-d1",
+       "gym-toes-to-bar-w16-d1",
+       "nw-mx-018",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w16-d1",
+       "gym-rope-w16-d1",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-oly-lift-w16-d1",
+       "lift-clean_and_jerk-w16-d1",
+       "wp-w16-d1",
+       "nw-mx-018",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w16-d1",
+       "lift-clean_and_jerk-w16-d1",
+       "splus-w16-d1",
+       "armour-lift-w16-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w16-d1",
+       "gym-toes-to-bar-w16-d1",
+       "gym-rope-w16-d1",
+       "armour-gym-w16-d1"
+      ],
+      "engine": [
+       "eng-w16-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 18,
+      "prep": 4,
+      "wod": 8,
+      "flush": 6,
+      "transitions": 7,
+      "total": 55
+     }
+    },
+    "WED": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w16-d2",
+     "c0": "lift-back_squat-w16-d2",
+     "c1": "nw-thr-014",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-front-lever-w16-d2",
+     "engine": "eng-w16-d2",
+     "lift": "lift-back_squat-w16-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w16-d2",
+       "lift-back_squat-w16-d2",
+       "armour-lift-w16-d2",
+       "wp-w16-d2",
+       "eng-w16-d2",
+       "hdr-pm",
+       "wu-pull-skill-w16-d2",
+       "gym-front-lever-w16-d2",
+       "nw-thr-014",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w16-d2",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-squat-lift-w16-d2",
+       "lift-back_squat-w16-d2",
+       "wp-w16-d2",
+       "nw-thr-014",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w16-d2",
+       "lift-back_squat-w16-d2",
+       "splus-w16-d2",
+       "armour-lift-w16-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w16-d2",
+       "gym-front-lever-w16-d2",
+       "armour-gym-w16-d2"
+      ],
+      "engine": [
+       "eng-w16-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 11,
+      "prep": 4,
+      "wod": 20,
+      "flush": 2,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "THU": {
+     "focus": "press",
+     "movement": "BENCH PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-hpress-lift-w16-d3",
+     "c0": "lift-bench_press-w16-d3",
+     "c1": "nw-an-014",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-toes-to-bar-w16-d3",
+     "engine": "eng-w16-d3",
+     "lift": "lift-bench_press-w16-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w16-d3",
+       "lift-bench_press-w16-d3",
+       "sled-w16-d3",
+       "armour-lift-w16-d3",
+       "wp-w16-d3",
+       "eng-w16-d3",
+       "hdr-pm",
+       "wu-pull-skill-w16-d3",
+       "gym-toes-to-bar-w16-d3",
+       "nw-an-014",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w16-d3",
+       "gym-bar-muscle-up-w16-d3",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-hpress-lift-w16-d3",
+       "lift-bench_press-w16-d3",
+       "wp-w16-d3",
+       "nw-an-014",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w16-d3",
+       "lift-bench_press-w16-d3",
+       "sled-w16-d3",
+       "splus-w16-d3",
+       "armour-lift-w16-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w16-d3",
+       "gym-toes-to-bar-w16-d3",
+       "gym-bar-muscle-up-w16-d3",
+       "armour-gym-w16-d3"
+      ],
+      "engine": [
+       "eng-w16-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 16,
+      "prep": 4,
+      "wod": 12,
+      "flush": 6,
+      "transitions": 7,
+      "total": 55
+     }
+    },
+    "FRI": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w16-d4",
+     "c0": "lift-deadlift-w16-d4",
+     "c1": "nw-partner-04",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-front-lever-w16-d4",
+     "engine": "eng-w16-d4",
+     "lift": "lift-deadlift-w16-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w16-d4",
+       "lift-deadlift-w16-d4",
+       "armour-lift-w16-d4",
+       "wp-w16-d4",
+       "eng-w16-d4",
+       "hdr-pm",
+       "wu-pull-skill-w16-d4",
+       "gym-l-sit-w16-d4",
+       "nw-se-008",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w16-d4",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-hinge-lift-w16-d4",
+       "lift-deadlift-w16-d4",
+       "wp-w16-d4",
+       "nw-partner-04",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w16-d4",
+       "lift-deadlift-w16-d4",
+       "splus-w16-d4",
+       "armour-lift-w16-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w16-d4",
+       "gym-l-sit-w16-d4",
+       "armour-gym-w16-d4"
+      ],
+      "engine": [
+       "eng-w16-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 16,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 53
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-001",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 17,
+   "start": "2026-11-23",
+   "block": "RE-BUILD",
+   "emphasis": "build",
+   "intensity": "moderate-high",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "olympic",
+     "movement": "SNATCH \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w17-d0",
+     "c0": "lift-snatch-w17-d0",
+     "c1": "nw-mx-022",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-toes-to-bar-w17-d0",
+     "engine": "eng-w17-d0",
+     "lift": "lift-snatch-w17-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w17-d0",
+       "lift-snatch-w17-d0",
+       "armour-lift-w17-d0",
+       "wp-w17-d0",
+       "eng-w17-d0",
+       "hdr-pm",
+       "wu-pull-skill-w17-d0",
+       "gym-toes-to-bar-w17-d0",
+       "nw-mx-022",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w17-d0",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-oly-lift-w17-d0",
+       "lift-snatch-w17-d0",
+       "wp-w17-d0",
+       "nw-mx-022",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w17-d0",
+       "lift-snatch-w17-d0",
+       "splus-w17-d0",
+       "armour-lift-w17-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w17-d0",
+       "gym-toes-to-bar-w17-d0",
+       "armour-gym-w17-d0"
+      ],
+      "engine": [
+       "eng-w17-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 20,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 59
+     }
+    },
+    "TUE": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w17-d1",
+     "c0": "lift-back_squat-w17-d1",
+     "c1": "nw-thr-016",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-handstand-push-w17-d1",
+     "engine": "eng-w17-d1",
+     "lift": "lift-back_squat-w17-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w17-d1",
+       "lift-back_squat-w17-d1",
+       "armour-lift-w17-d1",
+       "wp-w17-d1",
+       "eng-w17-d1",
+       "hdr-pm",
+       "wu-ohead-skill-w17-d1",
+       "gym-handstand-push-w17-d1",
+       "nw-thr-016",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w17-d1",
+       "gym-rope-w17-d1",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-squat-lift-w17-d1",
+       "lift-back_squat-w17-d1",
+       "wp-w17-d1",
+       "nw-thr-016",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w17-d1",
+       "lift-back_squat-w17-d1",
+       "splus-w17-d1",
+       "armour-lift-w17-d1"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w17-d1",
+       "gym-handstand-push-w17-d1",
+       "gym-rope-w17-d1",
+       "armour-gym-w17-d1"
+      ],
+      "engine": [
+       "eng-w17-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 17,
+      "prep": 4,
+      "wod": 7,
+      "flush": 6,
+      "transitions": 7,
+      "total": 54
+     }
+    },
+    "WED": {
+     "focus": "press",
+     "movement": "STRICT PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-ohead-lift-w17-d2",
+     "c0": "lift-strict_press-w17-d2",
+     "c1": "nw-an-015",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-rope-w17-d2",
+     "engine": "eng-w17-d2",
+     "lift": "lift-strict_press-w17-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w17-d2",
+       "lift-strict_press-w17-d2",
+       "sled-w17-d2",
+       "armour-lift-w17-d2",
+       "wp-w17-d2",
+       "eng-w17-d2",
+       "hdr-pm",
+       "wu-pull-skill-w17-d2",
+       "gym-ring-muscle-up-w17-d2",
+       "nw-an-015",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w17-d2",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-ohead-lift-w17-d2",
+       "lift-strict_press-w17-d2",
+       "wp-w17-d2",
+       "nw-an-015",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w17-d2",
+       "lift-strict_press-w17-d2",
+       "sled-w17-d2",
+       "splus-w17-d2",
+       "armour-lift-w17-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w17-d2",
+       "gym-ring-muscle-up-w17-d2",
+       "armour-gym-w17-d2"
+      ],
+      "engine": [
+       "eng-w17-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 19,
+      "prep": 4,
+      "wod": 10,
+      "flush": 2,
+      "transitions": 7,
+      "total": 52
+     }
+    },
+    "THU": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w17-d3",
+     "c0": "lift-deadlift-w17-d3",
+     "c1": "nw-se-010",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-handstand-push-w17-d3",
+     "engine": "eng-w17-d3",
+     "lift": "lift-deadlift-w17-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w17-d3",
+       "lift-deadlift-w17-d3",
+       "armour-lift-w17-d3",
+       "wp-w17-d3",
+       "eng-w17-d3",
+       "hdr-pm",
+       "wu-ohead-skill-w17-d3",
+       "gym-handstand-push-w17-d3",
+       "nw-se-010",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w17-d3",
+       "gym-toes-to-bar-w17-d3",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-hinge-lift-w17-d3",
+       "lift-deadlift-w17-d3",
+       "wp-w17-d3",
+       "nw-se-010",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w17-d3",
+       "lift-deadlift-w17-d3",
+       "splus-w17-d3",
+       "armour-lift-w17-d3"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w17-d3",
+       "gym-handstand-push-w17-d3",
+       "gym-toes-to-bar-w17-d3",
+       "armour-gym-w17-d3"
+      ],
+      "engine": [
+       "eng-w17-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 13,
+      "prep": 4,
+      "wod": 18,
+      "flush": 6,
+      "transitions": 7,
+      "total": 58
+     }
+    },
+    "FRI": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Handstand-Walk line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-ohead-skill-w17-d4",
+     "c0": "gym-handstand-walk-w17-d4",
+     "c1": "nw-partner-05",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-handstand-walk-w17-d4",
+     "engine": "eng-w17-d4",
+     "lift": "lift-bench_press-w17-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w17-d4",
+       "lift-bench_press-w17-d4",
+       "armour-lift-w17-d4",
+       "wp-w17-d4",
+       "eng-w17-d4",
+       "hdr-pm",
+       "wu-ohead-skill-w17-d4",
+       "gym-handstand-walk-w17-d4",
+       "nw-ap-019",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w17-d4",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-ohead-skill-w17-d4",
+       "gym-handstand-walk-w17-d4",
+       "wp-w17-d4",
+       "nw-partner-05",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w17-d4",
+       "lift-bench_press-w17-d4",
+       "splus-w17-d4",
+       "armour-lift-w17-d4"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w17-d4",
+       "gym-handstand-walk-w17-d4",
+       "armour-gym-w17-d4"
+      ],
+      "engine": [
+       "eng-w17-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 18,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 55
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-002",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 18,
+   "start": "2026-11-30",
+   "block": "RE-BUILD",
+   "emphasis": "build",
+   "intensity": "high",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "olympic",
+     "movement": "CLEAN & JERK \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w18-d0",
+     "c0": "lift-clean_and_jerk-w18-d0",
+     "c1": "nw-mx-023",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-front-lever-w18-d0",
+     "engine": "eng-w18-d0",
+     "lift": "lift-clean_and_jerk-w18-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w18-d0",
+       "lift-clean_and_jerk-w18-d0",
+       "armour-lift-w18-d0",
+       "wp-w18-d0",
+       "eng-w18-d0",
+       "hdr-pm",
+       "wu-pull-skill-w18-d0",
+       "gym-front-lever-w18-d0",
+       "nw-mx-023",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w18-d0",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-oly-lift-w18-d0",
+       "lift-clean_and_jerk-w18-d0",
+       "wp-w18-d0",
+       "nw-mx-023",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w18-d0",
+       "lift-clean_and_jerk-w18-d0",
+       "splus-w18-d0",
+       "armour-lift-w18-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w18-d0",
+       "gym-front-lever-w18-d0",
+       "armour-gym-w18-d0"
+      ],
+      "engine": [
+       "eng-w18-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 18,
+      "prep": 4,
+      "wod": 8,
+      "flush": 6,
+      "transitions": 7,
+      "total": 55
+     }
+    },
+    "TUE": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w18-d1",
+     "c0": "lift-back_squat-w18-d1",
+     "c1": "nw-thr-017",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-handstand-push-w18-d1",
+     "engine": "eng-w18-d1",
+     "lift": "lift-back_squat-w18-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w18-d1",
+       "lift-back_squat-w18-d1",
+       "armour-lift-w18-d1",
+       "wp-w18-d1",
+       "eng-w18-d1",
+       "hdr-pm",
+       "wu-ohead-skill-w18-d1",
+       "gym-handstand-push-w18-d1",
+       "nw-thr-017",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w18-d1",
+       "gym-planche-w18-d1",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-squat-lift-w18-d1",
+       "lift-back_squat-w18-d1",
+       "wp-w18-d1",
+       "nw-thr-017",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w18-d1",
+       "lift-back_squat-w18-d1",
+       "splus-w18-d1",
+       "armour-lift-w18-d1"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w18-d1",
+       "gym-handstand-push-w18-d1",
+       "gym-planche-w18-d1",
+       "armour-gym-w18-d1"
+      ],
+      "engine": [
+       "eng-w18-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 13,
+      "prep": 4,
+      "wod": 17,
+      "flush": 6,
+      "transitions": 7,
+      "total": 60
+     }
+    },
+    "WED": {
+     "focus": "press",
+     "movement": "BENCH PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-hpress-lift-w18-d2",
+     "c0": "lift-bench_press-w18-d2",
+     "c1": "nw-an-016",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-handstand-walk-w18-d2",
+     "engine": "eng-w18-d2",
+     "lift": "lift-bench_press-w18-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w18-d2",
+       "lift-bench_press-w18-d2",
+       "sled-w18-d2",
+       "armour-lift-w18-d2",
+       "wp-w18-d2",
+       "eng-w18-d2",
+       "hdr-pm",
+       "wu-ohead-skill-w18-d2",
+       "gym-handstand-walk-w18-d2",
+       "nw-an-016",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w18-d2",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-hpress-lift-w18-d2",
+       "lift-bench_press-w18-d2",
+       "wp-w18-d2",
+       "nw-an-016",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w18-d2",
+       "lift-bench_press-w18-d2",
+       "sled-w18-d2",
+       "splus-w18-d2",
+       "armour-lift-w18-d2"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w18-d2",
+       "gym-handstand-walk-w18-d2",
+       "armour-gym-w18-d2"
+      ],
+      "engine": [
+       "eng-w18-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 17,
+      "prep": 4,
+      "wod": 4,
+      "flush": 2,
+      "transitions": 7,
+      "total": 44
+     }
+    },
+    "THU": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w18-d3",
+     "c0": "lift-deadlift-w18-d3",
+     "c1": "nw-se-016",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-handstand-push-w18-d3",
+     "engine": "eng-w18-d3",
+     "lift": "lift-deadlift-w18-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w18-d3",
+       "lift-deadlift-w18-d3",
+       "armour-lift-w18-d3",
+       "wp-w18-d3",
+       "eng-w18-d3",
+       "hdr-pm",
+       "wu-ohead-skill-w18-d3",
+       "gym-l-sit-w18-d3",
+       "nw-se-016",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w18-d3",
+       "gym-rope-w18-d3",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-hinge-lift-w18-d3",
+       "lift-deadlift-w18-d3",
+       "wp-w18-d3",
+       "nw-se-016",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w18-d3",
+       "lift-deadlift-w18-d3",
+       "splus-w18-d3",
+       "armour-lift-w18-d3"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w18-d3",
+       "gym-l-sit-w18-d3",
+       "gym-rope-w18-d3",
+       "armour-gym-w18-d3"
+      ],
+      "engine": [
+       "eng-w18-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 18,
+      "prep": 4,
+      "wod": 15,
+      "flush": 6,
+      "transitions": 7,
+      "total": 60
+     }
+    },
+    "FRI": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Toes-to-Bar line",
+     "stimulus": "aerobic-power",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w18-d4",
+     "c0": "gym-toes-to-bar-w18-d4",
+     "c1": "nw-partner-06",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-toes-to-bar-w18-d4",
+     "engine": "eng-w18-d4",
+     "lift": "lift-strict_press-w18-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w18-d4",
+       "lift-strict_press-w18-d4",
+       "armour-lift-w18-d4",
+       "wp-w18-d4",
+       "eng-w18-d4",
+       "hdr-pm",
+       "wu-pull-skill-w18-d4",
+       "gym-toes-to-bar-w18-d4",
+       "nw-ap-021",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w18-d4",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-pull-skill-w18-d4",
+       "gym-toes-to-bar-w18-d4",
+       "wp-w18-d4",
+       "nw-partner-06",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w18-d4",
+       "lift-strict_press-w18-d4",
+       "splus-w18-d4",
+       "armour-lift-w18-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w18-d4",
+       "gym-toes-to-bar-w18-d4",
+       "armour-gym-w18-d4"
+      ],
+      "engine": [
+       "eng-w18-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 16,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 56
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-003",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 19,
+   "start": "2026-12-07",
+   "block": "SHARPEN",
+   "emphasis": "sharpen",
+   "intensity": "high",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "olympic",
+     "movement": "SNATCH \u2014 session",
+     "stimulus": "mixed",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w19-d0",
+     "c0": "lift-snatch-w19-d0",
+     "c1": "nw-mx-006",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-rope-w19-d0",
+     "engine": "eng-w19-d0",
+     "lift": "lift-snatch-w19-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w19-d0",
+       "lift-snatch-w19-d0",
+       "armour-lift-w19-d0",
+       "wp-w19-d0",
+       "eng-w19-d0",
+       "hdr-pm",
+       "wu-pull-skill-w19-d0",
+       "gym-rope-w19-d0",
+       "nw-mx-006",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w19-d0",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-oly-lift-w19-d0",
+       "lift-snatch-w19-d0",
+       "wp-w19-d0",
+       "nw-mx-006",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w19-d0",
+       "lift-snatch-w19-d0",
+       "splus-w19-d0",
+       "armour-lift-w19-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w19-d0",
+       "gym-rope-w19-d0",
+       "armour-gym-w19-d0"
+      ],
+      "engine": [
+       "eng-w19-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 12,
+      "focus": 10,
+      "prep": 4,
+      "wod": 20,
+      "flush": 6,
+      "transitions": 7,
+      "total": 59
+     }
+    },
+    "TUE": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "7\u20138",
+     "rpeNote": "Target RPE 7\u20138 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w19-d1",
+     "c0": "lift-back_squat-w19-d1",
+     "c1": "nw-thr-018",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-handstand-push-w19-d1",
+     "engine": "eng-w19-d1",
+     "lift": "lift-back_squat-w19-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w19-d1",
+       "lift-back_squat-w19-d1",
+       "armour-lift-w19-d1",
+       "wp-w19-d1",
+       "eng-w19-d1",
+       "hdr-pm",
+       "wu-ohead-skill-w19-d1",
+       "gym-handstand-push-w19-d1",
+       "nw-thr-018",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w19-d1",
+       "gym-bar-muscle-up-w19-d1",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-squat-lift-w19-d1",
+       "lift-back_squat-w19-d1",
+       "wp-w19-d1",
+       "nw-thr-018",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w19-d1",
+       "lift-back_squat-w19-d1",
+       "splus-w19-d1",
+       "armour-lift-w19-d1"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w19-d1",
+       "gym-handstand-push-w19-d1",
+       "gym-bar-muscle-up-w19-d1",
+       "armour-gym-w19-d1"
+      ],
+      "engine": [
+       "eng-w19-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 9,
+      "prep": 4,
+      "wod": 17,
+      "flush": 6,
+      "transitions": 7,
+      "total": 56
+     }
+    },
+    "WED": {
+     "focus": "press",
+     "movement": "STRICT PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "9",
+     "rpeNote": "Target RPE 9 \u2014 redline, empty the tank",
+     "benchmark": null,
+     "warmup": "wu-ohead-lift-w19-d2",
+     "c0": "lift-strict_press-w19-d2",
+     "c1": "nw-an-017",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-bar-muscle-up-w19-d2",
+     "engine": "eng-w19-d2",
+     "lift": "lift-strict_press-w19-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w19-d2",
+       "lift-strict_press-w19-d2",
+       "sled-w19-d2",
+       "armour-lift-w19-d2",
+       "wp-w19-d2",
+       "eng-w19-d2",
+       "hdr-pm",
+       "wu-pull-skill-w19-d2",
+       "gym-ring-muscle-up-w19-d2",
+       "nw-an-017",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "splus-w19-d2",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-ohead-lift-w19-d2",
+       "lift-strict_press-w19-d2",
+       "wp-w19-d2",
+       "nw-an-017",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w19-d2",
+       "lift-strict_press-w19-d2",
+       "sled-w19-d2",
+       "splus-w19-d2",
+       "armour-lift-w19-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w19-d2",
+       "gym-ring-muscle-up-w19-d2",
+       "armour-gym-w19-d2"
+      ],
+      "engine": [
+       "eng-w19-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 16,
+      "prep": 4,
+      "wod": 6,
+      "flush": 2,
+      "transitions": 7,
+      "total": 45
+     }
+    },
+    "THU": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w19-d3",
+     "c0": "lift-deadlift-w19-d3",
+     "c1": "nw-se-017",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-handstand-push-w19-d3",
+     "engine": "eng-w19-d3",
+     "lift": "lift-deadlift-w19-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w19-d3",
+       "lift-deadlift-w19-d3",
+       "armour-lift-w19-d3",
+       "wp-w19-d3",
+       "eng-w19-d3",
+       "hdr-pm",
+       "wu-ohead-skill-w19-d3",
+       "gym-handstand-push-w19-d3",
+       "nw-se-017",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "splus-w19-d3",
+       "gym-planche-w19-d3",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-hinge-lift-w19-d3",
+       "lift-deadlift-w19-d3",
+       "wp-w19-d3",
+       "nw-se-017",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w19-d3",
+       "lift-deadlift-w19-d3",
+       "splus-w19-d3",
+       "armour-lift-w19-d3"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w19-d3",
+       "gym-handstand-push-w19-d3",
+       "gym-planche-w19-d3",
+       "armour-gym-w19-d3"
+      ],
+      "engine": [
+       "eng-w19-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 15,
+      "prep": 4,
+      "wod": 15,
+      "flush": 6,
+      "transitions": 7,
+      "total": 57
+     }
+    },
+    "FRI": {
+     "focus": "skill",
+     "movement": "OPEN 14.5 \u2014 scored test",
+     "stimulus": "aerobic-power",
+     "rpe": "10",
+     "rpeNote": "RPE 10 \u2014 scored test: all-out. Rest as needed to hit your best time/score.",
+     "benchmark": "bm-open-145",
+     "warmup": "wu-ohead-skill-w19-d4",
+     "c0": "gym-handstand-walk-w19-d4",
+     "c1": "bm-open-145",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-handstand-walk-w19-d4",
+     "engine": "eng-w19-d4",
+     "lift": "lift-bench_press-w19-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w19-d4",
+       "lift-bench_press-w19-d4",
+       "armour-lift-w19-d4",
+       "wp-w19-d4",
+       "eng-w19-d4",
+       "hdr-pm",
+       "wu-ohead-skill-w19-d4",
+       "bm-open-145",
+       "gym-handstand-walk-w19-d4",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "splus-w19-d4",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-ohead-skill-w19-d4",
+       "wp-w19-d4",
+       "bm-open-145",
+       "gym-handstand-walk-w19-d4",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w19-d4",
+       "lift-bench_press-w19-d4",
+       "splus-w19-d4",
+       "armour-lift-w19-d4"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w19-d4",
+       "gym-handstand-walk-w19-d4",
+       "armour-gym-w19-d4"
+      ],
+      "engine": [
+       "eng-w19-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 3,
+      "prep": 4,
+      "wod": 15,
+      "flush": 6,
+      "transitions": 7,
+      "total": 45
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-004",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 20,
+   "start": "2026-12-14",
+   "block": "PEAK",
+   "emphasis": "peak",
+   "intensity": "high",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "olympic",
+     "movement": "OLYMPIC \u2014 snatch + clean & jerk (session)",
+     "stimulus": "mixed",
+     "rpe": "6\u20137",
+     "rpeNote": "Target RPE 6\u20137 \u2014 steady, conversational",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w20-d0",
+     "c0": "lift-olympic-w20-d0",
+     "c1": "nw-mx-010",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-butterfly-w20-d0",
+     "engine": "eng-w20-d0",
+     "lift": "lift-olympic-w20-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w20-d0",
+       "lift-olympic-w20-d0",
+       "armour-lift-w20-d0",
+       "wp-w20-d0",
+       "eng-w20-d0",
+       "hdr-pm",
+       "wu-pull-skill-w20-d0",
+       "gym-butterfly-w20-d0",
+       "nw-mx-010",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-oly-lift-w20-d0",
+       "lift-olympic-w20-d0",
+       "wp-w20-d0",
+       "nw-mx-010",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w20-d0",
+       "lift-olympic-w20-d0",
+       "armour-lift-w20-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w20-d0",
+       "gym-butterfly-w20-d0",
+       "armour-gym-w20-d0"
+      ],
+      "engine": [
+       "eng-w20-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 11,
+      "focus": 8,
+      "prep": 4,
+      "wod": 17,
+      "flush": 6,
+      "transitions": 7,
+      "total": 53
+     }
+    },
+    "TUE": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "6\u20137",
+     "rpeNote": "Target RPE 6\u20137 \u2014 steady, conversational",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w20-d1",
+     "c0": "lift-back_squat-w20-d1",
+     "c1": "nw-thr-022",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-handstand-push-w20-d1",
+     "engine": "eng-w20-d1",
+     "lift": "lift-back_squat-w20-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w20-d1",
+       "lift-back_squat-w20-d1",
+       "armour-lift-w20-d1",
+       "wp-w20-d1",
+       "eng-w20-d1",
+       "hdr-pm",
+       "wu-ohead-skill-w20-d1",
+       "gym-handstand-push-w20-d1",
+       "nw-thr-022",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "gym-toes-to-bar-w20-d1",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-squat-lift-w20-d1",
+       "lift-back_squat-w20-d1",
+       "wp-w20-d1",
+       "nw-thr-022",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w20-d1",
+       "lift-back_squat-w20-d1",
+       "armour-lift-w20-d1"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w20-d1",
+       "gym-handstand-push-w20-d1",
+       "gym-toes-to-bar-w20-d1",
+       "armour-gym-w20-d1"
+      ],
+      "engine": [
+       "eng-w20-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 8,
+      "prep": 4,
+      "wod": 20,
+      "flush": 6,
+      "transitions": 7,
+      "total": 58
+     }
+    },
+    "WED": {
+     "focus": "press",
+     "movement": "BENCH PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-hpress-lift-w20-d2",
+     "c0": "lift-bench_press-w20-d2",
+     "c1": "nw-an-018",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-handstand-walk-w20-d2",
+     "engine": "eng-w20-d2",
+     "lift": "lift-bench_press-w20-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w20-d2",
+       "lift-bench_press-w20-d2",
+       "sled-w20-d2",
+       "armour-lift-w20-d2",
+       "wp-w20-d2",
+       "eng-w20-d2",
+       "hdr-pm",
+       "wu-ohead-skill-w20-d2",
+       "gym-handstand-walk-w20-d2",
+       "nw-an-018",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-hpress-lift-w20-d2",
+       "lift-bench_press-w20-d2",
+       "wp-w20-d2",
+       "nw-an-018",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w20-d2",
+       "lift-bench_press-w20-d2",
+       "sled-w20-d2",
+       "armour-lift-w20-d2"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w20-d2",
+       "gym-handstand-walk-w20-d2",
+       "armour-gym-w20-d2"
+      ],
+      "engine": [
+       "eng-w20-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 8,
+      "prep": 4,
+      "wod": 6,
+      "flush": 2,
+      "transitions": 7,
+      "total": 37
+     }
+    },
+    "THU": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w20-d3",
+     "c0": "lift-deadlift-w20-d3",
+     "c1": "nw-se-018",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-handstand-push-w20-d3",
+     "engine": "eng-w20-d3",
+     "lift": "lift-deadlift-w20-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w20-d3",
+       "lift-deadlift-w20-d3",
+       "armour-lift-w20-d3",
+       "wp-w20-d3",
+       "eng-w20-d3",
+       "hdr-pm",
+       "wu-ohead-skill-w20-d3",
+       "gym-l-sit-w20-d3",
+       "nw-se-018",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "gym-bar-muscle-up-w20-d3",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-hinge-lift-w20-d3",
+       "lift-deadlift-w20-d3",
+       "wp-w20-d3",
+       "nw-se-018",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w20-d3",
+       "lift-deadlift-w20-d3",
+       "armour-lift-w20-d3"
+      ],
+      "gymnastics": [
+       "wu-ohead-skill-w20-d3",
+       "gym-l-sit-w20-d3",
+       "gym-bar-muscle-up-w20-d3",
+       "armour-gym-w20-d3"
+      ],
+      "engine": [
+       "eng-w20-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 8,
+      "prep": 4,
+      "wod": 19,
+      "flush": 6,
+      "transitions": 7,
+      "total": 54
+     }
+    },
+    "FRI": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Rope / Apparatus line",
+     "stimulus": "aerobic-power",
+     "rpe": "6",
+     "rpeNote": "Target RPE 6 \u2014 steady, conversational",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w20-d4",
+     "c0": "gym-rope-w20-d4",
+     "c1": "nw-ap-022",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-rope-w20-d4",
+     "engine": "eng-w20-d4",
+     "lift": "lift-strict_press-w20-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w20-d4",
+       "lift-strict_press-w20-d4",
+       "armour-lift-w20-d4",
+       "wp-w20-d4",
+       "eng-w20-d4",
+       "hdr-pm",
+       "wu-pull-skill-w20-d4",
+       "gym-rope-w20-d4",
+       "nw-ap-022",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-pull-skill-w20-d4",
+       "gym-rope-w20-d4",
+       "wp-w20-d4",
+       "nw-ap-022",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w20-d4",
+       "lift-strict_press-w20-d4",
+       "armour-lift-w20-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w20-d4",
+       "gym-rope-w20-d4",
+       "armour-gym-w20-d4"
+      ],
+      "engine": [
+       "eng-w20-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 5,
+      "prep": 4,
+      "wod": 11,
+      "flush": 6,
+      "transitions": 7,
+      "total": 43
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-001",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 21,
+   "start": "2026-12-21",
+   "block": "PEAK",
+   "emphasis": "peak",
+   "intensity": "high",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "6\u20137",
+     "rpeNote": "Target RPE 6\u20137 \u2014 steady, conversational",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w21-d0",
+     "c0": "lift-back_squat-w21-d0",
+     "c1": "nw-thr-019",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-front-lever-w21-d0",
+     "engine": "eng-w21-d0",
+     "lift": "lift-back_squat-w21-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w21-d0",
+       "lift-back_squat-w21-d0",
+       "armour-lift-w21-d0",
+       "wp-w21-d0",
+       "eng-w21-d0",
+       "hdr-pm",
+       "wu-pull-skill-w21-d0",
+       "gym-front-lever-w21-d0",
+       "nw-thr-019",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-squat-lift-w21-d0",
+       "lift-back_squat-w21-d0",
+       "wp-w21-d0",
+       "nw-thr-019",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w21-d0",
+       "lift-back_squat-w21-d0",
+       "armour-lift-w21-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w21-d0",
+       "gym-front-lever-w21-d0",
+       "armour-gym-w21-d0"
+      ],
+      "engine": [
+       "eng-w21-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 15,
+      "prep": 4,
+      "wod": 15,
+      "flush": 6,
+      "transitions": 7,
+      "total": 60
+     }
+    },
+    "TUE": {
+     "focus": "press",
+     "movement": "STRICT PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "8",
+     "rpeNote": "Target RPE 8 \u2014 hard, brace and grind",
+     "benchmark": null,
+     "warmup": "wu-ohead-lift-w21-d1",
+     "c0": "lift-strict_press-w21-d1",
+     "c1": "nw-an-019",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w21-d1",
+     "engine": "eng-w21-d1",
+     "lift": "lift-strict_press-w21-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w21-d1",
+       "lift-strict_press-w21-d1",
+       "sled-w21-d1",
+       "armour-lift-w21-d1",
+       "wp-w21-d1",
+       "eng-w21-d1",
+       "hdr-pm",
+       "wu-pull-skill-w21-d1",
+       "gym-bar-muscle-up-w21-d1",
+       "nw-an-019",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "gym-rope-w21-d1",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-ohead-lift-w21-d1",
+       "lift-strict_press-w21-d1",
+       "wp-w21-d1",
+       "nw-an-019",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w21-d1",
+       "lift-strict_press-w21-d1",
+       "sled-w21-d1",
+       "armour-lift-w21-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w21-d1",
+       "gym-bar-muscle-up-w21-d1",
+       "gym-rope-w21-d1",
+       "armour-gym-w21-d1"
+      ],
+      "engine": [
+       "eng-w21-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 3,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 43
+     }
+    },
+    "WED": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 comfortably hard, repeatable",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w21-d2",
+     "c0": "lift-deadlift-w21-d2",
+     "c1": "nw-se-020",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-front-lever-w21-d2",
+     "engine": "eng-w21-d2",
+     "lift": "lift-deadlift-w21-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w21-d2",
+       "lift-deadlift-w21-d2",
+       "armour-lift-w21-d2",
+       "wp-w21-d2",
+       "eng-w21-d2",
+       "hdr-pm",
+       "wu-pull-skill-w21-d2",
+       "gym-front-lever-w21-d2",
+       "nw-se-020",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-hinge-lift-w21-d2",
+       "lift-deadlift-w21-d2",
+       "wp-w21-d2",
+       "nw-se-020",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w21-d2",
+       "lift-deadlift-w21-d2",
+       "armour-lift-w21-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w21-d2",
+       "gym-front-lever-w21-d2",
+       "armour-gym-w21-d2"
+      ],
+      "engine": [
+       "eng-w21-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 15,
+      "prep": 4,
+      "wod": 11,
+      "flush": 2,
+      "transitions": 7,
+      "total": 49
+     }
+    },
+    "THU": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Bar Muscle-Up line",
+     "stimulus": "aerobic-power",
+     "rpe": "8",
+     "rpeNote": "Target RPE 6 \u2014 steady, conversational",
+     "benchmark": "bm-cindy",
+     "warmup": "wu-pull-skill-w21-d3",
+     "c0": "gym-bar-muscle-up-w21-d3",
+     "c1": "bm-cindy",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w21-d3",
+     "engine": "eng-w21-d3",
+     "lift": "lift-bench_press-w21-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w21-d3",
+       "lift-bench_press-w21-d3",
+       "armour-lift-w21-d3",
+       "wp-w21-d3",
+       "eng-w21-d3",
+       "hdr-pm",
+       "wu-pull-skill-w21-d3",
+       "bm-cindy",
+       "gym-bar-muscle-up-w21-d3",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "gym-handstand-push-w21-d3",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-pull-skill-w21-d3",
+       "wp-w21-d3",
+       "bm-cindy",
+       "gym-bar-muscle-up-w21-d3",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w21-d3",
+       "lift-bench_press-w21-d3",
+       "armour-lift-w21-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w21-d3",
+       "gym-bar-muscle-up-w21-d3",
+       "gym-handstand-push-w21-d3",
+       "armour-gym-w21-d3"
+      ],
+      "engine": [
+       "eng-w21-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 3,
+      "prep": 4,
+      "wod": 20,
+      "flush": 6,
+      "transitions": 7,
+      "total": 50
+     }
+    },
+    "FRI": {
+     "focus": "olympic",
+     "movement": "OLYMPIC \u2014 snatch + clean & jerk (session)",
+     "stimulus": "mixed",
+     "rpe": "6\u20137",
+     "rpeNote": "Target RPE 6\u20137 \u2014 steady, conversational",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w21-d4",
+     "c0": "lift-olympic-w21-d4",
+     "c1": "nw-mx-011",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-front-lever-w21-d4",
+     "engine": "eng-w21-d4",
+     "lift": "lift-olympic-w21-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w21-d4",
+       "lift-olympic-w21-d4",
+       "armour-lift-w21-d4",
+       "wp-w21-d4",
+       "eng-w21-d4",
+       "hdr-pm",
+       "wu-pull-skill-w21-d4",
+       "gym-front-lever-w21-d4",
+       "nw-mx-011",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-oly-lift-w21-d4",
+       "lift-olympic-w21-d4",
+       "wp-w21-d4",
+       "nw-mx-011",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w21-d4",
+       "lift-olympic-w21-d4",
+       "armour-lift-w21-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w21-d4",
+       "gym-front-lever-w21-d4",
+       "armour-gym-w21-d4"
+      ],
+      "engine": [
+       "eng-w21-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 11,
+      "focus": 15,
+      "prep": 4,
+      "wod": 8,
+      "flush": 6,
+      "transitions": 7,
+      "total": 51
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-002",
+     "benchmark": null
+    }
+   }
+  },
+  {
+   "week": 22,
+   "start": "2026-12-28",
+   "block": "TAPER",
+   "emphasis": "taper",
+   "intensity": "light",
+   "scored": false,
+   "days": {
+    "MON": {
+     "focus": "squat",
+     "movement": "BACK SQUAT \u2014 session",
+     "stimulus": "threshold",
+     "rpe": "5\u20136",
+     "rpeNote": "Target RPE 5\u20136 \u2014 taper week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-squat-lift-w22-d0",
+     "c0": "lift-back_squat-w22-d0",
+     "c1": "taper-wod-w22-d0",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-front-lever-w22-d0",
+     "engine": "eng-w22-d0",
+     "lift": "lift-back_squat-w22-d0",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-squat-lift-w22-d0",
+       "lift-back_squat-w22-d0",
+       "armour-lift-w22-d0",
+       "wp-w22-d0",
+       "eng-w22-d0",
+       "hdr-pm",
+       "wu-pull-skill-w22-d0",
+       "gym-front-lever-w22-d0",
+       "taper-wod-w22-d0",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-squat-lift-w22-d0",
+       "lift-back_squat-w22-d0",
+       "wp-w22-d0",
+       "taper-wod-w22-d0",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-squat-lift-w22-d0",
+       "lift-back_squat-w22-d0",
+       "armour-lift-w22-d0"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w22-d0",
+       "gym-front-lever-w22-d0",
+       "armour-gym-w22-d0"
+      ],
+      "engine": [
+       "eng-w22-d0"
+      ]
+     },
+     "timing": {
+      "warmup": 13,
+      "focus": 8,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 51
+     }
+    },
+    "TUE": {
+     "focus": "press",
+     "movement": "BENCH PRESS \u2014 session",
+     "stimulus": "anaerobic",
+     "rpe": "7",
+     "rpeNote": "Target RPE 7 \u2014 taper week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-hpress-lift-w22-d1",
+     "c0": "lift-bench_press-w22-d1",
+     "c1": "taper-wod-w22-d1",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w22-d1",
+     "engine": "eng-w22-d1",
+     "lift": "lift-bench_press-w22-d1",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hpress-lift-w22-d1",
+       "lift-bench_press-w22-d1",
+       "sled-w22-d1",
+       "armour-lift-w22-d1",
+       "wp-w22-d1",
+       "eng-w22-d1",
+       "hdr-pm",
+       "wu-pull-skill-w22-d1",
+       "gym-bar-muscle-up-w22-d1",
+       "taper-wod-w22-d1",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "gym-planche-w22-d1",
+       "eng-speed-004"
+      ],
+      "class": [
+       "wu-hpress-lift-w22-d1",
+       "lift-bench_press-w22-d1",
+       "wp-w22-d1",
+       "taper-wod-w22-d1",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-hpress-lift-w22-d1",
+       "lift-bench_press-w22-d1",
+       "sled-w22-d1",
+       "armour-lift-w22-d1"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w22-d1",
+       "gym-bar-muscle-up-w22-d1",
+       "gym-planche-w22-d1",
+       "armour-gym-w22-d1"
+      ],
+      "engine": [
+       "eng-w22-d1"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 8,
+      "prep": 4,
+      "wod": 13,
+      "flush": 6,
+      "transitions": 7,
+      "total": 48
+     }
+    },
+    "WED": {
+     "focus": "hinge",
+     "movement": "DEADLIFT \u2014 session",
+     "stimulus": "strength-endurance",
+     "rpe": "6",
+     "rpeNote": "Target RPE 6 \u2014 taper week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-hinge-lift-w22-d2",
+     "c0": "lift-deadlift-w22-d2",
+     "c1": "taper-wod-w22-d2",
+     "flush": "cd-mobility-001",
+     "gymnastics": "gym-front-lever-w22-d2",
+     "engine": "eng-w22-d2",
+     "lift": "lift-deadlift-w22-d2",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-hinge-lift-w22-d2",
+       "lift-deadlift-w22-d2",
+       "armour-lift-w22-d2",
+       "wp-w22-d2",
+       "eng-w22-d2",
+       "hdr-pm",
+       "wu-pull-skill-w22-d2",
+       "gym-front-lever-w22-d2",
+       "taper-wod-w22-d2",
+       "cd-mobility-001",
+       "hdr-athlete-menu",
+       "eng-speed-001"
+      ],
+      "class": [
+       "wu-hinge-lift-w22-d2",
+       "lift-deadlift-w22-d2",
+       "wp-w22-d2",
+       "taper-wod-w22-d2",
+       "cd-mobility-001"
+      ],
+      "lifting": [
+       "wu-hinge-lift-w22-d2",
+       "lift-deadlift-w22-d2",
+       "armour-lift-w22-d2"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w22-d2",
+       "gym-front-lever-w22-d2",
+       "armour-gym-w22-d2"
+      ],
+      "engine": [
+       "eng-w22-d2"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 8,
+      "prep": 4,
+      "wod": 13,
+      "flush": 2,
+      "transitions": 7,
+      "total": 44
+     }
+    },
+    "THU": {
+     "focus": "skill",
+     "movement": "Gymnastics \u2014 Bar Muscle-Up line",
+     "stimulus": "aerobic-power",
+     "rpe": "5",
+     "rpeNote": "Target RPE 5 \u2014 taper week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-pull-skill-w22-d3",
+     "c0": "gym-bar-muscle-up-w22-d3",
+     "c1": "taper-wod-w22-d3",
+     "flush": "rec-flush-001",
+     "gymnastics": "gym-bar-muscle-up-w22-d3",
+     "engine": "eng-w22-d3",
+     "lift": "lift-strict_press-w22-d3",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-ohead-lift-w22-d3",
+       "lift-strict_press-w22-d3",
+       "armour-lift-w22-d3",
+       "wp-w22-d3",
+       "eng-w22-d3",
+       "hdr-pm",
+       "wu-pull-skill-w22-d3",
+       "gym-bar-muscle-up-w22-d3",
+       "taper-wod-w22-d3",
+       "rec-flush-001",
+       "hdr-athlete-menu",
+       "gym-rope-w22-d3",
+       "eng-speed-002"
+      ],
+      "class": [
+       "wu-pull-skill-w22-d3",
+       "gym-bar-muscle-up-w22-d3",
+       "wp-w22-d3",
+       "taper-wod-w22-d3",
+       "rec-flush-001"
+      ],
+      "lifting": [
+       "wu-ohead-lift-w22-d3",
+       "lift-strict_press-w22-d3",
+       "armour-lift-w22-d3"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w22-d3",
+       "gym-bar-muscle-up-w22-d3",
+       "gym-rope-w22-d3",
+       "armour-gym-w22-d3"
+      ],
+      "engine": [
+       "eng-w22-d3"
+      ]
+     },
+     "timing": {
+      "warmup": 10,
+      "focus": 10,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 47
+     }
+    },
+    "FRI": {
+     "focus": "olympic",
+     "movement": "OLYMPIC \u2014 snatch + clean & jerk (session)",
+     "stimulus": "mixed",
+     "rpe": "5\u20136",
+     "rpeNote": "Target RPE 5\u20136 \u2014 taper week: hold back, stay smooth. Been away or training light? Run it as prescribed and get after it.",
+     "benchmark": null,
+     "warmup": "wu-oly-lift-w22-d4",
+     "c0": "lift-olympic-w22-d4",
+     "c1": "taper-wod-w22-d4",
+     "flush": "cd-flush-001",
+     "gymnastics": "gym-front-lever-w22-d4",
+     "engine": "eng-w22-d4",
+     "lift": "lift-olympic-w22-d4",
+     "tracks": {
+      "athlete": [
+       "hdr-athlete-core",
+       "hdr-am",
+       "wu-oly-lift-w22-d4",
+       "lift-olympic-w22-d4",
+       "armour-lift-w22-d4",
+       "wp-w22-d4",
+       "eng-w22-d4",
+       "hdr-pm",
+       "wu-pull-skill-w22-d4",
+       "gym-front-lever-w22-d4",
+       "taper-wod-w22-d4",
+       "cd-flush-001",
+       "hdr-athlete-menu",
+       "eng-speed-003"
+      ],
+      "class": [
+       "wu-oly-lift-w22-d4",
+       "lift-olympic-w22-d4",
+       "wp-w22-d4",
+       "taper-wod-w22-d4",
+       "cd-flush-001"
+      ],
+      "lifting": [
+       "wu-oly-lift-w22-d4",
+       "lift-olympic-w22-d4",
+       "armour-lift-w22-d4"
+      ],
+      "gymnastics": [
+       "wu-pull-skill-w22-d4",
+       "gym-front-lever-w22-d4",
+       "armour-gym-w22-d4"
+      ],
+      "engine": [
+       "eng-w22-d4"
+      ]
+     },
+     "timing": {
+      "warmup": 11,
+      "focus": 16,
+      "prep": 4,
+      "wod": 10,
+      "flush": 6,
+      "transitions": 7,
+      "total": 54
+     }
+    },
+    "SAT": {
+     "coachChoice": true,
+     "benchmark": null
+    },
+    "SUN": {
+     "sunday": "sun-z2-003",
+     "benchmark": null
+    }
+   }
+  }
+ ]
+}
