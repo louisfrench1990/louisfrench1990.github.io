@@ -31,6 +31,16 @@
 .btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:var(--h-btn);padding:0 18px;border:0!important;border-radius:var(--r-md);background:linear-gradient(180deg,#ff3d97,#ec2079)!important;color:#fff!important;font-family:var(--ui);font-weight:700;font-size:15px;letter-spacing:.01em;cursor:pointer;box-shadow:0 6px 18px -8px rgba(255,45,138,.6)!important}
 .btn-primary:active{transform:translateY(1px)}
 .btn-primary .arw{margin-left:auto}
+.homehub{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+.hubtile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:var(--s1)!important;border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:18px 8px 15px;cursor:pointer;text-align:center;color:#f5f5f7;font:inherit;transition:transform .1s,border-color .13s}
+.hubtile:hover{border-color:rgba(255,255,255,.2)}
+.hubtile:active{transform:translateY(1px)}
+.hubtile .hubic{width:26px;height:26px;display:block;opacity:.95}
+.hubtile .hubl{font-size:1.05rem;font-weight:800;letter-spacing:.02em}
+.hubtile .hubs{font-size:.6rem;color:#8b8b95;line-height:1.25}
+.ht-prog .hubl{color:#5CC7FF}.ht-vault .hubl{color:#B98CFF}.ht-shop .hubl{color:#F3B73A}
+.sh-title-sel{width:100%;background:var(--s1)!important;border:1px solid rgba(255,255,255,.15);color:#f5f5f7;border-radius:10px;padding:11px 12px;font:inherit;font-size:.9rem}
+.sh-sec{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#8b8b95;margin-bottom:7px}
 .dcard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--s1)!important;border:1px solid var(--line)!important;border-radius:var(--r-md);padding:14px;cursor:pointer;color:var(--txt)!important;box-shadow:none!important}
 .dcard:active{background:var(--s2)!important}
 .dcard .dc-ic{width:38px;height:38px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,45,138,.12);color:var(--mag)}
@@ -1883,7 +1893,7 @@ window.openRM=function(){var m=document.getElementById('rmMask');
     var _copts='<option value="">— none —</option>'+coachTitlesAllowed().map(function(t){return '<option value="'+esc(t)+'"'+(t===_ct?' selected':'')+'>'+esc(t)+'</option>';}).join('');
     coachRow='<div class="rmhdr">Coach — assign coaching title</div><div class="rmnote">Coach-only. Limited by this athlete\'s card colour. The athlete can then choose to display it.</div><label class="rmrow"><span>Coaching title</span><select id="rm-coach-title">'+_copts+'</select></label>';
   }
-  m.querySelector('.rmbody').innerHTML=nameRow+titleRow+coachRow+sexRow+extraRows+gymRows;m.classList.add('on');};
+  m.querySelector('.rmbody').innerHTML=nameRow+coachRow+sexRow+extraRows+gymRows;m.classList.add('on');};
 window.closeRM=function(){document.getElementById('rmMask').classList.remove('on');};
 window.saveRM=function(){
   var ne=document.getElementById('rm-name');athleteName=ne?ne.value.trim().slice(0,24):athleteName;try{if(athleteName)localStorage.setItem('unranked-name',athleteName);else localStorage.removeItem('unranked-name');}catch(e){}
@@ -2183,9 +2193,14 @@ window.openShop=function(){var m=document.getElementById('shopMask');if(!m)retur
   var grid=SHOP_ITEMS.map(function(it){var owned=!!COSM.owned[it.id];var eq=COSM.equip[it.slot]===it.id;
     var btn=eq?'<span class="sh-b eq">Equipped</span>':(owned?'<span class="sh-b own" onclick="equipItem(&#39;'+it.id+'&#39;)">Equip</span>':'<span class="sh-b buy" onclick="buyItem(&#39;'+it.id+'&#39;)">'+it.price+'</span>');
     return '<div class="shopitem'+(eq?' on':'')+'"><div class="sh-prev pv-'+it.id+'"></div><div class="sh-info"><b>'+esc(it.name)+'</b><span>'+esc(it.desc)+'</span>'+btn+'</div></div>';}).join('');
-  m.querySelector('.shopbody').innerHTML='<div class="sh-cr"><b>'+cr.toLocaleString()+'</b> credits</div><p class="rmnote" style="margin:0 0 12px">Earn credits by levelling. Cosmetics only — nothing here ever changes a score or rank.</p><div class="sh-grid">'+grid+'</div>';
+  var _tp=titlePref();var _topts=displayTitleOptions().map(function(o){return '<option value="'+esc(o.v)+'"'+(o.v===_tp?' selected':'')+'>'+esc(o.l)+'</option>';}).join('');
+  m.querySelector('.shopbody').innerHTML='<div class="sh-cr"><b>'+cr.toLocaleString()+'</b> credits</div>'
+    +'<div class="sh-sec">Title — what your card says</div><p class="rmnote" style="margin:0 0 8px">Colour, stats and tier are always earned — this only picks the label. Fly your tier, a coach-given title, or any skill-tree title you\'ve unlocked.</p>'
+    +'<select class="sh-title-sel" onchange="setShopTitle(this.value)">'+_topts+'</select>'
+    +'<div class="sh-sec" style="margin-top:18px">Cosmetics</div><p class="rmnote" style="margin:0 0 12px">Earn credits by levelling. Cosmetics only — nothing here ever changes a score or rank.</p><div class="sh-grid">'+grid+'</div>';
   m.classList.add('on');};
 window.closeShop=function(){var m=document.getElementById('shopMask');if(m)m.classList.remove('on');};
+window.setShopTitle=function(v){try{localStorage.setItem('unranked-title-pref',v);}catch(e){}try{render();}catch(e){}try{openShop();}catch(e){}};
 var cardMode='form';   // 'form' (current) | 'legacy' (best-ever)
 var _holdToasts=false,_celebPayload=null;   // verify→handback→celebrate: suppress live toasts, then reveal on athlete tap
 var _MOVE={};SCORING.moves.forEach(function(m){_MOVE[m.id]=m;});
@@ -2674,10 +2689,10 @@ function buildHomeHTML(hint,cardToggle,card,tree){
   function hubBtn(asset,onclick,label,sub,ico){
     return '<button class="dcard" onclick="'+onclick+'" aria-label="'+esc(label)+'"><span class="dc-ic">'+ico+'</span><span class="dc-t"><b>'+esc(label)+'</b><span>'+esc(sub)+'</span></span><span class="dc-chev">›</span></button>';
   }
-  var links='<div class="hlinks">'
-    +hubBtn(null,'goNav(&#39;tree&#39;)','Class Tree','Your archetype path — Novice to Omnia',ICO.tree)
-    +hubBtn(null,'goNav(&#39;vault&#39;)','Vault','Your history and progress',ICO.vault)
-    +hubBtn(null,'openShop()','Shop','Spend credits on card cosmetics',ICO.shop)
+  var bighub='<div class="homehub">'
+    +'<button class="hubtile ht-prog" onclick="goNav(&#39;tree&#39;)"><span class="hubic">'+ICO.tree+'</span><span class="hubl">Progress</span><span class="hubs">Pursuit · tree · unlocks</span></button>'
+    +'<button class="hubtile ht-vault" onclick="goNav(&#39;vault&#39;)"><span class="hubic">'+ICO.vault+'</span><span class="hubl">Vault</span><span class="hubs">Moments · history</span></button>'
+    +'<button class="hubtile ht-shop" onclick="openShop()"><span class="hubic">'+ICO.shop+'</span><span class="hubl">Shop</span><span class="hubs">Cosmetics · titles</span></button>'
     +'</div>';
   // Home order: CARD → LEVEL → TODAY → DAILY QUEST → CURRENT PURSUIT + CLOSEST TO NEXT POINT (grouped — similar "what to do next" jobs) → CLASS TREE/VAULT/SHOP.
   // De-dupe: if the Pursuit card's "Closest" prerequisite is the same movement the next-point card would pick, exclude it there so Home doesn't show the same test twice.
@@ -2685,15 +2700,15 @@ function buildHomeHTML(hint,cardToggle,card,tree){
   if(_pn){var _pt=_pn.items.filter(function(it){return !it.ok;}).sort(function(a,b){return b.prog-a.prog;});if(_pt.length)_pex=_pt[0].id;}
   var npc=nextPointHTML(_pex),today=todayHomeHTML(),quest=questHTML(),pursuit=pursuitHTML();
   var pp=pendingPreviewHTML();   // "what your card becomes once verified" — the strongest come-back hook; only renders when pending>0
+  // Redesigned home — reduced cognitive load: card (who you are) → TODAY (what to do now) → 3 tiles (what you're working toward / collection / customise).
+  // Pursuit, next-point, and stale nudges moved into Progress (the tree page) where the unlock story lives.
   return hint+cardToggle+'<div class="ppsec">'+card+'</div>'
     +(pp?'<div class="ppsec">'+pp+'</div>':'')
     +'<div class="ppsec">'+levelStripHTML()+'</div>'
     +'<div class="ppsec">'+streakHomeHTML()+'</div>'
     +(today?'<div class="ppsec">'+today+'</div>':'')
     +(quest?'<div class="ppsec">'+quest+'</div>':'')
-    +((pursuit||npc)?'<div class="ppsec">'+pursuit+(npc?(pursuit?'<div class="pp-gap"></div>':'')+npc:'')+'</div>':'')
-    +(function(){var st=staleHomeHTML();return st?'<div class="ppsec">'+st+'</div>':'';})()
-    +'<div class="ppsec">'+links+'</div>';
+    +'<div class="ppsec">'+bighub+'</div>';
 }
 // CLASS TREE — its own page: Novice→Apprentice spine, 4 specialisation family-trees, Prismatic ladder
 function buildTreePageHTML(){
