@@ -46,8 +46,10 @@
 .btn2{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;padding:16px 18px;font-family:inherit;font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:filter .12s}
 .btn2--primary{background:var(--acc);color:#fff}.btn2--primary:hover{filter:brightness(1.08)}
 .sess-mask{display:none;position:fixed;inset:0;z-index:9997;background:#08080d;overflow:auto}
-.sess-inner{max-width:440px;margin:0 auto;padding:22px 18px 40px;position:relative}
-.sess-x{position:absolute;top:18px;right:16px;background:var(--s1);border:1px solid rgba(255,255,255,.14);color:var(--di);border-radius:9px;padding:7px 12px;font-size:.72rem;cursor:pointer}
+.sess-inner{max-width:440px;margin:0 auto;padding:0 18px calc(40px + env(safe-area-inset-bottom,0px));position:relative}
+.ss-top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;margin:0 -18px 18px;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px 13px;background:#08080d;border-bottom:1px solid var(--line)}
+.ss-topttl{flex:1;min-width:0;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--di);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ss-close{background:var(--s1);border:1px solid rgba(255,255,255,.14);color:var(--di);border-radius:9px;padding:8px 13px;font-size:.72rem;cursor:pointer;flex-shrink:0}
 .ss-kick{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--di);font-weight:700}
 .ss-h{font-family:var(--disp);font-size:2.3rem;letter-spacing:.02em;line-height:.95}
 .ss-sub{color:#8b8b95;font-size:.82rem;margin:6px 0 22px}
@@ -73,7 +75,7 @@
 .ss-sec .ss-chev{font-size:1.15rem;transition:transform .18s}.ss-sec.open .ss-chev{transform:rotate(90deg)}
 .ss-sb{display:none;padding:0 17px 17px 47px}.ss-sec.open .ss-sb{display:block}
 .ss-txt{white-space:pre-line;font-size:.85rem;color:var(--txt);line-height:1.6}
-.ss-sticky{position:sticky;bottom:0;padding:14px 0 2px;background:linear-gradient(to top,#08080d 55%,transparent)}
+.ss-sticky{position:sticky;bottom:0;padding:14px 0 calc(2px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,#08080d 55%,transparent)}
 .qc{background:var(--s1)!important;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;margin-top:8px}
 .qc-line{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;color:#f5f5f7;padding:11px 14px;cursor:pointer;font:inherit;text-align:left}
 .qc-ic{width:17px;height:17px;flex-shrink:0;opacity:.9}
@@ -462,6 +464,14 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 .card .lg-rpe{flex:1;min-width:30px;font-size:13px;font-weight:800;padding:7px 0;border-radius:7px;border:1px solid var(--line);background:var(--panel2);color:var(--dim);cursor:pointer}
 .card .lg-rpe.on{background:var(--mag);border-color:var(--mag);color:#fff}
 .lg-import{display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+/* Log overlay: neutralise the blanket ".card button" magenta-gradient so log cards render as designed (dark surfaces, subtle accents) */
+#logMask .lg-head{background:none;border:0;box-shadow:none;width:100%;border-radius:0}
+#logMask .lg-band{flex:none;background:var(--panel2);border:1px solid var(--line);color:var(--dim);box-shadow:none;border-radius:8px;font-weight:800}
+#logMask .lg-band.on{background:var(--acc);border-color:var(--acc);color:#0a0a11}
+#logMask .lg-rpe{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--dim);box-shadow:none;border-radius:7px;font-weight:800}
+#logMask .lg-rpe.on{background:var(--mag);border-color:var(--mag);color:#fff}
+#logMask .lg-opt{flex:none;background:none;border:1px dashed rgba(255,255,255,.20);color:var(--di);box-shadow:none;border-radius:8px;font-weight:600}
+#logMask .lg-opt.on{border-style:solid;color:var(--txt)}
 .ml-stats{display:flex;gap:10px;margin:4px 0 8px}
 .ml-stat{flex:1;text-align:center;border:1px solid var(--line);border-radius:12px;padding:12px 6px;background:var(--bg)}
 .ml-stat b{display:block;font-family:var(--disp);font-size:30px;font-weight:800;color:var(--acc2);line-height:1}
@@ -1492,6 +1502,11 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
 #logMask .card>h3{padding:18px 20px 0;flex:none}
 #logMask .card>.rmnote{padding:4px 20px 0;flex:none}
 #logMask .logbody{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:14px 20px}
+/* Log overlay: opaque full-height sheet (no page bleeding through underneath) + safe-area */
+#logMask{background:#08080d;z-index:9996}
+#logMask .card{width:100%;max-width:460px;height:100%;max-height:100%;border-radius:0;border:0}
+#logMask .fp-head{padding-top:calc(env(safe-area-inset-top,0px) + 8px)}
+#logMask .card>.row{padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
 #logMask .card>.row{flex:none;margin:0;padding:12px 20px;border-top:1px solid var(--line);background:var(--panel)}
 .card h3{margin:0 0 6px;color:var(--acc)}.card p{color:var(--dim);font-size:13px;margin:0 0 14px}
 .card input{width:100%;padding:10px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--txt);font-size:16px}
@@ -2299,18 +2314,18 @@ function renderSession(){var el=document.getElementById('sessInner');if(!el)retu
  if(!sessTrack){
   var avail=_SESS_TRK.filter(function(t){return day&&day.tracks&&day.tracks[t[0]]&&day.tracks[t[0]].length;});
   if(!avail.length)avail=_SESS_TRK.slice(0,1);
-  el.innerHTML='<button class="sess-x" onclick="closeSession()">Close</button>'
-   +'<div class="ss-kick">Start session</div><div class="ss-h">Today&#39;s session</div><div class="ss-sub">'+esc(sessDateStr())+' &mdash; which program?</div>'
+  el.innerHTML='<div class="ss-top"><span class="ss-topttl">Start session</span><button class="ss-close" onclick="closeSession()">Close</button></div>'
+   +'<div class="ss-h">Today&#39;s session</div><div class="ss-sub">'+esc(sessDateStr())+' &mdash; which program?</div>'
    +'<div class="ss-picker">'+avail.map(function(t){return '<button class="ss-track'+(t[0]==='class'?' primary':'')+'" onclick="pickSessTrack(\''+t[0]+'\')"><span class="ss-tic">'+(_SESS_ICO[t[0]]||'')+'</span><span class="ss-tmid"><span class="ss-tnm">'+t[1]+'</span><span class="ss-td">'+t[2]+'</span>'+(t[0]==='class'?'<span class="ss-tag">Your usual</span>':'')+'</span><span class="ss-chev">&rsaquo;</span></button>';}).join('')+'</div>';
   return;}
  var tName=(_SESS_TRK.filter(function(x){return x[0]===sessTrack;})[0]||[0,sessTrack])[1];
  var ids=(day&&day.tracks&&day.tracks[sessTrack])||[];var n=0;
  var blocks=ids.map(function(id){var p=piece(id);if(!p||p.type==='header')return '';n++;
    return '<div class="ss-sec'+(n===1?' open':'')+'" id="ssx-'+esc(id)+'"><button class="ss-sh" onclick="sessToggle(\'ssx-'+esc(id)+'\')"><span class="ss-idx">'+n+'</span><span class="ss-smid"><span class="ss-slab">'+esc(labelFor(p))+'</span><span class="ss-snm">'+esc(clean(boardTitle(p)))+'</span></span><span class="ss-chev">&rsaquo;</span></button><div class="ss-sb"><div class="ss-txt">'+esc(sessPres(p))+'</div></div></div>';}).join('');
- el.innerHTML='<button class="sess-x" onclick="closeSession()">Close</button>'
-  +'<div class="ss-head"><button class="ss-back" onclick="sessBack()">&lsaquo;</button><div><div class="ss-kick">'+esc(tName)+' &middot; today</div><div class="ss-h">Today</div></div></div>'
+ el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="sessBack()">&lsaquo;</button><span class="ss-topttl">'+esc(tName)+' &middot; today</span><button class="ss-close" onclick="closeSession()">Close</button></div>'
+  +'<div class="ss-h">Today</div>'
   +'<div class="ss-sub">Tap any block to open it.</div><div class="ss-sess">'+blocks+'</div>'
-  +'<div class="ss-sticky"><button class="btn2 btn2--primary" onclick="sessLog()">Log this session</button></div>';
+  +'<div class="ss-sticky"><button class="btn-primary" onclick="sessLog()">Log this session</button></div>';
 }
 var cardMode='form';   // 'form' (current) | 'legacy' (best-ever)
 var _holdToasts=false,_celebPayload=null;   // verify→handback→celebrate: suppress live toasts, then reveal on athlete tap
@@ -2927,7 +2942,7 @@ function buildTrainHTML(){
     +'<div class="tt-card"><div class="tt-meta"><span class="tt-date">'+dstr.toUpperCase()+'</span>'
       +'<span class="tt-prog"><span class="tt-ic">'+ICO.program+'</span>Unranked Program</span></div>'
     +rdy
-    +'<button class="btn-primary" onclick="goNav(&#39;program&#39;)">Start session <span class="arw">→</span></button></div>';
+    +'<button class="btn-primary th-go" onclick="goNav(&#39;program&#39;);openSession()">Start session <span class="arw">→</span></button></div>';
   var scSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.target+'</span><span class="dc-t"><b>Log a score</b><span>Log &amp; update your test results</span></span><span class="dc-chev">›</span></summary>';
   var scores='<details class="trn-acc">'+scSum+'<div class="trn-body">'+buildTestsHTML(true)+'</div></details>';
   var lgSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.star+'</span><span class="dc-t"><b>Log a Previous Best</b><span>Build your Legacy card from old PBs</span></span><span class="dc-chev">›</span></summary>';
