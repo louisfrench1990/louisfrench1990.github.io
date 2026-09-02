@@ -78,6 +78,10 @@
 .ss-divs{display:flex;gap:6px;margin-bottom:12px}
 .ss-div{flex:1;font-size:.68rem;font-weight:800;letter-spacing:.03em;padding:8px 0;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--di);cursor:pointer}
 .ss-div.on{background:var(--acc);border-color:var(--acc);color:#1a1200}
+.ss-div{position:relative}
+.ss-div.sug:not(.on){border-color:rgba(255,194,71,.45)}
+.ss-div.sug:not(.on)::after{content:"";position:absolute;top:5px;right:6px;width:5px;height:5px;border-radius:50%;background:var(--acc)}
+.ss-sughint{font-size:.68rem;color:var(--di);font-weight:600;margin:0 0 11px}
 .ss-sticky{position:sticky;bottom:0;padding:14px 0 10px;background:linear-gradient(to top,#08080d 55%,transparent)}
 #weekMask .ss-sb{padding-left:17px}
 .wk-p{display:flex;flex-direction:column;padding:9px 0;border-top:1px solid rgba(255,255,255,.05)}
@@ -2377,17 +2381,46 @@ var _SESS_TRK=[['class','Class','The daily class session, coach-led'],['athlete'
 var sessTrack=null;
 function sessDay(){try{var ti=todayInfo();var wk=D.weeks&&D.weeks.find(function(x){return x.week===ti.week;});return wk?wk.days[ti.wd]:null;}catch(e){return null;}}
 function sessPres(p){try{var isW=clsFor(p)==='wod';var V=isW?p.variants:vb(p);var b=(V&&(V.rx||V.intermediate||V.scaled||V.rxPlus))||{};return b.prescription||p.intent||'';}catch(e){return '';}}
-var SESSDIV=(function(){try{return localStorage.getItem('unranked-scale-pref')||'rx';}catch(e){return 'rx';}})();
-var SESSDIV_PIECE={};
-function sessDivFor(pid){return SESSDIV_PIECE[pid]||SESSDIV;}
+var SESSDIV_PIECE={};   // per-piece manual override for this session (auto-select is the default)
+function sessDivFor(pid,sug){return SESSDIV_PIECE[pid]||sug||'rx';}
 function sessDivs(p){try{var isW=clsFor(p)==='wod';var V=isW?p.variants:vb(p);if(!V)return [];var order=[['scaled','Scaled'],['intermediate','Int'],['rx','RX'],['rxPlus','RX+']];var out=[];order.forEach(function(o){var b=V[o[0]];if(b&&(b.prescription||b.target)){out.push({key:o[0],label:o[1],pres:b.prescription||b.target});}});return out;}catch(e){return [];}}
+function gymKeyFromLine(l){l=(l||'').toLowerCase();
+  if(/ring muscle|ring-mu|\brmu\b/.test(l))return 'ringmu';
+  if(/bar muscle|bar-mu|\bbmu\b|muscle-up/.test(l))return 'barmu';
+  if(/chest-to-bar|chest to bar|\bc2b\b/.test(l))return 'c2b';
+  if(/toes-to-bar|toes to bar|\bt2b\b|\bttb\b/.test(l))return 't2b';
+  if(/handstand push|\bhspu\b/.test(l))return 'hspu';
+  if(/pull-?up/.test(l))return 'pullup';
+  if(/rope climb/.test(l))return 'rope';
+  return null;}
+// Gymnastic max-effort reps: compute off a 90% TRAINING MAX of the athlete's max (TM_FRAC), same principle as barbell %s.
+function personalizeGym(text){try{var tm=(typeof TM_FRAC!=='undefined')?TM_FRAC:0.9;return String(text||'').split('\n').map(function(ln){
+   var pm=ln.match(/(\d{1,3})\s*%\s*of your max/i);if(!pm)return ln;
+   var k=gymKeyFromLine(ln);if(!k)return ln;
+   var mx=(typeof gcap==='function')?gcap(k):0;if(!mx||mx<=0)return ln;
+   var reps=Math.max(1,Math.round(mx*tm*(parseInt(pm[1],10)/100)));
+   return ln.replace(/((\d{1,3})\s*%\s*of your max[^\n(]*)/i,'$1(≈'+reps+' for you) ');
+  }).join('\n');}catch(e){return text;}}
+function sessSuggestDiv(p){try{
+   if(clsFor(p)==='wod'){var rb=(typeof recBand==='function')?recBand(p):null;if(rb)return rb;}
+   else if(p&&p.variants&&sessDivs(p).length>1){var order=['rx','intermediate','scaled'];   // skill line: highest band whose gym movement the athlete can actually do
+     for(var i=0;i<order.length;i++){var v=p.variants[order[i]];if(!v||!v.prescription)continue;
+       var k=gymKeyFromLine(v.prescription.split('\n')[0]);
+       if(!k)return order[i];
+       if(typeof gcap==='function'&&gcap(k)>0)return order[i];}
+     return 'scaled';}
+  }catch(e){}return 'rx';}
+function sessResolvePres(p,pres){var t=pres;try{if(clsFor(p)==='wod'&&typeof personalizeWod==='function')t=personalizeWod(t,p.category,p.bench);}catch(e){}try{t=personalizeGym(t);}catch(e){}return t;}
 function sessBodyHTML(p,pid){var divs=sessDivs(p);
-  if(divs.length<2){return '<div class="ss-txt">'+esc(divs.length?divs[0].pres:sessPres(p))+'</div>';}
-  var cur=sessDivFor(pid);if(!divs.some(function(d){return d.key===cur;}))cur=(divs.filter(function(d){return d.key==='rx';})[0]||divs[divs.length-1]).key;
-  var tabs=divs.map(function(d){return '<button class="ss-div'+(d.key===cur?' on':'')+'" onclick="sessSetDiv(&#39;'+pid+'&#39;,&#39;'+d.key+'&#39;)">'+d.label+'</button>';}).join('');
-  var pres=(divs.filter(function(d){return d.key===cur;})[0]||divs[0]).pres;
-  return '<div class="ss-divs">'+tabs+'</div><div class="ss-txt">'+esc(pres)+'</div>';}
-window.sessSetDiv=function(pid,div){SESSDIV_PIECE[pid]=div;SESSDIV=div;try{localStorage.setItem('unranked-scale-pref',div);}catch(e){}var b=document.getElementById('ssb-'+pid);if(b){var p=piece(pid);if(p)b.innerHTML=sessBodyHTML(p,pid);}};
+  if(divs.length<2){return '<div class="ss-txt">'+esc(sessResolvePres(p,divs.length?divs[0].pres:sessPres(p)))+'</div>';}
+  var sug=sessSuggestDiv(p);var cur=sessDivFor(pid,sug);
+  if(!divs.some(function(d){return d.key===cur;}))cur=(divs.filter(function(d){return d.key==='rx';})[0]||divs[divs.length-1]).key;
+  var tabs=divs.map(function(d){return '<button class="ss-div'+(d.key===cur?' on':'')+(d.key===sug?' sug':'')+'" onclick="sessSetDiv(&#39;'+pid+'&#39;,&#39;'+d.key+'&#39;)">'+d.label+'</button>';}).join('');
+  var chosen=(divs.filter(function(d){return d.key===cur;})[0]||divs[0]);
+  var why='';try{if(cur===sug&&clsFor(p)==='wod'&&typeof recWhy==='function')why=recWhy(p);}catch(e){}
+  var hint=(cur===sug)?('<div class="ss-sughint">Suggested for you'+(why?' &mdash; '+esc(why):'')+'</div>'):'';
+  return '<div class="ss-divs">'+tabs+'</div>'+hint+'<div class="ss-txt">'+esc(sessResolvePres(p,chosen.pres))+'</div>';}
+window.sessSetDiv=function(pid,div){SESSDIV_PIECE[pid]=div;var b=document.getElementById('ssb-'+pid);if(b){var p=piece(pid);if(p)b.innerHTML=sessBodyHTML(p,pid);}};
 function sessDateStr(){try{return new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});}catch(e){return '';}}
 window.openSession=function(){var m=document.getElementById('sessMask');if(!m){m=document.createElement('div');m.id='sessMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="sessInner"></div>';document.body.appendChild(m);}sessTrack=null;renderSession();m.style.display='block';m.scrollTop=0;};
 window.closeSession=function(){var m=document.getElementById('sessMask');if(m)m.style.display='none';};
