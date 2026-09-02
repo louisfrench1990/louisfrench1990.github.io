@@ -1847,13 +1847,43 @@ function _recCalc(p){if(!p||p.type!=='wod')return {band:null,why:''};
 function recBand(p){return _recCalc(p).band;}
 function recWhy(p){return _recCalc(p).why;}
 window.setSex=function(s){athleteSex=s;try{localStorage.setItem('unranked-sex',s)}catch(e){}var bs=document.querySelectorAll('.sexb');for(var i=0;i<bs.length;i++)bs[i].classList.toggle('on',bs[i].textContent===s);};
+/* ===== Display titles — pick which label the card shows. Cosmetic only: never touches ratings, TP or tier. ===== */
+var COACH_LADDER=[['Member',0],['Established Member',1],['Committed Member',1],['Community Leader',2],['Apprentice Coach',2],['Assistant Coach',3],['Coach',3],['Senior Coach',4],['Head Coach',5],['Master Coach',6]];
+function cardTierIndex(){try{var cc=computeCard();return cc.entered>0?SCORING.tiers.indexOf(cc.tier):-1;}catch(e){return -1;}}
+function unlockedTitles(){var st=classStates();var out=[];SCORING.trees.forEach(function(tr){tr.classes.forEach(function(c){if(st[c.slug]&&st[c.slug].unlocked)out.push(c.name);});});return out;}
+function titlePref(){try{return localStorage.getItem('unranked-title-pref')||'auto';}catch(e){return 'auto';}}
+function assignedCoachTitle(){var t='';try{t=localStorage.getItem('unranked-coach-title')||'';}catch(e){}
+  if(!t)return '';var idx=cardTierIndex();for(var i=0;i<COACH_LADDER.length;i++){if(COACH_LADDER[i][0]===t)return idx>=COACH_LADDER[i][1]?t:'';}return '';}
+function coachTitlesAllowed(){var idx=cardTierIndex();var out=[];COACH_LADDER.forEach(function(x){if(idx>=x[1])out.push(x[0]);});return out;}
+function resolveCardTitle(cur){var p=titlePref();cur=cur||{};
+  if(p==='none')return '';
+  if(p==='tier'){try{var cc=computeCard();return cc.entered>0?cc.tier.name:(cur.name||'');}catch(e){return cur.name||'';}}
+  if(p&&p.indexOf('coach:')===0){return assignedCoachTitle()||(cur.name||'');}
+  if(p&&p.indexOf('tree:')===0){var n=p.slice(5);return unlockedTitles().indexOf(n)>=0?n:(cur.name||'');}
+  return cur.name||'';}   // 'auto' / default = the app's computed class
+function displayTitleOptions(){
+  var opts=[{v:'auto',l:'Class (auto) — '+((currentClass()||{}).name||'Novice')}];
+  var ct=assignedCoachTitle();if(ct)opts.push({v:'coach:'+ct,l:'Coaching title — '+ct});
+  unlockedTitles().forEach(function(n){opts.push({v:'tree:'+n,l:'Skill tree — '+n});});
+  try{var cc=computeCard();if(cc.entered>0)opts.push({v:'tier',l:'Card tier — '+cc.tier.name});}catch(e){}
+  opts.push({v:'none',l:'Hide title'});
+  return opts;}
 window.openRM=function(){var m=document.getElementById('rmMask');
   var nameRow='<label class="rmrow"><span>Name (shown on your card)</span><input type="text" id="rm-name" value="'+esc(athleteName||'')+'" placeholder="e.g. A. Fowler" maxlength="24"></label>';
   var sexRow='<div class="rmrow"><span>Sex (sets your scoring curve &amp; load cap)</span><span><button class="sexb'+(athleteSex==='M'?' on':'')+'" onclick="setSex(\'M\')">M</button><button class="sexb'+(athleteSex==='F'?' on':'')+'" onclick="setSex(\'F\')">F</button></span></div>'
     +'<label class="rmrow"><span>Age (masters scaling, 35+)</span><input type="number" inputmode="numeric" min="14" max="99" id="rm-age" value="'+(athleteAge||'')+'" placeholder="yrs"></label>';
   var extraRows='<div class="rmhdr">Your 1RMs — for WOD weights</div><div class="rmnote">Enter your working 1-rep maxes so the app scales WOD loads to you — <b>even for lifts you haven\'t unlocked as a test yet</b>. Used for <b>WOD weights only</b>; they never change your card rating or rankings. Leave one blank to fall back to your verified test score where you have it.</div>'+WODLIFTS.map(function(l){var tv=testRM(l[0]);var ph=tv>0?('from your test: '+tv+' kg'):'kg';return '<label class="rmrow"><span>'+l[1]+'</span><input type="number" inputmode="decimal" min="0" id="rm-'+l[0]+'" value="'+(liftExtra[l[0]]||'')+'" placeholder="'+ph+'"></label>';}).join('');
   var gymRows='<div class="rmhdr">Your gymnastics — for WOD scaling</div><div class="rmnote">Max unbroken reps in a fresh minute (leave blank if you can\'t do it yet). Lets the app auto-scale gymnastic movements in WODs to a version you can hold. <b>WOD scaling only</b> — never your card. Blank falls back to your verified test score where you have one.</div>'+GYMSKILLS.map(function(g){var tid=GYM2TEST[g[0]];var tv=(tid&&typeof TESTS!=='undefined'&&TESTS[tid]>0)?TESTS[tid]:0;var ph=tv>0?('from your test: '+tv):'reps';return '<label class="rmrow"><span>'+g[1]+'</span><input type="number" inputmode="numeric" min="0" id="gymcap-'+g[0]+'" value="'+(gymSkills[g[0]]||'')+'" placeholder="'+ph+'"></label>';}).join('');
-  m.querySelector('.rmbody').innerHTML=nameRow+sexRow+extraRows+gymRows;m.classList.add('on');};
+  var _tp=titlePref();
+  var _topts=displayTitleOptions().map(function(o){return '<option value="'+esc(o.v)+'"'+(o.v===_tp?' selected':'')+'>'+esc(o.l)+'</option>';}).join('');
+  var titleRow='<div class="rmhdr">Card title</div><div class="rmnote">Choose which label shows on your card. Your colour, stats and tier are always earned — this only changes the label.</div><label class="rmrow"><span>Show on card</span><select id="rm-title">'+_topts+'</select></label>';
+  var coachRow='';
+  if(coachMode()){
+    var _ct='';try{_ct=localStorage.getItem('unranked-coach-title')||'';}catch(e){}
+    var _copts='<option value="">— none —</option>'+coachTitlesAllowed().map(function(t){return '<option value="'+esc(t)+'"'+(t===_ct?' selected':'')+'>'+esc(t)+'</option>';}).join('');
+    coachRow='<div class="rmhdr">Coach — assign coaching title</div><div class="rmnote">Coach-only. Limited by this athlete\'s card colour. The athlete can then choose to display it.</div><label class="rmrow"><span>Coaching title</span><select id="rm-coach-title">'+_copts+'</select></label>';
+  }
+  m.querySelector('.rmbody').innerHTML=nameRow+titleRow+coachRow+sexRow+extraRows+gymRows;m.classList.add('on');};
 window.closeRM=function(){document.getElementById('rmMask').classList.remove('on');};
 window.saveRM=function(){
   var ne=document.getElementById('rm-name');athleteName=ne?ne.value.trim().slice(0,24):athleteName;try{if(athleteName)localStorage.setItem('unranked-name',athleteName);else localStorage.removeItem('unranked-name');}catch(e){}
@@ -1861,6 +1891,8 @@ window.saveRM=function(){
   GYMSKILLS.forEach(function(g){var el=document.getElementById('gymcap-'+g[0]);if(!el)return;var n=parseInt(el.value,10);if(!isNaN(n)&&n>0)gymSkills[g[0]]=n;else delete gymSkills[g[0]];});   // manual gym entry overrides the test-derived cap for WOD scaling (blank falls back to the test via gcap)
   gymSet=Object.keys(gymSkills).length>0;try{localStorage.setItem('unranked-gym',JSON.stringify(gymSkills))}catch(e){}
   var ae=document.getElementById('rm-age');var av=ae?parseInt(ae.value,10):0;athleteAge=(!isNaN(av)&&av>0)?av:0;try{if(athleteAge)localStorage.setItem('unranked-age',String(athleteAge));else localStorage.removeItem('unranked-age');}catch(e){}
+  var te=document.getElementById('rm-title');if(te){try{localStorage.setItem('unranked-title-pref',te.value);}catch(e){}}
+  var cte=document.getElementById('rm-coach-title');if(cte){try{if(cte.value)localStorage.setItem('unranked-coach-title',cte.value);else localStorage.removeItem('unranked-coach-title');}catch(e){}}
   oneRM=buildOneRM();closeRM();render();var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();};
 /* ================= member training log (on-device, unverified — a private notebook, separate from the ranked/verified layer Ash builds) ================= */
 var LOG=sanitizeLog(lsObj('unranked-log'));
@@ -2784,7 +2816,7 @@ function athleteCardHTML(opts){opts=opts||{};
     var tierIdx=SCORING.tiers.indexOf(ccD.tier)+1,tierN=SCORING.tiers.length;
     var tLetter=(ccD.tier.name||'?').charAt(0).toUpperCase();
     var serial='UR-'+tLetter+'-'+cardSerial(athleteName,ccD.tier.key);
-    var clsName=(cur.name||'').toUpperCase();
+    var clsName=(resolveCardTitle(cur)||'').toUpperCase();
     var verified=(!isLeg&&cc.verified>0);
     var tagline=cardTagline(ccD.stats);
     var nextGap=ccD.nextTier?(ccD.nextTier.tp-ccD.tp):0;
@@ -3331,7 +3363,7 @@ window.goNav=function(page){
 };
 betaGateInit();
 // FULL backup: every unranked-* store (tests, verifications, XP, achievements, profile, log) — not just the log.
-var _BACKUP_KEYS=['unranked-tests','unranked-verified','unranked-xp','unranked-ach','unranked-log','unranked-extra','unranked-gym','unranked-sex','unranked-age','unranked-name','unranked-photo','unranked-photoy','unranked-consent','unranked-lasttier','unranked-best','unranked-prev','unranked-prevv','unranked-moments','unranked-cosmetics','unranked-readiness-hist','unranked-edits','unranked-ratehist','unranked-tests-ts','unranked-quest','unranked-prog','unranked-vprog'];   // include wellness history, manual programme edits, form-trend, staleness ts, quest & progression-variant state so a device-to-device restore is genuinely complete
+var _BACKUP_KEYS=['unranked-tests','unranked-verified','unranked-xp','unranked-ach','unranked-log','unranked-extra','unranked-gym','unranked-sex','unranked-age','unranked-name','unranked-photo','unranked-photoy','unranked-consent','unranked-lasttier','unranked-best','unranked-prev','unranked-prevv','unranked-moments','unranked-cosmetics','unranked-readiness-hist','unranked-edits','unranked-ratehist','unranked-tests-ts','unranked-quest','unranked-prog','unranked-vprog','unranked-title-pref','unranked-coach-title'];   // include wellness history, manual programme edits, form-trend, staleness ts, quest & progression-variant state so a device-to-device restore is genuinely complete
 window.exportLog=function(){try{var env={_unranked:1,v:1,ts:new Date().toISOString(),data:{}};
     _BACKUP_KEYS.forEach(function(k){try{var raw=localStorage.getItem(k);if(raw!=null)env.data[k]=raw;}catch(e){}});
     var blob=new Blob([JSON.stringify(env)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='unranked-backup-'+todayStr()+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},600);
