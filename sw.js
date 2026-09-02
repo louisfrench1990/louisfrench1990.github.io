@@ -1,7 +1,7 @@
 // Unranked BETA service worker — network-first with offline cache fallback.
 // Rebuilt 2026-08-26 (original lost in a workspace reset). Network-first guarantees users always get the
 // latest index.html/data on deploy, and still works offline after the first online visit.
-const CACHE = 'unranked-20260902r';
+const CACHE = 'unranked-20260902t';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => {
   e.waitUntil(
