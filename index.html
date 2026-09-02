@@ -104,6 +104,13 @@
 .dev-rdcur{color:var(--mag);font-weight:700;font-size:.78rem;margin-left:4px}
 .dev-fam{display:flex;flex-direction:column;gap:8px;background:var(--s1);border:1px solid var(--line);border-radius:13px;padding:15px 16px;cursor:pointer;color:var(--txt);font:inherit;text-align:left;width:100%}
 .dev-fam:hover{border-color:rgba(255,255,255,.16)}
+.dev-fam.mastered{border-color:rgba(255,194,71,.45);background:linear-gradient(180deg,rgba(255,194,71,.07),var(--s1))}
+.dev-fam.mastered .dev-lvl{color:var(--acc)}
+.dev-fam.mastered .dev-bar i{background:var(--acc)}
+.dev-launch.locked{opacity:.5;cursor:default}
+.dev-launch.locked:hover{background:var(--s1)}
+.dev-lockic{color:var(--di);display:flex;align-items:center;flex:none}
+.dev-lockic svg{width:17px;height:17px}
 .dev-fam-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .dev-fam-nm{font-weight:700;font-size:1rem}
 .dev-lvl{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--acc);flex:none}
@@ -2572,13 +2579,17 @@ function devSeedMet(seed){try{if(!seed)return false;var id=seed.test;if(typeof i
   if(seed.variant){var vars=(mv&&mv.variants)||[];var order={};vars.forEach(function(v,i){order[v.key]=i;});var cur=(typeof PROG!=='undefined')?PROG[id]:null;if(cur==null)cur=(vars[0]&&vars[0].key);return order[cur]!=null&&order[seed.variant]!=null&&order[cur]>=order[seed.variant];}
   var perf=(typeof TESTS!=='undefined')?TESTS[id]:null;if(perf==null)return false;if(seed.min!=null){return (mv&&mv.dir==='lo')?perf<=seed.min:perf>=seed.min;}return true;}catch(e){return false;}}
 function devAchById(nid,seed){if(DEVP[nid]&&DEVP[nid].done)return true;return devSeedMet(seed);}
-function devSkillState(sk){var ach=sk.stages.map(function(st){return devAchById(st.id,st.seed);});var last=-1;ach.forEach(function(a,i){if(a)last=i;});var cur=last+1;var done=0;ach.forEach(function(a){if(a)done++;});var level=cur>=sk.stages.length?'Mastery':sk.stages[cur].level;return {ach:ach,cur:cur,done:done,total:sk.stages.length,level:level,next:sk.stages[cur]||null};}
+function devSkillState(sk){var raw=sk.stages.map(function(st){return devAchById(st.id,st.seed);});var last=-1;raw.forEach(function(a,i){if(a)last=i;});
+  var ach=sk.stages.map(function(_,i){return i<=last;});   // cascade: reaching a stage completes everything below it
+  var done=last+1;var cur=last+1;var mastered=(last===sk.stages.length-1);
+  var level=cur>=sk.stages.length?'Mastery':sk.stages[cur].level;
+  return {ach:ach,cur:cur,done:done,total:sk.stages.length,level:level,next:sk.stages[cur]||null,mastered:mastered};}
 function devReady(sk){var items=(sk.readiness||[]).map(function(it){var met=devAchById(it.id,it.seed);var curv=(it.seed&&it.seed.test&&typeof TESTS!=='undefined'&&TESTS[it.seed.test]!=null)?TESTS[it.seed.test]:null;return {name:it.name,met:met,cur:curv,target:(it.seed&&it.seed.min)};});var m=0;items.forEach(function(x){if(x.met)m++;});return {items:items,met:m,total:items.length};}
 function devTick(){return '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg>';}
 function renderDev(){var el=document.getElementById('devInner');if(!el)return;
   var body=DEV_GROUPS.map(function(g){var sks=DEV_G.filter(function(s){return s.group===g;});if(!sks.length)return '';
     var cards=sks.map(function(sk){var st=devSkillState(sk);var pct=Math.round(st.done/st.total*100);
-      return '<button class="dev-fam" onclick="openDevSkill(&#39;'+sk.id+'&#39;)"><span class="dev-fam-top"><span class="dev-fam-nm">'+esc(sk.name)+'</span><span class="dev-lvl">'+esc(st.level)+'</span></span><span class="dev-bar"><i style="width:'+pct+'%"></i></span><span class="dev-fam-sub">'+st.done+' of '+st.total+' stages</span></button>';}).join('');
+      return '<button class="dev-fam'+(st.mastered?' mastered':'')+'" onclick="openDevSkill(&#39;'+sk.id+'&#39;)"><span class="dev-fam-top"><span class="dev-fam-nm">'+esc(sk.name)+'</span><span class="dev-lvl">'+(st.mastered?'&#9733; ':'')+esc(st.level)+'</span></span><span class="dev-bar"><i style="width:'+pct+'%"></i></span><span class="dev-fam-sub">'+st.done+' of '+st.total+' stages</span></button>';}).join('');
     return '<div class="dev-group">'+g+'</div><div class="dev-grid">'+cards+'</div>';}).join('');
   el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeDev()">&lsaquo;</button><span class="ss-topttl">Development</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
    +'<div class="ss-h">Development</div>'+body;}
@@ -2865,7 +2876,7 @@ var TROPHIES=[
  {name:'Benchmark Title',sub:'Win a benchmark event'}
 ];
 var vaultTab='';   // closed beta: Vault opens on History; other tabs are locked
-window.setVaultTab=function(t){vaultTab=t;var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();try{var b=document.querySelector('#myLogMask .mlbody');if(b)b.scrollTop=0;}catch(e){}};
+window.setVaultTab=function(t){if(t==='moments')return;vaultTab=t;var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();try{var b=document.querySelector('#myLogMask .mlbody');if(b)b.scrollTop=0;}catch(e){}};
 // ---- History calendar (Vault → History tab): month grid over your logged sessions; tap a highlighted day to see it ----
 var calOffset=0, calSel='';
 window.calNav=function(d){calOffset+=d;if(calOffset<0)calOffset=0;calSel='';var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();};
@@ -2941,8 +2952,8 @@ function buildVaultHTML(hist,allDlen){
   var log='<details class="vlog"><summary>Session log'+(allDlen?' ('+allDlen+')':'')+' &amp; backup <span class="ts-chev">›</span></summary>'+hist
     +'<div class="pprow" style="padding:10px 0 0"><button class="ghost" onclick="exportLog()">Export</button><label class="ghost lg-import" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--line)">Import<input type="file" accept="application/json,.json" onchange="importLog(this)" style="display:none"></label></div></details>';
   if(!vaultTab){
-    var vopts=[['history','History','Your training calendar & session log'],['moments','Moments','Milestones you\'ve kept'],['achievements','Achievements','Badges you\'ve earned'],['trophies','Trophies','Competition wins']];
-    var choose=vopts.map(function(o){return '<button class="dev-launch" onclick="setVaultTab(&#39;'+o[0]+'&#39;)"><span class="dev-ll"><span class="dev-lk">'+o[1]+'</span><span class="dev-ls">'+o[2]+'</span></span><span class="ss-chev">&rsaquo;</span></button>';}).join('');
+    var vopts=[['history','History','Your training calendar & session log',0],['moments','Moments','Not open yet',1],['achievements','Achievements','Badges you\'ve earned',0],['trophies','Trophies','Competition wins',0]];
+    var choose=vopts.map(function(o){if(o[3])return '<div class="dev-launch locked"><span class="dev-ll"><span class="dev-lk">'+o[1]+'</span><span class="dev-ls">'+o[2]+'</span></span><span class="dev-lockic">'+ICO.lock+'</span></div>';return '<button class="dev-launch" onclick="setVaultTab(&#39;'+o[0]+'&#39;)"><span class="dev-ll"><span class="dev-lk">'+o[1]+'</span><span class="dev-ls">'+o[2]+'</span></span><span class="ss-chev">&rsaquo;</span></button>';}).join('');
     return '<div class="ppsec vaultsec"><div class="dsec">Vault</div>'+choose+'</div>';
   }
   var vlabels={history:'History',moments:'Moments',achievements:'Achievements',trophies:'Trophies'};
@@ -3370,14 +3381,14 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
     var nodes=tr.classes.map(function(c){var s=cst[c.slug]||{};var k=s.unlocked?'done':'lock';
       return '<span class="cnode '+k+' cc-'+c.colour+'">'+esc(c.name)+(s.unlocked?' ✓':'')+'</span>';}).join('<span class="cn-arrow">›</span>');
     return '<div class="ctree" onclick="openTree(\''+tr.key+'\')"><div class="ctree-h">'+esc(tr.name)+'<span class="ctree-open">tap to open ›</span></div><div class="ctree-nodes">'+nodes+'</div></div>';}).join('');
-  var tree='<div class="rmhdr">Class tree <span class="betap">beta</span></div><div class="rmnote">Your archetype path — Novice to Omnia. Tap a tree to see your classes.</div>'+treeHtml;
+  var tree='<div class="rmhdr">Class tree <span class="betap">beta</span></div>'+treeHtml;
   // ---- XP / Level (beta port of Ash's XP engine) — earned from training + verified progress ----
   xpSync();achSync();
   // ---- settings (folds in the old "My details"; "My numbers" is gone — barbell maxes come from tests now) ----
   var setBits=[];if(athleteName)setBits.push(esc(athleteName));if(athleteSex)setBits.push(athleteSex==='F'?'Female':'Male');if(athleteAge)setBits.push(athleteAge+' yrs');
   var settings='<div class="ppsec"><div class="rmhdr">Settings <button class="minibtn" onclick="openRM()">Edit</button></div>'
     +'<div class="ml-line"><span>You</span><span class="ml-res">'+(setBits.length?setBits.join(' · '):'tap Edit to set up')+'</span></div>'
-    +'<div class="rmnote">Name, sex &amp; age — plus your 1-rep maxes and gymnastics numbers, used to scale WOD weights to you (even for lifts you haven\'t unlocked as a test yet). WOD loads only; they never change your card or ranking.</div>'
+    +'<div class="rmnote">Used to scale WOD loads to you — never affects your card or ranking.</div>'
     +'<div class="pprow" style="padding:10px 0 0"><button class="ghost" onclick="startTour(false)">Walkthrough</button><button class="ghost" onclick="openPrivacy()">Privacy &amp; data</button></div></div>'
     +'<div class="ppsec ppabout"><div class="rmhdr">About</div>'
       +'<div class="ab-brand">UN<b>RANKED</b> · PRIVATE BETA · v0.9.0-beta</div>'
@@ -3588,7 +3599,7 @@ window.openTree=function(key){var m=document.getElementById('treeMask');if(!m)re
       +'<div class="tn-state">'+(s.unlocked?'✓ Unlocked':'Locked')+'</div></div>';}).join('');
   m.querySelector('.treettl').innerHTML=esc(tree.name);
   m.querySelector('.treebody').innerHTML='<div class="tree-cur">Your class in this tree: <b>'+esc(stage)+'</b></div>'
-    +'<div class="rmnote">Keep training and getting scores verified to progress through this tree.</div>'
+    
     +'<div class="tree-grid">'+nodeHtml+'</div>';
   m.classList.add('on');};
 window.closeTree=function(){var m=document.getElementById('treeMask');if(m)m.classList.remove('on');};
