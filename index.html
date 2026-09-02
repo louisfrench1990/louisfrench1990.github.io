@@ -342,7 +342,7 @@ button{transition:transform .12s cubic-bezier(.2,.8,.2,1),border-color .12s,back
 .brand{font-family:var(--disp);font-weight:800;font-style:italic;letter-spacing:.02em;font-size:23px;text-transform:uppercase}.brand b{color:var(--mag)}
 .bd{font-size:2.9em;font-weight:800;font-style:italic;font-family:var(--disp);letter-spacing:.01em;color:var(--acc);line-height:.92}
 .meta{color:var(--dim);font-size:14px}
-.btrack{font-size:1.05em;color:var(--mag);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-family:var(--disp)}
+.btrack{font-size:1.05em;color:var(--dim);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-family:var(--disp)}
 .rpe{color:var(--txt);background:#241a05;border:1px solid var(--acc);border-radius:10px;display:inline-block;padding:.25em .6em;font-size:13px;margin:.3em 0}
 .tabs{display:flex;gap:7px;flex-wrap:wrap;margin:.6em 0}
 .tabs button{font-size:14px;min-height:40px;padding:7px 13px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--txt);cursor:pointer}
@@ -1589,9 +1589,9 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
 .card button.ghost{background:transparent;color:var(--txt);border-color:var(--line);font-weight:600}
 .centre{display:flex;align-items:center;justify-content:center;min-height:60vh;text-align:center;color:var(--dim);flex-direction:column;gap:10px}
 .fsbtn{font-size:12px;background:transparent;border:1px solid var(--line);border-radius:8px;color:var(--dim);padding:6px 10px;cursor:pointer}
-.zoombox{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--mag);border-radius:10px;padding:4px 8px}
-.zlab{font-size:12px;color:var(--mag);font-weight:800;text-transform:uppercase;letter-spacing:.14em}
-.zbtn{font-size:18px;font-weight:900;line-height:1;background:var(--mag);color:#fff;border:none;border-radius:7px;padding:5px 13px;cursor:pointer}
+.zoombox{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:4px 8px}
+.zlab{font-size:12px;color:var(--dim);font-weight:800;text-transform:uppercase;letter-spacing:.14em}
+.zbtn{font-size:18px;font-weight:900;line-height:1;background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer}
 .zbtn:hover{filter:brightness(1.08)}
 .modebanner{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;padding:6px 14px;border-radius:10px;margin:0 0 8px;letter-spacing:.02em}
 .modebanner.coach{background:rgba(255,45,138,.13);border:1px solid var(--mag);color:#ff9ec6}
@@ -2618,8 +2618,8 @@ window.openDevFamily=window.openDevSkill;
 window.devBackToList=function(){renderDev();try{window.scrollTo(0,0);}catch(e){}};
 window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual'};devSave();renderDevSkill(sid);};
 function progressChooserHTML(){return '<div class="dsec">Progress</div>'
-  +'<button class="dev-launch" onclick="openSkillTree()"><span class="dev-ll"><span class="dev-lk">Skill Tree</span><span class="dev-ls">Your class ladder — Novice, Gymnast, Lifter, Engine…</span></span><span class="ss-chev">&rsaquo;</span></button>'
-  +'<button class="dev-launch" onclick="openDev()"><span class="dev-ll"><span class="dev-lk">Development</span><span class="dev-ls">Your movement pathways — where you are, what&#39;s next</span></span><span class="ss-chev">&rsaquo;</span></button>';}
+  +'<button class="dev-launch" onclick="openSkillTree()"><span class="dev-ll"><span class="dev-lk">Skill Tree</span></span><span class="ss-chev">&rsaquo;</span></button>'
+  +'<button class="dev-launch" onclick="openDev()"><span class="dev-ll"><span class="dev-lk">Development</span></span><span class="ss-chev">&rsaquo;</span></button>';}
 window.openSkillTree=function(){var m=document.getElementById('skillMask');if(!m){m=document.createElement('div');m.id='skillMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="skillInner"></div>';document.body.appendChild(m);}document.getElementById('skillInner').innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeSkillTree()">&lsaquo;</button><span class="ss-topttl">Skill Tree</span><button class="ss-close" onclick="closeSkillTree()">Close</button></div>'+buildTreePageHTML();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.closeSkillTree=function(){var m=document.getElementById('skillMask');if(m)m.style.display='none';};
 window.pickSessTrack=function(t){sessTrack=t;renderSession();var m=document.getElementById('sessMask');if(m)m.scrollTop=0;};
@@ -2953,7 +2953,7 @@ function buildVaultHTML(hist,allDlen){
     +'<div class="pprow" style="padding:10px 0 0"><button class="ghost" onclick="exportLog()">Export</button><label class="ghost lg-import" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--line)">Import<input type="file" accept="application/json,.json" onchange="importLog(this)" style="display:none"></label></div></details>';
   if(!vaultTab){
     var vopts=[['history','History','Your training calendar & session log',0],['moments','Moments','Not open yet',1],['achievements','Achievements','Badges you\'ve earned',0],['trophies','Trophies','Competition wins',0]];
-    var choose=vopts.map(function(o){if(o[3])return '<div class="dev-launch locked"><span class="dev-ll"><span class="dev-lk">'+o[1]+'</span><span class="dev-ls">'+o[2]+'</span></span><span class="dev-lockic">'+ICO.lock+'</span></div>';return '<button class="dev-launch" onclick="setVaultTab(&#39;'+o[0]+'&#39;)"><span class="dev-ll"><span class="dev-lk">'+o[1]+'</span><span class="dev-ls">'+o[2]+'</span></span><span class="ss-chev">&rsaquo;</span></button>';}).join('');
+    var choose=vopts.map(function(o){if(o[3])return '<div class="dev-launch locked"><span class="dev-ll"><span class="dev-lk">'+o[1]+'</span></span><span class="dev-lockic">'+ICO.lock+'</span></div>';return '<button class="dev-launch" onclick="setVaultTab(&#39;'+o[0]+'&#39;)"><span class="dev-ll"><span class="dev-lk">'+o[1]+'</span></span><span class="ss-chev">&rsaquo;</span></button>';}).join('');
     return '<div class="ppsec vaultsec"><div class="dsec">Vault</div>'+choose+'</div>';
   }
   var vlabels={history:'History',moments:'Moments',achievements:'Achievements',trophies:'Trophies'};
@@ -3171,9 +3171,9 @@ function buildHomeHTML(hint,cardToggle,card,tree){
     return '<button class="dcard" onclick="'+onclick+'" aria-label="'+esc(label)+'"><span class="dc-ic">'+ico+'</span><span class="dc-t"><b>'+esc(label)+'</b><span>'+esc(sub)+'</span></span><span class="dc-chev">›</span></button>';
   }
   var bighub='<div class="homehub">'
-    +'<button class="hubtile ht-prog" onclick="goNav(&#39;tree&#39;)"><span class="hubic">'+ICO.tree+'</span><span class="hubl">Progress</span><span class="hubs">Pursuit · tree · unlocks</span></button>'
-    +'<button class="hubtile ht-vault" onclick="goNav(&#39;vault&#39;)"><span class="hubic">'+ICO.vault+'</span><span class="hubl">Vault</span><span class="hubs">Moments · history</span></button>'
-    +'<button class="hubtile ht-shop" onclick="openShop()"><span class="hubic">'+ICO.shop+'</span><span class="hubl">Shop</span><span class="hubs">Cosmetics · titles</span></button>'
+    +'<button class="hubtile ht-prog" onclick="goNav(&#39;tree&#39;)"><span class="hubic">'+ICO.tree+'</span><span class="hubl">Progress</span></button>'
+    +'<button class="hubtile ht-vault" onclick="goNav(&#39;vault&#39;)"><span class="hubic">'+ICO.vault+'</span><span class="hubl">Vault</span></button>'
+    +'<button class="hubtile ht-shop" onclick="openShop()"><span class="hubic">'+ICO.shop+'</span><span class="hubl">Shop</span></button>'
     +'</div>';
   // Home order: CARD → LEVEL → TODAY → DAILY QUEST → CURRENT PURSUIT + CLOSEST TO NEXT POINT (grouped — similar "what to do next" jobs) → CLASS TREE/VAULT/SHOP.
   // De-dupe: if the Pursuit card's "Closest" prerequisite is the same movement the next-point card would pick, exclude it there so Home doesn't show the same test twice.
@@ -3265,9 +3265,9 @@ function buildTrainHTML(){
       +'<span class="tt-prog"><span class="tt-ic">'+ICO.program+'</span>Unranked Program</span></div>'
     +rdy
     +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+questCompactHTML()+'<button class="tt-week" onclick="openWeek()"><span class="tt-wk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg></span><span class="tt-wk-l">Week ahead</span><span class="arw">›</span></button></div>';
-  var scSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.target+'</span><span class="dc-t"><b>Log a score</b><span>Log &amp; update your test results</span></span><span class="dc-chev">›</span></summary>';
+  var scSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.target+'</span><span class="dc-t"><b>Log a score</b></span><span class="dc-chev">›</span></summary>';
   var scores='<details class="trn-acc">'+scSum+'<div class="trn-body">'+buildTestsHTML(true)+'</div></details>';
-  var lgSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.star+'</span><span class="dc-t"><b>Log a Previous Best</b><span>Build your Legacy card from old PBs</span></span><span class="dc-chev">›</span></summary>';
+  var lgSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.star+'</span><span class="dc-t"><b>Log a Previous Best</b></span><span class="dc-chev">›</span></summary>';
   var legacy='<details class="trn-acc">'+lgSum+'<div class="trn-body">'+legacyLogInner()+'</div></details>';
   return today+'<div class="dsec">Your scores</div>'+scores+legacy;
 }
@@ -3398,7 +3398,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
   var hint=(cc.entered===0)?'<div class="pphint"><b>Welcome!</b> Tap <b>“Enter your first score”</b> on your card below. As a coach verifies your scores, your card, stats and class light up.</div>':(cc.pending>0?'<div class="pphint">⏳ You have <b>'+cc.pending+'</b> score'+(cc.pending===1?'':'s')+' waiting for coach verification — ask a coach to verify to update your card.</div>':'');
   var histLog=prHtml+hist;   // personal records + every session (folds into the Vault's collapsible log)
   // render the active page only (bottom-nav drives which); coach never gets here
-  var titles={home:'Home',tree:'Class Tree',train:'Train',submit:'Log a score',vault:'The Vault',compete:'In Development',explore:'In Development',fantasy:'In Development'};
+  var titles={home:'Home',tree:'Progress',train:'Train',submit:'Log a score',vault:'The Vault',compete:'In Development',explore:'In Development',fantasy:'In Development'};
   var tt=document.getElementById('ppTitle');if(tt)tt.innerHTML=(titles[profilePage]||'Home')+' <span class="betap">beta</span>';
   var bk=document.getElementById('ni-back');if(bk)bk.style.display=(profilePage==='tree'||profilePage==='vault'||profilePage==='submit')?'':'none';   // sub-pages reached from Home/Train links get a back affordance; top-level tabs don't
   var pageHtml;
