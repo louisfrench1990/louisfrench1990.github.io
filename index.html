@@ -138,9 +138,9 @@
 .qc-done{font-size:.72rem;font-weight:700;color:#4ADE80;white-space:nowrap}
 .qc-chev{color:#8b8b95;font-size:1.05rem}
 .qc-detail{display:none;padding:2px 14px 12px}
-.th-card .qc{border:0;background:transparent!important;border-radius:0;margin-top:14px;border-top:1px solid var(--line)}
-.th-card .qc-line{padding:13px 0 5px}
-.th-card .qc-detail{padding:2px 0 4px}
+.th-card .qc,.tt-card .qc{border:0;background:transparent!important;border-radius:0;margin-top:14px;border-top:1px solid var(--line)}
+.th-card .qc-line,.tt-card .qc-line{padding:13px 0 5px}
+.th-card .qc-detail,.tt-card .qc-detail{padding:2px 0 4px}
 .qc-detail.open{display:block}
 .qc-detail p{font-size:.8rem;color:#8b8b95;margin:8px 0 10px;line-height:1.5}
 .vlvl-strk{font-size:.72rem;font-weight:800;color:#FF6A3D;white-space:nowrap;display:inline-flex;align-items:center;gap:2px}
@@ -297,9 +297,9 @@
 .cardseg{margin:0 0 12px}
 .tt-card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px}
 .tt-meta{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
-.tt-date{font-family:var(--disp);letter-spacing:.05em;font-size:24px;line-height:1;color:var(--mag)}
+.tt-date{font-family:var(--disp);letter-spacing:.05em;font-size:24px;line-height:1;color:var(--txt)}
 .tt-prog{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--dim)}
-.tt-prog .tt-ic{display:inline-flex;color:var(--mag)}.tt-prog .tt-ic .ico{width:16px;height:16px}
+.tt-prog .tt-ic{display:inline-flex;color:#8b8b95}.tt-prog .tt-ic .ico{width:16px;height:16px}
 /* readiness chip on the Today's Training card */
 .tt-ready{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:44px;margin:0 0 10px;padding:10px 14px;border-radius:var(--r-md);border:1px dashed var(--line)!important;background:rgba(255,255,255,.03)!important;color:var(--dim)!important;font-family:var(--ui);font-weight:600;font-size:13px;cursor:pointer;text-align:left}
 .tt-ready .arw{color:var(--dim)}
@@ -2493,6 +2493,11 @@ window.closeDev=function(){var m=document.getElementById('devMask');if(m)m.style
 window.openDevFamily=function(id){var m=document.getElementById('devMask');if(m){renderDevFamily(id);m.style.display='block';try{window.scrollTo(0,0);}catch(e){}}};
 window.devBackToList=function(){renderDev();try{window.scrollTo(0,0);}catch(e){}};
 window.devToggleNext=function(fid){var f=devFam(fid);if(!f)return;var s=devFamState(f);var n=s.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual'};devSave();renderDevFamily(fid);};
+function progressChooserHTML(){return '<div class="dsec">Progress</div>'
+  +'<button class="dev-launch" onclick="openSkillTree()"><span class="dev-ll"><span class="dev-lk">Skill Tree</span><span class="dev-ls">Your class ladder — Novice, Gymnast, Lifter, Engine…</span></span><span class="ss-chev">&rsaquo;</span></button>'
+  +'<button class="dev-launch" onclick="openDev()"><span class="dev-ll"><span class="dev-lk">Development</span><span class="dev-ls">Your movement pathways — where you are, what&#39;s next</span></span><span class="ss-chev">&rsaquo;</span></button>';}
+window.openSkillTree=function(){var m=document.getElementById('skillMask');if(!m){m=document.createElement('div');m.id='skillMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="skillInner"></div>';document.body.appendChild(m);}document.getElementById('skillInner').innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeSkillTree()">&lsaquo;</button><span class="ss-topttl">Skill Tree</span><button class="ss-close" onclick="closeSkillTree()">Close</button></div>'+buildTreePageHTML();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
+window.closeSkillTree=function(){var m=document.getElementById('skillMask');if(m)m.style.display='none';};
 window.pickSessTrack=function(t){sessTrack=t;renderSession();var m=document.getElementById('sessMask');if(m)m.scrollTop=0;};
 window.sessBack=function(){sessTrack=null;renderSession();};
 window.sessToggle=function(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');};
@@ -3128,7 +3133,7 @@ function buildTrainHTML(){
     +'<div class="tt-card"><div class="tt-meta"><span class="tt-date">'+dstr.toUpperCase()+'</span>'
       +'<span class="tt-prog"><span class="tt-ic">'+ICO.program+'</span>Unranked Program</span></div>'
     +rdy
-    +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+'<button class="tt-week" onclick="openWeek()"><span class="tt-wk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg></span><span class="tt-wk-l">Week ahead</span><span class="arw">›</span></button></div>';
+    +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+questCompactHTML()+'<button class="tt-week" onclick="openWeek()"><span class="tt-wk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg></span><span class="tt-wk-l">Week ahead</span><span class="arw">›</span></button></div>';
   var scSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.target+'</span><span class="dc-t"><b>Log a score</b><span>Log &amp; update your test results</span></span><span class="dc-chev">›</span></summary>';
   var scores='<details class="trn-acc">'+scSum+'<div class="trn-body">'+buildTestsHTML(true)+'</div></details>';
   var lgSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.star+'</span><span class="dc-t"><b>Log a Previous Best</b><span>Build your Legacy card from old PBs</span></span><span class="dc-chev">›</span></summary>';
@@ -3266,7 +3271,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
   var tt=document.getElementById('ppTitle');if(tt)tt.innerHTML=(titles[profilePage]||'Home')+' <span class="betap">beta</span>';
   var bk=document.getElementById('ni-back');if(bk)bk.style.display=(profilePage==='tree'||profilePage==='vault'||profilePage==='submit')?'':'none';   // sub-pages reached from Home/Train links get a back affordance; top-level tabs don't
   var pageHtml;
-  if(profilePage==='tree'){ pageHtml=devLauncherHTML()+buildTreePageHTML(); }
+  if(profilePage==='tree'){ pageHtml=progressChooserHTML(); }
   else if(profilePage==='vault'){ pageHtml=buildVaultHTML(histLog,allD.length)+settings; }
   else if(profilePage==='submit'||profilePage==='train'){ pageHtml=buildTrainHTML(); }
   else if(profilePage==='compete'||profilePage==='explore'||profilePage==='fantasy'){ pageHtml=buildLockedHTML(profilePage); }
@@ -3713,7 +3718,7 @@ function updateNav(active){[].forEach.call(document.querySelectorAll('.anav-b'),
 window.navSoon=function(){try{showToast('Coming soon');}catch(e){}};   // locked tabs give feedback without navigating to a dead page, revealing feature names, or stealing the active state
 function navFor(pp){return (pp==='vault'||pp==='tree')?'home':(pp==='submit')?'train':pp;}   // vault/tree live under Home; submit under Train
 window.goNav=function(page){
-  try{closeSession();}catch(e){} try{closeLog();}catch(e){} try{closeWeek();}catch(e){} try{closeDev();}catch(e){}
+  try{closeSession();}catch(e){} try{closeLog();}catch(e){} try{closeWeek();}catch(e){} try{closeDev();}catch(e){} try{closeSkillTree();}catch(e){}
   if((page==='train'||page==='submit')&&!coachMode()&&!hasConsent()&&!(athleteSex||Object.keys(TESTS).length)){openOnboard();return;}
   if(page==='program'){updateNav('train');closeMyLog();try{window.scrollTo(0,0);}catch(e){}return;}   // the programme is the main app, under the Train tab
   var valid={home:1,tree:1,vault:1,train:1,submit:1,compete:1,explore:1,fantasy:1};
