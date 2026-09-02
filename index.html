@@ -83,6 +83,46 @@
 .wk-pnm{font-weight:700;font-size:.92rem;margin-top:1px}
 .tt-week{width:100%;min-height:46px;margin-top:9px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r-md);color:var(--txt);font-family:var(--ui);font-weight:700;font-size:14px;cursor:pointer}
 .tt-week:hover{background:#1c1c26}
+.dev-launch{width:100%;display:flex;align-items:center;gap:10px;background:var(--s1);border:1px solid var(--line);border-radius:13px;padding:15px 16px;margin:0 0 14px;cursor:pointer;color:var(--txt);font:inherit;text-align:left}
+.dev-launch:hover{background:#1c1c26}
+.dev-ll{flex:1;display:flex;flex-direction:column;min-width:0}
+.dev-lk{font-family:var(--disp);font-size:1.5rem;letter-spacing:.03em;line-height:1}
+.dev-ls{font-size:.75rem;color:var(--di);margin-top:3px}
+.dev-grid{display:flex;flex-direction:column;gap:10px}
+.dev-fam{display:flex;flex-direction:column;gap:8px;background:var(--s1);border:1px solid var(--line);border-radius:13px;padding:15px 16px;cursor:pointer;color:var(--txt);font:inherit;text-align:left;width:100%}
+.dev-fam:hover{border-color:rgba(255,255,255,.16)}
+.dev-fam-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dev-fam-nm{font-weight:700;font-size:1rem}
+.dev-lvl{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--acc);flex:none}
+.dev-lvl.big{font-size:.72rem}
+.dev-bar{display:block;height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden}
+.dev-bar i{display:block;height:100%;background:var(--mag);border-radius:3px}
+.dev-fam-sub{font-size:.72rem;color:var(--di)}
+.dev-lvlrow{display:flex;align-items:center;gap:12px;margin:2px 0 4px}
+.dev-rdc{font-size:.75rem;color:var(--di)}
+.dev-sec-l{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--di);margin:22px 0 10px}
+.dev-path{display:flex;flex-direction:column;margin-left:11px}
+.dev-node{display:flex;align-items:center;gap:13px;padding:11px 0;border-left:2px solid var(--line);padding-left:20px;position:relative}
+.dev-node.done{border-left-color:var(--acc2)}
+.dev-node.now{border-left-color:var(--mag)}
+.dev-node:last-child{border-left-color:transparent}
+.dev-dot{position:absolute;left:-10px;top:12px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--di)}
+.dev-dot.done{border-color:var(--acc2);color:var(--acc2)}
+.dev-dot.now{border-color:var(--mag);background:var(--mag)}
+.dev-nmid{display:flex;flex-direction:column}
+.dev-nnm{font-weight:700;font-size:.95rem}
+.dev-node.up .dev-nnm{color:var(--di);font-weight:600}
+.dev-nlv{font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--di);margin-top:1px}
+.dev-nowchip{font-size:.5rem;font-weight:800;letter-spacing:.1em;color:var(--mag);border:1px solid var(--mag);border-radius:4px;padding:1px 4px;margin-left:7px}
+.dev-obj{background:var(--s1);border:1px solid rgba(255,45,138,.35);border-radius:12px;padding:14px 15px;margin-top:18px}
+.dev-objl{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--mag)}
+.dev-objt{font-weight:700;font-size:.95rem;margin-top:4px}
+.dev-rdlist{display:flex;flex-direction:column;gap:15px}
+.dev-rdgl{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--txt);margin-bottom:5px}
+.dev-rd{display:flex;align-items:center;gap:9px;padding:4px 0;font-size:.85rem;color:var(--di)}
+.dev-rd.met{color:var(--txt)}
+.dev-rdi{width:16px;display:flex;justify-content:center;color:var(--di);flex:none}
+.dev-rd.met .dev-rdi{color:var(--acc2)}
 .qc{background:var(--s1)!important;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;margin-top:8px}
 .qc-line{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;color:#f5f5f7;padding:11px 14px;cursor:pointer;font:inherit;text-align:left}
 .qc-ic{width:17px;height:17px;flex-shrink:0;opacity:.9}
@@ -2329,6 +2369,109 @@ function renderWeekAhead(){var el=document.getElementById('weekInner');if(!el)re
 window.openWeek=function(){var m=document.getElementById('weekMask');if(!m){m=document.createElement('div');m.id='weekMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="weekInner"></div>';document.body.appendChild(m);}renderWeekAhead();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.closeWeek=function(){var m=document.getElementById('weekMask');if(m)m.style.display='none';};
 window.wkToggle=function(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');};
+/* ===== Athlete Development Engine (movement progression) ===== */
+var DEVP={};try{DEVP=JSON.parse(localStorage.getItem('unranked-dev'))||{};}catch(e){DEVP={};}
+function devSave(){try{localStorage.setItem('unranked-dev',JSON.stringify(DEVP));}catch(e){}}
+var DEV_FAMILIES=[
+ {id:'bar-muscle-up',cat:'Gymnastics',name:'Bar Muscle-Up',order:1,
+  nodes:[
+   {id:'bmu-ringrow',name:'Ring Row',level:'Foundation',need:'10 controlled ring rows'},
+   {id:'bmu-strict',name:'Strict Pull-Up',level:'Developing',need:'10 strict pull-ups',seed:{test:'strictpullups',min:8}},
+   {id:'bmu-c2b',name:'Chest-to-Bar',level:'Competent',need:'5 chest-to-bar',seed:{test:'c2b1min',min:5}},
+   {id:'bmu-highpull',name:'High Pull',level:'Proficient',need:'3 high pulls to lower chest'},
+   {id:'bmu-transition',name:'BMU Transition',level:'Proficient',need:'Jumping / low-bar transition drill'},
+   {id:'bmu-full',name:'Bar Muscle-Up',level:'Advanced',need:'1 bar muscle-up',seed:{test:'barmuscleup',variant:'full'}},
+   {id:'bmu-strictbmu',name:'Strict Bar Muscle-Up',level:'Mastery',need:'1 strict bar muscle-up'}
+  ],
+  readiness:[
+   {g:'Strength',items:[{t:'10 strict pull-ups',ref:'bmu-strict'}]},
+   {g:'Pulling power',items:[{t:'5 chest-to-bar',ref:'bmu-c2b'},{t:'High pull to chest',ref:'bmu-highpull'}]},
+   {g:'Technique',items:[{t:'Controlled hollow / arch kip'},{t:'Fast turnover',ref:'bmu-transition'}]},
+   {g:'Support',items:[{t:'Straight-bar dip'}]}
+  ]},
+ {id:'front-lever',cat:'Gymnastics',name:'Front Lever',order:2,
+  nodes:[
+   {id:'fl-hang',name:'Active hang / scap',level:'Foundation',need:'30s active hang',seed:{test:'deadhang',min:30}},
+   {id:'fl-tuck',name:'Tuck lever',level:'Developing',need:'Hold 10s tuck lever',seed:{test:'frontlever',variant:'tuck'}},
+   {id:'fl-advtuck',name:'Advanced tuck',level:'Competent',need:'Hold 10s advanced tuck'},
+   {id:'fl-straddle',name:'Straddle lever',level:'Proficient',need:'Hold 5s straddle',seed:{test:'frontlever',variant:'straddle'}},
+   {id:'fl-full',name:'Full lever',level:'Advanced',need:'Hold 5s full lever',seed:{test:'frontlever',variant:'full'}},
+   {id:'fl-pull',name:'Front lever pull',level:'Mastery',need:'1 front lever pull'}
+  ],
+  readiness:[
+   {g:'Strength',items:[{t:'Solid active hang',ref:'fl-hang'}]},
+   {g:'Core',items:[{t:'Hollow body hold'},{t:'Tuck lever 10s',ref:'fl-tuck'}]},
+   {g:'Pulling',items:[{t:'Straight-arm scap strength'}]}
+  ]},
+ {id:'pull-up',cat:'Gymnastics',name:'Pull-Up / C2B',order:3,
+  nodes:[
+   {id:'pu-hang',name:'Dead Hang',level:'Foundation',need:'30s dead hang',seed:{test:'deadhang',min:30}},
+   {id:'pu-scap',name:'Scap Pull',level:'Foundation',need:'10 scap pulls'},
+   {id:'pu-band',name:'Banded Pull-Up',level:'Developing',need:'8 banded pull-ups'},
+   {id:'pu-strict',name:'Strict Pull-Up',level:'Competent',need:'5 strict pull-ups',seed:{test:'strictpullups',min:5}},
+   {id:'pu-kip',name:'Kipping Pull-Up',level:'Proficient',need:'10 kipping pull-ups'},
+   {id:'pu-c2b',name:'Chest-to-Bar',level:'Advanced',need:'5 chest-to-bar',seed:{test:'c2b1min',min:5}},
+   {id:'pu-highc2b',name:'High Chest-to-Bar',level:'Mastery',need:'Sternum-height C2B'}
+  ],
+  readiness:[
+   {g:'Grip',items:[{t:'30s dead hang',ref:'pu-hang'}]},
+   {g:'Strength',items:[{t:'5 strict pull-ups',ref:'pu-strict'}]},
+   {g:'Technique',items:[{t:'Hollow / arch kip'}]}
+  ]},
+ {id:'handstand',cat:'Gymnastics',name:'Handstand / Walk',order:4,
+  nodes:[
+   {id:'hs-pike',name:'Pike hold',level:'Foundation',need:'30s pike hold'},
+   {id:'hs-wall',name:'Wall handstand',level:'Developing',need:'30s wall handstand',seed:{test:'hshold',variant:'wall'}},
+   {id:'hs-wallface',name:'Wall-facing HS',level:'Competent',need:'20s nose-to-wall'},
+   {id:'hs-free',name:'Freestanding hold',level:'Proficient',need:'Hold freestanding',seed:{test:'hshold',variant:'freestanding'}},
+   {id:'hs-walk',name:'Handstand Walk',level:'Advanced',need:'5m handstand walk',seed:{test:'hswalk',min:5}},
+   {id:'hs-adv',name:'Advanced HS skills',level:'Mastery',need:'Pirouettes / obstacle walks'}
+  ],
+  readiness:[
+   {g:'Shoulders',items:[{t:'Wall handstand 30s',ref:'hs-wall'}]},
+   {g:'Balance',items:[{t:'Nose-to-wall control',ref:'hs-wallface'}]},
+   {g:'Core',items:[{t:'Hollow body hold'}]}
+  ]}
+];
+function devFam(id){for(var i=0;i<DEV_FAMILIES.length;i++)if(DEV_FAMILIES[i].id===id)return DEV_FAMILIES[i];return null;}
+function devNodeById(f,id){for(var i=0;i<f.nodes.length;i++)if(f.nodes[i].id===id)return f.nodes[i];return null;}
+function devTestMet(seed){try{if(!seed)return false;var id=seed.test;if(typeof isVerified==='function'&&!isVerified(id))return false;var mv=(typeof scMove==='function')?scMove(id):null;
+  if(seed.variant){var vars=(mv&&mv.variants)||[];var order={};vars.forEach(function(v,i){order[v.key]=i;});var cur=(typeof PROG!=='undefined')?PROG[id]:null;if(cur==null)cur=(vars[0]&&vars[0].key);return order[cur]!=null&&order[seed.variant]!=null&&order[cur]>=order[seed.variant];}
+  var perf=(typeof TESTS!=='undefined')?TESTS[id]:null;if(perf==null)return false;if(seed.min!=null){return (mv&&mv.dir==='lo')?perf<=seed.min:perf>=seed.min;}return true;}catch(e){return false;}}
+function devAchieved(node){if(DEVP[node.id]&&DEVP[node.id].done)return true;return devTestMet(node.seed);}
+function devFamState(f){var ach=f.nodes.map(devAchieved);var last=-1;ach.forEach(function(a,i){if(a)last=i;});var cur=last+1;var done=0;ach.forEach(function(a){if(a)done++;});var level=cur>=f.nodes.length?'Mastery':f.nodes[cur].level;return {ach:ach,cur:cur,done:done,total:f.nodes.length,level:level,next:f.nodes[cur]||null};}
+function devReadyItemMet(f,it){if(it.ref){var n=devNodeById(f,it.ref);return n?devAchieved(n):false;}return !!(DEVP['rdy|'+f.id+'|'+it.t]&&DEVP['rdy|'+f.id+'|'+it.t].done);}
+function devReadyMet(f){var m=0,t=0;f.readiness.forEach(function(gr){gr.items.forEach(function(it){t++;if(devReadyItemMet(f,it))m++;});});return {met:m,total:t};}
+function devTick(){return '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg>';}
+function devLauncherHTML(){return '<button class="dev-launch" onclick="openDev()"><span class="dev-ll"><span class="dev-lk">Development</span><span class="dev-ls">Your movement pathways — where you are, what&#39;s next</span></span><span class="ss-chev">&rsaquo;</span></button>';}
+function renderDev(){var el=document.getElementById('devInner');if(!el)return;
+  var cards=DEV_FAMILIES.map(function(f){var s=devFamState(f);var pct=Math.round(s.done/s.total*100);
+   return '<button class="dev-fam" onclick="openDevFamily(&#39;'+f.id+'&#39;)"><span class="dev-fam-top"><span class="dev-fam-nm">'+esc(f.name)+'</span><span class="dev-lvl">'+esc(s.level)+'</span></span><span class="dev-bar"><i style="width:'+pct+'%"></i></span><span class="dev-fam-sub">'+s.done+' of '+s.total+' stages</span></button>';}).join('');
+  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeDev()">&lsaquo;</button><span class="ss-topttl">Development</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
+   +'<div class="ss-h">Development</div><div class="ss-sub">Your movement pathways. Tap one to see where you are and what&#39;s next.</div>'
+   +'<div class="dev-grid">'+cards+'</div>';}
+function renderDevFamily(id){var el=document.getElementById('devInner');if(!el)return;var f=devFam(id);if(!f){renderDev();return;}
+  var s=devFamState(f);var rd=devReadyMet(f);
+  var path=f.nodes.map(function(n,i){var st=s.ach[i]?'done':(i===s.cur?'now':'up');
+    var dot=s.ach[i]?('<span class="dev-dot done">'+devTick()+'</span>'):(i===s.cur?'<span class="dev-dot now"></span>':'<span class="dev-dot"></span>');
+    var nowchip=(i===s.cur)?' <span class="dev-nowchip">NOW</span>':'';
+    return '<div class="dev-node '+st+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+nowchip+'</span><span class="dev-nlv">'+esc(n.level)+'</span></span></div>';}).join('');
+  var rdHTML=f.readiness.map(function(gr){var items=gr.items.map(function(it){var met=devReadyItemMet(f,it);return '<div class="dev-rd '+(met?'met':'')+'"><span class="dev-rdi">'+(met?devTick():'&#9675;')+'</span>'+esc(it.t)+'</div>';}).join('');return '<div class="dev-rdg"><div class="dev-rdgl">'+esc(gr.g)+'</div>'+items+'</div>';}).join('');
+  var next=s.next;
+  var nextObj=next?('<div class="dev-obj"><div class="dev-objl">Next objective</div><div class="dev-objt">'+esc(next.need)+'</div></div>'):('<div class="dev-obj"><div class="dev-objt">Mastered — every stage complete.</div></div>');
+  var markBtn=(next&&!next.seed)?'<button class="btn-primary" onclick="devToggleNext(&#39;'+f.id+'&#39;)">Mark &ldquo;'+esc(next.name)+'&rdquo; done</button>':'';
+  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="devBackToList()">&lsaquo;</button><span class="ss-topttl">'+esc(f.name)+'</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
+   +'<div class="ss-h">'+esc(f.name)+'</div>'
+   +'<div class="dev-lvlrow"><span class="dev-lvl big">'+esc(s.level)+'</span><span class="dev-rdc">'+rd.met+' / '+rd.total+' readiness met</span></div>'
+   +'<div class="dev-sec-l">Your pathway</div><div class="dev-path">'+path+'</div>'
+   +nextObj
+   +'<div class="dev-sec-l">Readiness</div><div class="dev-rdlist">'+rdHTML+'</div>'
+   +(markBtn?'<div class="ss-sticky">'+markBtn+'</div>':'');}
+window.openDev=function(){var m=document.getElementById('devMask');if(!m){m=document.createElement('div');m.id='devMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="devInner"></div>';document.body.appendChild(m);}renderDev();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
+window.closeDev=function(){var m=document.getElementById('devMask');if(m)m.style.display='none';};
+window.openDevFamily=function(id){var m=document.getElementById('devMask');if(m){renderDevFamily(id);m.style.display='block';try{window.scrollTo(0,0);}catch(e){}}};
+window.devBackToList=function(){renderDev();try{window.scrollTo(0,0);}catch(e){}};
+window.devToggleNext=function(fid){var f=devFam(fid);if(!f)return;var s=devFamState(f);var n=s.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual'};devSave();renderDevFamily(fid);};
 window.pickSessTrack=function(t){sessTrack=t;renderSession();var m=document.getElementById('sessMask');if(m)m.scrollTop=0;};
 window.sessBack=function(){sessTrack=null;renderSession();};
 window.sessToggle=function(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');};
@@ -3103,7 +3246,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
   var tt=document.getElementById('ppTitle');if(tt)tt.innerHTML=(titles[profilePage]||'Home')+' <span class="betap">beta</span>';
   var bk=document.getElementById('ni-back');if(bk)bk.style.display=(profilePage==='tree'||profilePage==='vault'||profilePage==='submit')?'':'none';   // sub-pages reached from Home/Train links get a back affordance; top-level tabs don't
   var pageHtml;
-  if(profilePage==='tree'){ pageHtml=buildTreePageHTML(); }
+  if(profilePage==='tree'){ pageHtml=devLauncherHTML()+buildTreePageHTML(); }
   else if(profilePage==='vault'){ pageHtml=buildVaultHTML(histLog,allD.length)+settings; }
   else if(profilePage==='submit'||profilePage==='train'){ pageHtml=buildTrainHTML(); }
   else if(profilePage==='compete'||profilePage==='explore'||profilePage==='fantasy'){ pageHtml=buildLockedHTML(profilePage); }
@@ -3550,7 +3693,7 @@ function updateNav(active){[].forEach.call(document.querySelectorAll('.anav-b'),
 window.navSoon=function(){try{showToast('Coming soon');}catch(e){}};   // locked tabs give feedback without navigating to a dead page, revealing feature names, or stealing the active state
 function navFor(pp){return (pp==='vault'||pp==='tree')?'home':(pp==='submit')?'train':pp;}   // vault/tree live under Home; submit under Train
 window.goNav=function(page){
-  try{closeSession();}catch(e){} try{closeLog();}catch(e){} try{closeWeek();}catch(e){}
+  try{closeSession();}catch(e){} try{closeLog();}catch(e){} try{closeWeek();}catch(e){} try{closeDev();}catch(e){}
   if((page==='train'||page==='submit')&&!coachMode()&&!hasConsent()&&!(athleteSex||Object.keys(TESTS).length)){openOnboard();return;}
   if(page==='program'){updateNav('train');closeMyLog();try{window.scrollTo(0,0);}catch(e){}return;}   // the programme is the main app, under the Train tab
   var valid={home:1,tree:1,vault:1,train:1,submit:1,compete:1,explore:1,fantasy:1};
@@ -3559,7 +3702,7 @@ window.goNav=function(page){
 };
 betaGateInit();
 // FULL backup: every unranked-* store (tests, verifications, XP, achievements, profile, log) — not just the log.
-var _BACKUP_KEYS=['unranked-tests','unranked-verified','unranked-xp','unranked-ach','unranked-log','unranked-extra','unranked-gym','unranked-sex','unranked-age','unranked-name','unranked-photo','unranked-photoy','unranked-consent','unranked-lasttier','unranked-best','unranked-prev','unranked-prevv','unranked-moments','unranked-cosmetics','unranked-readiness-hist','unranked-edits','unranked-ratehist','unranked-tests-ts','unranked-quest','unranked-prog','unranked-vprog','unranked-title-pref','unranked-coach-title'];   // include wellness history, manual programme edits, form-trend, staleness ts, quest & progression-variant state so a device-to-device restore is genuinely complete
+var _BACKUP_KEYS=['unranked-tests','unranked-verified','unranked-xp','unranked-ach','unranked-log','unranked-extra','unranked-gym','unranked-sex','unranked-age','unranked-name','unranked-photo','unranked-photoy','unranked-consent','unranked-lasttier','unranked-best','unranked-prev','unranked-prevv','unranked-moments','unranked-cosmetics','unranked-readiness-hist','unranked-edits','unranked-ratehist','unranked-tests-ts','unranked-quest','unranked-prog','unranked-vprog','unranked-title-pref','unranked-coach-title','unranked-dev'];   // include wellness history, manual programme edits, form-trend, staleness ts, quest & progression-variant state so a device-to-device restore is genuinely complete
 window.exportLog=function(){try{var env={_unranked:1,v:1,ts:new Date().toISOString(),data:{}};
     _BACKUP_KEYS.forEach(function(k){try{var raw=localStorage.getItem(k);if(raw!=null)env.data[k]=raw;}catch(e){}});
     var blob=new Blob([JSON.stringify(env)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='unranked-backup-'+todayStr()+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},600);
