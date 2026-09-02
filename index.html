@@ -75,14 +75,21 @@
 .ss-sec .ss-chev{font-size:1.15rem;transition:transform .18s}.ss-sec.open .ss-chev{transform:rotate(90deg)}
 .ss-sb{display:none;padding:0 17px 17px 47px}.ss-sec.open .ss-sb{display:block}
 .ss-txt{white-space:pre-line;font-size:.85rem;color:var(--txt);line-height:1.6}
+.ss-divs{display:flex;gap:6px;margin-bottom:12px}
+.ss-div{flex:1;font-size:.68rem;font-weight:800;letter-spacing:.03em;padding:8px 0;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--di);cursor:pointer}
+.ss-div.on{background:var(--acc);border-color:var(--acc);color:#1a1200}
 .ss-sticky{position:sticky;bottom:0;padding:14px 0 10px;background:linear-gradient(to top,#08080d 55%,transparent)}
 #weekMask .ss-sb{padding-left:17px}
 .wk-p{display:flex;flex-direction:column;padding:9px 0;border-top:1px solid rgba(255,255,255,.05)}
 .wk-p:first-child{border-top:0;padding-top:2px}
 .wk-plab{font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--di)}
 .wk-pnm{font-weight:700;font-size:.92rem;margin-top:1px}
-.tt-week{width:100%;min-height:46px;margin-top:9px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r-md);color:var(--txt);font-family:var(--ui);font-weight:700;font-size:14px;cursor:pointer}
-.tt-week:hover{background:#1c1c26}
+.wk-pres{white-space:pre-line;font-size:.78rem;color:var(--txt);line-height:1.5;margin-top:5px;opacity:.82}
+.tt-week{width:100%;min-height:50px;margin-top:10px;display:flex;align-items:center;gap:11px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r-md);color:var(--txt);font-family:var(--ui);font-weight:700;font-size:14px;cursor:pointer;padding:0 15px;text-align:left}
+.tt-week:hover{background:#1c1c26;border-color:rgba(255,255,255,.18)}
+.tt-wk-ic{color:#8b8b95;display:flex;flex:none}
+.tt-wk-l{flex:1}
+.tt-week .arw{color:var(--di)}
 .dev-launch{width:100%;display:flex;align-items:center;gap:10px;background:var(--s1);border:1px solid var(--line);border-radius:13px;padding:15px 16px;margin:0 0 14px;cursor:pointer;color:var(--txt);font:inherit;text-align:left}
 .dev-launch:hover{background:#1c1c26}
 .dev-ll{flex:1;display:flex;flex-direction:column;min-width:0}
@@ -131,6 +138,9 @@
 .qc-done{font-size:.72rem;font-weight:700;color:#4ADE80;white-space:nowrap}
 .qc-chev{color:#8b8b95;font-size:1.05rem}
 .qc-detail{display:none;padding:2px 14px 12px}
+.th-card .qc{border:0;background:transparent!important;border-radius:0;margin-top:14px;border-top:1px solid var(--line)}
+.th-card .qc-line{padding:13px 0 5px}
+.th-card .qc-detail{padding:2px 0 4px}
 .qc-detail.open{display:block}
 .qc-detail p{font-size:.8rem;color:#8b8b95;margin:8px 0 10px;line-height:1.5}
 .vlvl-strk{font-size:.72rem;font-weight:800;color:#FF6A3D;white-space:nowrap;display:inline-flex;align-items:center;gap:2px}
@@ -138,7 +148,7 @@
 .vlvl-strk.off{color:#8b8b95}.vlvl-strk.off svg{opacity:.6}
 .dcard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--s1)!important;border:1px solid var(--line)!important;border-radius:var(--r-md);padding:14px;cursor:pointer;color:var(--txt)!important;box-shadow:none!important}
 .dcard:active{background:var(--s2)!important}
-.dcard .dc-ic{width:38px;height:38px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,45,138,.12);color:var(--mag)}
+.dcard .dc-ic{width:38px;height:38px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.05);color:#8b8b95}
 .dcard .dc-ic .ico{width:20px;height:20px}
 .dcard .dc-t{flex:1;min-width:0}
 .dcard .dc-t b{display:block;font-family:var(--ui);font-weight:700;font-size:14px;letter-spacing:.01em;color:var(--txt)}
@@ -2352,6 +2362,17 @@ var _SESS_TRK=[['class','Class','The daily class session, coach-led'],['athlete'
 var sessTrack=null;
 function sessDay(){try{var ti=todayInfo();var wk=D.weeks&&D.weeks.find(function(x){return x.week===ti.week;});return wk?wk.days[ti.wd]:null;}catch(e){return null;}}
 function sessPres(p){try{var isW=clsFor(p)==='wod';var V=isW?p.variants:vb(p);var b=(V&&(V.rx||V.intermediate||V.scaled||V.rxPlus))||{};return b.prescription||p.intent||'';}catch(e){return '';}}
+var SESSDIV=(function(){try{return localStorage.getItem('unranked-scale-pref')||'rx';}catch(e){return 'rx';}})();
+var SESSDIV_PIECE={};
+function sessDivFor(pid){return SESSDIV_PIECE[pid]||SESSDIV;}
+function sessDivs(p){try{var isW=clsFor(p)==='wod';var V=isW?p.variants:vb(p);if(!V)return [];var order=[['scaled','Scaled'],['intermediate','Int'],['rx','RX'],['rxPlus','RX+']];var out=[];order.forEach(function(o){var b=V[o[0]];if(b&&(b.prescription||b.target)){out.push({key:o[0],label:o[1],pres:b.prescription||b.target});}});return out;}catch(e){return [];}}
+function sessBodyHTML(p,pid){var divs=sessDivs(p);
+  if(divs.length<2){return '<div class="ss-txt">'+esc(divs.length?divs[0].pres:sessPres(p))+'</div>';}
+  var cur=sessDivFor(pid);if(!divs.some(function(d){return d.key===cur;}))cur=(divs.filter(function(d){return d.key==='rx';})[0]||divs[divs.length-1]).key;
+  var tabs=divs.map(function(d){return '<button class="ss-div'+(d.key===cur?' on':'')+'" onclick="sessSetDiv(&#39;'+pid+'&#39;,&#39;'+d.key+'&#39;)">'+d.label+'</button>';}).join('');
+  var pres=(divs.filter(function(d){return d.key===cur;})[0]||divs[0]).pres;
+  return '<div class="ss-divs">'+tabs+'</div><div class="ss-txt">'+esc(pres)+'</div>';}
+window.sessSetDiv=function(pid,div){SESSDIV_PIECE[pid]=div;SESSDIV=div;try{localStorage.setItem('unranked-scale-pref',div);}catch(e){}var b=document.getElementById('ssb-'+pid);if(b){var p=piece(pid);if(p)b.innerHTML=sessBodyHTML(p,pid);}};
 function sessDateStr(){try{return new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});}catch(e){return '';}}
 window.openSession=function(){var m=document.getElementById('sessMask');if(!m){m=document.createElement('div');m.id='sessMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="sessInner"></div>';document.body.appendChild(m);}sessTrack=null;renderSession();m.style.display='block';m.scrollTop=0;};
 window.closeSession=function(){var m=document.getElementById('sessMask');if(m)m.style.display='none';};
@@ -2360,7 +2381,7 @@ function weekAheadList(){var out=[];for(var k=0;k<16&&out.length<10;k++){var fi=
 function wkHeadline(ids){var wod=null,first=null;ids.forEach(function(id){var p=piece(id);if(!p||p.type==='header')return;if(!first)first=p;if(!wod&&clsFor(p)==='wod')wod=p;});var p=wod||first;return p?clean(boardTitle(p)):'Session';}
 function wkDateLabel(fi){if(fi.k===0)return 'Today';if(fi.k===1)return 'Tomorrow';try{return fi.date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});}catch(e){return '';}}
 function renderWeekAhead(){var el=document.getElementById('weekInner');if(!el)return;var list=weekAheadList();
-  var cards=list.map(function(fi,n){var blocks=fi.ids.map(function(id){var p=piece(id);if(!p||p.type==='header')return '';return '<div class="wk-p"><span class="wk-plab">'+esc(labelFor(p))+'</span><span class="wk-pnm">'+esc(clean(boardTitle(p)))+'</span></div>';}).join('');
+  var cards=list.map(function(fi,n){var blocks=fi.ids.map(function(id){var p=piece(id);if(!p||p.type==='header')return '';var wex=(clsFor(p)==='wod')?'<span class="wk-pres">'+esc(sessPres(p))+'</span>':'';return '<div class="wk-p'+(wex?' wod':'')+'"><span class="wk-plab">'+esc(labelFor(p))+'</span><span class="wk-pnm">'+esc(clean(boardTitle(p)))+'</span>'+wex+'</div>';}).join('');
     return '<div class="ss-sec'+(n===0?' open':'')+'" id="wkx-'+n+'"><button class="ss-sh" onclick="wkToggle(\''+'wkx-'+n+'\')"><span class="ss-smid"><span class="ss-slab">'+esc(wkDateLabel(fi))+'</span><span class="ss-snm">'+esc(wkHeadline(fi.ids))+'</span></span><span class="ss-chev">&rsaquo;</span></button><div class="ss-sb">'+blocks+'</div></div>';}).join('');
   el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeWeek()">&lsaquo;</button><span class="ss-topttl">Week ahead</span><button class="ss-close" onclick="closeWeek()">Close</button></div>'
    +'<div class="ss-h">Week ahead</div><div class="ss-sub">Upcoming sessions &mdash; tap a day to open it.</div>'
@@ -2487,7 +2508,7 @@ function renderSession(){var el=document.getElementById('sessInner');if(!el)retu
  var tName=(_SESS_TRK.filter(function(x){return x[0]===sessTrack;})[0]||[0,sessTrack])[1];
  var ids=(day&&day.tracks&&day.tracks[sessTrack])||[];var n=0;
  var blocks=ids.map(function(id){var p=piece(id);if(!p||p.type==='header')return '';n++;
-   return '<div class="ss-sec'+(n===1?' open':'')+'" id="ssx-'+esc(id)+'"><button class="ss-sh" onclick="sessToggle(\'ssx-'+esc(id)+'\')"><span class="ss-idx">'+n+'</span><span class="ss-smid"><span class="ss-slab">'+esc(labelFor(p))+'</span><span class="ss-snm">'+esc(clean(boardTitle(p)))+'</span></span><span class="ss-chev">&rsaquo;</span></button><div class="ss-sb"><div class="ss-txt">'+esc(sessPres(p))+'</div></div></div>';}).join('');
+   return '<div class="ss-sec'+(n===1?' open':'')+'" id="ssx-'+esc(id)+'"><button class="ss-sh" onclick="sessToggle(\'ssx-'+esc(id)+'\')"><span class="ss-idx">'+n+'</span><span class="ss-smid"><span class="ss-slab">'+esc(labelFor(p))+'</span><span class="ss-snm">'+esc(clean(boardTitle(p)))+'</span></span><span class="ss-chev">&rsaquo;</span></button><div class="ss-sb" id="ssb-'+esc(id)+'">'+sessBodyHTML(p,id)+'</div></div>';}).join('');
  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="sessBack()">&lsaquo;</button><span class="ss-topttl">'+esc(tName)+' &middot; today</span><button class="ss-close" onclick="closeSession()">Close</button></div>'
   +'<div class="ss-h">Today</div>'
   +'<div class="ss-sub">Tap any block to open it.</div><div class="ss-sess">'+blocks+'</div>'
@@ -2965,7 +2986,7 @@ function todayHomeHTML(){var info=todayInfo();var d=new Date();var DY=['SUN','MO
       sub='Week '+(info.week||'')+(day&&day.stimulus?' · '+capWord(day.stimulus)+' focus':'');}}
   var action=rest?'':'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>';
   return '<div class="dsec">Today</div><div class="th-card"><div class="th-top"><span class="th-day">'+dn+'</span><span class="th-badge'+(rest?'':' on')+'">'+(rest?'Recovery':'Training day')+'</span></div>'
-    +'<div class="th-ttl">'+esc(ttl)+'</div><div class="th-sub">'+esc(sub)+'</div>'+action+'</div>';}
+    +'<div class="th-ttl">'+esc(ttl)+'</div><div class="th-sub">'+esc(sub)+'</div>'+action+(rest?'':questCompactHTML())+'</div>';}
 // Daily quest — ONE small optional athletic action chosen from the programme context. Reward = credits (cosmetic), NEVER rating.
 var QUEST_XP=10;var QUEST_CREDITS=5;
 function todaysQuest(){var info=todayInfo();var d=new Date();var wd=info.wd||['SUN','MON','TUE','WED','THU','FRI','SAT'][d.getDay()];
@@ -3029,7 +3050,6 @@ function buildHomeHTML(hint,cardToggle,card,tree){
   return hint+cardToggle+'<div class="ppsec">'+card+'</div>'
     +(pp?'<div class="ppsec">'+pp+'</div>':'')
     +(today?'<div class="ppsec">'+today+'</div>':'')
-    +(quest?'<div class="ppsec">'+quest+'</div>':'')
     +'<div class="ppsec">'+bighub+'</div>'
     +'<div class="ppsec">'+levelStreakHTML()+'</div>';
 }
@@ -3108,7 +3128,7 @@ function buildTrainHTML(){
     +'<div class="tt-card"><div class="tt-meta"><span class="tt-date">'+dstr.toUpperCase()+'</span>'
       +'<span class="tt-prog"><span class="tt-ic">'+ICO.program+'</span>Unranked Program</span></div>'
     +rdy
-    +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+'<button class="tt-week" onclick="openWeek()">Week ahead <span class="arw">›</span></button></div>';
+    +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+'<button class="tt-week" onclick="openWeek()"><span class="tt-wk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg></span><span class="tt-wk-l">Week ahead</span><span class="arw">›</span></button></div>';
   var scSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.target+'</span><span class="dc-t"><b>Log a score</b><span>Log &amp; update your test results</span></span><span class="dc-chev">›</span></summary>';
   var scores='<details class="trn-acc">'+scSum+'<div class="trn-body">'+buildTestsHTML(true)+'</div></details>';
   var lgSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.star+'</span><span class="dc-t"><b>Log a Previous Best</b><span>Build your Legacy card from old PBs</span></span><span class="dc-chev">›</span></summary>';
@@ -3702,7 +3722,7 @@ window.goNav=function(page){
 };
 betaGateInit();
 // FULL backup: every unranked-* store (tests, verifications, XP, achievements, profile, log) — not just the log.
-var _BACKUP_KEYS=['unranked-tests','unranked-verified','unranked-xp','unranked-ach','unranked-log','unranked-extra','unranked-gym','unranked-sex','unranked-age','unranked-name','unranked-photo','unranked-photoy','unranked-consent','unranked-lasttier','unranked-best','unranked-prev','unranked-prevv','unranked-moments','unranked-cosmetics','unranked-readiness-hist','unranked-edits','unranked-ratehist','unranked-tests-ts','unranked-quest','unranked-prog','unranked-vprog','unranked-title-pref','unranked-coach-title','unranked-dev'];   // include wellness history, manual programme edits, form-trend, staleness ts, quest & progression-variant state so a device-to-device restore is genuinely complete
+var _BACKUP_KEYS=['unranked-tests','unranked-verified','unranked-xp','unranked-ach','unranked-log','unranked-extra','unranked-gym','unranked-sex','unranked-age','unranked-name','unranked-photo','unranked-photoy','unranked-consent','unranked-lasttier','unranked-best','unranked-prev','unranked-prevv','unranked-moments','unranked-cosmetics','unranked-readiness-hist','unranked-edits','unranked-ratehist','unranked-tests-ts','unranked-quest','unranked-prog','unranked-vprog','unranked-title-pref','unranked-coach-title','unranked-dev','unranked-scale-pref'];   // include wellness history, manual programme edits, form-trend, staleness ts, quest & progression-variant state so a device-to-device restore is genuinely complete
 window.exportLog=function(){try{var env={_unranked:1,v:1,ts:new Date().toISOString(),data:{}};
     _BACKUP_KEYS.forEach(function(k){try{var raw=localStorage.getItem(k);if(raw!=null)env.data[k]=raw;}catch(e){}});
     var blob=new Blob([JSON.stringify(env)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='unranked-backup-'+todayStr()+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},600);
