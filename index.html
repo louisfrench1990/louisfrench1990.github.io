@@ -2731,6 +2731,90 @@ var DEV_G=[
    {id:'t.3',name:'3 Triple-Unders',level:'Competent',std:'3 in a set'},
    {id:'t.5',name:'5 unbroken Triples',level:'Proficient',std:'5 unbroken'},
    {id:'t.10',name:'10 unbroken Triples',level:'Advanced',std:'10 unbroken'}
+  ]},
+ {id:'s.shrimp',name:'Shrimp Squat',group:'Lower',rated:null,
+  stages:[
+   {id:'sh.assist',name:'Assisted Shrimp',level:'Foundation',std:'hold a support'},
+   {id:'sh.beg',name:'Beginner Shrimp',level:'Developing',std:'knee taps floor'},
+   {id:'sh.star',name:'Shrimp Squat',level:'Achievement',std:'1 clean rep',star:true},
+   {id:'sh.5',name:'5 Shrimp Squats',level:'Competent',std:'5 each leg'},
+   {id:'sh.adv',name:'Advanced Shrimp',level:'Advanced',std:'rear foot to hand'}
+  ]},
+ {id:'s.nordic',name:'Nordic Curl',group:'Lower',rated:null,
+  stages:[
+   {id:'nc.iso',name:'Nordic Negatives',level:'Foundation',std:'5 slow lowers'},
+   {id:'nc.band',name:'Band-Assisted Nordic',level:'Developing',std:'5 reps'},
+   {id:'nc.star',name:'Nordic Curl',level:'Achievement',std:'1 full rep',star:true},
+   {id:'nc.3',name:'3 Nordic Curls',level:'Competent',std:'3 controlled'},
+   {id:'nc.5',name:'5 Nordic Curls',level:'Proficient',std:'5 controlled'}
+  ]},
+ {id:'s.boxjump',name:'Box Jump',group:'Lower',rated:null,
+  stages:[
+   {id:'bj.50',name:'20″ Box Jump',level:'Foundation',std:'50 cm'},
+   {id:'bj.60',name:'24″ Box Jump',level:'Developing',std:'60 cm'},
+   {id:'bj.star',name:'30″ Box Jump',level:'Achievement',std:'76 cm',star:true},
+   {id:'bj.90',name:'36″ Box Jump',level:'Advanced',std:'90 cm'},
+   {id:'bj.100',name:'40″+ Box Jump',level:'Mastery',std:'100 cm+'}
+  ]},
+ {id:'s.hollow',name:'Hollow & Arch',group:'Core / Lever',rated:null,
+  stages:[
+   {id:'ho.tuck',name:'Tuck Hollow Hold',level:'Foundation',std:'20s'},
+   {id:'ho.star',name:'Hollow Hold',level:'Achievement',std:'30s straight',star:true},
+   {id:'ho.rock',name:'Hollow Rocks',level:'Competent',std:'20 reps'},
+   {id:'ho.arch',name:'Arch / Superman Hold',level:'Proficient',std:'30s'},
+   {id:'ho.60',name:'60s Hollow Hold',level:'Advanced',std:'60s solid'}
+  ]},
+ {id:'s.back-lever',name:'Back Lever',group:'Core / Lever',rated:null,
+  readiness:[{id:'r.fl-tuck30',name:'Tuck Front Lever 30s',seed:{test:'frontlever',min:5}}],
+  stages:[
+   {id:'bl.tuck',name:'Tuck Back Lever',level:'Developing',std:'10s'},
+   {id:'bl.strad',name:'Straddle Back Lever',level:'Competent',std:'5s'},
+   {id:'bl.star',name:'Full Back Lever',level:'Achievement',std:'3s',star:true},
+   {id:'bl.10',name:'Back Lever 10s',level:'Advanced',std:'10s'},
+   {id:'bl.pull',name:'Back Lever Pulls',level:'Mastery',std:'from inverted'}
+  ]},
+ {id:'s.dragon',name:'Dragon Flag',group:'Core / Lever',rated:null,
+  stages:[
+   {id:'df.neg',name:'Dragon Flag Negatives',level:'Developing',std:'5 slow lowers'},
+   {id:'df.tuck',name:'Tuck Dragon Flag',level:'Competent',std:'5 reps'},
+   {id:'df.star',name:'Dragon Flag',level:'Achievement',std:'1 full rep',star:true},
+   {id:'df.5',name:'5 Dragon Flags',level:'Proficient',std:'5 reps'},
+   {id:'df.10',name:'10 Dragon Flags',level:'Advanced',std:'10 reps'}
+  ]},
+ {id:'s.wallwalk',name:'Wall Walk',group:'Handstand',rated:null,
+  stages:[
+   {id:'ww.plank',name:'Incline Plank Walk',level:'Foundation',std:'feet on a box'},
+   {id:'ww.star',name:'Wall Walk',level:'Achievement',std:'1 full wall walk',star:true},
+   {id:'ww.5',name:'5 Wall Walks',level:'Competent',std:'5 unbroken'},
+   {id:'ww.nose',name:'Nose-to-Wall Walk',level:'Proficient',std:'chest to wall'},
+   {id:'ww.10',name:'10 Wall Walks',level:'Advanced',std:'10 unbroken'}
+  ]},
+ {id:'s.kip-hspu',name:'Kipping HSPU',group:'Handstand',rated:null,
+  readiness:[{id:'r.hs20',name:'Handstand Hold 20s',seed:{test:'hshold',min:20}}],
+  stages:[
+   {id:'kh.knee',name:'Knee-Kip Drills',level:'Developing',std:'box / knee kip'},
+   {id:'kh.star',name:'Kipping HSPU',level:'Achievement',std:'1 rep',star:true},
+   {id:'kh.5',name:'5 Kipping HSPU',level:'Competent',std:'5 unbroken'},
+   {id:'kh.10',name:'10 Kipping HSPU',level:'Proficient',std:'10 unbroken'},
+   {id:'kh.def',name:'Deficit Kipping HSPU',level:'Advanced',std:'4″+ deficit'}
+  ]},
+ {id:'s.press-hs',name:'Press to Handstand',group:'Handstand',rated:null,
+  readiness:[{id:'r.hs30',name:'Handstand Hold 30s',seed:{test:'hshold',min:30}}],
+  stages:[
+   {id:'ph.pike',name:'Pike Press Negatives',level:'Developing',std:'5 slow lowers'},
+   {id:'ph.strad',name:'Straddle Press (banded)',level:'Competent',std:'assisted'},
+   {id:'ph.star',name:'Press to Handstand',level:'Achievement',std:'1 straddle press',star:true},
+   {id:'ph.pikefull',name:'Pike Press to Handstand',level:'Advanced',std:'straight-leg'},
+   {id:'ph.3',name:'3 Presses',level:'Mastery',std:'3 unbroken'}
+  ]},
+ {id:'s.kip-pullup',name:'Kipping Pull-Up',group:'Pulling',rated:null,
+  readiness:[{id:'m.strict-pullup-5',name:'5 Strict Pull-Ups',seed:{test:'strictpullups',min:5}}],
+  stages:[
+   {id:'kp.swing',name:'Kip Swing',level:'Foundation',std:'controlled arc'},
+   {id:'kp.star',name:'Kipping Pull-Up',level:'Achievement',std:'1 rep',star:true},
+   {id:'kp.10',name:'10 Kipping Pull-Ups',level:'Competent',std:'10 unbroken'},
+   {id:'kp.20',name:'20 Kipping Pull-Ups',level:'Proficient',std:'20 unbroken'},
+   {id:'kp.butterfly',name:'Butterfly Pull-Ups',level:'Advanced',std:'cycling technique'}
   ]}
 ];
 var DEV_GROUPS=['Pulling','Handstand','Core / Lever','Lower','Skills'];
@@ -2840,6 +2924,8 @@ Object.assign(CAP_NAV,{'s.squat':'BARBELL','s.deadlift':'BARBELL','s.bench':'BAR
 Object.assign(CAP_FEEDS,{'s.squat':'Rating · Strength','s.deadlift':'Rating · Strength','s.bench':'Rating · Strength','s.press':'Rating · Strength','s.powerclean':'Rating · Power','s.cleanjerk':'Off-card · Olympic lift','s.snatch':'Rating · Skill','s.ring-support':'Skill · Support','s.ring-row':'Skill · Pulling Gymnastics','s.strict-bmu':'Skill · Pulling Gymnastics'});
 Object.assign(CAP_NAV,{'s.du-cross':'COORDINATION','s.triple':'COORDINATION'});
 Object.assign(CAP_FEEDS,{'s.du-cross':'Skill · Coordination','s.triple':'Skill · Coordination'});
+Object.assign(CAP_NAV,{'s.shrimp':'LOWER BODY','s.nordic':'LOWER BODY','s.boxjump':'LOWER BODY','s.hollow':'CORE','s.back-lever':'CORE','s.dragon':'CORE','s.wallwalk':'HAND BALANCE / INVERSION','s.kip-hspu':'HAND BALANCE / INVERSION','s.press-hs':'HAND BALANCE / INVERSION','s.kip-pullup':'BARS'});
+Object.assign(CAP_FEEDS,{'s.shrimp':'Development · Lower Body','s.nordic':'Development · Lower Body','s.boxjump':'Development · Lower Body','s.hollow':'Development · Core','s.back-lever':'Skill · Static / Core','s.dragon':'Development · Core','s.wallwalk':'Development · Inversion','s.kip-hspu':'Development · Inversion','s.press-hs':'Development · Inversion','s.kip-pullup':'Development · Pulling'});
 function cap2List(){_devCat=null;var el=document.getElementById('devInner');if(!el)return;
   var tiles=CAP_NAVGROUPS.map(function(g){var meta=CAP_CATMETA[g]||{};var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===g;});
     var mastered=sks.filter(function(sk){return devSkillState(sk).mastered;}).length;
