@@ -2665,8 +2665,8 @@ function renderDev(){var el=document.getElementById('devInner');if(!el)return;
     var cards=sks.map(function(sk){var st=devSkillState(sk);var pct=Math.round(st.done/st.total*100);
       return '<button class="dev-fam'+(st.mastered?' mastered':'')+'" onclick="openDevSkill(&#39;'+sk.id+'&#39;)"><span class="dev-fam-top"><span class="dev-fam-nm">'+esc(sk.name)+'</span><span class="dev-lvl">'+(st.mastered?'&#9733; ':'')+esc(st.level)+'</span></span><span class="dev-bar"><i style="width:'+pct+'%"></i></span><span class="dev-fam-sub">'+st.done+' of '+st.total+' stages</span></button>';}).join('');
     return '<div class="dev-group">'+g+'</div><div class="dev-grid">'+cards+'</div>';}).join('');
-  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeDev()">&lsaquo;</button><span class="ss-topttl">Development</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
-   +'<div class="ss-h">Development</div>'+body;}
+  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeDev()">&lsaquo;</button><span class="ss-topttl">Skill Tree</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
+   +'<div class="ss-h">Skill Tree</div>'+body;}
 function renderDevSkill(id){var el=document.getElementById('devInner');if(!el)return;var sk=devSkill(id);if(!sk){renderDev();return;}
   var st=devSkillState(sk);var rd=devReady(sk);
   var path=sk.stages.map(function(n,i){var stt=st.ach[i]?'done':(i===st.cur?'now':'up');
@@ -2700,9 +2700,9 @@ window.devBackToList=function(){renderDev();try{window.scrollTo(0,0);}catch(e){}
 window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual'};devSave();renderDevSkill(sid);};
 window.devLogBest=function(sid,key){var el=document.getElementById('devBestIn');if(!el)return;var v=parseInt(el.value,10);if(!v||v<1){showToast('Enter your best rep count');return;}var r=devIngest(key,v,{source:'best'});renderDevSkill(sid);try{window.scrollTo(0,0);}catch(e){}if(!(r&&r.crossed.length))showToast('Saved &mdash; best updated');};
 function progressChooserHTML(){return '<div class="dsec">Progress</div>'
-  +'<button class="dev-launch" onclick="openSkillTree()"><span class="dev-ll"><span class="dev-lk">Skill Tree</span></span><span class="ss-chev">&rsaquo;</span></button>'
-  +'<button class="dev-launch" onclick="openDev()"><span class="dev-ll"><span class="dev-lk">Development</span></span><span class="ss-chev">&rsaquo;</span></button>';}
-window.openSkillTree=function(){var m=document.getElementById('skillMask');if(!m){m=document.createElement('div');m.id='skillMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="skillInner"></div>';document.body.appendChild(m);}document.getElementById('skillInner').innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeSkillTree()">&lsaquo;</button><span class="ss-topttl">Skill Tree</span><button class="ss-close" onclick="closeSkillTree()">Close</button></div>'+buildTreePageHTML();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
+  +'<button class="dev-launch" onclick="openSkillTree()"><span class="dev-ll"><span class="dev-lk">Class Ladder</span></span><span class="ss-chev">&rsaquo;</span></button>'
+  +'<button class="dev-launch" onclick="openDev()"><span class="dev-ll"><span class="dev-lk">Skill Tree</span></span><span class="ss-chev">&rsaquo;</span></button>';}
+window.openSkillTree=function(){var m=document.getElementById('skillMask');if(!m){m=document.createElement('div');m.id='skillMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="skillInner"></div>';document.body.appendChild(m);}document.getElementById('skillInner').innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeSkillTree()">&lsaquo;</button><span class="ss-topttl">Class Ladder</span><button class="ss-close" onclick="closeSkillTree()">Close</button></div>'+buildTreePageHTML();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.closeSkillTree=function(){var m=document.getElementById('skillMask');if(m)m.style.display='none';};
 window.pickSessTrack=function(t){sessTrack=t;renderSession();var m=document.getElementById('sessMask');if(m)m.scrollTop=0;};
 window.sessBack=function(){sessTrack=null;renderSession();};
