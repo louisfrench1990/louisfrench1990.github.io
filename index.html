@@ -2061,11 +2061,13 @@ function coachTitlesAllowed(){var idx=cardTierIndex();var out=[];COACH_LADDER.fo
 function resolveCardTitle(cur){var p=titlePref();cur=cur||{};
   if(p==='none')return '';
   if(p==='tier'){try{var cc=computeCard();return cc.entered>0?cc.tier.name:(cur.name||'');}catch(e){return cur.name||'';}}
+  if(p==='arch'){try{var ac=computeCard();var a=archetypeOf(ac);return (a&&a!=='Prospect')?a:(cur.name||'');}catch(e){return cur.name||'';}}
   if(p&&p.indexOf('coach:')===0){return assignedCoachTitle()||(cur.name||'');}
   if(p&&p.indexOf('tree:')===0){var n=p.slice(5);return unlockedTitles().indexOf(n)>=0?n:(cur.name||'');}
   return cur.name||'';}   // 'auto' / default = the app's computed class
 function displayTitleOptions(){
   var opts=[{v:'auto',l:'Class (auto)'}];
+  try{var _ac=computeCard();var _a=archetypeOf(_ac);if(_a&&_a!=='Prospect')opts.push({v:'arch',l:_a+' — archetype'});}catch(e){}
   var ct=assignedCoachTitle();if(ct)opts.push({v:'coach:'+ct,l:ct});
   unlockedTitles().forEach(function(n){opts.push({v:'tree:'+n,l:n});});
   try{var cc=computeCard();if(cc.entered>0)opts.push({v:'tier',l:cc.tier.name});}catch(e){}
@@ -3562,11 +3564,13 @@ function buildTrainHTML(){
       +'<span class="tt-prog"><span class="tt-ic">'+ICO.program+'</span>Unranked Program</span></div>'
     +rdy
     +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+questCompactHTML()+'<button class="tt-week" onclick="openWeek()"><span class="tt-wk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg></span><span class="tt-wk-l">Week ahead</span><span class="arw">›</span></button></div>';
-  var scSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.target+'</span><span class="dc-t"><b>Log a score</b></span><span class="dc-chev">›</span></summary>';
-  var scores='<details class="trn-acc">'+scSum+'<div class="trn-body">'+buildTestsHTML(true)+'</div></details>';
-  var lgSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.star+'</span><span class="dc-t"><b>Log a Previous Best</b></span><span class="dc-chev">›</span></summary>';
+  var scSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.target+'</span><span class="dc-t"><b>Log score</b><span>the rated tests that build your card</span></span><span class="dc-chev">›</span></summary>';
+  var scores='<details class="trn-acc">'+scSum+'<div class="trn-body">'+buildTestsHTML('card')+'</div></details>';
+  var dvSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.tree+'</span><span class="dc-t"><b>Log skill development</b><span>skill tree, WOD scaling &amp; class titles — off your card</span></span><span class="dc-chev">›</span></summary>';
+  var dev='<details class="trn-acc">'+dvSum+'<div class="trn-body">'+buildTestsHTML('dev')+'</div></details>';
+  var lgSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.star+'</span><span class="dc-t"><b>Log previous best</b><span>beta — seeds your Legacy card</span></span><span class="dc-chev">›</span></summary>';
   var legacy='<details class="trn-acc">'+lgSum+'<div class="trn-body">'+legacyLogInner()+'</div></details>';
-  return today+'<div class="dsec">Your scores</div>'+scores+legacy;
+  return today+'<div class="dsec">Log your training</div>'+scores+dev+legacy;
 }
 // COMPETE / EXPLORE / FANTASY — locked, coming soon (shows the shape of the full app)
 // Closed beta: descriptions of unreleased features intentionally removed so they don't ship in the client bundle.
@@ -3630,7 +3634,7 @@ function athleteCardHTML(opts){opts=opts||{};
       +'<div class="pc2-top">'
         +'<div class="pc2-idn"><span class="pc2-ovl">Overall</span><span class="pc2-ov">'+ccD.overall+'</span><span class="pc2-rule"></span>'
           +'<span class="pc2-nm">'+(athleteName?esc(athleteName):'YOUR NAME')+'</span>'
-          +'<span class="pc2-cls">'+esc(clsName)+'</span>'+((archName&&archName!=='Prospect')?'<span class="pc2-arch">&#9670; '+esc(archName)+'</span>':'')+vfBadge+'</div>'
+          +'<span class="pc2-cls">'+esc(clsName)+'</span>'+((archName&&archName!=='Prospect'&&titlePref()!=='arch')?'<span class="pc2-arch">&#9670; '+esc(archName)+'</span>':'')+vfBadge+'</div>'
         +'<div class="pc-hero'+(athletePhoto?' has-img':'')+'"'+(athletePhoto?'':' onclick="pickPhoto()"')+'><div class="pc-stage"></div><div class="pc-wm">UR</div>'+heroImg+'</div>'
       +'</div>'
       +'<div class="pc2-bot">'
@@ -3806,7 +3810,8 @@ function pendingPreviewHTML(){
 }
 function cardTestSet(){var s={};try{['STR','PWR','SPD','END'].forEach(function(k){(V2_SUB[k]||[]).forEach(function(sd){sd[1].forEach(function(id){s[id]=1;});});});SKILL_DOMAINS.forEach(function(d){d.members.forEach(function(m){if(m[1])s[m[1]]=1;});});}catch(e){}return s;}
 var _CARDTESTS=null;function cardTest(id){if(typeof RATING_V2==='undefined'||!RATING_V2)return true;if(!_CARDTESTS)_CARDTESTS=cardTestSet();return !!_CARDTESTS[id];}
-function buildTestsHTML(noLegacy){
+function buildTestsHTML(mode){
+  mode=mode||'card';
   function avail(mv){return true;}   // OPEN LOGGING (2026-09-03): every test is findable, viewable and loggable from day one. Verification is the only gate; Rating Confidence (not locks) guides onboarding. moveAvail is retained for other systems.
   var byStat={};SCORING.stats.forEach(function(s){byStat[s.key]=[];});var treeMoves=[];
   SCORING.moves.forEach(function(mv){if(mv.stat&&byStat[mv.stat])byStat[mv.stat].push(mv);else treeMoves.push(mv);});
@@ -3830,35 +3835,51 @@ function buildTestsHTML(noLegacy){
   function grpBlock(name,mvs,filterFn,openDefault){var av=mvs.filter(filterFn);if(!av.length)return '';
     var enteredN=av.filter(function(m){return TESTS[m.id]!=null;}).length;
     return '<details class="ts-grp"'+(openDefault?' open':'')+'><summary class="ts-grpsum"><span class="ts-grpnm">'+esc(name)+'</span><span class="ts-grpct">'+enteredN+'/'+av.length+'</span><span class="ts-chev">›</span></summary>'+av.map(rowHtml).join('')+'</details>';}
-  var cc=computeCard();var availCount=0;SCORING.moves.forEach(function(mv){if(avail(mv))availCount++;});var lockedCount=SCORING.moves.length-availCount;
-  var pct=SCORING.moves.length?Math.round(cc.entered/SCORING.moves.length*100):0;
-  var confBanner=((typeof RATING_V2!=='undefined'&&RATING_V2)&&cc.confidence!=null)?('<div class="ts-conf">Rating Confidence <b>'+cc.confidence+'%</b> &mdash; the <span class="ts-conf-h">highlighted</span> tests build your card; verify them to raise it.</div>'):'';
-  var prog='<div class="ts-prog">'+confBanner+'<div class="ts-progbar"><i style="width:'+pct+'%"></i></div>'
-    +'<div class="ts-progrow"><span><b>'+cc.entered+'</b> / '+SCORING.moves.length+' entered</span>'
-    +'<span class="ts-pv">'+cc.verified+' verified</span>'+(cc.pending?'<span class="ts-pp">'+cc.pending+' pending</span>':'')
-    +(lockedCount?'<span class="ts-pl">'+lockedCount+' locked</span>':'')+'</div></div>';
-  var lockedRows=[];SCORING.moves.forEach(function(mv){if(!avail(mv))lockedRows.push(mv);});
+  var cc=computeCard();
+  function isCard(mv){return cardTest(mv.id);}
+  function isDev(mv){return !cardTest(mv.id);}
   var novSet={};(SCORING.novice||[]).forEach(function(id){novSet[id]=1;});
-  var startHere=(SCORING.novice&&SCORING.novice.length)&&!noviceAllVerified();
-  var body;
-  // Split the entry: CARD tests (build your rating, by stat) vs CHALLENGES & EXTRAS (feats -> achievements/titles, not the card).
-  function cardGroupsHtml(exclude){return groups.map(function(g){return grpBlock(g[0],g[1],function(mv){return cardTest(mv.id)&&(!exclude||!exclude[mv.id]);},false);}).join('');}
-  function featSection(exclude){var fm=SCORING.moves.filter(function(mv){return !cardTest(mv.id)&&(!exclude||!exclude[mv.id]);});
-    return fm.length?('<details class="ts-feat"><summary><span class="ts-featnm">Challenges &amp; extras</span><span class="ts-featsub">achievements &amp; titles, not your card</span><span class="ts-chev">›</span></summary>'+fm.map(rowHtml).join('')+'</details>'):'';}
-  if(startHere){
-    var novDone=SCORING.novice.filter(function(id){return isVerified(id);}).length;
-    var novRows=SCORING.novice.map(function(id){var mv=scMove(id);return mv?rowHtml(mv):'';}).join('');
-    var cardGroups=cardGroupsHtml(novSet);
-    body='<div class="ts-sh"><div class="ts-shhdr">★ Foundation — build your card<span class="ts-shct">'+novDone+'/8 verified</span></div>'
-      +'<p class="ts-shnote">Complete these to establish your athlete card and lift your Rating Confidence. You can log any test, any time — this is just the fastest way to get a full picture.</p>'+novRows+'</div>'
-      +(cardGroups?'<details class="ts-more"><summary>All card tests — build your rating <span class="ts-chev">›</span></summary>'+cardGroups+'</details>':'')
-      +featSection(novSet);
-  } else {
-    body='<div class="ts-secl">Card tests — build your rating</div>'+cardGroupsHtml(null)+featSection(null);
+
+  // ===== SKILL DEVELOPMENT view: everything OFF the card — skill-tree tests, WOD-scaling & capacity pieces, and the
+  // optional tests that earn class titles. Logging here never moves the five card stats. =====
+  if(mode==='dev'){
+    var devMoves=SCORING.moves.filter(isDev);
+    var dEnt=devMoves.filter(function(m){return TESTS[m.id]!=null;}).length;
+    var dPct=devMoves.length?Math.round(dEnt/devMoves.length*100):0;
+    var dprog='<div class="ts-prog"><div class="ts-progbar"><i style="width:'+dPct+'%"></i></div>'
+      +'<div class="ts-progrow"><span><b>'+dEnt+'</b> / '+devMoves.length+' logged</span><span class="ts-pv">off-card</span></div></div>';
+    var treeLink='<button class="dcard" style="margin:2px 0 14px" onclick="goNav(&#39;tree&#39;)"><span class="dc-ic">'+ICO.tree+'</span><span class="dc-t"><b>Open your Skill Tree</b><span>mark drills &amp; progressions as you unlock them</span></span><span class="dc-chev">›</span></button>';
+    var dgroups=groups.map(function(g){return grpBlock(g[0],g[1],isDev,false);}).join('');
+    return '<div class="ts-page"><p class="ts-intro">These sharpen your training, scale your WODs and can earn <b>class titles</b> — but they <b>don’t change your card rating</b>. Log anything outside the rated battery here.</p>'
+      +dprog+treeLink+'<div class="ts-secl">Off-card tests</div>'+(dgroups||'<p class="rmnote">Nothing to log here yet.</p>')
+      +'<div class="ts-actions"><button class="minibtn2" onclick="saveTests()">Log scores</button><button class="minibtn2 alt" onclick="openVerify()">'+ICO.lock+' Coach verify</button></div></div>';
   }
-  if(lockedRows.length)body+='<details class="ts-locked"><summary>'+ICO.lock+' '+lockedRows.length+' locked test'+(lockedRows.length===1?'':'s')+' — rank up to unlock <span class="ts-chev">›</span></summary>'+lockedRows.map(lockRow).join('')+'</details>';
-  return '<div class="ts-page"><p class="ts-intro">Enter your best result for each test. New scores save as <b>pending</b> and count once a coach verifies them.</p>'+prog+pendingPreviewHTML()+body
-    +'<div class="ts-actions"><button class="minibtn2" onclick="saveTests()">Log scores</button><button class="minibtn2 alt" onclick="openVerify()">'+ICO.lock+' Coach verify</button></div>'+(noLegacy?'':legacyLogHTML())+'</div>';
+
+  // ===== CARD view: only the RATED tests that build the five card stats. =====
+  var cardMoves=SCORING.moves.filter(isCard);
+  var cEnt=cardMoves.filter(function(m){return TESTS[m.id]!=null;}).length;
+  var cVer=cardMoves.filter(function(m){return isVerified(m.id);}).length;
+  var cPend=cEnt-cVer;var pct=cardMoves.length?Math.round(cEnt/cardMoves.length*100):0;
+  var confBanner=((typeof RATING_V2!=='undefined'&&RATING_V2)&&cc.confidence!=null)?('<div class="ts-conf">Rating Confidence <b>'+cc.confidence+'%</b> &mdash; every test here moves one of your five card stats. Verify them to raise it.</div>'):'';
+  var prog='<div class="ts-prog">'+confBanner+'<div class="ts-progbar"><i style="width:'+pct+'%"></i></div>'
+    +'<div class="ts-progrow"><span><b>'+cEnt+'</b> / '+cardMoves.length+' entered</span>'
+    +'<span class="ts-pv">'+cVer+' verified</span>'+(cPend>0?'<span class="ts-pp">'+cPend+' pending</span>':'')+'</div></div>';
+  function cardGroupsHtml(exclude){return groups.map(function(g){return grpBlock(g[0],g[1],function(mv){return isCard(mv)&&(!exclude||!exclude[mv.id]);},false);}).join('');}
+  var novCard=(SCORING.novice||[]).filter(function(id){var mv=scMove(id);return mv&&cardTest(id);});
+  var startHere=novCard.length&&!novCard.every(function(id){return isVerified(id);});
+  var body;
+  if(startHere){
+    var novDone=novCard.filter(function(id){return isVerified(id);}).length;
+    var novRows=novCard.map(function(id){var mv=scMove(id);return mv?rowHtml(mv):'';}).join('');
+    var cardGroups=cardGroupsHtml(novSet);
+    body='<div class="ts-sh"><div class="ts-shhdr">★ Foundation — establish your card<span class="ts-shct">'+novDone+'/'+novCard.length+' verified</span></div>'
+      +'<p class="ts-shnote">Log one clear result per stat to build your athlete card and lift your Rating Confidence fast. You can log any card test any time — this is just the quickest way to a full picture.</p>'+novRows+'</div>'
+      +(cardGroups?'<details class="ts-more" open><summary>All card tests — by stat <span class="ts-chev">›</span></summary>'+cardGroups+'</details>':'');
+  } else {
+    body='<div class="ts-secl">Card tests — by stat</div>'+cardGroupsHtml(null);
+  }
+  return '<div class="ts-page"><p class="ts-intro">Your best result for each <b>rated</b> test. New scores save as <b>pending</b> and count once a coach verifies them.</p>'+prog+pendingPreviewHTML()+body
+    +'<div class="ts-actions"><button class="minibtn2" onclick="saveTests()">Log scores</button><button class="minibtn2 alt" onclick="openVerify()">'+ICO.lock+' Coach verify</button></div></div>';
 }
 // Low-key "log a previous best" — beta-only, so athletes can see how the Legacy (best-ever) card works. Writes to PREV; folds into BEST.
 function legacyLogInner(){
