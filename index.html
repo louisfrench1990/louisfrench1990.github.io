@@ -140,6 +140,7 @@
 .cn-cap-nm.cn-lim ~ .cn-bar i{background:var(--acc)}
 .cn-limtag{flex:0 0 auto;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--acc)}
 .cn-metmk{flex:0 0 auto;color:var(--acc2);display:inline-flex;align-items:center}
+.pc2-arch{display:inline-flex;align-items:center;gap:4px;align-self:flex-start;margin-top:7px;padding:3px 10px;border:1px solid rgba(255,194,71,.5);border-radius:999px;background:rgba(255,194,71,.10);color:var(--acc);font-family:var(--disp);font-size:14px;letter-spacing:.05em;text-transform:uppercase;line-height:1.2}
 .cn-lgtag{font-size:10px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--di);border:1px solid var(--line);border-radius:6px;padding:1px 5px;margin-left:4px}
 .cn-train{background:rgba(255,194,71,.08);border:1px solid rgba(255,194,71,.35);border-radius:12px;padding:11px 13px;margin-top:12px;font-size:13px;color:var(--txt)}
 .cn-train-l{display:block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--acc);margin-bottom:3px}
@@ -2469,38 +2470,34 @@ var DEV_G=[
  {id:'s.strict-pullup',name:'Strict Pull-Up',group:'Pulling',rated:'strictpullups',
   stages:[
    {id:'f.active-hang',name:'Active Hang',level:'Foundation',std:'20s hold'},
-   {id:'f.ring-row-10',name:'Ring Rows',level:'Foundation',std:'10 clean reps'},
    {id:'f.scap-pull-8',name:'Scapular Pull-Ups',level:'Developing',std:'8 reps'},
-   {id:'f.pullup-neg',name:'Pull-Up Negatives',level:'Developing',std:'3 × 5s'},
    {id:'s.strict-pullup.star',name:'Strict Pull-Up',level:'Achievement',std:'1 rep',star:true,seed:{gcap:'pullup',min:1}},
    {id:'m.strict-pullup-3',name:'3 Strict Pull-Ups',level:'Competent',std:'3 reps',seed:{gcap:'pullup',min:3}},
    {id:'m.strict-pullup-5',name:'5 Strict Pull-Ups',level:'Proficient',std:'5 reps',seed:{gcap:'pullup',min:5}},
    {id:'m.strict-pullup-10',name:'10 Strict Pull-Ups',level:'Advanced',std:'10 reps',seed:{gcap:'pullup',min:10}},
-   {id:'m.strict-pullup-15',name:'15+ / Weighted',level:'Mastery',std:'15 unbroken or weighted',seed:{gcap:'pullup',min:15}}
+   {id:'m.strict-pullup-15',name:'15 Strict Pull-Ups',level:'Advanced',std:'15 unbroken',seed:{gcap:'pullup',min:15}},
+   {id:'w.weighted-pullup',name:'Weighted Pull-Up',level:'Mastery',std:'+20kg',seed:{test:'weightedpullup',min:20}}
   ]},
  {id:'s.c2b',name:'Chest-to-Bar',group:'Pulling',rated:'c2b1min',
   readiness:[{id:'m.strict-pullup-5',name:'5 Strict Pull-Ups',seed:{test:'strictpullups',min:5}}],
   stages:[
-   {id:'f.beat-swing-10',name:'Beat Swings',level:'Foundation',std:'10 controlled'},
-   {id:'d.kip-pullup-5',name:'Kipping Pull-Ups',level:'Developing',std:'5 controlled'},
-   {id:'d.kip-pullup-10',name:'Kipping Pull-Ups',level:'Developing',std:'10 reps'},
-   {id:'s.c2b.star',name:'Chest-to-Bar',level:'Achievement',std:'1 kipping C2B',star:true,seed:{gcap:'c2b',min:1}},
-   {id:'m.c2b-5',name:'5 unbroken C2B',level:'Competent',std:'5 unbroken',seed:{gcap:'c2b',min:5}},
-   {id:'d.c2b-10',name:'10 unbroken C2B',level:'Proficient',std:'10 unbroken',seed:{gcap:'c2b',min:10}},
-   {id:'d.c2b-strict',name:'Strict C2B',level:'Advanced',std:'5 strict'},
-   {id:'d.c2b-butterfly',name:'Butterfly / 10 Strict',level:'Mastery',std:'10+ strict or butterfly'}
+   {id:'d.kip-pullup-10',name:'Kipping Pull-Ups',level:'Developing',std:'10 controlled'},
+   {id:'s.c2b.star',name:'Chest-to-Bar',level:'Achievement',std:'1 C2B',star:true,seed:{gcap:'c2b',min:1}},
+   {id:'m.c2b-5',name:'5 unbroken C2B',level:'Competent',std:'5 unbroken (cycling)',seed:{gcap:'c2b',min:5}},
+   {id:'d.c2b-10',name:'10 unbroken C2B',level:'Proficient',std:'10 unbroken (cycling)',seed:{gcap:'c2b',min:10}},
+   {id:'d.c2b-strict',name:'Strict Chest-to-Bar',level:'Advanced',std:'5 strict (strength branch)'},
+   {id:'d.c2b-butterfly',name:'Butterfly C2B',level:'Mastery',std:'15+ butterfly (cycling branch)'}
   ]},
  {id:'s.ttb',name:'Toes-to-Bar',group:'Pulling',rated:'t2b',
   stages:[
    {id:'f.dead-hang-30',name:'Dead Hang',level:'Foundation',std:'30s'},
-   {id:'f.hollow-20',name:'Hollow Hold',level:'Foundation',std:'20s'},
    {id:'d.knee-raise-10',name:'Kipping Knee Raises',level:'Developing',std:'10 reps'},
-   {id:'d.knees-chest-10',name:'Knees-to-Chest',level:'Developing',std:'10 reps'},
+   {id:'d.straight-leg-raise',name:'Straight-Leg Raise',level:'Developing',std:'to 90°'},
    {id:'s.ttb.star',name:'Toes-to-Bar',level:'Achievement',std:'1 TTB',star:true,seed:{gcap:'t2b',min:1}},
    {id:'d.ttb-5',name:'5 unbroken TTB',level:'Competent',std:'5 unbroken',seed:{gcap:'t2b',min:5}},
    {id:'m.ttb-10',name:'10 unbroken TTB',level:'Proficient',std:'10 unbroken',seed:{gcap:'t2b',min:10}},
    {id:'d.ttb-15',name:'15 unbroken TTB',level:'Advanced',std:'15 unbroken',seed:{gcap:'t2b',min:15}},
-   {id:'d.ttb-25',name:'25+ TTB',level:'Mastery',std:'25+ efficient',seed:{gcap:'t2b',min:25}}
+   {id:'d.ttb-25',name:'25+ / Strict TTB',level:'Mastery',std:'25+ efficient or strict',seed:{gcap:'t2b',min:25}}
   ]},
  {id:'s.bmu',name:'Bar Muscle-Up',group:'Pulling',rated:'barmuscleup',
   readiness:[
@@ -2511,34 +2508,29 @@ var DEV_G=[
   ],
   stages:[
    {id:'d.high-pull',name:'High Pull',level:'Developing',std:'3–5 hips-to-bar'},
-   {id:'d.box-transition',name:'Box-Assisted Transition',level:'Developing',std:'5 clean'},
    {id:'d.band-bmu',name:'Band-Assisted BMU',level:'Developing',std:'3 clean'},
    {id:'s.bmu.star',name:'Bar Muscle-Up',level:'Achievement',std:'1 BMU',star:true,seed:{gcap:'barmu',min:1}},
    {id:'d.bmu-3',name:'3 unbroken BMU',level:'Competent',std:'3 unbroken',seed:{gcap:'barmu',min:3}},
    {id:'d.bmu-5',name:'5 unbroken BMU',level:'Proficient',std:'5 unbroken',seed:{gcap:'barmu',min:5}},
    {id:'d.bmu-10',name:'10 unbroken BMU',level:'Advanced',std:'10 unbroken',seed:{gcap:'barmu',min:10}},
-   {id:'d.strict-bmu',name:'Strict Bar Muscle-Up',level:'Mastery',std:'1 strict BMU'}
+   {id:'d.strict-bmu',name:'Strict Bar Muscle-Up',level:'Mastery',std:'1 strict BMU (branch)'}
   ]},
  {id:'s.rmu',name:'Ring Muscle-Up',group:'Pulling',rated:'ringmu',
   readiness:[{id:'m.strict-pullup-5',name:'5 Strict Pull-Ups',seed:{test:'strictpullups',min:5}}],
   stages:[
    {id:'f.ring-support-20',name:'Ring Support',level:'Foundation',std:'20s'},
-   {id:'f.fg-ring-row',name:'False-Grip Ring Rows',level:'Foundation',std:'10 controlled'},
    {id:'f.false-grip-hang',name:'False-Grip Hang',level:'Developing',std:'20s'},
-   {id:'m.fg-pull-5',name:'FG Pull-Ups to Sternum',level:'Developing',std:'5 reps'},
    {id:'m.ring-dip-10',name:'Strict Ring Dips',level:'Developing',std:'5–10 deep'},
    {id:'d.low-ring-trans',name:'Low-Ring Transitions',level:'Developing',std:'5 controlled'},
-   {id:'s.rmu.star',name:'Ring Muscle-Up',level:'Achievement',std:'1 strict RMU',star:true,seed:{gcap:'ringmu',min:1}},
-   {id:'d.rmu-3',name:'3 Strict RMU',level:'Competent',std:'3 strict',seed:{gcap:'ringmu',min:3}},
-   {id:'d.rmu-kip',name:'Kipping RMU',level:'Proficient',std:'competency'},
-   {id:'d.rmu-10',name:'10+ RMU',level:'Mastery',std:'10+ unbroken',seed:{gcap:'ringmu',min:10}}
+   {id:'s.rmu.star',name:'Ring Muscle-Up',level:'Achievement',std:'1 RMU',star:true,seed:{gcap:'ringmu',min:1}},
+   {id:'d.rmu-3',name:'3 RMU',level:'Competent',std:'3 unbroken',seed:{gcap:'ringmu',min:3}},
+   {id:'d.rmu-10',name:'10+ RMU / Strict',level:'Mastery',std:'10+ unbroken or strict',seed:{gcap:'ringmu',min:10}}
   ]},
  {id:'s.handstand',name:'Handstand',group:'Handstand',rated:'hshold',
   stages:[
    {id:'f.pike-hold-30',name:'Pike Hold',level:'Foundation',std:'30s'},
    {id:'f.wall-walk-3',name:'Wall Walks',level:'Developing',std:'3 controlled'},
    {id:'f.wall-hs-30',name:'Chest-to-Wall HS',level:'Developing',std:'30s',seed:{test:'hshold',variant:'wall'}},
-   {id:'d.heel-pulls',name:'Heel Pulls / Balance',level:'Developing',std:'10 attempts'},
    {id:'s.handstand.star',name:'Freestanding Handstand',level:'Achievement',std:'3s hold',star:true,seed:{test:'hshold',variant:'free',min:3}},
    {id:'m.free-hs-10',name:'10s Handstand',level:'Competent',std:'10s',seed:{test:'hshold',variant:'free',min:10}},
    {id:'d.hs-20',name:'20s Handstand',level:'Proficient',std:'20s',seed:{test:'hshold',variant:'free',min:20}},
@@ -2548,37 +2540,34 @@ var DEV_G=[
  {id:'s.strict-hspu',name:'Strict HSPU',group:'Handstand',rated:null,
   readiness:[{id:'f.wall-hs-30',name:'30s Wall Handstand',seed:{test:'hshold',variant:'wall'}}],
   stages:[
-   {id:'f.pushup-10',name:'Push-Ups',level:'Foundation',std:'10 reps'},
    {id:'f.pike-pushup-10',name:'Pike Push-Ups',level:'Foundation',std:'10 reps'},
    {id:'d.box-pike-hspu',name:'Box Pike HSPU',level:'Developing',std:'10 reps'},
-   {id:'d.hspu-neg',name:'HSPU Negatives',level:'Developing',std:'3 controlled'},
    {id:'s.strict-hspu.star',name:'Strict HSPU',level:'Achievement',std:'1 rep',star:true,seed:{gcap:'hspu',min:1}},
    {id:'d.strict-hspu-5',name:'5 Strict HSPU',level:'Competent',std:'5 reps',seed:{gcap:'hspu',min:5}},
    {id:'d.strict-hspu-10',name:'10 Strict HSPU',level:'Advanced',std:'10 reps',seed:{gcap:'hspu',min:10}},
-   {id:'d.deficit-hspu',name:'Deficit / Freestanding',level:'Mastery',std:'deficit or freestanding'}
+   {id:'d.freestanding-hspu',name:'Freestanding HSPU',level:'Mastery',std:'deficit or freestanding (branch)'}
   ]},
  {id:'s.hsw',name:'Handstand Walk',group:'Handstand',rated:'hswalk',
   readiness:[{id:'f.wall-hs-30',name:'30s Chest-to-Wall HS',seed:{test:'hshold',variant:'wall'}}],
   stages:[
    {id:'m.shoulder-taps-20',name:'Wall Shoulder Taps',level:'Developing',std:'20 taps'},
-   {id:'d.hip-taps',name:'Hip Taps / Weight Shifts',level:'Developing',std:'10 controlled'},
    {id:'m.free-hs-5',name:'Freestanding HS',level:'Developing',std:'5s'},
    {id:'s.hsw.star',name:'Handstand Walk',level:'Achievement',std:'1 metre',star:true,seed:{test:'hswalk',min:1}},
    {id:'d.hsw-5',name:'5m Handstand Walk',level:'Competent',std:'5m',seed:{test:'hswalk',min:5}},
    {id:'d.hsw-10',name:'10m Handstand Walk',level:'Proficient',std:'10m',seed:{test:'hswalk',min:10}},
    {id:'d.hsw-15',name:'15m / 50ft',level:'Advanced',std:'15m',seed:{test:'hswalk',min:15}},
-   {id:'d.hsw-25',name:'25m+ / Obstacles',level:'Mastery',std:'25m+',seed:{test:'hswalk',min:25}}
+   {id:'d.hsw-25',name:'25m+ / Obstacles',level:'Mastery',std:'25m+ or turns (branch)',seed:{test:'hswalk',min:25}}
   ]},
  {id:'s.lsit',name:'L-Sit',group:'Core / Lever',rated:'lsit',
   stages:[
    {id:'f.support-hold-20',name:'Support Hold',level:'Foundation',std:'20s'},
-   {id:'d.foot-lift',name:'Alternating Foot Lift',level:'Developing',std:'10s'},
    {id:'d.tuck-lsit',name:'Tuck L-Sit',level:'Developing',std:'10s',seed:{test:'lsit',variant:'tuck',min:10}},
    {id:'d.single-lsit',name:'Single-Leg L-Sit',level:'Developing',std:'5s each',seed:{test:'lsit',variant:'single',min:5}},
    {id:'s.lsit.star',name:'Full L-Sit',level:'Achievement',std:'5s hold',star:true,seed:{test:'lsit',variant:'full',min:5}},
    {id:'d.lsit-10',name:'10s L-Sit',level:'Competent',std:'10s',seed:{test:'lsit',variant:'full',min:10}},
    {id:'d.lsit-20',name:'20s L-Sit',level:'Proficient',std:'20s',seed:{test:'lsit',variant:'full',min:20}},
-   {id:'d.lsit-30',name:'30s / V-Sit',level:'Mastery',std:'30s or V-sit',seed:{test:'lsit',variant:'full',min:30}}
+   {id:'d.lsit-30',name:'30s L-Sit',level:'Advanced',std:'30s',seed:{test:'lsit',variant:'full',min:30}},
+   {id:'d.vsit',name:'V-Sit',level:'Mastery',std:'V-sit / Manna reach (branch)'}
   ]},
  {id:'s.front-lever',name:'Front Lever',group:'Core / Lever',rated:'frontlever',
   readiness:[
@@ -2591,24 +2580,20 @@ var DEV_G=[
    {id:'d.adv-tuck-fl',name:'Advanced Tuck',level:'Competent',std:'10s'},
    {id:'d.straddle-fl',name:'Straddle / One-Leg',level:'Proficient',std:'5–10s',seed:{test:'frontlever',variant:'straddle',min:5}},
    {id:'s.front-lever.star',name:'Full Front Lever',level:'Advanced',std:'3s hold',star:true,seed:{test:'frontlever',variant:'full',min:3}},
-   {id:'d.fl-pull',name:'Front Lever Pull-Ups',level:'Mastery',std:'controlled reps'}
+   {id:'d.fl-pull',name:'Front Lever Pull-Ups',level:'Mastery',std:'controlled reps (branch)'}
   ]},
  {id:'s.pistol',name:'Pistol',group:'Lower',rated:null,
   stages:[
    {id:'f.air-squat-10',name:'Deep Air Squats',level:'Foundation',std:'10 controlled'},
-   {id:'d.step-down',name:'Step-Downs',level:'Developing',std:'10 each leg'},
    {id:'d.single-box',name:'Single-Leg to Box',level:'Developing',std:'5 each leg'},
-   {id:'d.counterbalance',name:'Counterbalanced Pistols',level:'Developing',std:'5 reps'},
    {id:'s.pistol.star',name:'Pistol',level:'Achievement',std:'1 each leg',star:true},
    {id:'d.pistol-5',name:'5 Pistols each leg',level:'Competent',std:'5 each'},
    {id:'d.pistol-10',name:'10 alternating',level:'Proficient',std:'10 unbroken'},
-   {id:'d.pistol-weighted',name:'Weighted Pistol',level:'Mastery',std:'loaded'}
+   {id:'d.pistol-weighted',name:'Weighted Pistol',level:'Mastery',std:'loaded (branch)'}
   ]},
  {id:'s.du',name:'Double-Unders',group:'Skills',rated:'doubleunders',
   stages:[
    {id:'f.singles-50',name:'Unbroken Singles',level:'Foundation',std:'50 unbroken'},
-   {id:'d.penguin-taps',name:'Penguin Double-Taps',level:'Developing',std:'20 reps'},
-   {id:'d.power-jumps',name:'Power Jumps',level:'Developing',std:'20 big singles'},
    {id:'s.du.star',name:'Double-Under',level:'Achievement',std:'1 DU',star:true,seed:{test:'doubleunders',min:1}},
    {id:'d.du-10',name:'10 Double-Unders',level:'Competent',std:'10 unbroken',seed:{test:'doubleunders',min:10}},
    {id:'d.du-30',name:'30 Double-Unders',level:'Proficient',std:'30 unbroken',seed:{test:'doubleunders',min:30}},
@@ -2617,15 +2602,20 @@ var DEV_G=[
   ]},
  {id:'s.rope-climb',name:'Rope Climb',group:'Skills',rated:null,
   stages:[
-   {id:'f.rope-pull-stand',name:'Lying Rope Pull-to-Stand',level:'Foundation',std:'controlled'},
-   {id:'d.seated-clamp',name:'Seated Foot Clamps',level:'Developing',std:'5 reps'},
-   {id:'d.hanging-lock',name:'Hanging Foot Locks',level:'Developing',std:'3 reps'},
-   {id:'d.lock-stand-regrip',name:'Foot Lock + Stand + Regrip',level:'Developing',std:'3 reps'},
-   {id:'d.half-climb',name:'Half Rope Climb',level:'Developing',std:'to halfway'},
+   {id:'d.half-climb',name:'Half Rope Climb',level:'Foundation',std:'to halfway'},
    {id:'s.rope-climb.star',name:'Rope Climb',level:'Achievement',std:'1 full climb',star:true,seed:{gcap:'rope',min:1}},
    {id:'d.rope-3',name:'3 Rope Climbs',level:'Competent',std:'3 climbs',seed:{gcap:'rope',min:3}},
    {id:'d.rope-efficient',name:'Efficient 2–3 Pull Climb',level:'Proficient',std:'efficient'},
-   {id:'d.legless',name:'Legless Rope Climb',level:'Mastery',std:'legless'}
+   {id:'d.legless',name:'Legless Rope Climb',level:'Mastery',std:'legless (branch)'}
+  ]},
+ {id:'s.dip',name:'Strict Dip',group:'Pulling',rated:null,
+  stages:[
+   {id:'f.support-hold-dip',name:'Support Hold',level:'Foundation',std:'20s locked'},
+   {id:'s.dip.star',name:'Strict Dip',level:'Achievement',std:'1 rep',star:true},
+   {id:'d.dip-5',name:'5 Strict Dips',level:'Competent',std:'5 reps'},
+   {id:'d.dip-10',name:'10 Strict Dips',level:'Proficient',std:'10 reps'},
+   {id:'d.dip-15',name:'15 Strict Dips',level:'Advanced',std:'15 reps'},
+   {id:'d.weighted-dip',name:'Weighted Dip',level:'Mastery',std:'+20kg (branch)'}
   ]}
 ];
 var DEV_GROUPS=['Pulling','Handstand','Core / Lever','Lower','Skills'];
@@ -2715,9 +2705,9 @@ window.openDevSkill=function(id){var m=document.getElementById('devMask');if(m){
 window.openDevFamily=window.openDevSkill;
 
 /* ===== Skill Tree — capability presentation over the tree data (nav groups, feeds label, readiness/limiter) ===== */
-var CAP_NAV={'s.strict-pullup':'Bar & Rings','s.c2b':'Bar & Rings','s.ttb':'Bar & Rings','s.bmu':'Bar & Rings','s.rmu':'Bar & Rings','s.rope-climb':'Bar & Rings','s.handstand':'Hand Balance','s.strict-hspu':'Hand Balance','s.hsw':'Hand Balance','s.lsit':'Core & Levers','s.front-lever':'Core & Levers','s.pistol':'Lower Body','s.du':'Coordination'};
+var CAP_NAV={'s.strict-pullup':'Bar & Rings','s.c2b':'Bar & Rings','s.ttb':'Bar & Rings','s.bmu':'Bar & Rings','s.rmu':'Bar & Rings','s.rope-climb':'Bar & Rings','s.dip':'Bar & Rings','s.handstand':'Hand Balance','s.strict-hspu':'Hand Balance','s.hsw':'Hand Balance','s.lsit':'Core & Levers','s.front-lever':'Core & Levers','s.pistol':'Lower Body','s.du':'Coordination'};
 var CAP_NAVGROUPS=['Bar & Rings','Hand Balance','Core & Levers','Lower Body','Coordination'];
-var CAP_FEEDS={'s.strict-pullup':'Skill · Pulling Gymnastics','s.c2b':'Skill · Pulling Gymnastics','s.ttb':'Skill · Pulling Gymnastics','s.bmu':'Skill · Pulling Gymnastics','s.rmu':'Skill · Pulling Gymnastics','s.rope-climb':'Skill · Coordination','s.handstand':'Skill · Inversion','s.strict-hspu':'Skill · Inversion','s.hsw':'Skill · Inversion','s.lsit':'Skill · Static / Core','s.front-lever':'Skill · Static / Core','s.pistol':'Skill · Coordination','s.du':'Skill · Coordination'};
+var CAP_FEEDS={'s.strict-pullup':'Skill · Pulling Gymnastics','s.c2b':'Skill · Pulling Gymnastics','s.ttb':'Skill · Pulling Gymnastics','s.bmu':'Skill · Pulling Gymnastics','s.rmu':'Skill · Pulling Gymnastics','s.rope-climb':'Skill · Coordination','s.dip':'Skill · Support','s.handstand':'Skill · Inversion','s.strict-hspu':'Skill · Inversion','s.hsw':'Skill · Inversion','s.lsit':'Skill · Static / Core','s.front-lever':'Skill · Static / Core','s.pistol':'Skill · Coordination','s.du':'Skill · Coordination'};
 function cap2List(){var el=document.getElementById('devInner');if(!el)return;
   var body=CAP_NAVGROUPS.map(function(g){var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===g;});if(!sks.length)return '';
     var cards=sks.map(function(sk){var st=devSkillState(sk);var pct=Math.round(st.done/st.total*100);
@@ -2855,6 +2845,20 @@ function renderSession(){var el=document.getElementById('sessInner');if(!el)retu
 }
 var cardMode='form';   // 'form' (current) | 'legacy' (best-ever)
 var _holdToasts=false,_celebPayload=null;   // verify→handback→celebrate: suppress live toasts, then reveal on athlete tap
+/* New rated tests (2026-09-03): retire the V2 proxies — Weighted Pull-Up is the real Strength pull test,
+   20m Sprint the real acceleration test. Provisional expert bands (V1 model), sex-specific. Pushed at runtime
+   to avoid editing the embedded SCORING blob. unlockedBy:null = always loggable (Rating Confidence, not gates). */
+(function(){try{
+ var wpu={id:'weightedpullup',name:'Weighted Pull-Up',stat:'STR',unit:'kg',dir:'hi',unlockedBy:null,bands:{
+   m:[[100,100],[85,99],[75,98],[65,97],[55,96],[50,95],[45,93],[42.5,92],[40,90],[37.5,88],[35,86],[32.5,84],[30,82],[27.5,80],[25,77],[22.5,74],[20,71],[17.5,68],[15,64],[12.5,60],[10,55],[7.5,50],[5,45],[2.5,40],[0,35]],
+   f:[[60,100],[50,99],[42.5,98],[37.5,97],[32.5,96],[30,95],[27.5,93],[25,90],[22.5,88],[20,85],[17.5,82],[15,78],[12.5,74],[10,70],[7.5,64],[5,57],[2.5,50],[0,40]]}};
+ var s20={id:'sprint20m',name:'20m Sprint',stat:'SPD',unit:'sec',dir:'lo',unlockedBy:null,bands:{
+   m:[[2.8,100],[2.85,99],[2.9,98],[2.95,97],[3,95],[3.05,93],[3.1,91],[3.15,89],[3.2,86],[3.25,83],[3.3,80],[3.35,77],[3.4,74],[3.45,70],[3.5,66],[3.6,60],[3.7,54],[3.8,48],[3.9,42],[4,36],[4.2,28]],
+   f:[[3.1,100],[3.15,99],[3.2,98],[3.25,97],[3.3,95],[3.35,93],[3.4,91],[3.45,88],[3.5,85],[3.6,80],[3.7,74],[3.8,68],[3.9,62],[4,56],[4.1,50],[4.2,44],[4.4,36],[4.6,28]]}};
+ var have={};SCORING.moves.forEach(function(m){have[m.id]=1;});
+ if(!have.weightedpullup)SCORING.moves.push(wpu);
+ if(!have.sprint20m)SCORING.moves.push(s20);
+}catch(e){}})();
 var _MOVE={};SCORING.moves.forEach(function(m){_MOVE[m.id]=m;});
 function scMove(id){return _MOVE[id]||null;}
 function scSex(){return athleteSex==='F'?'f':'m';}
@@ -2931,9 +2935,9 @@ function treeSkillRating(rate){var doms=treeDomainRatings(rate);var vals=doms.ma
    subdomains. OVR = balance-weighted estimate over covered stats. TP = ability x confidence. Tier from OVR. ======= */
 var RATING_V2=true;
 var V2_SUB={
- STR:[['Squat',['backsquat']],['Hinge',['deadlift']],['Press',['bench','strictpress']],['Pull',['strictpullups']]],
+ STR:[['Squat',['backsquat']],['Hinge',['deadlift']],['Press',['bench','strictpress']],['Pull',['weightedpullup']]],
  PWR:[['Jump',['broadjump','verticaljump']],['Loaded',['powerclean']],['Cyclical',['row100']]],
- SPD:[['Sprint',['sprint100']],['Agility',['boxjumpovers']]],
+ SPD:[['Acceleration',['sprint20m']],['Sprint',['sprint100']],['Agility',['boxjumpovers']]],
  END:[['Anaerobic',['sprint400']],['Mid',['row2k']],['Aerobic',['run5k']]]
 };
 function v2Sub(tests,rate,counts){var got=[];tests.forEach(function(id){if(counts(id))got.push(rate(id)||0);});
@@ -2961,6 +2965,18 @@ function computeV2(rate,counts){rate=rate||ratingOf;counts=counts||isVerified;
   var pris=null;for(var j=0;j<SCORING.prismatic.length;j++){if(overall>=SCORING.prismatic[j].ov)pris=SCORING.prismatic[j];}
   return {stats:stats,statConf:statConf,overall:overall,tp:tp,tier:tier,nextTier:nextTier,prismatic:pris,confidence:confidence,missing:missing};}
 
+/* ===== Archetype — a shareable identity that EMERGES from the card's stat shape (never chosen; never modifies scores). ===== */
+var ARCH_PAIR={'PWR|STR':'Juggernaut','SPD|STR':'Bruiser','END|STR':'Workhorse','SKL|STR':'Iron Gymnast',
+ 'PWR|SPD':'Missile','END|PWR':'Engine Room','PWR|SKL':'Power Gymnast','END|SPD':'Greyhound','SKL|SPD':'Ninja','END|SKL':'The Operator'};
+function archetypeOf(cc){if(!cc||!cc.stats)return 'Prospect';
+  var ks=['STR','PWR','SPD','END','SKL'];var vals=ks.map(function(k){return {k:k,v:cc.stats[k]||0};});
+  var covered=vals.filter(function(x){return x.v>0;});
+  if(covered.length<2||(cc.confidence!=null&&cc.confidence<25))return 'Prospect';   // not enough proven to typecast
+  var sorted=vals.slice().sort(function(a,b){return b.v-a.v;});
+  var mx=sorted[0].v,mn=sorted[sorted.length-1].v;
+  if(mx-mn<=10)return mx>=78?'Complete Athlete':'All-Rounder';
+  var top2=[sorted[0].k,sorted[1].k].sort().join('|');
+  return ARCH_PAIR[top2]||'All-Rounder';}
 function computeCard(rate,counts){rate=rate||ratingOf;counts=counts||isVerified;
   var stats={};SCORING.stats.forEach(function(s){stats[s.key]=_statFrom(s.key,rate,counts);});
   if(TREE_SKILL&&stats.SKL!=null)stats.SKL=treeSkillRating(rate);   // Skill sourced from the Development Tree
@@ -3583,6 +3599,7 @@ function athleteCardHTML(opts){opts=opts||{};
     var clsName=(resolveCardTitle(cur)||'').toUpperCase();
     var verified=(!isLeg&&cc.verified>0);
     var tagline=cardTagline(ccD.stats);
+    var archName=archetypeOf(ccD);
     var nextGap=ccD.nextTier?((typeof RATING_V2!=='undefined'&&RATING_V2)?(ccD.nextTier.ov-ccD.overall):(ccD.nextTier.tp-ccD.tp)):0;
     var heroImg=athletePhoto
       ?('<img class="pc-cut" id="acphImg" src="'+athletePhoto+'" alt="" style="object-position:center '+athletePhotoY+'%" draggable="false"><button class="pc-editph" onclick="event.stopPropagation();pickPhoto()" title="Change photo">✎</button>')
@@ -3602,7 +3619,7 @@ function athleteCardHTML(opts){opts=opts||{};
       +'<div class="pc2-top">'
         +'<div class="pc2-idn"><span class="pc2-ovl">Overall</span><span class="pc2-ov">'+ccD.overall+'</span><span class="pc2-rule"></span>'
           +'<span class="pc2-nm">'+(athleteName?esc(athleteName):'YOUR NAME')+'</span>'
-          +'<span class="pc2-cls">'+esc(clsName)+'</span>'+vfBadge+'</div>'
+          +'<span class="pc2-cls">'+esc(clsName)+'</span>'+((archName&&archName!=='Prospect')?'<span class="pc2-arch">&#9670; '+esc(archName)+'</span>':'')+vfBadge+'</div>'
         +'<div class="pc-hero'+(athletePhoto?' has-img':'')+'"'+(athletePhoto?'':' onclick="pickPhoto()"')+'><div class="pc-stage"></div><div class="pc-wm">UR</div>'+heroImg+'</div>'
       +'</div>'
       +'<div class="pc2-bot">'
