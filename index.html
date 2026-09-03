@@ -2926,6 +2926,41 @@ function skillMemberScore(m,rate){if(m[1])return rate(m[1])||0;return treeLevelS
 function treeDomainRatings(rate){rate=rate||ratingOf;return SKILL_DOMAINS.map(function(d){var best=0;
   d.members.forEach(function(m){var s=skillMemberScore(m,rate);if(s>best)best=s;});return {name:d.name,score:best};});}
 function treeSkillRating(rate){var doms=treeDomainRatings(rate);var vals=doms.map(function(d){return d.score;});return Math.round(_mean(vals));}
+/* ===== RATING v2 — subdomain scoring + Rating Confidence (spec v2). Flip RATING_V2 false to revert. ============
+   Each stat = mean of its COVERED subdomains (missing = unknown, excluded — no zero-drag). Confidence = covered/total
+   subdomains. OVR = balance-weighted estimate over covered stats. TP = ability x confidence. Tier from OVR. ======= */
+var RATING_V2=true;
+var V2_SUB={
+ STR:[['Squat',['backsquat']],['Hinge',['deadlift']],['Press',['bench','strictpress']],['Pull',['strictpullups']]],
+ PWR:[['Jump',['broadjump','verticaljump']],['Loaded',['powerclean']],['Cyclical',['row100']]],
+ SPD:[['Sprint',['sprint100']],['Agility',['boxjumpovers']]],
+ END:[['Anaerobic',['sprint400']],['Mid',['row2k']],['Aerobic',['run5k']]]
+};
+function v2Sub(tests,rate,counts){var got=[];tests.forEach(function(id){if(counts(id))got.push(rate(id)||0);});
+  return {covered:got.length>0,score:got.length?_mean(got):0};}
+function v2Stat(key,rate,counts){
+  if(key==='SKL'){var doms=treeDomainRatings(rate);var cov=doms.filter(function(d){return d.score>0;});
+    return {score:cov.length?Math.round(_mean(cov.map(function(d){return d.score;}))):0,slots:doms.length,coveredSlots:cov.length,
+      missing:doms.filter(function(d){return d.score<=0;}).map(function(d){return d.name;})};}
+  var subs=(V2_SUB[key]||[]).map(function(sd){var r=v2Sub(sd[1],rate,counts);return {name:sd[0],covered:r.covered,score:r.score};});
+  var cov=subs.filter(function(s){return s.covered;});
+  return {score:cov.length?Math.round(_mean(cov.map(function(s){return s.score;}))):0,slots:subs.length,coveredSlots:cov.length,
+    missing:subs.filter(function(s){return !s.covered;}).map(function(s){return s.name;})};}
+function computeV2(rate,counts){rate=rate||ratingOf;counts=counts||isVerified;
+  var keys=['STR','PWR','SPD','END','SKL'];var stats={},statConf={},slots=0,cov=0,missing=[];var coveredScores=[];
+  keys.forEach(function(k){var r=v2Stat(k,rate,counts);stats[k]=r.score;statConf[k]=r.slots?Math.round(r.coveredSlots/r.slots*100):0;
+    slots+=r.slots;cov+=r.coveredSlots;if(r.coveredSlots>0)coveredScores.push(r.score);
+    r.missing.forEach(function(nm){missing.push({stat:k,name:nm});});});
+  stats.CAP=0;
+  var confidence=slots?Math.round(cov/slots*100):0;
+  var overall=0;if(coveredScores.length){var mean=_mean(coveredScores),mn=Math.min.apply(null,coveredScores);overall=Math.round(0.85*mean+0.15*mn);}
+  overall=Math.max(0,Math.min(100,overall));
+  var tp=Math.round(overall*confidence);   // ability x confidence -> 0..10000
+  var tier=SCORING.tiers[0],ti=0;for(var i=0;i<SCORING.tiers.length;i++){if(overall>=SCORING.tiers[i].ov){tier=SCORING.tiers[i];ti=i;}}
+  var nextTier=SCORING.tiers[ti+1]||null;
+  var pris=null;for(var j=0;j<SCORING.prismatic.length;j++){if(overall>=SCORING.prismatic[j].ov)pris=SCORING.prismatic[j];}
+  return {stats:stats,statConf:statConf,overall:overall,tp:tp,tier:tier,nextTier:nextTier,prismatic:pris,confidence:confidence,missing:missing};}
+
 function computeCard(rate,counts){rate=rate||ratingOf;counts=counts||isVerified;
   var stats={};SCORING.stats.forEach(function(s){stats[s.key]=_statFrom(s.key,rate,counts);});
   if(TREE_SKILL&&stats.SKL!=null)stats.SKL=treeSkillRating(rate);   // Skill sourced from the Development Tree
@@ -2954,7 +2989,9 @@ function computeCard(rate,counts){rate=rate||ratingOf;counts=counts||isVerified;
   var statsPot={},statPending={};SCORING.stats.forEach(function(s){statsPot[s.key]=statScoreAll(s.key);statPending[s.key]=0;});
   if(TREE_SKILL)statsPot.SKL=treeSkillRating(ratingAll);
   SCORING.moves.forEach(function(m){if(TESTS[m.id]!=null&&!isVerified(m.id)&&statPending[m.stat]!=null)statPending[m.stat]++;});
-  return {stats:stats,statsPot:statsPot,statPending:statPending,overall:overall,tp:tp,bonusTP:bonusTP,bonusUnlock:bonusUnlock,bonusStat:bonusStat,tier:tier,nextTier:nextTier,prismatic:pris,entered:entered,verified:verified,pending:pending};}
+  var _v2=null;
+  if(typeof RATING_V2!=='undefined'&&RATING_V2){_v2=computeV2(rate,counts);stats=_v2.stats;overall=_v2.overall;tp=_v2.tp;tier=_v2.tier;nextTier=_v2.nextTier;pris=_v2.prismatic;}
+  return {stats:stats,statsPot:statsPot,statPending:statPending,overall:overall,tp:tp,bonusTP:bonusTP,bonusUnlock:bonusUnlock,bonusStat:bonusStat,tier:tier,nextTier:nextTier,prismatic:pris,entered:entered,verified:verified,pending:pending,confidence:_v2?_v2.confidence:null,statConf:_v2?_v2.statConf:null,missing:_v2?_v2.missing:null};}
 function computeLegacyCard(){return computeCard(ratingBest,function(id){return BEST[id]!=null;});}   // best-ever card (display only)
 function hasLegacy(){for(var k in BEST){if(BEST[k]!=null)return true;}return false;}
 /* ===== premium card helpers ===== */
@@ -3546,7 +3583,7 @@ function athleteCardHTML(opts){opts=opts||{};
     var clsName=(resolveCardTitle(cur)||'').toUpperCase();
     var verified=(!isLeg&&cc.verified>0);
     var tagline=cardTagline(ccD.stats);
-    var nextGap=ccD.nextTier?(ccD.nextTier.tp-ccD.tp):0;
+    var nextGap=ccD.nextTier?((typeof RATING_V2!=='undefined'&&RATING_V2)?(ccD.nextTier.ov-ccD.overall):(ccD.nextTier.tp-ccD.tp)):0;
     var heroImg=athletePhoto
       ?('<img class="pc-cut" id="acphImg" src="'+athletePhoto+'" alt="" style="object-position:center '+athletePhotoY+'%" draggable="false"><button class="pc-editph" onclick="event.stopPropagation();pickPhoto()" title="Change photo">✎</button>')
       :('<div class="pc-nophoto"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="74" r="38" fill="rgba(255,255,255,.12)"/><path d="M34 200 C34 134 64 106 100 106 C136 106 166 134 166 200 Z" fill="rgba(255,255,255,.12)"/></svg><span class="pc-addph">＋ add photo</span></div>');
@@ -3571,11 +3608,11 @@ function athleteCardHTML(opts){opts=opts||{};
       +'<div class="pc2-bot">'
         +'<div class="pc2-pw"><span class="pc2-pw-l">Total Power</span><span class="pc2-pw-v">'+tpFmt+'</span>'
           +(ccD.nextTier?'<span class="pc2-togold">'+nextGap+' to '+esc(ccD.nextTier.name)+'</span>':'<span class="pc2-togold">Top tier</span>')
-          +'<div class="pc2-season">Season 01</div>'
+          +'<div class="pc2-season">Season 01'+((typeof RATING_V2!=='undefined'&&RATING_V2&&cc.confidence!=null&&!isLeg)?' &middot; <b>'+cc.confidence+'%</b> confidence':'')+'</div>'
           +'<div class="pc2-form pc2-form-'+fst.k+'">Form <b>'+fst.t+'</b>'+(fst.flame?' <span class="pc2-flame"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" style="vertical-align:-1px"><path d="M12 2c1 3-1 4-2 6s0 4 2 4 3-2 2-5c2 1 4 4 4 7a6 6 0 0 1-12 0c0-4 4-6 6-12z"/></svg></span>':'')+'</div></div>'
         +'<div class="pc2-stats">'+statCells+'</div>'
       +'</div>'
-      +(isLeg?'<div class="pc-note">Legacy — your best-ever verified scores. Display only; your ranked card stays on Form.</div>':(cc.pending>0?'<div class="pc-note">'+cc.pending+' score'+(cc.pending===1?'':'s')+' awaiting coach verification — your rating updates once a coach verifies.</div>':''))
+      +(isLeg?'<div class="pc-note">Legacy — your best-ever verified scores. Display only; your ranked card stays on Form.</div>':((typeof RATING_V2!=='undefined'&&RATING_V2&&cc.confidence!=null&&cc.confidence<100&&cc.missing&&cc.missing.length)?'<div class="pc-note">Rating confidence '+cc.confidence+'% — complete '+esc(cc.missing.slice(0,2).map(function(x){return x.name+' ('+x.stat+')';}).join(', '))+' to sharpen it.</div>':(cc.pending>0?'<div class="pc-note">'+cc.pending+' score'+(cc.pending===1?'':'s')+' awaiting coach verification — your rating updates once a coach verifies.</div>':'')))
       +'</div></div>';
   } else {
     var emptyStats=PC_STATS.map(function(k){var m=STAT_META[k]||{};
