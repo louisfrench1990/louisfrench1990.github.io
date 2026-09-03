@@ -2163,12 +2163,14 @@ function buildXPHTML(){var xi=xpInfo();var rows=xpBreakdown();var got=rows.filte
 window.openXP=function(){var m=document.getElementById('xpMask');if(!m)return;xpSync();m.querySelector('.xpbody').innerHTML=buildXPHTML();m.classList.add('on');};
 window.closeXP=function(){var m=document.getElementById('xpMask');if(m)m.classList.remove('on');};
 function buildTiersHTML(){var cc=computeCard();var curIdx=SCORING.tiers.indexOf(cc.tier);
+  var v2=(typeof RATING_V2!=='undefined'&&RATING_V2);
   var rows=SCORING.tiers.map(function(t,i){var isCur=i===curIdx;
-    var range=(i<SCORING.tiers.length-1)?(t.tp.toLocaleString()+'–'+(SCORING.tiers[i+1].tp-1).toLocaleString()):(t.tp.toLocaleString()+'+');
-    return '<div class="tr-row'+(isCur?' cur':'')+'"><span class="tr-dot" style="background:'+tierColor(t.key)+'"></span><span class="tr-nm">'+esc(t.name)+'</span><span class="tr-tp">'+range+' TP</span>'+(isCur?'<span class="tr-you">YOU</span>':'')+'</div>';}).join('');
-  var next=cc.nextTier?('You\'re <b>'+esc(cc.tier.name)+'</b> with <b>'+Math.round(cc.tp).toLocaleString()+'</b> Total Power — <b>'+(cc.nextTier.tp-Math.round(cc.tp)).toLocaleString()+'</b> to reach <b>'+esc(cc.nextTier.name)+'</b>.'):('You\'re at the top tier — <b>'+esc(cc.tier.name)+'</b>. Respect.');
-  var bonusLine=(cc.bonusTP>0)?('<p class="tr-bonus">Includes <b>+'+cc.bonusTP.toLocaleString()+'</b> breadth bonus — <b>+'+cc.bonusUnlock+'</b> from class unlocks and <b>+'+cc.bonusStat+'</b> from your five stat bars. Progressing further into your trees pushes you up.</p>'):'';
-  return '<p class="tr-intro">Your five stats each score <b>0–100</b> from your coach-verified tests. They add up into your <b>Total Power</b> — how strong you are across every test, not just your best few. Total Power sets your <b>tier colour</b>, from White up to Mythic.</p>'
+    var range=v2?((i<SCORING.tiers.length-1)?(t.ov+'–'+(SCORING.tiers[i+1].ov-1)):(t.ov+'+')):((i<SCORING.tiers.length-1)?(t.tp.toLocaleString()+'–'+(SCORING.tiers[i+1].tp-1).toLocaleString()):(t.tp.toLocaleString()+'+'));
+    return '<div class="tr-row'+(isCur?' cur':'')+'"><span class="tr-dot" style="background:'+tierColor(t.key)+'"></span><span class="tr-nm">'+esc(t.name)+'</span><span class="tr-tp">'+range+(v2?' OVR':' TP')+'</span>'+(isCur?'<span class="tr-you">YOU</span>':'')+'</div>';}).join('');
+  var next=cc.nextTier?(v2?('You\'re <b>'+esc(cc.tier.name)+'</b> at <b>'+cc.overall+'</b> Overall — <b>'+(cc.nextTier.ov-cc.overall)+'</b> to reach <b>'+esc(cc.nextTier.name)+'</b>.'):('You\'re <b>'+esc(cc.tier.name)+'</b> with <b>'+Math.round(cc.tp).toLocaleString()+'</b> Total Power — <b>'+(cc.nextTier.tp-Math.round(cc.tp)).toLocaleString()+'</b> to reach <b>'+esc(cc.nextTier.name)+'</b>.')):('You\'re at the top tier — <b>'+esc(cc.tier.name)+'</b>. Respect.');
+  var bonusLine=(!v2&&cc.bonusTP>0)?('<p class="tr-bonus">Includes <b>+'+cc.bonusTP.toLocaleString()+'</b> breadth bonus — <b>+'+cc.bonusUnlock+'</b> from class unlocks and <b>+'+cc.bonusStat+'</b> from your five stat bars. Progressing further into your trees pushes you up.</p>'):'';
+  var intro=v2?('<p class="tr-intro">Your five stats each score <b>0–100</b> from your coach-verified tests and Skill Tree. They combine into your <b>Overall</b> — with balance rewarded — which sets your <b>tier colour</b>, White up to Mythic. <b>Total Power</b> is your ability scaled by how much you\'ve proven, so it climbs as your <b>Rating Confidence</b> rises.</p>'):('<p class="tr-intro">Your five stats each score <b>0–100</b> from your coach-verified tests. They add up into your <b>Total Power</b> — how strong you are across every test, not just your best few. Total Power sets your <b>tier colour</b>, from White up to Mythic.</p>');
+  return intro
     +'<p class="tr-next">'+next+'</p>'+bonusLine
     +'<div class="tr-ladder">'+rows+'</div>'
     +'<p class="tr-foot">Real performance stays real — only coach-verified scores move your tier.</p>';}
@@ -3313,7 +3315,7 @@ function pulseHTML(){var cc=computeCard();if(cc.entered===0)return '';snapshotRa
   if(cc.pending>0)items.push({t:'pend',ic:ICO.clock,tx:'<b>'+cc.pending+'</b> score'+(cc.pending===1?'':'s')+' waiting for coach verification'});
   var strk=curStreak();if(strk>=2)items.push({t:'streak',ic:ICO.history,tx:'<b>'+strk+'-day</b> training streak — keep it alive'});
   var stx=staleTest();if(stx)items.push({t:'stale',ic:ICO.clock,tx:'Your <b>'+esc(stx.name)+'</b> score is ageing ('+stx.days+'d) — retest to keep it sharp'});
-  if(cc.nextTier){var gap=cc.nextTier.tp-cc.tp;if(gap<=250)items.push({t:'tier',ic:ICO.star,tx:'<b>'+gap+'</b> Total Power from <b>'+esc(cc.nextTier.name)+'</b> tier'});}
+  if(cc.nextTier){var _v2t=(typeof RATING_V2!=='undefined'&&RATING_V2);var gap=_v2t?(cc.nextTier.ov-cc.overall):(cc.nextTier.tp-cc.tp);if(gap<=(_v2t?4:250))items.push({t:'tier',ic:ICO.star,tx:'<b>'+gap+'</b> '+(_v2t?'Overall':'Total Power')+' from <b>'+esc(cc.nextTier.name)+'</b> tier'});}
   if(!items.length)return '';
   var rows=items.slice(0,4).map(function(it){return '<div class="pl-row pl-'+it.t+'"><span class="pl-ic">'+(it.ic||'')+'</span><span class="pl-tx">'+it.tx+'</span></div>';}).join('');
   return '<div class="dsec">The Pulse</div><div class="pl-card">'+rows+'</div>';}
