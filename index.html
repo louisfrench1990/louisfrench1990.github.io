@@ -126,6 +126,23 @@
 .dev-rdc{font-size:.75rem;color:var(--di)}
 .dev-sec-l{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--di);margin:22px 0 10px}
 .dev-path{display:flex;flex-direction:column;margin-left:11px}
+.cn-status{display:flex;align-items:center;gap:10px;margin:6px 0 2px}
+.cn-ach{color:var(--acc2);font-weight:800;font-size:14px}
+.cn-na{color:var(--dim);font-weight:700;font-size:14px}
+.cn-lvl{font-family:var(--disp);font-size:1.15rem;letter-spacing:.03em;color:var(--txt)}
+.cn-feed{font-size:.72rem;color:var(--di);font-weight:600;margin:0 0 4px}
+.cn-caps{margin:2px 0 4px}
+.cn-cap{display:flex;align-items:center;gap:10px;margin:7px 0}
+.cn-cap-nm{width:92px;flex:0 0 auto;font-size:12.5px;font-weight:600;color:var(--dim)}
+.cn-cap-nm.cn-lim{color:var(--acc)}
+.cn-bar{flex:1;height:8px;background:var(--s2);border-radius:4px;overflow:hidden}
+.cn-bar i{display:block;height:100%;background:var(--mag);border-radius:4px}
+.cn-cap-nm.cn-lim ~ .cn-bar i{background:var(--acc)}
+.cn-limtag{flex:0 0 auto;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--acc)}
+.cn-metmk{flex:0 0 auto;color:var(--acc2);display:inline-flex;align-items:center}
+.cn-lgtag{font-size:10px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--di);border:1px solid var(--line);border-radius:6px;padding:1px 5px;margin-left:4px}
+.cn-train{background:rgba(255,194,71,.08);border:1px solid rgba(255,194,71,.35);border-radius:12px;padding:11px 13px;margin-top:12px;font-size:13px;color:var(--txt)}
+.cn-train-l{display:block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--acc);margin-bottom:3px}
 .dev-best{display:flex;gap:9px;align-items:stretch}
 .dev-bestin{flex:1;min-width:0;min-height:48px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--s2);color:var(--txt);font-family:var(--ui);font-weight:700;font-size:16px;padding:0 14px}
 .dev-bestin::placeholder{color:var(--di);font-weight:600}
@@ -2692,12 +2709,123 @@ function renderDevSkill(id){var el=document.getElementById('devInner');if(!el)re
    +'<div class="dev-sec-l">Your pathway</div><div class="dev-path">'+path+'</div>'
    +bestBox
    +(markBtn?'<div class="ss-sticky">'+markBtn+'</div>':'');}
-window.openDev=function(){var m=document.getElementById('devMask');if(!m){m=document.createElement('div');m.id='devMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="devInner"></div>';document.body.appendChild(m);}renderDev();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
+window.openDev=function(){var m=document.getElementById('devMask');if(!m){m=document.createElement('div');m.id='devMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="devInner"></div>';document.body.appendChild(m);}cap2List();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.closeDev=function(){var m=document.getElementById('devMask');if(m)m.style.display='none';};
-window.openDevSkill=function(id){var m=document.getElementById('devMask');if(m){renderDevSkill(id);m.style.display='block';try{window.scrollTo(0,0);}catch(e){}}};
+window.openDevSkill=function(id){var m=document.getElementById('devMask');if(m){cap2Skill(id);m.style.display='block';try{window.scrollTo(0,0);}catch(e){}}};
 window.openDevFamily=window.openDevSkill;
-window.devBackToList=function(){renderDev();try{window.scrollTo(0,0);}catch(e){}};
-window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual'};devSave();renderDevSkill(sid);};
+
+/* ===== Skill Tree — capability presentation over the tree data (nav groups, feeds label, readiness/limiter) ===== */
+var CAP_NAV={'s.strict-pullup':'Bar & Rings','s.c2b':'Bar & Rings','s.ttb':'Bar & Rings','s.bmu':'Bar & Rings','s.rmu':'Bar & Rings','s.rope-climb':'Bar & Rings','s.handstand':'Hand Balance','s.strict-hspu':'Hand Balance','s.hsw':'Hand Balance','s.lsit':'Core & Levers','s.front-lever':'Core & Levers','s.pistol':'Lower Body','s.du':'Coordination'};
+var CAP_NAVGROUPS=['Bar & Rings','Hand Balance','Core & Levers','Lower Body','Coordination'];
+var CAP_FEEDS={'s.strict-pullup':'Skill · Pulling Gymnastics','s.c2b':'Skill · Pulling Gymnastics','s.ttb':'Skill · Pulling Gymnastics','s.bmu':'Skill · Pulling Gymnastics','s.rmu':'Skill · Pulling Gymnastics','s.rope-climb':'Skill · Coordination','s.handstand':'Skill · Inversion','s.strict-hspu':'Skill · Inversion','s.hsw':'Skill · Inversion','s.lsit':'Skill · Static / Core','s.front-lever':'Skill · Static / Core','s.pistol':'Skill · Coordination','s.du':'Skill · Coordination'};
+function cap2List(){var el=document.getElementById('devInner');if(!el)return;
+  var body=CAP_NAVGROUPS.map(function(g){var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===g;});if(!sks.length)return '';
+    var cards=sks.map(function(sk){var st=devSkillState(sk);var pct=Math.round(st.done/st.total*100);
+      return '<button class="dev-fam'+(st.mastered?' mastered':'')+'" onclick="openDevSkill(&#39;'+sk.id+'&#39;)"><span class="dev-fam-top"><span class="dev-fam-nm">'+esc(sk.name)+'</span><span class="dev-lvl">'+(st.mastered?'&#9733; ':'')+esc(st.level)+'</span></span><span class="dev-bar"><i style="width:'+pct+'%"></i></span><span class="dev-fam-sub">'+st.done+' of '+st.total+' milestones</span></button>';}).join('');
+    return '<div class="dev-group">'+g+'</div><div class="dev-grid">'+cards+'</div>';}).join('');
+  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeDev()">&lsaquo;</button><span class="ss-topttl">Skill Tree</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
+   +'<div class="ss-h">Skill Tree</div>'+body;}
+function cap2Skill(id){var el=document.getElementById('devInner');if(!el)return;var sk=devSkill(id);if(!sk){cap2List();return;}
+  var st=devSkillState(sk);var rd=devReady(sk);
+  var starIx=-1;sk.stages.forEach(function(s,i){if(s.star)starIx=i;});
+  var achieved=(starIx>=0&&(st.done-1)>=starIx);
+  var capsHTML='';
+  if(rd.total){var items=rd.items.map(function(it){var frac=it.met?1:((it.cur!=null&&it.target)?Math.max(0.12,Math.min(0.95,it.cur/it.target)):0.25);return {name:it.name,frac:frac,met:it.met};});
+    var lim=null;items.forEach(function(x){if(!x.met&&(lim===null||x.frac<lim.frac))lim=x;});
+    capsHTML='<div class="dev-sec-l">Readiness</div><div class="cn-caps">'+items.map(function(x){var isL=lim&&x.name===lim.name;
+      return '<div class="cn-cap"><span class="cn-cap-nm'+(isL?' cn-lim':'')+'">'+esc(x.name)+'</span>'+capBar(x.frac)+(isL?'<span class="cn-limtag">limiter</span>':(x.met?'<span class="cn-metmk">'+devTick()+'</span>':''))+'</div>';}).join('')+'</div>';}
+  var next=st.next;
+  var nextHTML=next?('<div class="dev-obj"><div class="dev-objl">Next milestone</div><div class="dev-objt">'+esc(next.name)+' &mdash; '+esc(next.std)+'</div></div>'):('<div class="dev-obj"><div class="dev-objt">Mastered &mdash; every milestone complete.</div></div>');
+  var pathHTML=sk.stages.map(function(n,i){var stt=st.ach[i]?'done':(i===st.cur?'now':'up');
+    var dot=st.ach[i]?'<span class="dev-dot done">'+devTick()+'</span>':(i===st.cur?'<span class="dev-dot now"></span>':'<span class="dev-dot"></span>');
+    var starmk=n.star?' <span class="dev-star">&#9733;</span>':'';
+    return '<div class="dev-node '+stt+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';}).join('');
+  var markBtn=(next&&!next.seed)?'<button class="btn-primary" onclick="devMarkNext(&#39;'+sk.id+'&#39;)">Mark &ldquo;'+esc(next.name)+'&rdquo; done</button>':'';
+  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="devBackToList()">&lsaquo;</button><span class="ss-topttl">'+esc(sk.name)+'</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
+   +'<div class="ss-h">'+esc(sk.name)+'</div>'
+   +'<div class="cn-status">'+(achieved?'<span class="cn-ach">&#9733; Achieved</span>':'<span class="cn-na">In progress</span>')+'<span class="cn-lvl">'+esc(st.level)+'</span></div>'
+   +'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'
+   +capsHTML+nextHTML
+   +'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'
+   +(markBtn?'<div class="ss-sticky">'+markBtn+'</div>':'');}
+window.devBackToList=function(){cap2List();try{window.scrollTo(0,0);}catch(e){}};
+/* ===== CAPABILITY-NETWORK slice (v1, flagged/preview — non-destructive) ============================
+   Reference implementation of the four-layer Development model (Capability -> Skill -> Milestone -> Exercise).
+   Reachable only via window.capSlice('bar-muscle-up'); NOT wired into nav. Card-feed points at the Skill
+   domain aggregation (Skill sourced from the Development Tree), never at the card directly. ============ */
+var CAPNET={
+ 'bar-muscle-up':{name:'Bar Muscle-Up',nav:'Bar & Rings',gk:'barmu',feeds:'Skill · Pulling Gymnastics',
+   caps:[['Pull',0.9],['High pull',0.8],['Support',0.7],['Transition',0.5],['Swing',0.85]],   // illustrative until the capability layer is built
+   milestones:[
+     {id:'k.assist',name:'Band / jump BMU',lvl:'Developing',gcap:0},
+     {id:'k.star',name:'Bar Muscle-Up',lvl:'Achievement',star:true,gcap:1},
+     {id:'k.3',name:'3 Unbroken',lvl:'Competent',gcap:3},
+     {id:'k.5',name:'5 Unbroken',lvl:'Proficient',gcap:5},
+     {id:'k.10',name:'10 Unbroken',lvl:'Advanced',gcap:10,legacy:true},
+     {id:'k.20',name:'20 Unbroken',lvl:'Feat',gcap:20,legacy:true}
+   ],
+   train:{'Transition':'Box / jumping BMU transitions — 5×3 slow','High pull':'High pulls to lower chest — 4×3','Support':'Straight-bar dips — 3×5 deep','Pull':'Weighted / banded pull-ups — 4×5','Swing':'Kip-swing shape drills — 3×6'}
+ },
+ 'front-lever':{name:'Front Lever',nav:'Core & Levers',prog:'frontlever',feeds:'Skill · Static / Core',variantKind:'leverage',
+   caps:[['Straight-arm pull',0.6],['Scap control',0.75],['Body-line',0.5],['Compression',0.7]],
+   milestones:[
+     {id:'fl.tuck10',name:'Tuck Lever 10s',lvl:'Foundation',variant:'tuck',min:10},
+     {id:'fl.tuck30',name:'Tuck Lever 30s',lvl:'Developing',variant:'tuck',min:30},
+     {id:'fl.strad5',name:'Straddle 5s',lvl:'Competent',variant:'straddle',min:5},
+     {id:'fl.strad15',name:'Straddle 15s',lvl:'Proficient',variant:'straddle',min:15},
+     {id:'fl.full3',name:'Full Front Lever 3s',lvl:'Achievement',star:true,variant:'full',min:3},
+     {id:'fl.full10',name:'Full Front Lever 10s',lvl:'Mastery',variant:'full',min:10,legacy:true}
+   ],
+   train:{'Body-line':'Front-lever raises / eccentrics — 4×3','Straight-arm pull':'Band straddle holds — 5×8s','Compression':'Hanging leg raises — 3×8','Scap control':'Scap pull-ups — 3×8'}
+ },
+ 'handstand':{name:'Handstand',nav:'Hand Balance',prog:'hshold',feeds:'Skill · Inversion',variantKind:'assistance',
+   caps:[['Overhead line',0.7],['Support',0.8],['Balance',0.45],['Shoulder mobility',0.6]],
+   milestones:[
+     {id:'hs.wall30',name:'Chest-to-Wall 30s',lvl:'Foundation',variant:'wall',min:30},
+     {id:'hs.wall60',name:'Chest-to-Wall 60s',lvl:'Developing',variant:'wall',min:60},
+     {id:'hs.free5',name:'Freestanding 5s',lvl:'Achievement',star:true,variant:'free',min:5},
+     {id:'hs.free15',name:'Freestanding 15s',lvl:'Competent',variant:'free',min:15},
+     {id:'hs.free30',name:'Freestanding 30s',lvl:'Proficient',variant:'free',min:30},
+     {id:'hs.free60',name:'Freestanding 60s',lvl:'Mastery',variant:'free',min:60,legacy:true}
+   ],
+   train:{'Balance':'Wall floats / heel pulls — 5×3 attempts','Shoulder mobility':'Overhead line drills — daily','Overhead line':'Chest-to-wall holds — 3×30s','Support':'Wall walks — 4×1'}
+ }
+};
+function capBar(pct){return '<span class="cn-bar"><i style="width:'+Math.round(pct*100)+'%"></i></span>';}
+// progression-source achievement: best (variant index, seconds) from the athlete's test data vs a milestone {variant,min}
+function capProgState(progId){var t=(typeof TESTS!=='undefined'&&TESTS[progId]!=null)?TESTS[progId]:0;
+  var vk=(typeof PROG!=='undefined'&&PROG[progId])?PROG[progId]:null;var mv=(typeof scMove==='function')?scMove(progId):null;
+  var order=(mv&&mv.variants)?mv.variants.map(function(x){return x.key;}):[];return {vi:vk?order.indexOf(vk):-1,t:t,order:order};}
+function capMet(sk,m){
+  if(sk.gk){var v=(typeof gcap==='function')?gcap(sk.gk):0;return v>=(m.gcap||0);}
+  if(sk.prog){var ps=capProgState(sk.prog);var mi=ps.order.indexOf(m.variant);if(mi<0)return false;if(ps.vi>mi)return true;if(ps.vi===mi)return ps.t>=(m.min||0);return false;}
+  return false;}
+function renderCapSkill(id){var el=document.getElementById('capInner');if(!el)return;var sk=CAPNET[id];if(!sk){el.innerHTML='';return;}
+  var ach=sk.milestones.map(function(m){return capMet(sk,m);});
+  var last=-1;ach.forEach(function(a,i){if(a)last=i;});
+  var cur=sk.milestones[last+1]||null;
+  var starIx=-1;sk.milestones.forEach(function(m,i){if(m.star)starIx=i;});
+  var achieved=(starIx>=0&&last>=starIx);   // the ⭐ Achievement milestone is met
+  var lvl=last>=0?sk.milestones[last].lvl:'Not started';
+  // limiter = lowest capability
+  var lim=sk.caps.slice().sort(function(a,b){return a[1]-b[1];})[0];
+  var capsHTML=sk.caps.map(function(c){var isLim=c[0]===lim[0];return '<div class="cn-cap"><span class="cn-cap-nm'+(isLim?' cn-lim':'')+'">'+esc(c[0])+'</span>'+capBar(c[1])+(isLim?'<span class="cn-limtag">limiter</span>':'')+'</div>';}).join('');
+  var pathHTML=sk.milestones.map(function(m,i){var st=ach[i]?'done':(cur&&m.id===cur.id?'now':'up');
+    var dot=ach[i]?'<span class="dev-dot done">'+devTick()+'</span>':(st==='now'?'<span class="dev-dot now"></span>':'<span class="dev-dot"></span>');
+    var star=m.star?' <span class="dev-star">★</span>':'';var lg=m.legacy?' <span class="cn-lgtag">Legacy</span>':'';
+    return '<div class="dev-node '+st+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(m.name)+star+lg+'</span><span class="dev-nlv">'+esc(m.lvl)+'</span></span></div>';}).join('');
+  var trainTip=sk.train[lim[0]]||'';
+  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="capClose()">‹</button><span class="ss-topttl">'+esc(sk.name)+'</span><button class="ss-close" onclick="capClose()">Close</button></div>'
+   +'<div class="ss-h">'+esc(sk.name)+'</div>'
+   +'<div class="cn-status">'+(achieved?'<span class="cn-ach">★ Achieved</span>':'<span class="cn-na">In progress</span>')+'<span class="cn-lvl">'+esc(lvl)+'</span></div>'
+   +'<div class="cn-feed">Feeds: '+esc(sk.feeds)+'</div>'
+   +'<div class="dev-sec-l">Capabilities</div><div class="cn-caps">'+capsHTML+'</div>'
+   +(cur?('<div class="dev-obj"><div class="dev-objl">Next milestone</div><div class="dev-objt">'+esc(cur.name)+'</div></div>'):'')
+   +(trainTip?('<div class="cn-train"><span class="cn-train-l">Train this</span> '+esc(trainTip)+'</div>'):'')
+   +'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>';}
+window.capSlice=function(id){var m=document.getElementById('capMask');if(!m){m=document.createElement('div');m.id='capMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="capInner"></div>';document.body.appendChild(m);}renderCapSkill(id||'bar-muscle-up');m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
+window.capClose=function(){var m=document.getElementById('capMask');if(m)m.style.display='none';};
+window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual'};devSave();cap2Skill(sid);};
 window.devLogBest=function(sid,key){var el=document.getElementById('devBestIn');if(!el)return;var v=parseInt(el.value,10);if(!v||v<1){showToast('Enter your best rep count');return;}var r=devIngest(key,v,{source:'best'});renderDevSkill(sid);try{window.scrollTo(0,0);}catch(e){}if(!(r&&r.crossed.length))showToast('Saved &mdash; best updated');};
 function progressChooserHTML(){return '<div class="dsec">Progress</div>'
   +'<button class="dev-launch" onclick="openSkillTree()"><span class="dev-ll"><span class="dev-lk">Class Ladder</span></span><span class="ss-chev">&rsaquo;</span></button>'
@@ -2780,8 +2908,27 @@ function ratingBest(id){var mv=scMove(id);if(!mv||BEST[id]==null)return 0;return
 // POWER CURVE: each rating earns rating × powerMult(rating) toward Total Power. Floor x1 (a 30 is worth 30); smooth rising kicker above 50. Replaces the class-depth multiplier. Editable anchors in SCORING.tp.powerCurve.
 var _PC=(SCORING.tp&&SCORING.tp.powerCurve)||[[50,1.1],[70,1.5],[85,2.25],[100,3]];
 function powerMult(r){if(r<_PC[0][0])return 1;for(var i=1;i<_PC.length;i++){if(r<=_PC[i][0]){var x0=_PC[i-1][0],y0=_PC[i-1][1],x1=_PC[i][0],y1=_PC[i][1];return y0+(r-x0)/((x1-x0)||1)*(y1-y0);}}return _PC[_PC.length-1][1];}
+var TREE_SKILL=true;   // Skill rating is sourced from the Development Tree domains (spec v2). Flip false to revert to the 12-test average.
+// Five Skill domains; each member is [treeSkillId, ratedTestId|null]. Domain rating = your BEST demonstrated member
+// (depth beats collecting); Skill = mean of the five domains. Rated members use the VERIFIED card score ("real
+// performance stays real"); tree-only members (pistol, rope, strict-HSPU) fall back to their milestone level.
+var SKILL_DOMAINS=[
+ {name:'Pulling Gymnastics',members:[['s.strict-pullup','strictpullups'],['s.c2b','c2b1min'],['s.ttb','t2b'],['s.bmu','barmuscleup'],['s.rmu','ringmu']]},
+ {name:'Inversion',members:[['s.handstand','hshold'],['s.strict-hspu',null],['s.hsw','hswalk']]},
+ {name:'Static / Core',members:[['s.lsit','lsit'],['s.front-lever','frontlever']]},
+ {name:'Coordination',members:[['s.du','doubleunders'],['s.rope-climb',null],['s.pistol',null]]},
+ {name:'Technical WL',members:[[null,'snatch']]}
+];
+var LEVELSCORE={Foundation:15,Developing:30,Achievement:45,Competent:58,Proficient:70,Advanced:82,Mastery:95};
+function treeLevelScore(skid){var sk=devSkill(skid);if(!sk)return 0;var st=devSkillState(sk);if(st.done<=0)return 0;
+  var lv=(st.done-1<sk.stages.length)?sk.stages[st.done-1].level:'Mastery';return LEVELSCORE[lv]||0;}
+function skillMemberScore(m,rate){if(m[1])return rate(m[1])||0;return treeLevelScore(m[0]);}
+function treeDomainRatings(rate){rate=rate||ratingOf;return SKILL_DOMAINS.map(function(d){var best=0;
+  d.members.forEach(function(m){var s=skillMemberScore(m,rate);if(s>best)best=s;});return {name:d.name,score:best};});}
+function treeSkillRating(rate){var doms=treeDomainRatings(rate);var vals=doms.map(function(d){return d.score;});return Math.round(_mean(vals));}
 function computeCard(rate,counts){rate=rate||ratingOf;counts=counts||isVerified;
   var stats={};SCORING.stats.forEach(function(s){stats[s.key]=_statFrom(s.key,rate,counts);});
+  if(TREE_SKILL&&stats.SKL!=null)stats.SKL=treeSkillRating(rate);   // Skill sourced from the Development Tree
   // TOTAL POWER = sum over tests of (points × that tree's depth multiplier). Depth rewards specialists; breadth (all 40
   // tests) is the only route to the top tiers, because one tree is just ~7 tests. Louis 2026-08-16.
   var raw=0;SCORING.moves.forEach(function(m){var r=rate(m.id);raw+=r*powerMult(r);});raw=Math.min(SCORING.tp.rawCap,raw);
@@ -2805,6 +2952,7 @@ function computeCard(rate,counts){rate=rate||ratingOf;counts=counts||isVerified;
   var pris=null;for(var j=0;j<SCORING.prismatic.length;j++)if(overall>=SCORING.prismatic[j].ov)pris=SCORING.prismatic[j];
   var entered=0,verified=0,pending=0;SCORING.moves.forEach(function(m){if(TESTS[m.id]!=null){entered++;if(isVerified(m.id))verified++;else pending++;}});
   var statsPot={},statPending={};SCORING.stats.forEach(function(s){statsPot[s.key]=statScoreAll(s.key);statPending[s.key]=0;});
+  if(TREE_SKILL)statsPot.SKL=treeSkillRating(ratingAll);
   SCORING.moves.forEach(function(m){if(TESTS[m.id]!=null&&!isVerified(m.id)&&statPending[m.stat]!=null)statPending[m.stat]++;});
   return {stats:stats,statsPot:statsPot,statPending:statPending,overall:overall,tp:tp,bonusTP:bonusTP,bonusUnlock:bonusUnlock,bonusStat:bonusStat,tier:tier,nextTier:nextTier,prismatic:pris,entered:entered,verified:verified,pending:pending};}
 function computeLegacyCard(){return computeCard(ratingBest,function(id){return BEST[id]!=null;});}   // best-ever card (display only)
