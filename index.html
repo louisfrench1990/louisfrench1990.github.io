@@ -2133,14 +2133,13 @@ window.saveRM=function(){
   oneRM=buildOneRM();closeRM();render();var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();};
 // WOD-scaling numbers — self-entered maxes/capacities that scale workouts (never the card). Moved out of My details into
 // Log skill development (2026-09-03), so all numbers live behind the two log buttons.
-function wodScalingHTML(){
+function wodScalingInner(){
   var lifts=WODLIFTS.map(function(l){var tv=testRM(l[0]);var ph=tv>0?('from your test: '+tv+' kg'):'kg';return '<label class="rmrow"><span>'+l[1]+'</span><input type="number" inputmode="decimal" min="0" id="rm-'+l[0]+'" value="'+(liftExtra[l[0]]||'')+'" placeholder="'+ph+'"></label>';}).join('');
   var gym=GYMSKILLS.map(function(g){var tid=GYM2TEST[g[0]];var tv=(tid&&typeof TESTS!=='undefined'&&TESTS[tid]>0)?TESTS[tid]:0;var ph=tv>0?('from your test: '+tv):'reps';return '<label class="rmrow"><span>'+g[1]+'</span><input type="number" inputmode="numeric" min="0" id="gymcap-'+g[0]+'" value="'+(gymSkills[g[0]]||'')+'" placeholder="'+ph+'"></label>';}).join('');
-  return '<details class="ts-feat"><summary><span class="ts-featnm">Numbers for WOD scaling</span><span class="ts-featsub">self-entered \u00b7 scales your workouts, never your card</span><span class="ts-chev">\u203a</span></summary>'
-    +'<p class="rmnote">Your working maxes and gymnastics capacity so the app scales WOD loads and movements to you \u2014 even for lifts you haven\u2019t tested yet. Blank falls back to your verified test score. <b>WOD scaling only</b> \u2014 never your card or rating.</p>'
+  return '<p class="rmnote">Your working maxes and gymnastics capacity so the app scales WOD loads and movements to you \u2014 even for lifts you haven\u2019t tested yet. Blank falls back to your verified test score. <b>Scales your workouts only</b> \u2014 never your card or rating, and no verification needed.</p>'
     +'<div class="rmhdr">Barbell 1RMs</div>'+lifts
     +'<div class="rmhdr">Gymnastics capacity</div>'+gym
-    +'<div class="ts-actions"><button class="minibtn2" onclick="saveWodScaling()">Save scaling numbers</button></div></details>';
+    +'<div class="ts-actions"><button class="minibtn2" onclick="saveWodScaling()">Save scaling numbers</button></div>';
 }
 window.saveWodScaling=function(){
   WODLIFTS.forEach(function(l){var el=document.getElementById('rm-'+l[0]);if(!el)return;var v=parseFloat(el.value);if(v>0)liftExtra[l[0]]=v;else delete liftExtra[l[0]];});try{localStorage.setItem('unranked-extra',JSON.stringify(liftExtra))}catch(e){}
@@ -2678,6 +2677,60 @@ var DEV_G=[
    {id:'d.dip-10',name:'10 Strict Dips',level:'Proficient',std:'10 reps'},
    {id:'d.dip-15',name:'15 Strict Dips',level:'Advanced',std:'15 reps'},
    {id:'d.weighted-dip',name:'Weighted Dip',level:'Mastery',std:'+20kg (branch)'}
+  ]},
+ {id:'s.squat',name:'Back Squat',group:'Barbell',rated:'backsquat',stages:[{id:'squat.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'backsquat',minScore:20}},{id:'squat.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'backsquat',minScore:35}},{id:'squat.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'backsquat',minScore:50}},{id:'squat.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'backsquat',minScore:65}},{id:'squat.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'backsquat',minScore:80}},{id:'squat.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'backsquat',minScore:92}}]},
+ {id:'s.deadlift',name:'Deadlift',group:'Barbell',rated:'deadlift',stages:[{id:'deadlift.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'deadlift',minScore:20}},{id:'deadlift.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'deadlift',minScore:35}},{id:'deadlift.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'deadlift',minScore:50}},{id:'deadlift.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'deadlift',minScore:65}},{id:'deadlift.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'deadlift',minScore:80}},{id:'deadlift.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'deadlift',minScore:92}}]},
+ {id:'s.bench',name:'Bench Press',group:'Barbell',rated:'bench',stages:[{id:'bench.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'bench',minScore:20}},{id:'bench.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'bench',minScore:35}},{id:'bench.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'bench',minScore:50}},{id:'bench.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'bench',minScore:65}},{id:'bench.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'bench',minScore:80}},{id:'bench.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'bench',minScore:92}}]},
+ {id:'s.press',name:'Strict Press',group:'Barbell',rated:'strictpress',stages:[{id:'press.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'strictpress',minScore:20}},{id:'press.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'strictpress',minScore:35}},{id:'press.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'strictpress',minScore:50}},{id:'press.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'strictpress',minScore:65}},{id:'press.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'strictpress',minScore:80}},{id:'press.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'strictpress',minScore:92}}]},
+ {id:'s.powerclean',name:'Power Clean',group:'Barbell',rated:'powerclean',stages:[{id:'powerclean.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'powerclean',minScore:20}},{id:'powerclean.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'powerclean',minScore:35}},{id:'powerclean.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'powerclean',minScore:50}},{id:'powerclean.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'powerclean',minScore:65}},{id:'powerclean.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'powerclean',minScore:80}},{id:'powerclean.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'powerclean',minScore:92}}]},
+ {id:'s.cleanjerk',name:'Clean & Jerk',group:'Barbell',rated:'cleanjerk',stages:[{id:'cleanjerk.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'cleanjerk',minScore:20}},{id:'cleanjerk.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'cleanjerk',minScore:35}},{id:'cleanjerk.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'cleanjerk',minScore:50}},{id:'cleanjerk.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'cleanjerk',minScore:65}},{id:'cleanjerk.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'cleanjerk',minScore:80}},{id:'cleanjerk.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'cleanjerk',minScore:92}}]},
+ {id:'s.snatch',name:'Snatch',group:'Barbell',rated:'snatch',stages:[{id:'snatch.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'snatch',minScore:20}},{id:'snatch.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'snatch',minScore:35}},{id:'snatch.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'snatch',minScore:50}},{id:'snatch.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'snatch',minScore:65}},{id:'snatch.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'snatch',minScore:80}},{id:'snatch.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'snatch',minScore:92}}]},
+  {id:'s.ring-support',name:'Ring Support & Dips',group:'Rings',rated:null,
+  stages:[
+   {id:'rs.hold10',name:'Ring Support Hold',level:'Foundation',std:'10s locked'},
+   {id:'rs.hold30',name:'Ring Support 30s',level:'Developing',std:'30s stable'},
+   {id:'rs.dip1',name:'Ring Dip',level:'Achievement',std:'1 rep',star:true},
+   {id:'rs.dip5',name:'5 Ring Dips',level:'Competent',std:'5 unbroken'},
+   {id:'rs.dip10',name:'10 Ring Dips',level:'Proficient',std:'10 unbroken'},
+   {id:'rs.rto',name:'RTO Support / Weighted Dip',level:'Advanced',std:'rings-turned-out or +weight'}
+  ]},
+ {id:'s.ring-row',name:'Ring Rows & Pulls',group:'Rings',rated:null,
+  stages:[
+   {id:'rr.row',name:'Ring Row',level:'Foundation',std:'10 controlled'},
+   {id:'rr.feet',name:'Feet-Elevated Ring Row',level:'Developing',std:'8 reps'},
+   {id:'rr.pull1',name:'Ring Pull-Up',level:'Achievement',std:'1 rep',star:true},
+   {id:'rr.fg',name:'False-Grip Hold',level:'Competent',std:'20s false grip'},
+   {id:'rr.fgpull',name:'False-Grip Pull to Sternum',level:'Proficient',std:'3 reps'}
+  ]},
+  {id:'s.strict-bmu',name:'Strict Bar Muscle-Up',group:'Pulling',rated:null,
+  readiness:[
+   {id:'m.strict-pullup-10',name:'10 Strict Pull-Ups',seed:{test:'strictpullups',min:10}},
+   {id:'m.c2b-strict',name:'Strict Chest-to-Bar'}
+  ],
+  stages:[
+   {id:'sbmu.highpull',name:'Strict High Pull to Sternum',level:'Developing',std:'3 slow reps'},
+   {id:'sbmu.neg',name:'Slow BMU Negatives',level:'Developing',std:'3× 5s lower'},
+   {id:'sbmu.star',name:'Strict Bar Muscle-Up',level:'Achievement',std:'1 strict rep',star:true},
+   {id:'sbmu.3',name:'3 Strict BMU',level:'Competent',std:'3 unbroken'},
+   {id:'sbmu.5',name:'5 Strict BMU',level:'Proficient',std:'5 unbroken'}
+  ]},
+ {id:'s.du-cross',name:'Crossovers',group:'Skills',rated:null,
+  readiness:[{id:'d.du-50',name:'50 Double-Unders',seed:{test:'doubleunders',min:50}}],
+  stages:[
+   {id:'x.single',name:'Single-Under Crossover',level:'Foundation',std:'1 crossover'},
+   {id:'x.single5',name:'5 Single Crossovers',level:'Developing',std:'5 unbroken'},
+   {id:'x.du',name:'Double-Under Crossover',level:'Achievement',std:'1 DU crossover',star:true},
+   {id:'x.du5',name:'5 DU Crossovers',level:'Competent',std:'5 unbroken'},
+   {id:'x.du10',name:'10 DU Crossovers',level:'Proficient',std:'10 unbroken'}
+  ]},
+ {id:'s.triple',name:'Triple-Unders',group:'Skills',rated:null,
+  readiness:[{id:'d.du-100',name:'100 Double-Unders',seed:{test:'doubleunders',min:100}}],
+  stages:[
+   {id:'t.high',name:'High, Fast Double-Unders',level:'Developing',std:'fast tempo, high pull'},
+   {id:'t.star',name:'Triple-Under',level:'Achievement',std:'1 triple',star:true},
+   {id:'t.3',name:'3 Triple-Unders',level:'Competent',std:'3 in a set'},
+   {id:'t.5',name:'5 unbroken Triples',level:'Proficient',std:'5 unbroken'},
+   {id:'t.10',name:'10 unbroken Triples',level:'Advanced',std:'10 unbroken'}
   ]}
 ];
 var DEV_GROUPS=['Pulling','Handstand','Core / Lever','Lower','Skills'];
@@ -2685,6 +2738,7 @@ function devSkill(id){for(var i=0;i<DEV_G.length;i++)if(DEV_G[i].id===id)return 
 function devSeedMet(seed){try{if(!seed)return false;
   if(seed.gcap){var c=(typeof gcap==='function')?gcap(seed.gcap):0;return c>0&&c>=(seed.min||1);}   // gymnastic capacity (gym entry OR mapped test) — reps/effort
   var id=seed.test;if(!id)return false;if(typeof isVerified==='function'&&!isVerified(id))return false;var mv=(typeof scMove==='function')?scMove(id):null;
+  if(seed.minScore!=null){return (typeof ratingOf==='function'?ratingOf(id):0)>=seed.minScore;}   // barbell ladders: sex-fair rating threshold
   if(seed.variant){var vars=(mv&&mv.variants)||[];var order={};vars.forEach(function(v,i){order[v.key]=i;});var cur=(typeof PROG!=='undefined')?PROG[id]:null;if(cur==null)cur=(vars[0]&&vars[0].key);if(!(order[cur]!=null&&order[seed.variant]!=null&&order[cur]>=order[seed.variant]))return false;}
   if(seed.min!=null){var perf=(typeof TESTS!=='undefined')?TESTS[id]:null;if(perf==null)return false;return (mv&&mv.dir==='lo')?perf<=seed.min:perf>=seed.min;}
   return true;}catch(e){return false;}}
@@ -2768,7 +2822,7 @@ window.openDevFamily=window.openDevSkill;
 
 /* ===== Skill Tree — capability presentation over the tree data (nav groups, feeds label, readiness/limiter) ===== */
 var CAP_NAV={'s.strict-pullup':'BARS','s.c2b':'BARS','s.ttb':'BARS','s.bmu':'BARS','s.dip':'BARS','s.rmu':'RINGS','s.rope-climb':'RINGS','s.handstand':'HAND BALANCE / INVERSION','s.strict-hspu':'HAND BALANCE / INVERSION','s.hsw':'HAND BALANCE / INVERSION','s.lsit':'CORE','s.front-lever':'CORE','s.pistol':'LOWER BODY','s.du':'COORDINATION'};
-var CAP_NAVGROUPS=['BARS','RINGS','HAND BALANCE / INVERSION','CORE','LOWER BODY','COORDINATION'];
+var CAP_NAVGROUPS=['BARBELL','BARS','RINGS','HAND BALANCE / INVERSION','CORE','LOWER BODY','COORDINATION'];
 var _CIC={bars:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6v12M20 6v12M4 10h16"/></svg>',rings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="8" cy="8.5" r="3.2"/><circle cx="16" cy="8.5" r="3.2"/><path d="M8 11.7v6M16 11.7v6"/></svg>',hand:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="19" r="2"/><path d="M12 16.5V9M12 9L8 3M12 9l4-6"/></svg>',core:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 12h18M7 9v6M17 9v6"/></svg>',lower:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v8l-3 10M10 11l4 1 2 9"/></svg>',coord:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 12c2.5-5 5.5 5 9 0s6.5-5 9 0"/></svg>'};
 var CAP_CATMETA={
  'BARS':{key:'bars',ca:'#ff2d8a',caBg:'rgba(255,45,138,.15)',sub:'Pull-ups · muscle-up · C2B · T2B',ic:_CIC.bars},
@@ -2780,6 +2834,12 @@ var CAP_CATMETA={
 };
 var _devCat=null;var _devOpen={};
 var CAP_FEEDS={'s.strict-pullup':'Skill · Pulling Gymnastics','s.c2b':'Skill · Pulling Gymnastics','s.ttb':'Skill · Pulling Gymnastics','s.bmu':'Skill · Pulling Gymnastics','s.rmu':'Skill · Pulling Gymnastics','s.rope-climb':'Skill · Coordination','s.dip':'Skill · Support','s.handstand':'Skill · Inversion','s.strict-hspu':'Skill · Inversion','s.hsw':'Skill · Inversion','s.lsit':'Skill · Static / Core','s.front-lever':'Skill · Static / Core','s.pistol':'Skill · Coordination','s.du':'Skill · Coordination'};
+_CIC.barbell='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 12h18M6 8v8M9 6v12M15 6v12M18 8v8"/></svg>';
+CAP_CATMETA['BARBELL']={key:'barbell',ca:'#ff5c5c',caBg:'rgba(255,92,92,.15)',sub:'Squat · deadlift · olympic lifts',ic:_CIC.barbell};
+Object.assign(CAP_NAV,{'s.squat':'BARBELL','s.deadlift':'BARBELL','s.bench':'BARBELL','s.press':'BARBELL','s.powerclean':'BARBELL','s.cleanjerk':'BARBELL','s.snatch':'BARBELL','s.ring-support':'RINGS','s.ring-row':'RINGS','s.strict-bmu':'BARS'});
+Object.assign(CAP_FEEDS,{'s.squat':'Rating · Strength','s.deadlift':'Rating · Strength','s.bench':'Rating · Strength','s.press':'Rating · Strength','s.powerclean':'Rating · Power','s.cleanjerk':'Off-card · Olympic lift','s.snatch':'Rating · Skill','s.ring-support':'Skill · Support','s.ring-row':'Skill · Pulling Gymnastics','s.strict-bmu':'Skill · Pulling Gymnastics'});
+Object.assign(CAP_NAV,{'s.du-cross':'COORDINATION','s.triple':'COORDINATION'});
+Object.assign(CAP_FEEDS,{'s.du-cross':'Skill · Coordination','s.triple':'Skill · Coordination'});
 function cap2List(){_devCat=null;var el=document.getElementById('devInner');if(!el)return;
   var tiles=CAP_NAVGROUPS.map(function(g){var meta=CAP_CATMETA[g]||{};var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===g;});
     var mastered=sks.filter(function(sk){return devSkillState(sk).mastered;}).length;
@@ -3655,11 +3715,13 @@ function buildTrainHTML(){
     +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+questCompactHTML()+'<button class="tt-week" onclick="openWeek()"><span class="tt-wk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg></span><span class="tt-wk-l">Week ahead</span><span class="arw">›</span></button></div>';
   var scSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.target+'</span><span class="dc-t"><b>Log score</b><span>the rated tests that build your card</span></span><span class="dc-chev">›</span></summary>';
   var scores='<details class="trn-acc">'+scSum+'<div class="trn-body">'+buildTestsHTML('card')+'</div></details>';
-  var dvSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.tree+'</span><span class="dc-t"><b>Log skill development</b><span>skill tree, WOD scaling &amp; class titles — off your card</span></span><span class="dc-chev">›</span></summary>';
+  var dvSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.tree+'</span><span class="dc-t"><b>Log skill development</b><span>skill-tree tests &amp; class-title challenges — off your card</span></span><span class="dc-chev">›</span></summary>';
   var dev='<details class="trn-acc">'+dvSum+'<div class="trn-body">'+buildTestsHTML('dev')+'</div></details>';
+  var wodSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.gear+'</span><span class="dc-t"><b>Numbers for WOD scaling</b><span>self-entered · scales workouts, never your card</span></span><span class="dc-chev">›</span></summary>';
+  var wod='<details class="trn-acc">'+wodSum+'<div class="trn-body">'+wodScalingInner()+'</div></details>';
   var lgSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.star+'</span><span class="dc-t"><b>Log previous best</b><span>beta — seeds your Legacy card</span></span><span class="dc-chev">›</span></summary>';
   var legacy='<details class="trn-acc">'+lgSum+'<div class="trn-body">'+legacyLogInner()+'</div></details>';
-  return today+'<div class="dsec">Log your training</div>'+scores+dev+legacy;
+  return today+'<div class="dsec">Log your training</div>'+scores+dev+wod+legacy;
 }
 // COMPETE / EXPLORE / FANTASY — locked, coming soon (shows the shape of the full app)
 // Closed beta: descriptions of unreleased features intentionally removed so they don't ship in the client bundle.
@@ -3942,7 +4004,7 @@ function buildTestsHTML(mode){
     var dgroups=groups.map(function(g){return grpBlock(g[0],g[1],isDev,false);}).join('');
     return '<div class="ts-page"><p class="ts-intro">These sharpen your training, scale your WODs and can earn <b>class titles</b> — but they <b>don’t change your card rating</b>. Log anything outside the rated battery here.</p>'
       +dprog+treeLink+'<div class="ts-secl">Off-card tests</div>'+(dgroups||'<p class="rmnote">Nothing to log here yet.</p>')
-      +'<div class="ts-actions"><button class="minibtn2" onclick="saveTests()">Log scores</button><button class="minibtn2 alt" onclick="openVerify()">'+ICO.lock+' Coach verify</button></div>'+wodScalingHTML()+'</div>';
+      +'<div class="ts-actions"><button class="minibtn2" onclick="saveTests()">Log scores</button><button class="minibtn2 alt" onclick="openVerify()">'+ICO.lock+' Coach verify</button></div></div>';
   }
 
   // ===== CARD view: only the RATED tests that build the five card stats. =====
