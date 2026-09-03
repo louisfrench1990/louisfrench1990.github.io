@@ -2114,8 +2114,6 @@ window.openRM=function(){var m=document.getElementById('rmMask');
   var nameRow='<label class="rmrow"><span>Name (shown on your card)</span><input type="text" id="rm-name" value="'+esc(athleteName||'')+'" placeholder="e.g. A. Fowler" maxlength="24"></label>';
   var sexRow='<div class="rmrow"><span>Sex (sets your scoring curve &amp; load cap)</span><span><button class="sexb'+(athleteSex==='M'?' on':'')+'" onclick="setSex(\'M\')">M</button><button class="sexb'+(athleteSex==='F'?' on':'')+'" onclick="setSex(\'F\')">F</button></span></div>'
     +'<label class="rmrow"><span>Age (masters scaling, 35+)</span><input type="number" inputmode="numeric" min="14" max="99" id="rm-age" value="'+(athleteAge||'')+'" placeholder="yrs"></label>';
-  var extraRows='<div class="rmhdr">Your 1RMs — for WOD weights</div><div class="rmnote">Enter your working 1-rep maxes so the app scales WOD loads to you — <b>even for lifts you haven\'t unlocked as a test yet</b>. Used for <b>WOD weights only</b>; they never change your card rating or rankings. Leave one blank to fall back to your verified test score where you have it.</div>'+WODLIFTS.map(function(l){var tv=testRM(l[0]);var ph=tv>0?('from your test: '+tv+' kg'):'kg';return '<label class="rmrow"><span>'+l[1]+'</span><input type="number" inputmode="decimal" min="0" id="rm-'+l[0]+'" value="'+(liftExtra[l[0]]||'')+'" placeholder="'+ph+'"></label>';}).join('');
-  var gymRows='<div class="rmhdr">Your gymnastics — for WOD scaling</div><div class="rmnote">Max unbroken reps in a fresh minute (leave blank if you can\'t do it yet). Lets the app auto-scale gymnastic movements in WODs to a version you can hold. <b>WOD scaling only</b> — never your card. Blank falls back to your verified test score where you have one.</div>'+GYMSKILLS.map(function(g){var tid=GYM2TEST[g[0]];var tv=(tid&&typeof TESTS!=='undefined'&&TESTS[tid]>0)?TESTS[tid]:0;var ph=tv>0?('from your test: '+tv):'reps';return '<label class="rmrow"><span>'+g[1]+'</span><input type="number" inputmode="numeric" min="0" id="gymcap-'+g[0]+'" value="'+(gymSkills[g[0]]||'')+'" placeholder="'+ph+'"></label>';}).join('');
   var _tp=titlePref();
   var _topts=displayTitleOptions().map(function(o){return '<option value="'+esc(o.v)+'"'+(o.v===_tp?' selected':'')+'>'+esc(o.l)+'</option>';}).join('');
   var titleRow='<div class="rmhdr">Card title</div><div class="rmnote">Choose which label shows on your card. Your colour, stats and tier are always earned — this only changes the label.</div><label class="rmrow"><span>Show on card</span><select id="rm-title">'+_topts+'</select></label>';
@@ -2125,17 +2123,31 @@ window.openRM=function(){var m=document.getElementById('rmMask');
     var _copts='<option value="">— none —</option>'+coachTitlesAllowed().map(function(t){return '<option value="'+esc(t)+'"'+(t===_ct?' selected':'')+'>'+esc(t)+'</option>';}).join('');
     coachRow='<div class="rmhdr">Coach — assign coaching title</div><div class="rmnote">Coach-only. Limited by this athlete\'s card colour. The athlete can then choose to display it.</div><label class="rmrow"><span>Coaching title</span><select id="rm-coach-title">'+_copts+'</select></label>';
   }
-  m.querySelector('.rmbody').innerHTML=nameRow+coachRow+sexRow+extraRows+gymRows;m.classList.add('on');};
+  m.querySelector('.rmbody').innerHTML=nameRow+coachRow+sexRow+titleRow;m.classList.add('on');};
 window.closeRM=function(){document.getElementById('rmMask').classList.remove('on');};
 window.saveRM=function(){
   var ne=document.getElementById('rm-name');athleteName=ne?ne.value.trim().slice(0,24):athleteName;try{if(athleteName)localStorage.setItem('unranked-name',athleteName);else localStorage.removeItem('unranked-name');}catch(e){}
-  WODLIFTS.forEach(function(l){var el=document.getElementById('rm-'+l[0]);var v=el?parseFloat(el.value):0;if(v>0)liftExtra[l[0]]=v;else delete liftExtra[l[0]];});try{localStorage.setItem('unranked-extra',JSON.stringify(liftExtra))}catch(e){}
-  GYMSKILLS.forEach(function(g){var el=document.getElementById('gymcap-'+g[0]);if(!el)return;var n=parseInt(el.value,10);if(!isNaN(n)&&n>0)gymSkills[g[0]]=n;else delete gymSkills[g[0]];});   // manual gym entry overrides the test-derived cap for WOD scaling (blank falls back to the test via gcap)
-  gymSet=Object.keys(gymSkills).length>0;try{localStorage.setItem('unranked-gym',JSON.stringify(gymSkills))}catch(e){}
   var ae=document.getElementById('rm-age');var av=ae?parseInt(ae.value,10):0;athleteAge=(!isNaN(av)&&av>0)?av:0;try{if(athleteAge)localStorage.setItem('unranked-age',String(athleteAge));else localStorage.removeItem('unranked-age');}catch(e){}
   var te=document.getElementById('rm-title');if(te){try{localStorage.setItem('unranked-title-pref',te.value);}catch(e){}}
   var cte=document.getElementById('rm-coach-title');if(cte){try{if(cte.value)localStorage.setItem('unranked-coach-title',cte.value);else localStorage.removeItem('unranked-coach-title');}catch(e){}}
   oneRM=buildOneRM();closeRM();render();var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();};
+// WOD-scaling numbers — self-entered maxes/capacities that scale workouts (never the card). Moved out of My details into
+// Log skill development (2026-09-03), so all numbers live behind the two log buttons.
+function wodScalingHTML(){
+  var lifts=WODLIFTS.map(function(l){var tv=testRM(l[0]);var ph=tv>0?('from your test: '+tv+' kg'):'kg';return '<label class="rmrow"><span>'+l[1]+'</span><input type="number" inputmode="decimal" min="0" id="rm-'+l[0]+'" value="'+(liftExtra[l[0]]||'')+'" placeholder="'+ph+'"></label>';}).join('');
+  var gym=GYMSKILLS.map(function(g){var tid=GYM2TEST[g[0]];var tv=(tid&&typeof TESTS!=='undefined'&&TESTS[tid]>0)?TESTS[tid]:0;var ph=tv>0?('from your test: '+tv):'reps';return '<label class="rmrow"><span>'+g[1]+'</span><input type="number" inputmode="numeric" min="0" id="gymcap-'+g[0]+'" value="'+(gymSkills[g[0]]||'')+'" placeholder="'+ph+'"></label>';}).join('');
+  return '<details class="ts-feat"><summary><span class="ts-featnm">Numbers for WOD scaling</span><span class="ts-featsub">self-entered \u00b7 scales your workouts, never your card</span><span class="ts-chev">\u203a</span></summary>'
+    +'<p class="rmnote">Your working maxes and gymnastics capacity so the app scales WOD loads and movements to you \u2014 even for lifts you haven\u2019t tested yet. Blank falls back to your verified test score. <b>WOD scaling only</b> \u2014 never your card or rating.</p>'
+    +'<div class="rmhdr">Barbell 1RMs</div>'+lifts
+    +'<div class="rmhdr">Gymnastics capacity</div>'+gym
+    +'<div class="ts-actions"><button class="minibtn2" onclick="saveWodScaling()">Save scaling numbers</button></div></details>';
+}
+window.saveWodScaling=function(){
+  WODLIFTS.forEach(function(l){var el=document.getElementById('rm-'+l[0]);if(!el)return;var v=parseFloat(el.value);if(v>0)liftExtra[l[0]]=v;else delete liftExtra[l[0]];});try{localStorage.setItem('unranked-extra',JSON.stringify(liftExtra))}catch(e){}
+  GYMSKILLS.forEach(function(g){var el=document.getElementById('gymcap-'+g[0]);if(!el)return;var n=parseInt(el.value,10);if(!isNaN(n)&&n>0)gymSkills[g[0]]=n;else delete gymSkills[g[0]];});
+  gymSet=Object.keys(gymSkills).length>0;try{localStorage.setItem('unranked-gym',JSON.stringify(gymSkills))}catch(e){}
+  oneRM=buildOneRM();showToast('Scaling numbers saved');
+};
 /* ================= member training log (on-device, unverified — a private notebook, separate from the ranked/verified layer Ash builds) ================= */
 var LOG=sanitizeLog(lsObj('unranked-log'));
 // drop anything that isn't a well-formed {date:{pieces:{id:{...}}}} entry, so one bad row can never break the Logbook
@@ -3930,7 +3942,7 @@ function buildTestsHTML(mode){
     var dgroups=groups.map(function(g){return grpBlock(g[0],g[1],isDev,false);}).join('');
     return '<div class="ts-page"><p class="ts-intro">These sharpen your training, scale your WODs and can earn <b>class titles</b> — but they <b>don’t change your card rating</b>. Log anything outside the rated battery here.</p>'
       +dprog+treeLink+'<div class="ts-secl">Off-card tests</div>'+(dgroups||'<p class="rmnote">Nothing to log here yet.</p>')
-      +'<div class="ts-actions"><button class="minibtn2" onclick="saveTests()">Log scores</button><button class="minibtn2 alt" onclick="openVerify()">'+ICO.lock+' Coach verify</button></div></div>';
+      +'<div class="ts-actions"><button class="minibtn2" onclick="saveTests()">Log scores</button><button class="minibtn2 alt" onclick="openVerify()">'+ICO.lock+' Coach verify</button></div>'+wodScalingHTML()+'</div>';
   }
 
   // ===== CARD view: only the RATED tests that build the five card stats. =====
