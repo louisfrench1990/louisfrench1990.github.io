@@ -1146,6 +1146,10 @@ body.hasnav #foot{bottom:60px}
 .skcat-mid{flex:1;min-width:0}
 .skcat-nm{display:block;font-family:var(--disp);letter-spacing:.03em;font-size:16px;font-weight:800;color:var(--txt)}
 .skcat-sub{display:block;font-size:11.5px;color:var(--dim);margin-top:2px}
+.skcat-bar{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,.08);margin-top:9px;overflow:hidden}
+.skcat-bar i{display:block;height:100%;background:var(--ca);border-radius:3px}
+.skcat-meta{font-weight:800}
+.trn-btn{margin-bottom:10px}
 .skcat-meta{font-size:10.5px;color:var(--ca);font-weight:800;flex:none;text-align:right;line-height:1.35;text-transform:uppercase;letter-spacing:.03em}
 .skcat-chev{color:var(--dim);font-size:22px;flex:none;line-height:1}
 .skcatwrap{display:block}
@@ -2136,7 +2140,7 @@ window.saveRM=function(){
 function wodScalingInner(){
   var lifts=WODLIFTS.map(function(l){var tv=testRM(l[0]);var ph=tv>0?('from your test: '+tv+' kg'):'kg';return '<label class="rmrow"><span>'+l[1]+'</span><input type="number" inputmode="decimal" min="0" id="rm-'+l[0]+'" value="'+(liftExtra[l[0]]||'')+'" placeholder="'+ph+'"></label>';}).join('');
   var gym=GYMSKILLS.map(function(g){var tid=GYM2TEST[g[0]];var tv=(tid&&typeof TESTS!=='undefined'&&TESTS[tid]>0)?TESTS[tid]:0;var ph=tv>0?('from your test: '+tv):'reps';return '<label class="rmrow"><span>'+g[1]+'</span><input type="number" inputmode="numeric" min="0" id="gymcap-'+g[0]+'" value="'+(gymSkills[g[0]]||'')+'" placeholder="'+ph+'"></label>';}).join('');
-  return '<p class="rmnote">Your working maxes and gymnastics capacity so the app scales WOD loads and movements to you \u2014 even for lifts you haven\u2019t tested yet. Blank falls back to your verified test score. <b>Scales your workouts only</b> \u2014 never your card or rating, and no verification needed.</p>'
+  return '<p class="rmnote">Self-entered maxes so the app scales workouts to you. Blank falls back to your test score. <b>Never your card</b> \u2014 no verification needed.</p>'
     +'<div class="rmhdr">Barbell 1RMs</div>'+lifts
     +'<div class="rmhdr">Gymnastics capacity</div>'+gym
     +'<div class="ts-actions"><button class="minibtn2" onclick="saveWodScaling()">Save scaling numbers</button></div>';
@@ -2928,12 +2932,10 @@ Object.assign(CAP_NAV,{'s.shrimp':'LOWER BODY','s.nordic':'LOWER BODY','s.boxjum
 Object.assign(CAP_FEEDS,{'s.shrimp':'Development · Lower Body','s.nordic':'Development · Lower Body','s.boxjump':'Development · Lower Body','s.hollow':'Development · Core','s.back-lever':'Skill · Static / Core','s.dragon':'Development · Core','s.wallwalk':'Development · Inversion','s.kip-hspu':'Development · Inversion','s.press-hs':'Development · Inversion','s.kip-pullup':'Development · Pulling'});
 function cap2List(){_devCat=null;var el=document.getElementById('devInner');if(!el)return;
   var tiles=CAP_NAVGROUPS.map(function(g){var meta=CAP_CATMETA[g]||{};var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===g;});
-    var mastered=sks.filter(function(sk){return devSkillState(sk).mastered;}).length;
-    var inprog=sks.filter(function(sk){var st=devSkillState(sk);return st.done>0&&!st.mastered;}).length;
-    var metaTxt=sks.length+' skill'+(sks.length===1?'':'s')+(mastered?'<br>'+mastered+' mastered':(inprog?'<br>'+inprog+' in progress':''));
-    return '<button class="skcat skcat-'+(meta.key||'x')+'" style="--ca:'+(meta.ca||'#888')+';--caBg:'+(meta.caBg||'rgba(255,255,255,.1)')+'" onclick="openDevCat(&#39;'+g+'&#39;)"><span class="skcat-ic">'+(meta.ic||'')+'</span><span class="skcat-mid"><span class="skcat-nm">'+esc(g)+'</span><span class="skcat-sub">'+esc(meta.sub||'')+'</span></span><span class="skcat-meta">'+metaTxt+'</span><span class="skcat-chev">&rsaquo;</span></button>';}).join('');
+    var pct=0;if(sks.length){var sum=0;sks.forEach(function(sk){var st=devSkillState(sk);sum+=(st.total?st.done/st.total:0);});pct=Math.round(sum/sks.length*100);}
+    return '<button class="skcat skcat-'+(meta.key||'x')+'" style="--ca:'+(meta.ca||'#888')+';--caBg:'+(meta.caBg||'rgba(255,255,255,.1)')+'" onclick="openDevCat(&#39;'+g+'&#39;)"><span class="skcat-ic">'+(meta.ic||'')+'</span><span class="skcat-mid"><span class="skcat-nm">'+esc(g)+'</span><span class="skcat-bar"><i style="width:'+pct+'%"></i></span></span><span class="skcat-meta">'+pct+'%</span><span class="skcat-chev">&rsaquo;</span></button>';}).join('');
   el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeDev()">&lsaquo;</button><span class="ss-topttl">Skill Tree</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
-   +'<div class="ss-h">Skill Tree</div><p class="skt-intro">Six disciplines. Open one to see your skills and the level you’re at on each.</p>'
+   +'<div class="ss-h">Skill Tree</div><p class="skt-intro">Open a discipline to track your skills and levels.</p>'
    +'<div class="skcats">'+tiles+'</div>'+'<div class="skt-legend"><span class="skl-i"><span class="skl-dot skl-found"></span>Foundations</span><span class="skl-i"><span class="skl-dot skl-ready"></span>Readiness</span><span class="skl-i"><span class="skl-star">&#9733;</span>Achievement</span></div>';}
 function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);
   var capsHTML='';
@@ -3799,15 +3801,9 @@ function buildTrainHTML(){
       +'<span class="tt-prog"><span class="tt-ic">'+ICO.program+'</span>Unranked Program</span></div>'
     +rdy
     +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+questCompactHTML()+'<button class="tt-week" onclick="openWeek()"><span class="tt-wk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg></span><span class="tt-wk-l">Week ahead</span><span class="arw">›</span></button></div>';
-  var scSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.target+'</span><span class="dc-t"><b>Log score</b><span>the rated tests that build your card</span></span><span class="dc-chev">›</span></summary>';
-  var scores='<details class="trn-acc">'+scSum+'<div class="trn-body">'+buildTestsHTML('card')+'</div></details>';
-  var dvSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.tree+'</span><span class="dc-t"><b>Log skill development</b><span>skill-tree tests &amp; class-title challenges — off your card</span></span><span class="dc-chev">›</span></summary>';
-  var dev='<details class="trn-acc">'+dvSum+'<div class="trn-body">'+buildTestsHTML('dev')+'</div></details>';
-  var wodSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.gear+'</span><span class="dc-t"><b>Numbers for WOD scaling</b><span>self-entered · scales workouts, never your card</span></span><span class="dc-chev">›</span></summary>';
-  var wod='<details class="trn-acc">'+wodSum+'<div class="trn-body">'+wodScalingInner()+'</div></details>';
-  var lgSum='<summary class="dcard dsum"><span class="dc-ic">'+ICO.star+'</span><span class="dc-t"><b>Log previous best</b><span>beta — seeds your Legacy card</span></span><span class="dc-chev">›</span></summary>';
-  var legacy='<details class="trn-acc">'+lgSum+'<div class="trn-body">'+legacyLogInner()+'</div></details>';
-  return today+'<div class="dsec">Log your training</div>'+scores+dev+wod+legacy;
+  var TB=[['card','Log Scores',ICO.target],['dev','Skill Development',ICO.tree],['wod','WOD Scaling',ICO.gear],['legacy','Previous Bests',ICO.star]];
+  var btns=TB.map(function(x){return '<button class="dcard trn-btn" onclick="openTrainPage(&#39;'+x[0]+'&#39;)"><span class="dc-ic">'+x[2]+'</span><span class="dc-t"><b>'+x[1]+'</b></span><span class="dc-chev">›</span></button>';}).join('');
+  return today+'<div class="dsec">Log your training</div>'+btns;
 }
 // COMPETE / EXPLORE / FANTASY — locked, coming soon (shows the shape of the full app)
 // Closed beta: descriptions of unreleased features intentionally removed so they don't ship in the client bundle.
@@ -4088,7 +4084,7 @@ function buildTestsHTML(mode){
       +'<div class="ts-progrow"><span><b>'+dEnt+'</b> / '+devMoves.length+' logged</span><span class="ts-pv">off-card</span></div></div>';
     var treeLink='<button class="dcard" style="margin:2px 0 14px" onclick="goNav(&#39;tree&#39;)"><span class="dc-ic">'+ICO.tree+'</span><span class="dc-t"><b>Open your Skill Tree</b><span>mark drills &amp; progressions as you unlock them</span></span><span class="dc-chev">›</span></button>';
     var dgroups=groups.map(function(g){return grpBlock(g[0],g[1],isDev,false);}).join('');
-    return '<div class="ts-page"><p class="ts-intro">These sharpen your training, scale your WODs and can earn <b>class titles</b> — but they <b>don’t change your card rating</b>. Log anything outside the rated battery here.</p>'
+    return '<div class="ts-page"><p class="ts-intro">Off-card work — sharpens training, scales WODs, earns titles. Never your card.</p>'
       +dprog+treeLink+'<div class="ts-secl">Off-card tests</div>'+(dgroups||'<p class="rmnote">Nothing to log here yet.</p>')
       +'<div class="ts-actions"><button class="minibtn2" onclick="saveTests()">Log scores</button><button class="minibtn2 alt" onclick="openVerify()">'+ICO.lock+' Coach verify</button></div></div>';
   }
@@ -4098,7 +4094,7 @@ function buildTestsHTML(mode){
   var cEnt=cardMoves.filter(function(m){return TESTS[m.id]!=null;}).length;
   var cVer=cardMoves.filter(function(m){return isVerified(m.id);}).length;
   var cPend=cEnt-cVer;var pct=cardMoves.length?Math.round(cEnt/cardMoves.length*100):0;
-  var confBanner=((typeof RATING_V2!=='undefined'&&RATING_V2)&&cc.confidence!=null)?('<div class="ts-conf">Rating Confidence <b>'+cc.confidence+'%</b> &mdash; every test here moves one of your five card stats. Verify them to raise it.</div>'):'';
+  var confBanner=((typeof RATING_V2!=='undefined'&&RATING_V2)&&cc.confidence!=null)?('<div class="ts-conf">Rating Confidence <b>'+cc.confidence+'%</b> &mdash; verify these to raise it.</div>'):'';
   var prog='<div class="ts-prog">'+confBanner+'<div class="ts-progbar"><i style="width:'+pct+'%"></i></div>'
     +'<div class="ts-progrow"><span><b>'+cEnt+'</b> / '+cardMoves.length+' entered</span>'
     +'<span class="ts-pv">'+cVer+' verified</span>'+(cPend>0?'<span class="ts-pp">'+cPend+' pending</span>':'')+'</div></div>';
@@ -4116,7 +4112,7 @@ function buildTestsHTML(mode){
   } else {
     body='<div class="ts-secl">Card tests — by stat</div>'+cardGroupsHtml(null);
   }
-  return '<div class="ts-page"><p class="ts-intro">Your best result for each <b>rated</b> test. New scores save as <b>pending</b> and count once a coach verifies them.</p>'+prog+pendingPreviewHTML()+body
+  return '<div class="ts-page"><p class="ts-intro">Log your best for each rated test — scores count once a coach verifies them.</p>'+prog+pendingPreviewHTML()+body
     +'<div class="ts-actions"><button class="minibtn2" onclick="saveTests()">Log scores</button><button class="minibtn2 alt" onclick="openVerify()">'+ICO.lock+' Coach verify</button></div></div>';
 }
 // Low-key "log a previous best" — beta-only, so athletes can see how the Legacy (best-ever) card works. Writes to PREV; folds into BEST.
@@ -4134,20 +4130,31 @@ window.addPrevBest=function(){var sel=document.getElementById('lgpSel'),val=docu
   if(!sel)return;var id=sel.value;var raw=val?val.value:'';var v=parsePerf(raw);
   if(v==null){if(msg)msg.textContent='Enter a valid result first.';return;}
   PREV[id]=v;savePREV();if(val)val.value='';   // pending — folds into the Legacy card only after a coach verifies
-  var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();
+  var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();refreshTrainPage();
   showToast('Previous best logged — pending coach verification');};
 window.removePrevBest=function(id){if(PREV[id]!=null){delete PREV[id];savePREV();}
   if(PREVV[id]!=null){delete PREVV[id];savePREVV();}
   BEST={};updateBest();saveBEST();   // rebuild from remaining verified sources (removing one can lower BEST)
   var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();};
 function wireTestInputs(root){}   // no live-score preview — Louis: don't reveal the rating until AFTER they submit (the score column only fills in for saved values)
+var _trainPage=null;
+window.openTrainPage=function(key){
+  var M={card:['Log Scores',function(){return buildTestsHTML('card');}],dev:['Skill Development',function(){return buildTestsHTML('dev');}],wod:['WOD Scaling',function(){return wodScalingInner();}],legacy:['Previous Bests',function(){return legacyLogInner();}]};
+  var spec=M[key];if(!spec)return;_trainPage=key;
+  var m=document.getElementById('trainMask');if(!m){m=document.createElement('div');m.id='trainMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="trainPgInner"></div>';document.body.appendChild(m);}
+  document.getElementById('trainPgInner').innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeTrainPage()">&lsaquo;</button><span class="ss-topttl">'+spec[0]+'</span><button class="ss-close" onclick="closeTrainPage()">Close</button></div><div class="ss-h">'+spec[0]+'</div>'+spec[1]();
+  m.style.display='block';try{window.scrollTo(0,0);}catch(e){}
+};
+window.closeTrainPage=function(){var m=document.getElementById('trainMask');if(m)m.style.display='none';_trainPage=null;};
+function _trainPageOpen(){var m=document.getElementById('trainMask');return _trainPage&&m&&m.style.display==='block';}
+function refreshTrainPage(){if(_trainPageOpen())openTrainPage(_trainPage);}
 window.openTests=function(){goNav('submit');};   // back-compat: route to the Submit page
 var _toastT=null;
 function showToast(msg){if(_holdToasts)return;var t=document.getElementById('toast');if(!t)return;t.innerHTML=msg;t.classList.add('on');if(_toastT)clearTimeout(_toastT);_toastT=setTimeout(function(){t.classList.remove('on');},2600);}
 window.saveTests=function(){
-  [].forEach.call(document.querySelectorAll('#myLogMask .ts-psel, #testMask .ts-psel'),function(sel){var id=sel.getAttribute('data-id');if(sel.value){PROG[id]=sel.value;}});   // capture the chosen variant for progression tests before reading the perf
-  [].forEach.call(document.querySelectorAll('#myLogMask .ts-in, #testMask .ts-in'),function(inp){var id=inp.getAttribute('data-id');var v=parsePerf(inp.value);if(v!=null&&v>0)TESTS[id]=v;else delete TESTS[id];});
-  saveTESTS();savePROG();openMyLog();render();
+  [].forEach.call(document.querySelectorAll('#myLogMask .ts-psel, #testMask .ts-psel, #trainMask .ts-psel'),function(sel){var id=sel.getAttribute('data-id');if(sel.value){PROG[id]=sel.value;}});   // capture the chosen variant for progression tests before reading the perf
+  [].forEach.call(document.querySelectorAll('#myLogMask .ts-in, #testMask .ts-in, #trainMask .ts-in'),function(inp){var id=inp.getAttribute('data-id');var v=parsePerf(inp.value);if(v!=null&&v>0)TESTS[id]=v;else delete TESTS[id];});
+  saveTESTS();savePROG();openMyLog();render();refreshTrainPage();
   var cc=computeCard();if(cc.pending>0)showToast('Saved — '+cc.pending+' score'+(cc.pending===1?'':'s')+' pending coach verification');else showToast('Scores saved');};
 window.closeTests=function(){var m=document.getElementById('testMask');if(m)m.classList.remove('on');};
 window.openTree=function(key){var m=document.getElementById('treeMask');if(!m)return;
