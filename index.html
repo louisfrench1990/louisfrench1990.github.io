@@ -141,6 +141,10 @@
 .cn-limtag{flex:0 0 auto;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--acc)}
 .cn-metmk{flex:0 0 auto;color:var(--acc2);display:inline-flex;align-items:center}
 .pc2-arch{display:inline-flex;align-items:center;gap:4px;align-self:flex-start;margin-top:7px;padding:3px 10px;border:1px solid rgba(255,194,71,.5);border-radius:999px;background:rgba(255,194,71,.10);color:var(--acc);font-family:var(--disp);font-size:14px;letter-spacing:.05em;text-transform:uppercase;line-height:1.2}
+.ts-row.ts-card{box-shadow:inset 2px 0 0 var(--mag)}
+.ts-conf{font-size:12.5px;color:var(--dim);font-weight:600;margin:0 0 10px;line-height:1.45}
+.ts-conf b{color:var(--acc2)}
+.ts-conf-h{color:var(--mag);font-weight:800}
 .cn-lgtag{font-size:10px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--di);border:1px solid var(--line);border-radius:6px;padding:1px 5px;margin-left:4px}
 .cn-train{background:rgba(255,194,71,.08);border:1px solid rgba(255,194,71,.35);border-radius:12px;padding:11px 13px;margin-top:12px;font-size:13px;color:var(--txt)}
 .cn-train-l{display:block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--acc);margin-bottom:3px}
@@ -3135,7 +3139,7 @@ var ACH_FULL=[
  {g:'Journey',slug:'classed',name:'Classed Up',sub:'Unlocked your first class',test:function(cc){var st=classStates();for(var s in st)if(st[s].unlocked)return true;return false;}},
  {g:'Journey',slug:'ten',name:'Ten Verified',sub:'10 verified scores',test:function(cc){return cc.verified>=10;}},
  {g:'Journey',slug:'twentyfive',name:'Twenty-Five Verified',sub:'25 verified scores',test:function(cc){return cc.verified>=25;}},
- {g:'Journey',slug:'fullcard',name:'Full Card',sub:'All 40 tests verified',test:function(cc){return cc.verified>=SCORING.moves.length;}},
+ {g:'Journey',slug:'fullcard',name:'Full Card',sub:'100% Rating Confidence',test:function(cc){return (cc.confidence!=null)?(cc.confidence>=100):(cc.verified>=SCORING.moves.length);}},
  {g:'Tiers',slug:'t_green',name:'Green Tier',sub:'Reached Green',test:function(cc){return tierIdxNow()>=1;}},
  {g:'Tiers',slug:'t_blue',name:'Blue Tier',sub:'Reached Blue',test:function(cc){return tierIdxNow()>=2;}},
  {g:'Tiers',slug:'t_purple',name:'Purple Tier',sub:'Reached Purple',test:function(cc){return tierIdxNow()>=3;}},
@@ -3795,6 +3799,8 @@ function pendingPreviewHTML(){
     +(tierUp?'<div class="pend-tier">'+ICO.star+' Verifies you into <b>'+esc(tierUp.name)+'</b></div>':'')
     +'</div>';
 }
+function cardTestSet(){var s={};try{['STR','PWR','SPD','END'].forEach(function(k){(V2_SUB[k]||[]).forEach(function(sd){sd[1].forEach(function(id){s[id]=1;});});});SKILL_DOMAINS.forEach(function(d){d.members.forEach(function(m){if(m[1])s[m[1]]=1;});});}catch(e){}return s;}
+var _CARDTESTS=null;function cardTest(id){if(typeof RATING_V2==='undefined'||!RATING_V2)return true;if(!_CARDTESTS)_CARDTESTS=cardTestSet();return !!_CARDTESTS[id];}
 function buildTestsHTML(noLegacy){
   function avail(mv){return moveAvail(mv)||isVerified(mv.id);}   // a test you've already verified is never "locked", even if its tree node was relocated deeper (keeps counts a clean partition, shows the done row in its group)
   var byStat={};SCORING.stats.forEach(function(s){byStat[s.key]=[];});var treeMoves=[];
@@ -3808,12 +3814,12 @@ function buildTestsHTML(noLegacy){
     var flag=cur==null?'':(ver?'<span class="ts-flag ok">'+ICO.check+'</span>':'<span class="ts-flag pend">'+ICO.clock+'</span>');
     if(mv.type==='progression'){var vk=progVar(mv.id);var scp=cur!=null?scoreOf(cur,mv):null;var un=mv.proto==='reps'?'reps':'sec';
       var opts=mv.variants.map(function(vv){return '<option value="'+esc(vv.key)+'"'+(vv.key===vk?' selected':'')+'>'+esc(vv.name)+'</option>';}).join('');
-      return '<div class="ts-row ts-prog'+stcls+'"><div class="ts-name">'+esc(mv.name)+flag+infoBtn(mv)+'<span class="ts-unit">'+un+'</span></div>'
+      return '<div class="ts-row ts-prog'+(cardTest(mv.id)?' ts-card':'')+stcls+'"><div class="ts-name">'+esc(mv.name)+flag+infoBtn(mv)+'<span class="ts-unit">'+un+'</span></div>'
         +'<div class="ts-proginp"><select class="ts-psel" data-id="'+esc(mv.id)+'" onchange="saveTests()">'+opts+'</select>'
         +'<input class="ts-in ts-pin" data-id="'+esc(mv.id)+'" inputmode="numeric" value="'+(cur!=null?cur:'')+'" placeholder="'+un+'"></div>'
         +'<div class="ts-score'+(scp!=null?' on':'')+'">'+(scp!=null?scp:'—')+'</div></div>';}
     var sc=cur!=null?scoreOf(cur,mv):null;var isT=/ss/.test(mv.unit);var ph=phEx(mv);
-    return '<div class="ts-row'+stcls+'"><div class="ts-name">'+esc(mv.name)+flag+infoBtn(mv)+'<span class="ts-unit">'+esc(mv.unit)+'</span></div>'
+    return '<div class="ts-row'+(cardTest(mv.id)?' ts-card':'')+stcls+'"><div class="ts-name">'+esc(mv.name)+flag+infoBtn(mv)+'<span class="ts-unit">'+esc(mv.unit)+'</span></div>'
       +'<input class="ts-in" data-id="'+esc(mv.id)+'" inputmode="'+(isT?'text':'decimal')+'" value="'+(cur!=null?esc(fmtPerf(cur,mv)):'')+'" placeholder="'+esc(ph)+'" title="'+esc(ph)+'">'
       +'<div class="ts-score'+(sc!=null?' on':'')+'">'+(sc!=null?sc:'—')+'</div></div>';}
   function grpBlock(name,mvs,filterFn,openDefault){var av=mvs.filter(filterFn);if(!av.length)return '';
@@ -3821,7 +3827,8 @@ function buildTestsHTML(noLegacy){
     return '<details class="ts-grp"'+(openDefault?' open':'')+'><summary class="ts-grpsum"><span class="ts-grpnm">'+esc(name)+'</span><span class="ts-grpct">'+enteredN+'/'+av.length+'</span><span class="ts-chev">›</span></summary>'+av.map(rowHtml).join('')+'</details>';}
   var cc=computeCard();var availCount=0;SCORING.moves.forEach(function(mv){if(avail(mv))availCount++;});var lockedCount=SCORING.moves.length-availCount;
   var pct=SCORING.moves.length?Math.round(cc.entered/SCORING.moves.length*100):0;
-  var prog='<div class="ts-prog"><div class="ts-progbar"><i style="width:'+pct+'%"></i></div>'
+  var confBanner=((typeof RATING_V2!=='undefined'&&RATING_V2)&&cc.confidence!=null)?('<div class="ts-conf">Rating Confidence <b>'+cc.confidence+'%</b> &mdash; the <span class="ts-conf-h">highlighted</span> tests build your card; verify them to raise it.</div>'):'';
+  var prog='<div class="ts-prog">'+confBanner+'<div class="ts-progbar"><i style="width:'+pct+'%"></i></div>'
     +'<div class="ts-progrow"><span><b>'+cc.entered+'</b> / '+SCORING.moves.length+' entered</span>'
     +'<span class="ts-pv">'+cc.verified+' verified</span>'+(cc.pending?'<span class="ts-pp">'+cc.pending+' pending</span>':'')
     +(lockedCount?'<span class="ts-pl">'+lockedCount+' locked</span>':'')+'</div></div>';
