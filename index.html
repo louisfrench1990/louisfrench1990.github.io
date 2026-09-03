@@ -145,6 +145,11 @@
 .ts-conf{font-size:12.5px;color:var(--dim);font-weight:600;margin:0 0 10px;line-height:1.45}
 .ts-conf b{color:var(--acc2)}
 .ts-conf-h{color:var(--mag);font-weight:800}
+.ts-secl{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--di);margin:16px 2px 8px}
+.ts-feat>summary{list-style:none;display:flex;align-items:center;gap:8px;padding:13px 14px;margin-top:14px;border:1px dashed var(--line);border-radius:var(--r-md);background:rgba(255,255,255,.02);cursor:pointer}
+.ts-feat>summary::-webkit-details-marker{display:none}
+.ts-featnm{font-weight:800;font-size:14px;color:var(--txt)}
+.ts-featsub{font-size:11.5px;color:var(--di);font-weight:600;margin-left:auto;margin-right:4px}
 .cn-lgtag{font-size:10px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--di);border:1px solid var(--line);border-radius:6px;padding:1px 5px;margin-left:4px}
 .cn-train{background:rgba(255,194,71,.08);border:1px solid rgba(255,194,71,.35);border-radius:12px;padding:11px 13px;margin-top:12px;font-size:13px;color:var(--txt)}
 .cn-train-l{display:block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--acc);margin-bottom:3px}
@@ -3802,7 +3807,7 @@ function pendingPreviewHTML(){
 function cardTestSet(){var s={};try{['STR','PWR','SPD','END'].forEach(function(k){(V2_SUB[k]||[]).forEach(function(sd){sd[1].forEach(function(id){s[id]=1;});});});SKILL_DOMAINS.forEach(function(d){d.members.forEach(function(m){if(m[1])s[m[1]]=1;});});}catch(e){}return s;}
 var _CARDTESTS=null;function cardTest(id){if(typeof RATING_V2==='undefined'||!RATING_V2)return true;if(!_CARDTESTS)_CARDTESTS=cardTestSet();return !!_CARDTESTS[id];}
 function buildTestsHTML(noLegacy){
-  function avail(mv){return moveAvail(mv)||isVerified(mv.id);}   // a test you've already verified is never "locked", even if its tree node was relocated deeper (keeps counts a clean partition, shows the done row in its group)
+  function avail(mv){return true;}   // OPEN LOGGING (2026-09-03): every test is findable, viewable and loggable from day one. Verification is the only gate; Rating Confidence (not locks) guides onboarding. moveAvail is retained for other systems.
   var byStat={};SCORING.stats.forEach(function(s){byStat[s.key]=[];});var treeMoves=[];
   SCORING.moves.forEach(function(mv){if(mv.stat&&byStat[mv.stat])byStat[mv.stat].push(mv);else treeMoves.push(mv);});
   var groups=[];SCORING.stats.forEach(function(s){if(byStat[s.key].length)groups.push([s.name,byStat[s.key]]);});
@@ -3836,15 +3841,20 @@ function buildTestsHTML(noLegacy){
   var novSet={};(SCORING.novice||[]).forEach(function(id){novSet[id]=1;});
   var startHere=(SCORING.novice&&SCORING.novice.length)&&!noviceAllVerified();
   var body;
+  // Split the entry: CARD tests (build your rating, by stat) vs CHALLENGES & EXTRAS (feats -> achievements/titles, not the card).
+  function cardGroupsHtml(exclude){return groups.map(function(g){return grpBlock(g[0],g[1],function(mv){return cardTest(mv.id)&&(!exclude||!exclude[mv.id]);},false);}).join('');}
+  function featSection(exclude){var fm=SCORING.moves.filter(function(mv){return !cardTest(mv.id)&&(!exclude||!exclude[mv.id]);});
+    return fm.length?('<details class="ts-feat"><summary><span class="ts-featnm">Challenges &amp; extras</span><span class="ts-featsub">achievements &amp; titles, not your card</span><span class="ts-chev">›</span></summary>'+fm.map(rowHtml).join('')+'</details>'):'';}
   if(startHere){
     var novDone=SCORING.novice.filter(function(id){return isVerified(id);}).length;
     var novRows=SCORING.novice.map(function(id){var mv=scMove(id);return mv?rowHtml(mv):'';}).join('');
-    var restGroups=groups.map(function(g){return grpBlock(g[0],g[1],function(mv){return avail(mv)&&!novSet[mv.id];},false);}).join('');
-    body='<div class="ts-sh"><div class="ts-shhdr">★ Foundation — your first 8<span class="ts-shct">'+novDone+'/8 verified</span></div>'
-      +'<p class="ts-shnote">Get these verified to graduate Novice and open your class trees. The rest can wait.</p>'+novRows+'</div>'
-      +(restGroups?'<details class="ts-more"><summary>More tests — optional for now <span class="ts-chev">›</span></summary>'+restGroups+'</details>':'');
+    var cardGroups=cardGroupsHtml(novSet);
+    body='<div class="ts-sh"><div class="ts-shhdr">★ Foundation — build your card<span class="ts-shct">'+novDone+'/8 verified</span></div>'
+      +'<p class="ts-shnote">Complete these to establish your athlete card and lift your Rating Confidence. You can log any test, any time — this is just the fastest way to get a full picture.</p>'+novRows+'</div>'
+      +(cardGroups?'<details class="ts-more"><summary>All card tests — build your rating <span class="ts-chev">›</span></summary>'+cardGroups+'</details>':'')
+      +featSection(novSet);
   } else {
-    body=groups.map(function(g){return grpBlock(g[0],g[1],avail,false);}).join('');
+    body='<div class="ts-secl">Card tests — build your rating</div>'+cardGroupsHtml(null)+featSection(null);
   }
   if(lockedRows.length)body+='<details class="ts-locked"><summary>'+ICO.lock+' '+lockedRows.length+' locked test'+(lockedRows.length===1?'':'s')+' — rank up to unlock <span class="ts-chev">›</span></summary>'+lockedRows.map(lockRow).join('')+'</details>';
   return '<div class="ts-page"><p class="ts-intro">Enter your best result for each test. New scores save as <b>pending</b> and count once a coach verifies them.</p>'+prog+pendingPreviewHTML()+body
