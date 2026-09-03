@@ -1135,6 +1135,41 @@ body.hasnav #foot{bottom:60px}
 .trn-chev{color:var(--dim);font-size:20px;transition:transform .2s}
 .trn-acc[open]>summary .trn-chev{transform:rotate(90deg)}
 .trn-body{padding:2px 14px 14px;border-top:1px solid var(--line)}
+.skt-intro{font-size:12.5px;color:var(--dim);margin:2px 2px 12px;line-height:1.45}
+.skcats{display:flex;flex-direction:column;gap:10px}
+.skcat{display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--ca);border-radius:var(--r-md);padding:14px;cursor:pointer;color:var(--txt)}
+.skcat:active{background:var(--s2)}
+.skcat-ic{width:42px;height:42px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:12px;background:var(--caBg);color:var(--ca)}
+.skcat-ic svg{width:23px;height:23px}
+.skcat-mid{flex:1;min-width:0}
+.skcat-nm{display:block;font-family:var(--disp);letter-spacing:.03em;font-size:16px;font-weight:800;color:var(--txt)}
+.skcat-sub{display:block;font-size:11.5px;color:var(--dim);margin-top:2px}
+.skcat-meta{font-size:10.5px;color:var(--ca);font-weight:800;flex:none;text-align:right;line-height:1.35;text-transform:uppercase;letter-spacing:.03em}
+.skcat-chev{color:var(--dim);font-size:22px;flex:none;line-height:1}
+.skcatwrap{display:block}
+.skcat-hero{display:flex;align-items:center;gap:12px;padding:16px;border-radius:var(--r-md);background:var(--caBg);border:1px solid var(--ca);margin-bottom:12px}
+.skcat-heroic{width:40px;height:40px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--ca)}
+.skcat-heroic svg{width:27px;height:27px}
+.skcat-heronm{font-family:var(--disp);letter-spacing:.04em;font-size:20px;font-weight:800;color:var(--txt)}
+.skt-legend{display:flex;gap:15px;flex-wrap:wrap;padding:6px 2px 14px;font-size:11px;color:var(--dim)}
+.skl-i{display:inline-flex;align-items:center;gap:5px}
+.skl-dot{width:9px;height:9px;border-radius:3px;display:inline-block}
+.skl-found{background:var(--mag)}
+.skl-ready{background:#a56bff}
+.skl-star{color:var(--acc);font-size:12px}
+.skflist{display:flex;flex-direction:column;gap:8px}
+.skf{background:var(--s1);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.skf[open]{border-color:var(--ca)}
+.skf>summary.skf-sum{list-style:none;display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer}
+.skf>summary.skf-sum::-webkit-details-marker{display:none}
+.skf-nm{font-weight:700;font-size:14px;color:var(--txt);flex:none;max-width:44%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.skf-lvl{font-size:11.5px;font-weight:800;color:var(--ca);flex:none}
+.skf-bar{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;min-width:26px}
+.skf-bar i{display:block;height:100%;background:var(--ca)}
+.skf-chev{color:var(--dim);font-size:19px;flex:none;transition:transform .15s}
+.skf[open] .skf-chev{transform:rotate(90deg)}
+.skf-body{padding:4px 14px 14px;border-top:1px solid var(--line)}
+.skf-mark{margin-top:12px;width:100%}
 .trn-prog{cursor:pointer;background:linear-gradient(120deg,rgba(255,45,138,.15),rgba(255,45,138,.03));border-color:rgba(255,45,138,.45)}
 .trn-prog>.trn-h{display:flex;align-items:center;gap:12px;padding:15px 14px}
 .trn-prog .trn-ic-prog{background:linear-gradient(135deg,var(--mag),#8a2be2)}
@@ -2714,20 +2749,57 @@ function renderDevSkill(id){var el=document.getElementById('devInner');if(!el)re
    +(markBtn?'<div class="ss-sticky">'+markBtn+'</div>':'');}
 window.openDev=function(){var m=document.getElementById('devMask');if(!m){m=document.createElement('div');m.id='devMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="devInner"></div>';document.body.appendChild(m);}cap2List();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.closeDev=function(){var m=document.getElementById('devMask');if(m)m.style.display='none';};
-window.openDevSkill=function(id){var m=document.getElementById('devMask');if(m){cap2Skill(id);m.style.display='block';try{window.scrollTo(0,0);}catch(e){}}};
+window.openDevSkill=function(id){var m=document.getElementById('devMask');if(!m)return;var cat=CAP_NAV[id];_devOpen[id]=true;if(cat){openDevCat(cat);}else{cap2Skill(id);}m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.openDevFamily=window.openDevSkill;
 
 /* ===== Skill Tree — capability presentation over the tree data (nav groups, feeds label, readiness/limiter) ===== */
-var CAP_NAV={'s.strict-pullup':'Bar & Rings','s.c2b':'Bar & Rings','s.ttb':'Bar & Rings','s.bmu':'Bar & Rings','s.rmu':'Bar & Rings','s.rope-climb':'Bar & Rings','s.dip':'Bar & Rings','s.handstand':'Hand Balance','s.strict-hspu':'Hand Balance','s.hsw':'Hand Balance','s.lsit':'Core & Levers','s.front-lever':'Core & Levers','s.pistol':'Lower Body','s.du':'Coordination'};
-var CAP_NAVGROUPS=['Bar & Rings','Hand Balance','Core & Levers','Lower Body','Coordination'];
+var CAP_NAV={'s.strict-pullup':'BARS','s.c2b':'BARS','s.ttb':'BARS','s.bmu':'BARS','s.dip':'BARS','s.rmu':'RINGS','s.rope-climb':'RINGS','s.handstand':'HAND BALANCE / INVERSION','s.strict-hspu':'HAND BALANCE / INVERSION','s.hsw':'HAND BALANCE / INVERSION','s.lsit':'CORE','s.front-lever':'CORE','s.pistol':'LOWER BODY','s.du':'COORDINATION'};
+var CAP_NAVGROUPS=['BARS','RINGS','HAND BALANCE / INVERSION','CORE','LOWER BODY','COORDINATION'];
+var _CIC={bars:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6v12M20 6v12M4 10h16"/></svg>',rings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="8" cy="8.5" r="3.2"/><circle cx="16" cy="8.5" r="3.2"/><path d="M8 11.7v6M16 11.7v6"/></svg>',hand:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="19" r="2"/><path d="M12 16.5V9M12 9L8 3M12 9l4-6"/></svg>',core:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 12h18M7 9v6M17 9v6"/></svg>',lower:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v8l-3 10M10 11l4 1 2 9"/></svg>',coord:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 12c2.5-5 5.5 5 9 0s6.5-5 9 0"/></svg>'};
+var CAP_CATMETA={
+ 'BARS':{key:'bars',ca:'#ff2d8a',caBg:'rgba(255,45,138,.15)',sub:'Pull-ups · muscle-up · C2B · T2B',ic:_CIC.bars},
+ 'RINGS':{key:'rings',ca:'#ffb020',caBg:'rgba(255,176,32,.15)',sub:'Ring muscle-up · rope climb',ic:_CIC.rings},
+ 'HAND BALANCE / INVERSION':{key:'hand',ca:'#a56bff',caBg:'rgba(165,107,255,.15)',sub:'Handstand · HSPU · HS walk',ic:_CIC.hand},
+ 'CORE':{key:'core',ca:'#22d3ee',caBg:'rgba(34,211,238,.15)',sub:'L-sit · front lever',ic:_CIC.core},
+ 'LOWER BODY':{key:'lower',ca:'#34d399',caBg:'rgba(52,211,153,.15)',sub:'Pistol squat',ic:_CIC.lower},
+ 'COORDINATION':{key:'coord',ca:'#4c8dff',caBg:'rgba(76,141,255,.15)',sub:'Double-unders',ic:_CIC.coord}
+};
+var _devCat=null;var _devOpen={};
 var CAP_FEEDS={'s.strict-pullup':'Skill · Pulling Gymnastics','s.c2b':'Skill · Pulling Gymnastics','s.ttb':'Skill · Pulling Gymnastics','s.bmu':'Skill · Pulling Gymnastics','s.rmu':'Skill · Pulling Gymnastics','s.rope-climb':'Skill · Coordination','s.dip':'Skill · Support','s.handstand':'Skill · Inversion','s.strict-hspu':'Skill · Inversion','s.hsw':'Skill · Inversion','s.lsit':'Skill · Static / Core','s.front-lever':'Skill · Static / Core','s.pistol':'Skill · Coordination','s.du':'Skill · Coordination'};
-function cap2List(){var el=document.getElementById('devInner');if(!el)return;
-  var body=CAP_NAVGROUPS.map(function(g){var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===g;});if(!sks.length)return '';
-    var cards=sks.map(function(sk){var st=devSkillState(sk);var pct=Math.round(st.done/st.total*100);
-      return '<button class="dev-fam'+(st.mastered?' mastered':'')+'" onclick="openDevSkill(&#39;'+sk.id+'&#39;)"><span class="dev-fam-top"><span class="dev-fam-nm">'+esc(sk.name)+'</span><span class="dev-lvl">'+(st.mastered?'&#9733; ':'')+esc(st.level)+'</span></span><span class="dev-bar"><i style="width:'+pct+'%"></i></span><span class="dev-fam-sub">'+st.done+' of '+st.total+' milestones</span></button>';}).join('');
-    return '<div class="dev-group">'+g+'</div><div class="dev-grid">'+cards+'</div>';}).join('');
+function cap2List(){_devCat=null;var el=document.getElementById('devInner');if(!el)return;
+  var tiles=CAP_NAVGROUPS.map(function(g){var meta=CAP_CATMETA[g]||{};var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===g;});
+    var mastered=sks.filter(function(sk){return devSkillState(sk).mastered;}).length;
+    var inprog=sks.filter(function(sk){var st=devSkillState(sk);return st.done>0&&!st.mastered;}).length;
+    var metaTxt=sks.length+' skill'+(sks.length===1?'':'s')+(mastered?'<br>'+mastered+' mastered':(inprog?'<br>'+inprog+' in progress':''));
+    return '<button class="skcat skcat-'+(meta.key||'x')+'" style="--ca:'+(meta.ca||'#888')+';--caBg:'+(meta.caBg||'rgba(255,255,255,.1)')+'" onclick="openDevCat(&#39;'+g+'&#39;)"><span class="skcat-ic">'+(meta.ic||'')+'</span><span class="skcat-mid"><span class="skcat-nm">'+esc(g)+'</span><span class="skcat-sub">'+esc(meta.sub||'')+'</span></span><span class="skcat-meta">'+metaTxt+'</span><span class="skcat-chev">&rsaquo;</span></button>';}).join('');
   el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeDev()">&lsaquo;</button><span class="ss-topttl">Skill Tree</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
-   +'<div class="ss-h">Skill Tree</div>'+body;}
+   +'<div class="ss-h">Skill Tree</div><p class="skt-intro">Six disciplines. Open one to see your skills and the level you’re at on each.</p>'
+   +'<div class="skcats">'+tiles+'</div>'+'<div class="skt-legend"><span class="skl-i"><span class="skl-dot skl-found"></span>Foundations</span><span class="skl-i"><span class="skl-dot skl-ready"></span>Readiness</span><span class="skl-i"><span class="skl-star">&#9733;</span>Achievement</span></div>';}
+function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);
+  var capsHTML='';
+  if(rd.total){var items=rd.items.map(function(it){var frac=it.met?1:((it.cur!=null&&it.target)?Math.max(0.12,Math.min(0.95,it.cur/it.target)):0.25);return {name:it.name,frac:frac,met:it.met};});
+    var lim=null;items.forEach(function(x){if(!x.met&&(lim===null||x.frac<lim.frac))lim=x;});
+    capsHTML='<div class="dev-sec-l">Readiness</div><div class="cn-caps">'+items.map(function(x){var isL=lim&&x.name===lim.name;
+      return '<div class="cn-cap"><span class="cn-cap-nm'+(isL?' cn-lim':'')+'">'+esc(x.name)+'</span>'+capBar(x.frac)+(isL?'<span class="cn-limtag">limiter</span>':(x.met?'<span class="cn-metmk">'+devTick()+'</span>':''))+'</div>';}).join('')+'</div>';}
+  var pathHTML=sk.stages.map(function(n,i){var stt=st.ach[i]?'done':(i===st.cur?'now':'up');
+    var dot=st.ach[i]?'<span class="dev-dot done">'+devTick()+'</span>':(i===st.cur?'<span class="dev-dot now"></span>':'<span class="dev-dot"></span>');
+    var starmk=n.star?' <span class="dev-star">&#9733;</span>':'';var nowchip=(i===st.cur)?' <span class="dev-nowchip">NOW</span>':'';
+    return '<div class="dev-node '+stt+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+nowchip+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';}).join('');
+  var next=st.next;var markBtn=(next&&!next.seed)?'<button class="btn2 skf-mark" onclick="devMarkNext(&#39;'+sk.id+'&#39;)">Mark &ldquo;'+esc(next.name)+'&rdquo; done</button>':'';
+  return capsHTML+'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div><div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'+markBtn;}
+function openDevCat(cat){_devCat=cat;var el=document.getElementById('devInner');if(!el)return;var meta=CAP_CATMETA[cat]||{};
+  var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===cat;});
+  var rows=sks.map(function(sk){var st=devSkillState(sk);var pct=Math.round(st.done/st.total*100);var op=_devOpen[sk.id]?' open':'';
+    var lvl=(st.mastered?'&#9733; ':'')+esc(st.level);
+    return '<details class="skf"'+op+' ontoggle="devToggleRow(&#39;'+sk.id+'&#39;,this.open)"><summary class="skf-sum"><span class="skf-nm">'+esc(sk.name)+'</span><span class="skf-lvl">'+lvl+'</span><span class="skf-bar"><i style="width:'+pct+'%"></i></span><span class="skf-chev">&rsaquo;</span></summary><div class="skf-body">'+devRowBody(sk)+'</div></details>';}).join('');
+  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="cap2List()">&lsaquo;</button><span class="ss-topttl">'+esc(cat)+'</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
+   +'<div class="skcatwrap" style="--ca:'+(meta.ca||'#888')+';--caBg:'+(meta.caBg||'rgba(255,255,255,.1)')+'">'
+   +'<div class="skcat-hero"><span class="skcat-heroic">'+(meta.ic||'')+'</span><span class="skcat-heronm">'+esc(cat)+'</span></div>'
+   +'<div class="skt-legend"><span class="skl-i"><span class="skl-dot skl-found"></span>Foundations</span><span class="skl-i"><span class="skl-dot skl-ready"></span>Readiness</span><span class="skl-i"><span class="skl-star">&#9733;</span>Achievement</span></div>'
+   +'<div class="skflist">'+(rows||'<p class="rmnote">More skills are coming to this discipline soon.</p>')+'</div></div>';
+  try{window.scrollTo(0,0);}catch(e){}}
+window.openDevCat=openDevCat;
+window.devToggleRow=function(id,open){_devOpen[id]=!!open;};
 function cap2Skill(id){var el=document.getElementById('devInner');if(!el)return;var sk=devSkill(id);if(!sk){cap2List();return;}
   var st=devSkillState(sk);var rd=devReady(sk);
   var starIx=-1;sk.stages.forEach(function(s,i){if(s.star)starIx=i;});
@@ -2828,7 +2900,7 @@ function renderCapSkill(id){var el=document.getElementById('capInner');if(!el)re
    +'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>';}
 window.capSlice=function(id){var m=document.getElementById('capMask');if(!m){m=document.createElement('div');m.id='capMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="capInner"></div>';document.body.appendChild(m);}renderCapSkill(id||'bar-muscle-up');m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.capClose=function(){var m=document.getElementById('capMask');if(m)m.style.display='none';};
-window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual'};devSave();cap2Skill(sid);};
+window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual'};devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}};
 window.devLogBest=function(sid,key){var el=document.getElementById('devBestIn');if(!el)return;var v=parseInt(el.value,10);if(!v||v<1){showToast('Enter your best rep count');return;}var r=devIngest(key,v,{source:'best'});renderDevSkill(sid);try{window.scrollTo(0,0);}catch(e){}if(!(r&&r.crossed.length))showToast('Saved &mdash; best updated');};
 function progressChooserHTML(){return '<div class="dsec">Progress</div>'
   +'<button class="dev-launch" onclick="openSkillTree()"><span class="dev-ll"><span class="dev-lk">Class Ladder</span></span><span class="ss-chev">&rsaquo;</span></button>'
