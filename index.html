@@ -1235,7 +1235,7 @@ body.hasnav #foot{bottom:60px}
 .ppage .card{width:100%;max-width:540px;height:100%;max-height:100%;border-radius:0;padding:0;display:flex;flex-direction:column;overflow:hidden;margin:0 auto}
 .pphead{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;padding-top:calc(13px + env(safe-area-inset-top,0));border-bottom:1px solid var(--line);flex:none}
 .pphead-l{display:flex;align-items:center;gap:10px;min-width:0}
-.ppback{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--s2);color:var(--txt);font-size:24px;line-height:1;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 3px 3px 0}
+.ppback{flex:none;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--s2);color:var(--txt);font-size:24px;line-height:1;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 3px 3px 0}
 .ppback:active{background:var(--s3)}
 .pp-logo{height:28px;width:auto;flex:none;filter:drop-shadow(0 0 5px rgba(255,45,138,.35))}
 .ppgear .ppgic{width:30px;height:30px;display:block}
@@ -1665,7 +1665,9 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
 .mask.fullpage{align-items:stretch;justify-content:stretch}
 .mask.fullpage>.card{width:100%;max-width:640px;height:100%;max-height:100%;border-radius:0;border:0;padding:0;overflow-y:auto;-webkit-overflow-scrolling:touch;margin:0 auto;position:relative}
 .mask.fullpage>.card>.fp-head{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:12px;padding:calc(12px + env(safe-area-inset-top,0)) 16px 12px;background:var(--panel);border-bottom:1px solid var(--line)}
-.fp-head .fp-back{width:42px;height:42px;flex:none;background:rgba(255,255,255,.08);border:0;padding:0;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.fp-head .fp-back{width:40px;height:40px;flex:none;background:var(--s1);border:1px solid rgba(255,255,255,.14);padding:0;cursor:pointer;border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--txt);font-size:0;line-height:1}
+.fp-back .ico,.fp-back svg{display:none}
+.fp-back::before{content:'\2039';display:block;font-size:1.3rem;margin-top:-2px}
 .fp-head .fp-back img{width:42px;height:42px;display:block}
 .fp-head .fp-back .ico{width:22px;height:22px;color:var(--txt);display:flex}
 .fp-head .fp-back .ico svg{width:22px;height:22px}
@@ -2624,15 +2626,32 @@ var DEV_G=[
    {id:'d.bmu-20',name:'20 unbroken BMU',level:'Mastery',std:'20 unbroken',seed:{gcap:'barmu',min:20}}
   ]},
  {id:'s.rmu',name:'Ring Muscle-Up',group:'Pulling',rated:'ringmu',
-  readiness:[{id:'m.strict-pullup-5',name:'5 Strict Pull-Ups',seed:{test:'strictpullups',min:5}}],
+  readiness:[
+   {id:'m.strict-pullup-5',name:'5 Strict Pull-Ups',seed:{test:'strictpullups',min:5}},
+   {id:'rs.dip10',name:'10 Ring Dips'}
+  ],
   stages:[
    {id:'f.ring-support-20',name:'Ring Support',level:'Foundation',std:'20s'},
    {id:'f.false-grip-hang',name:'False-Grip Hang',level:'Developing',std:'20s'},
-   {id:'m.ring-dip-10',name:'Strict Ring Dips',level:'Developing',std:'5–10 deep'},
    {id:'d.low-ring-trans',name:'Low-Ring Transitions',level:'Developing',std:'5 controlled'},
    {id:'s.rmu.star',name:'Ring Muscle-Up',level:'Achievement',std:'1 RMU',star:true,seed:{gcap:'ringmu',min:1}},
-   {id:'d.rmu-3',name:'3 RMU',level:'Competent',std:'3 unbroken',seed:{gcap:'ringmu',min:3}},
-   {id:'d.rmu-10',name:'10+ RMU / Strict',level:'Mastery',std:'10+ unbroken or strict',seed:{gcap:'ringmu',min:10}}
+   {id:'d.rmu-3',name:'3 unbroken RMU',level:'Competent',std:'3 unbroken',seed:{gcap:'ringmu',min:3}},
+   {id:'d.rmu-5',name:'5 unbroken RMU',level:'Proficient',std:'5 unbroken',seed:{gcap:'ringmu',min:5}},
+   {id:'d.rmu-8',name:'8 unbroken RMU',level:'Advanced',std:'8 unbroken',seed:{gcap:'ringmu',min:8}},
+   {id:'d.rmu-12',name:'12 unbroken RMU',level:'Mastery',std:'12 unbroken',seed:{gcap:'ringmu',min:12}}
+  ]},
+ {id:'s.strict-rmu',name:'Strict Ring Muscle-Up',group:'Pulling',rated:null,
+  readiness:[
+   {id:'m.strict-pullup-10',name:'10 Strict Pull-Ups',seed:{test:'strictpullups',min:10}},
+   {id:'rs.dip5',name:'5 Strict Ring Dips'}
+  ],
+  stages:[
+   {id:'srmu.fghang',name:'False-Grip Hang',level:'Developing',std:'30s'},
+   {id:'srmu.dip',name:'Deep Strict Ring Dips',level:'Developing',std:'5 deep, RTO'},
+   {id:'srmu.neg',name:'Slow RMU Negatives',level:'Developing',std:'3× 5s lower'},
+   {id:'srmu.star',name:'Strict Ring Muscle-Up',level:'Achievement',std:'1 strict rep',star:true},
+   {id:'srmu.3',name:'3 Strict RMU',level:'Competent',std:'3 unbroken'},
+   {id:'srmu.5',name:'5 Strict RMU',level:'Proficient',std:'5 unbroken'}
   ]},
  {id:'s.handstand',name:'Handstand',group:'Handstand',rated:'hshold',
   stages:[
@@ -2648,16 +2667,17 @@ var DEV_G=[
  {id:'s.strict-hspu',name:'Strict HSPU',group:'Handstand',rated:null,
   readiness:[
    {id:'f.pushup-25',name:'25 Push-Ups'},
-   {id:'m.strictpress-40',name:'Strict Press · overhead strength',seed:{test:'strictpress',minScore:40}},
    {id:'f.wall-hs-30',name:'30s Chest-to-Wall HS'}
   ],
   stages:[
    {id:'f.pike-pushup-10',name:'Pike Push-Ups',level:'Foundation',std:'10 reps'},
+   {id:'m.strictpress-40',name:'Overhead Press strength',level:'Developing',std:'strict press rating 40+',seed:{test:'strictpress',minScore:40}},
    {id:'d.box-pike-hspu',name:'Box Pike HSPU',level:'Developing',std:'10 reps'},
    {id:'s.strict-hspu.star',name:'Strict HSPU',level:'Achievement',std:'1 rep',star:true,seed:{gcap:'hspu',min:1}},
    {id:'d.strict-hspu-5',name:'5 Strict HSPU',level:'Competent',std:'5 reps',seed:{gcap:'hspu',min:5}},
    {id:'d.strict-hspu-10',name:'10 Strict HSPU',level:'Advanced',std:'10 reps',seed:{gcap:'hspu',min:10}},
-   {id:'d.freestanding-hspu',name:'Freestanding HSPU',level:'Mastery',std:'deficit or freestanding (branch)'}
+   {id:'d.deficit-hspu',name:'Deficit HSPU',level:'Advanced',std:'4\u2033+ deficit'},
+   {id:'d.freestanding-hspu',name:'Freestanding HSPU',level:'Mastery',std:'free-balance, no wall'}
   ]},
  {id:'s.hsw',name:'Handstand Walk',group:'Handstand',rated:'hswalk',
   readiness:[
@@ -2692,6 +2712,7 @@ var DEV_G=[
    {id:'f.scap-pull-8',name:'Scapular control'}
   ],
   stages:[
+   {id:'fl.skincat',name:'Skin-the-Cat',level:'Foundation',std:'3 slow rotations'},
    {id:'d.tuck-fl',name:'Tuck Front Lever',level:'Developing',std:'10s',seed:{test:'frontlever',variant:'tuck',min:10}},
    {id:'d.adv-tuck-fl',name:'Advanced Tuck',level:'Competent',std:'10s'},
    {id:'d.straddle-fl',name:'Straddle / One-Leg',level:'Proficient',std:'5–10s',seed:{test:'frontlever',variant:'straddle',min:5}},
@@ -2731,8 +2752,10 @@ var DEV_G=[
    {id:'d.dip-5',name:'5 Strict Dips',level:'Competent',std:'5 reps'},
    {id:'d.dip-10',name:'10 Strict Dips',level:'Proficient',std:'10 reps'},
    {id:'d.dip-15',name:'15 Strict Dips',level:'Advanced',std:'15 reps'},
-   {id:'d.weighted-dip-30',name:'Weighted Dip +30kg',level:'Advanced',std:'+30kg'},
-   {id:'d.weighted-dip',name:'Weighted Dip +70kg',level:'Mastery',std:'+70kg'}
+   {id:'d.weighted-dip-10',name:'Weighted Dip +10kg',level:'Advanced',std:'+10kg'},
+   {id:'d.weighted-dip-20',name:'Weighted Dip +20kg',level:'Advanced',std:'+20kg'},
+   {id:'d.weighted-dip-40',name:'Weighted Dip +40kg',level:'Mastery',std:'+40kg'},
+   {id:'d.weighted-dip',name:'Weighted Dip +60kg',level:'Mastery',std:'+60kg'}
   ]},
  {id:'s.squat',name:'Back Squat',group:'Barbell',rated:'backsquat',stages:[{id:'squat.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'backsquat',minScore:20}},{id:'squat.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'backsquat',minScore:35}},{id:'squat.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'backsquat',minScore:50}},{id:'squat.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'backsquat',minScore:65}},{id:'squat.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'backsquat',minScore:80}},{id:'squat.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'backsquat',minScore:92}}]},
  {id:'s.deadlift',name:'Deadlift',group:'Barbell',rated:'deadlift',stages:[{id:'deadlift.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'deadlift',minScore:20}},{id:'deadlift.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'deadlift',minScore:35}},{id:'deadlift.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'deadlift',minScore:50}},{id:'deadlift.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'deadlift',minScore:65}},{id:'deadlift.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'deadlift',minScore:80}},{id:'deadlift.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'deadlift',minScore:92}}]},
@@ -2824,6 +2847,7 @@ var DEV_G=[
  {id:'s.back-lever',name:'Back Lever',group:'Core / Lever',rated:null,
   readiness:[{id:'d.tuck-fl',name:'Tuck Front Lever'}],
   stages:[
+   {id:'bl.germanhang',name:'German Hang',level:'Foundation',std:'30s hold'},
    {id:'bl.tuck',name:'Tuck Back Lever',level:'Developing',std:'10s'},
    {id:'bl.strad',name:'Straddle Back Lever',level:'Proficient',std:'5s'},
    {id:'bl.star',name:'Full Back Lever',level:'Advanced',std:'3s',star:true},
@@ -2968,8 +2992,8 @@ var _devCat=null;var _devOpen={};
 var CAP_FEEDS={'s.strict-pullup':'Skill · Pulling Gymnastics','s.c2b':'Skill · Pulling Gymnastics','s.ttb':'Skill · Pulling Gymnastics','s.bmu':'Skill · Pulling Gymnastics','s.rmu':'Skill · Pulling Gymnastics','s.rope-climb':'Skill · Coordination','s.dip':'Skill · Support','s.handstand':'Skill · Inversion','s.strict-hspu':'Skill · Inversion','s.hsw':'Skill · Inversion','s.lsit':'Skill · Static / Core','s.front-lever':'Skill · Static / Core','s.pistol':'Skill · Coordination','s.du':'Skill · Coordination'};
 _CIC.barbell='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 12h18M6 8v8M9 6v12M15 6v12M18 8v8"/></svg>';
 CAP_CATMETA['BARBELL']={key:'barbell',ca:'#ff5c5c',caBg:'rgba(255,92,92,.15)',sub:'Squat · deadlift · olympic lifts',ic:_CIC.barbell};
-Object.assign(CAP_NAV,{'s.squat':'BARBELL','s.deadlift':'BARBELL','s.bench':'BARBELL','s.press':'BARBELL','s.powerclean':'BARBELL','s.cleanjerk':'BARBELL','s.snatch':'BARBELL','s.ring-support':'RINGS','s.ring-row':'RINGS','s.strict-bmu':'RIG'});
-Object.assign(CAP_FEEDS,{'s.squat':'Rating · Strength','s.deadlift':'Rating · Strength','s.bench':'Rating · Strength','s.press':'Rating · Strength','s.powerclean':'Rating · Power','s.cleanjerk':'Off-card · Olympic lift','s.snatch':'Rating · Skill','s.ring-support':'Skill · Support','s.ring-row':'Skill · Pulling Gymnastics','s.strict-bmu':'Skill · Pulling Gymnastics'});
+Object.assign(CAP_NAV,{'s.squat':'BARBELL','s.deadlift':'BARBELL','s.bench':'BARBELL','s.press':'BARBELL','s.powerclean':'BARBELL','s.cleanjerk':'BARBELL','s.snatch':'BARBELL','s.ring-support':'RINGS','s.ring-row':'RINGS','s.strict-rmu':'RINGS','s.strict-bmu':'RIG'});
+Object.assign(CAP_FEEDS,{'s.squat':'Rating · Strength','s.deadlift':'Rating · Strength','s.bench':'Rating · Strength','s.press':'Rating · Strength','s.powerclean':'Rating · Power','s.cleanjerk':'Off-card · Olympic lift','s.snatch':'Rating · Skill','s.ring-support':'Skill · Support','s.ring-row':'Skill · Pulling Gymnastics','s.strict-rmu':'Skill · Pulling Gymnastics','s.strict-bmu':'Skill · Pulling Gymnastics'});
 Object.assign(CAP_NAV,{'s.du-cross':'COORDINATION','s.triple':'COORDINATION'});
 Object.assign(CAP_FEEDS,{'s.du-cross':'Skill · Coordination','s.triple':'Skill · Coordination'});
 Object.assign(CAP_NAV,{'s.shrimp':'LOWER BODY','s.nordic':'LOWER BODY','s.boxjump':'LOWER BODY','s.hollow':'CORE','s.back-lever':'CORE','s.dragon':'CORE','s.kip-hspu':'HAND BALANCE / INVERSION','s.press-hs':'HAND BALANCE / INVERSION'});
@@ -3855,7 +3879,7 @@ function buildTrainHTML(){
       +'<span class="tt-prog"><span class="tt-ic">'+ICO.program+'</span>Unranked Program</span></div>'
     +rdy
     +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+questCompactHTML()+'<button class="tt-week" onclick="openWeek()"><span class="tt-wk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg></span><span class="tt-wk-l">Week ahead</span><span class="arw">›</span></button></div>';
-  var TB=[['card','Log Scores',ICO.target],['dev','Extra Tests',ICO.tree],['wod','WOD Scaling',ICO.gear],['legacy','Previous Bests',ICO.star]];
+  var TB=[['card','Log Scores',ICO.target],['scale','For your WODs',ICO.gear]];
   var btns=TB.map(function(x){return '<button class="dcard trn-btn" onclick="openTrainPage(&#39;'+x[0]+'&#39;)"><span class="dc-ic">'+x[2]+'</span><span class="dc-t"><b>'+x[1]+'</b></span><span class="dc-chev">›</span></button>';}).join('');
   return today+'<div class="dsec">Log your training</div>'+btns;
 }
@@ -4206,8 +4230,14 @@ window.removePrevBest=function(id){if(PREV[id]!=null){delete PREV[id];savePREV()
   var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();};
 function wireTestInputs(root){}   // no live-score preview — Louis: don't reveal the rating until AFTER they submit (the score column only fills in for saved values)
 var _trainPage=null;
+function trainScaleInner(){
+  return '<p class="ts-intro">Numbers that scale your training to you \u2014 never your card, no verification needed.</p>'
+    +'<details class="ts-grp" open><summary class="ts-grpsum"><span class="ts-grpnm">Working maxes &amp; capacities</span><span class="ts-chev">\u203a</span></summary>'+wodScalingInner()+'</details>'
+    +'<details class="ts-grp"><summary class="ts-grpsum"><span class="ts-grpnm">Conditioning &amp; benchmark tests</span><span class="ts-chev">\u203a</span></summary>'+buildTestsHTML('dev')+'</details>'
+    +'<details class="ts-grp"><summary class="ts-grpsum"><span class="ts-grpnm">Previous bests <em class="betap">beta</em></span><span class="ts-chev">\u203a</span></summary>'+legacyLogInner()+'</details>';
+}
 window.openTrainPage=function(key){
-  var M={card:['Log Scores',function(){return buildTestsHTML('card');}],dev:['Extra Tests',function(){return buildTestsHTML('dev');}],wod:['WOD Scaling',function(){return wodScalingInner();}],legacy:['Previous Bests',function(){return legacyLogInner();}]};
+  var M={card:['Log Scores',function(){return buildTestsHTML('card');}],scale:['For your WODs',function(){return trainScaleInner();}],dev:['Extra Tests',function(){return buildTestsHTML('dev');}],wod:['WOD Scaling',function(){return wodScalingInner();}],legacy:['Previous Bests',function(){return legacyLogInner();}]};
   var spec=M[key];if(!spec)return;_trainPage=key;
   var m=document.getElementById('trainMask');if(!m){m=document.createElement('div');m.id='trainMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="trainPgInner"></div>';document.body.appendChild(m);}
   document.getElementById('trainPgInner').innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeTrainPage()">&lsaquo;</button><span class="ss-topttl">'+spec[0]+'</span><button class="ss-close" onclick="closeTrainPage()">Close</button></div><div class="ss-h">'+spec[0]+'</div>'+spec[1]();
