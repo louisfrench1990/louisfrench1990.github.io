@@ -2593,7 +2593,7 @@ var DEV_G=[
   readiness:[
    {id:'m.strict-pullup-10',name:'10 Strict Pull-Ups',seed:{test:'strictpullups',min:10}},
    {id:'m.c2b-5',name:'5 unbroken C2B',seed:{test:'c2b1min',min:5}},
-   {id:'m.sb-dip-10m',name:'10 Straight-Bar Dips'},
+   {id:'d.dip-10',name:'10 Strict Dips'},
    {id:'m.ttb-10',name:'10 TTB / kip control',seed:{test:'t2b',min:10}}
   ],
   stages:[
@@ -2646,10 +2646,10 @@ var DEV_G=[
   ]},
  {id:'s.strict-hspu',name:'Strict HSPU',group:'Handstand',rated:null,
   readiness:[
-   {id:'f.pushup-25',name:'25 Push-Ups'},
    {id:'f.wall-hs-30',name:'30s Chest-to-Wall HS'}
   ],
   stages:[
+   {id:'f.pushup-25',name:'25 Push-Ups',level:'Foundation',std:'25 unbroken'},
    {id:'f.pike-pushup-10',name:'Pike Push-Ups',level:'Foundation',std:'10 reps'},
    {id:'d.box-pike-hspu',name:'Box Pike HSPU',level:'Developing',std:'10 reps'},
    {id:'s.strict-hspu.star',name:'Strict HSPU',level:'Achievement',std:'1 rep',star:true,seed:{gcap:'hspu',min:1}},
@@ -3240,8 +3240,8 @@ function v2Stat(key,rate,counts){
   if(key==='SKL'){
     var _sks=DEV_G.filter(function(s){return CAP_NAV[s.id]&&CAP_NAV[s.id]!=='BARBELL';});
     var _pts=[],_discs={};
-    _sks.forEach(function(sk){var st=devSkillState(sk);if(st.done>0){var _lv=sk.stages[st.done-1]?sk.stages[st.done-1].level:'Mastery';_pts.push(SKILL_POINTS[_lv]||0);_discs[CAP_NAV[sk.id]]=1;}});
-    var _sc=0;if(_pts.length){_pts.sort(function(a,b){return b-a;});var _n=Math.min(8,_pts.length),_sum=0;for(var _i=0;_i<_n;_i++)_sum+=_pts[_i];_sc=_sum/_n;}   // SKILL = average of your best 8 skills (ability ceiling); breadth = Confidence, not this
+    _sks.forEach(function(sk){var st=devSkillState(sk);if(st.done>0){var _lv=sk.stages[st.done-1]?sk.stages[st.done-1].level:'Mastery';_pts.push(40+(SKILL_POINTS[_lv]||0)*0.6);_discs[CAP_NAV[sk.id]]=1;}});
+    var _sc=0;if(_pts.length){var _sum=0;for(var _i=0;_i<_pts.length;_i++)_sum+=_pts[_i];_sc=_sum/_pts.length;}   // SKILL = mean of ALL started skills on a compressed band (started~46, Competent~73, Proficient~82, Mastery 100); breadth = Confidence, not this
     var _DISCS=['RIG','RINGS','HAND BALANCE / INVERSION','CORE','LOWER BODY','COORDINATION'];
     var _cov=0,_miss=[];_DISCS.forEach(function(d){if(_discs[d])_cov++;else _miss.push(d);});
     return {score:Math.round(_sc),slots:_DISCS.length,coveredSlots:_cov,missing:_miss};}
@@ -4461,7 +4461,7 @@ function updateNav(active){[].forEach.call(document.querySelectorAll('.anav-b'),
 window.navSoon=function(){try{showToast('Coming soon');}catch(e){}};   // locked tabs give feedback without navigating to a dead page, revealing feature names, or stealing the active state
 function navFor(pp){return (pp==='vault'||pp==='tree')?'home':(pp==='submit')?'train':pp;}   // vault/tree live under Home; submit under Train
 window.goNav=function(page){
-  try{closeSession();}catch(e){} try{closeLog();}catch(e){} try{closeWeek();}catch(e){} try{closeDev();}catch(e){} try{closeSkillTree();}catch(e){} try{closeTrainPage();}catch(e){} try{closeRM();}catch(e){} try{closeVerify();}catch(e){} try{closeShop();}catch(e){} try{closeTests();}catch(e){} try{closeTree();}catch(e){} try{closeTiers();}catch(e){} try{closePursuit();}catch(e){}
+  try{closeSession();}catch(e){} try{closeLog();}catch(e){} try{closeWeek();}catch(e){} try{closeDev();}catch(e){} try{closeTrainPage();}catch(e){} try{closeRM();}catch(e){} try{closeVerify();}catch(e){} try{closeShop();}catch(e){} try{closeTests();}catch(e){} try{closeTree();}catch(e){} try{closeTiers();}catch(e){} try{closePursuit();}catch(e){}
   if((page==='train'||page==='submit')&&!coachMode()&&!hasConsent()&&!(athleteSex||Object.keys(TESTS).length)){openOnboard();return;}
   if(page==='program'){updateNav('train');closeMyLog();try{window.scrollTo(0,0);}catch(e){}return;}   // the programme is the main app, under the Train tab
   var valid={home:1,tree:1,vault:1,train:1,submit:1,compete:1,explore:1,fantasy:1};
@@ -5137,6 +5137,7 @@ function openMask(){var pw=document.getElementById('pw');pw.value='';document.ge
 window.askAthlete=()=>{pwIntent='athlete';document.getElementById('pwTitle').textContent='Athlete tracks';document.getElementById('pwSub').textContent='Enter the athlete password to unlock the Athlete, Lifting, Gymnastics & Engine tracks (view only).';openMask();};
 window.askCoach=()=>{pwIntent='coach';document.getElementById('pwTitle').textContent='Coach — full access';document.getElementById('pwSub').textContent='Enter the coach password for edit mode, day-by-day navigation and the full 22-week programme.';openMask();};
 window.lockOut=()=>{unlocked=false;accessLevel='public';D=PUB;track='class';step=0;subStep=0;viewMode='day';viewWeek=null;selDay=null;if(boardMode){boardMode=false;document.body.classList.remove('boardmode');var bar=document.getElementById('boardbar');if(bar)bar.style.display='none';clockPause();}try{localStorage.removeItem('unranked-pw')}catch(e){}renderTabs();setBtns('public');applyNav();render();};
+window.logoutNow=function(){try{closeMyLog();closeTests();closeRM();closePrivacy();}catch(e){}lockOut();var g=document.getElementById('betaGate');if(g){g.style.display='flex';betaGateInit();}};
 window.closePw=()=>{document.getElementById('mask').classList.remove('on');document.getElementById('err').textContent=''};
 async function decBlob(pw,blob){const dec=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));const bk=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:dec(blob.salt),iterations:blob.iters,hash:'SHA-256'},bk,{name:'AES-GCM',length:256},false,['decrypt']);const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:dec(blob.iv)},key,dec(blob.data));return JSON.parse(new TextDecoder().decode(pt));}
 window.tryPw=async()=>{const pw=document.getElementById('pw').value;const err=document.getElementById('err');err.textContent='Checking…';
