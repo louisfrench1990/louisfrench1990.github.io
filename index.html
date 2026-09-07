@@ -1614,6 +1614,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
 .bb-band{font-family:var(--ui);font-size:15px;font-weight:800;padding:9px 15px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--dim);cursor:pointer}
 .bb-band.on{background:var(--mag);border-color:var(--mag);color:#fff}
 .bb-clock{display:inline-flex;align-items:center;gap:14px}
+#sclock,.bb-clock{display:none!important}   /* timer hidden on the whiteboard for now (unused) — remove this line to restore */
 .bb-round{font-family:var(--disp);font-weight:800;font-size:30px;color:var(--acc);letter-spacing:.02em;min-width:96px;text-align:center;font-variant-numeric:tabular-nums;text-transform:uppercase}
 .bbbig{position:fixed;left:0;right:0;top:0;bottom:96px;z-index:58;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:1.5vh}
 .bbbig-round{font-family:var(--disp);font-weight:800;font-size:6vw;color:var(--acc);letter-spacing:.02em;text-transform:uppercase;line-height:1}
@@ -1979,7 +1980,9 @@ window.enterBoard=function(){
   boardSyncSection();render();};   // open on the CURRENT section (whatever the coach was viewing), not forced to the WOD
 window.exitBoard=function(){boardMode=false;clock.big=false;document.body.classList.remove('boardmode');var bar=document.getElementById('boardbar');if(bar)bar.style.display='none';var bg=document.getElementById('bbbig');if(bg)bg.style.display='none';clockPause();renderTabs();render();};   // keep step+subStep so you return to the same section
 function coachMode(){return accessLevel==='coach';}
-function weekRange(){var ti=todayInfo();var cur=(ti&&ti.week)||D.weeks[0].week;var lo=D.weeks[0].week,hi=D.weeks[D.weeks.length-1].week;if(accessLevel==='coach')return [lo,hi];var c=Math.max(lo,Math.min(hi,cur));return [c,Math.min(hi,c+1)];}   // public+member: this week + next only
+function dayAheadDays(wkNum,wd){var ws=weekStart(wkNum);if(!ws)return 0;var d=new Date(ws+'T00:00:00');if(isNaN(d.getTime()))return 0;d.setDate(d.getDate()+WD.indexOf(wd));var n=new Date();var t=new Date(n.getFullYear(),n.getMonth(),n.getDate());return Math.round((d-t)/86400000);}   // calendar days from today to this programme day (negative = past)
+function memberDayLocked(wkNum,wd){return accessLevel!=='coach' && dayAheadDays(wkNum,wd)>=7;}   // rolling window: members/public see today + the next 6 days only (7 days from the current date); coaches see all
+function weekRange(){var ti=todayInfo();var cur=(ti&&ti.week)||D.weeks[0].week;var lo=D.weeks[0].week,hi=D.weeks[D.weeks.length-1].week;if(accessLevel==='coach')return [lo,hi];var c=Math.max(lo,Math.min(hi,cur));var nx=Math.min(hi,c+1);return [c,(nx>c&&!memberDayLocked(nx,'MON'))?nx:c];}   // public+member: rolling 7-day window (this week, plus next week's days only once they fall inside 7 days of today)
 // read a plain OBJECT from localStorage, tolerating anything: bad JSON, 'null', an array, a string, a number.
 // (JSON.parse('null') succeeds and returns null, which slipped past the old try/catch and blanked the whole app.)
 function lsObj(key){try{var raw=localStorage.getItem(key);if(raw==null)return {};var v=JSON.parse(raw);
@@ -4898,6 +4901,7 @@ function renderAheadStrip(show){var el=document.getElementById('aheadStrip');if(
   for(var wi=0;wi<D.weeks.length&&chips.length<7;wi++){var wk=D.weeks[wi];if(wk.week<range[0]||wk.week>range[1])continue;
     for(var di=0;di<WDlist.length&&chips.length<7;di++){var wd=WDlist[di];
       if(tWeek!=null){if(wk.week<tWeek)continue;if(wk.week===tWeek&&WD.indexOf(wd)<WD.indexOf(tWd))continue;}
+      if(memberDayLocked(wk.week,wd))continue;   // rolling 7-day window — don't preview days more than 7 days out
       var isToday=(wk.week===tWeek&&wd===tWd);
       var head=dayHeadline(wk,wd);
       // members are locked to today's live session in the day view; today jumps to it, other days open the full week-ahead overview
@@ -5095,6 +5099,7 @@ function renderWeek(){
   var TRK=['class','athlete','lifting','gymnastics','engine'];
   var cards=WD.map(function(wd){
     var d=w.days[wd]; if(!d)return '';
+    if(memberDayLocked(wkNum,wd)){var _ws=weekStart(wkNum),_dt='';if(_ws){var _dd=new Date(_ws+'T00:00:00');_dd.setDate(_dd.getDate()+WD.indexOf(wd));if(!isNaN(_dd.getTime()))_dt=_dd.toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'});}return '<div class="wkday wklocked" style="opacity:.5"><div class="wkdname">'+wd+'</div><div class="wkmeta">🔒 Opens '+esc(_dt||'nearer the day')+'</div></div>';}   // rolling 7-day window — future days beyond 7 days stay closed to members
     var meta=esc((d.focus||'').toUpperCase()+(d.stimulus?(' · '+d.stimulus):''));
     var isWknd=(wd==='SAT'||wd==='SUN');
     var trackTabs='';
