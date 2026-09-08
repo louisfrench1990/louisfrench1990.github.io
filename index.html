@@ -4051,15 +4051,7 @@ window.clearMyData=function(){var keys=['unranked-tests','unranked-verified','un
   closePrivacy();try{closeMyLog();}catch(e){}render();if(!coachMode())openOnboard();};   // after wiping, drop the member back to the welcome screen
 /* ---- coach score verification (device-local): validate the coach password by decrypting the coach season blob ---- */
 async function verifyCoachPw(pw){try{var blob=await loadTier('coach');await decBlob(pw,blob);return true;}catch(e){return false;}}
-window.openVerify=function(){var m=document.getElementById('verMask');if(!m)return;var pend=[];SCORING.moves.forEach(function(mv){if(TESTS[mv.id]!=null&&!isVerified(mv.id))pend.push(mv);});
-  var pp=[];SCORING.moves.forEach(function(mv){if(prevPending(mv.id))pp.push(mv);});   // logged previous bests awaiting verification
-  var pr=pendingRungs();
-  var l=document.getElementById('verList');
-  var rows=pend.map(function(mv){return '<div class="ml-line"><span>'+esc(mv.name)+'</span><span class="ml-res">'+esc(fmtPerf(TESTS[mv.id],mv))+' · '+scoreOf(TESTS[mv.id],mv)+' pts</span></div>';}).join('');
-  if(pp.length)rows+='<div class="ver-sub">Previous bests (Legacy)</div>'+pp.map(function(mv){return '<div class="ml-line"><span>'+esc(mv.name)+' <em class="lgp-pend">'+ICO.clock+'</em></span><span class="ml-res">'+esc(fmtPerf(PREV[mv.id],mv))+' · '+scoreOf(PREV[mv.id],mv)+' pts</span></div>';}).join('');
-  if(pr.length)rows+='<div class="ver-sub">Skill milestones</div>'+pr.map(function(x){return '<div class="ml-line"><span>'+esc(x.sk.name)+' &mdash; '+esc(x.st.name)+' <em class="lgp-pend">'+ICO.clock+'</em></span><span class="ml-res">'+esc(x.st.level)+'</span></div>';}).join('');
-  if(l)l.innerHTML=(pend.length||pp.length||pr.length)?rows:'<p class="rmnote">Nothing pending — every entered score is already verified.</p>';
-  var pw=document.getElementById('ver-pw');if(pw)pw.value='';var e=document.getElementById('verErr');if(e)e.textContent='';m.classList.add('on');};
+window.openVerify=function(){var m=document.getElementById('verMask');if(!m)return;var pend=[];SCORING.moves.forEach(function(mv){if(TESTS[mv.id]!=null&&!isVerified(mv.id))pend.push(mv);});var pp=[];SCORING.moves.forEach(function(mv){if(prevPending(mv.id))pp.push(mv);});var pr=pendingRungs();var l=document.getElementById('verList');function ckRow(vk,name,res){return '<label style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08)"><input type="checkbox" class="ver-ck" data-vk="'+esc(vk)+'" checked style="width:18px;height:18px;flex:0 0 auto;accent-color:#7c4dff"><span style="flex:1">'+name+'</span><span class="ml-res">'+res+'</span></label>';}var rows=pend.map(function(mv){return ckRow('score:'+mv.id,esc(mv.name),esc(fmtPerf(TESTS[mv.id],mv))+' \u00b7 '+scoreOf(TESTS[mv.id],mv)+' pts');}).join('');if(pp.length)rows+='<div class="ver-sub">Previous bests (Legacy)</div>'+pp.map(function(mv){return ckRow('prev:'+mv.id,esc(mv.name),esc(fmtPerf(PREV[mv.id],mv))+' \u00b7 '+scoreOf(PREV[mv.id],mv)+' pts');}).join('');if(pr.length)rows+='<div class="ver-sub">Skill milestones</div>'+pr.map(function(x){return ckRow('rung:'+x.st.id,esc(x.sk.name)+' \u2014 '+esc(x.st.name),esc(x.st.level));}).join('');if(l)l.innerHTML=(pend.length||pp.length||pr.length)?('<p class="rmnote" style="margin:0 0 6px">Untick anything you don\u2019t want to verify \u2014 the rest stay pending.</p>'+rows):'<p class="rmnote">Nothing pending \u2014 every entered score is already verified.</p>';var pw=document.getElementById('ver-pw');if(pw)pw.value='';var e=document.getElementById('verErr');if(e)e.textContent='';m.classList.add('on');};
 window.closeVerify=function(){var m=document.getElementById('verMask');if(m)m.classList.remove('on');};
 // snapshot of the FORM card + progression state, used to diff what changed across a verify (for the celebrate reveal)
 function _verifySnap(){var cc=computeCard();var st=classStates();var cls={};for(var s in st){if(st[s].unlocked)cls[s]=1;}
@@ -4076,22 +4068,7 @@ function _showHandback(n){var hb=document.getElementById('handbackMask');if(!hb)
   var sub=document.getElementById('hbSub');var nm=athleteName?esc(athleteName):'the athlete';
   if(sub)sub.innerHTML=(n>0?('<b>'+n+' score'+(n===1?'':'s')+' verified.</b> '):'')+'Hand the phone back to '+nm+' — tap below to reveal your card.';
   hb.classList.add('on');}
-window.doVerify=async function(){var pwEl=document.getElementById('ver-pw');var pw=pwEl?pwEl.value:'';var err=document.getElementById('verErr');if(err)err.textContent='';
-  if(!pw){if(err)err.textContent='Enter the coach password.';return;}
-  if(err)err.textContent='Checking…';var ok=await verifyCoachPw(pw);
-  if(!ok){if(err)err.textContent='Wrong coach password.';return;}
-  var before=_verifySnap();
-  _holdToasts=true;   // no celebration while the COACH holds the phone — it fires when the athlete taps
-  var n=0;SCORING.moves.forEach(function(mv){if(TESTS[mv.id]!=null){if(!isVerified(mv.id))n++;VERIF[mv.id]=TESTS[mv.id];if(mv.type==='progression')VPROG[mv.id]=progVar(mv.id);}});
-  for(var k in VERIF){if(TESTS[k]==null){delete VERIF[k];delete VPROG[k];}}
-  var _pr=pendingRungs();_pr.forEach(function(x){var d=DEVP[x.st.id]||(DEVP[x.st.id]={done:true,at:Date.now(),src:'gcap'});d.done=true;d.verified=true;d.vat=Date.now();});if(_pr.length){n+=_pr.length;devSave();}
-  saveVERIF();savePROG();verifyPrevs();updateBest();syncMoments();xpSync();achSync();   // verifyPrevs confirms logged previous bests; updateBest folds verified sources; syncMoments catches newly-earned Vault moments
-  _holdToasts=false;
-  var after=_verifySnap();
-  _celebPayload=_buildCeleb(before,after,n);
-  try{localStorage.setItem('unranked-lasttier',String(after.tier));}catch(e){}   // pre-set so the card's own ring doesn't fire under the handback screen
-  closeVerify();cardMode='form';profilePage='home';try{openMyLog();}catch(e){}render();
-  _showHandback(n);};
+window.doVerify=async function(){var pwEl=document.getElementById('ver-pw');var pw=pwEl?pwEl.value:'';var err=document.getElementById('verErr');if(err)err.textContent='';if(!pw){if(err)err.textContent='Enter the coach password.';return;}if(err)err.textContent='Checking\u2026';var ok=await verifyCoachPw(pw);if(!ok){if(err)err.textContent='Wrong coach password.';return;}var checked={};[].forEach.call(document.querySelectorAll('#verList .ver-ck'),function(c){if(c.checked)checked[c.getAttribute('data-vk')]=1;});var any=false;for(var _k in checked){any=true;break;}if(!any){if(err)err.textContent='Nothing ticked to verify.';return;}var before=_verifySnap();_holdToasts=true;var n=0;SCORING.moves.forEach(function(mv){if(TESTS[mv.id]!=null&&!isVerified(mv.id)&&checked['score:'+mv.id]){VERIF[mv.id]=TESTS[mv.id];if(mv.type==='progression')VPROG[mv.id]=progVar(mv.id);n++;}});for(var k in VERIF){if(TESTS[k]==null){delete VERIF[k];delete VPROG[k];}}SCORING.moves.forEach(function(mv){if(prevPending(mv.id)&&checked['prev:'+mv.id]){PREVV[mv.id]=PREV[mv.id];}});var _pr=pendingRungs();_pr.forEach(function(x){if(checked['rung:'+x.st.id]){var d=DEVP[x.st.id]||(DEVP[x.st.id]={done:true,at:Date.now(),src:'gcap'});d.done=true;d.verified=true;d.vat=Date.now();n++;}});saveVERIF();savePROG();savePREVV();updateBest();syncMoments();xpSync();achSync();devSave();_holdToasts=false;var after=_verifySnap();_celebPayload=_buildCeleb(before,after,n);try{localStorage.setItem('unranked-lasttier',String(after.tier));}catch(e){}closeVerify();cardMode='form';profilePage='home';try{openMyLog();}catch(e){}render();_showHandback(n);};
 window.revealCelebrate=function(){var hb=document.getElementById('handbackMask');if(hb)hb.classList.remove('on');
   var p=_celebPayload||{n:0,items:[]};var body=document.getElementById('celebBody');
   var _cm={tier:'celeb_tier',level:'celeb_level','class':'celeb_class',ach:'celeb_ach',pris:'celeb_pris'};
@@ -4669,11 +4646,11 @@ function renderInner(){
   const dots=gs.map(function(gg,i){   // one nav row: the active section becomes a dropdown of its parts (coach) or levels (WOD), no second sub-nav row
     if(i===step){var g2=gs[i];
       if(isBandStep(g2)){var p2=bandPieceOf(g2);var order=(p2&&hasBands(p2))?wodBandOrder(p2):[];
-        if(order.length>1){var o='<option value="0"'+(subStep===0?' selected':'')+'>'+esc(stepLabel(gg))+' · All</option>'+order.map(function(b,j){return '<option value="'+(j+1)+'"'+(subStep===j+1?' selected':'')+'>'+esc(stepLabel(gg))+' · '+esc(VL[b])+'</option>';}).join('');
-          return '<select class="dot dotsel on" onchange="goSub(+this.value)">'+o+'</select>';}}
+        if(order.length>1){var o='<button class="dot dot-sub'+(subStep===0?' on':'')+'" onclick="goSub(0)">All</button>'+order.map(function(b,j){return '<button class="dot dot-sub'+(subStep===j+1?' on':'')+'" onclick="goSub('+(j+1)+')">'+esc(VL[b])+'</button>';}).join('');
+          return '<span class="dot-seg" style="display:inline-flex;gap:3px;background:rgba(255,255,255,.06);border-radius:9px;padding:2px">'+o+'</span>';}}
       else if(coachMode()){var bl2=stepBlocks(g2,gs);
-        if(bl2&&bl2.length>1){var lb2=stepBlockLabels(g2);var o2=bl2.map(function(bk,j){return '<option value="'+(j+1)+'"'+((subStep||1)===j+1?' selected':'')+'>'+esc(stepLabel(gg))+' · '+esc(chipName(bk,j,lb2))+'</option>';}).join('');
-          return '<select class="dot dotsel on" onchange="goSub(+this.value)">'+o2+'</select>';}}}
+        if(bl2&&bl2.length>1){var lb2=stepBlockLabels(g2);var o2=bl2.map(function(bk,j){return '<button class="dot dot-sub'+((subStep||1)===j+1?' on':'')+'" onclick="goSub('+(j+1)+')">'+esc(chipName(bk,j,lb2))+'</button>';}).join('');
+          return '<span class="dot-seg" style="display:inline-flex;gap:3px;background:rgba(255,255,255,.06);border-radius:9px;padding:2px">'+o2+'</span>';}}}
     return '<button class="dot '+(i===step?'on':'')+'" onclick="go('+i+')">'+esc(stepLabel(gg))+'</button>';
   }).join('');
   foot.style.display='flex';foot.innerHTML='<div class="footrow"><button class="nb" '+(step<=0?'disabled':'')+' onclick="stepBy(-1)">‹ Prev</button><div class="dots">'+dots+'</div><button class="nb" '+(step>=gs.length-1?'disabled':'')+' onclick="stepBy(1)">Next ›</button></div>';
