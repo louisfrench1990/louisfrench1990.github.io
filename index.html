@@ -1982,7 +1982,7 @@ window.exitBoard=function(){boardMode=false;clock.big=false;document.body.classL
 function coachMode(){return accessLevel==='coach';}
 function dayAheadDays(wkNum,wd){var ws=weekStart(wkNum);if(!ws)return 0;var d=new Date(ws+'T00:00:00');if(isNaN(d.getTime()))return 0;d.setDate(d.getDate()+WD.indexOf(wd));var n=new Date();var t=new Date(n.getFullYear(),n.getMonth(),n.getDate());return Math.round((d-t)/86400000);}   // calendar days from today to this programme day (negative = past)
 function memberDayLocked(wkNum,wd){return accessLevel!=='coach' && dayAheadDays(wkNum,wd)>=7;}   // rolling window: members/public see today + the next 6 days only (7 days from the current date); coaches see all
-function weekRange(){var ti=todayInfo();var cur=(ti&&ti.week)||D.weeks[0].week;var lo=D.weeks[0].week,hi=D.weeks[D.weeks.length-1].week;if(accessLevel==='coach')return [lo,hi];var c=Math.max(lo,Math.min(hi,cur));var nx=Math.min(hi,c+1);return [c,(nx>c&&!memberDayLocked(nx,'MON'))?nx:c];}   // public+member: rolling 7-day window (this week, plus next week's days only once they fall inside 7 days of today)
+function weekRange(){var ti=todayInfo();var cur=(ti&&ti.week)||D.weeks[0].week;var lo=D.weeks[0].week,hi=D.weeks[D.weeks.length-1].week;if(accessLevel==='coach')return [lo,hi];var c=Math.max(lo,Math.min(hi,cur));var nx=Math.min(hi,c+1);var hiB=(nx>c&&!memberDayLocked(nx,'MON'))?nx:c;return [lo,hiB];}   // public+member: rolling 7-day window (this week, plus next week's days only once they fall inside 7 days of today)
 // read a plain OBJECT from localStorage, tolerating anything: bad JSON, 'null', an array, a string, a number.
 // (JSON.parse('null') succeeds and returns null, which slipped past the old try/catch and blanked the whole app.)
 function lsObj(key){try{var raw=localStorage.getItem(key);if(raw==null)return {};var v=JSON.parse(raw);
@@ -2551,320 +2551,8 @@ var DEVP={};try{DEVP=JSON.parse(localStorage.getItem('unranked-dev'))||{};}catch
 function devSave(){try{localStorage.setItem('unranked-dev',JSON.stringify(DEVP));}catch(e){}}
 // stage: {id,name,level,std,star?,seed?}  seed: {test,min} | {test,variant}
 // readiness item: {id,name,seed?}
-var DEV_G=[
- {id:'s.strict-pullup',name:'Strict Pull-Up',group:'Pulling',rated:'strictpullups',
-  stages:[
-   {id:'f.active-hang',name:'Active Hang',level:'Foundation',std:'20s hold'},
-   {id:'f.scap-pull-8',name:'Scapular Pull-Ups',level:'Foundation',std:'8 reps'},
-   {id:'m.strict-ecc',name:'Controlled Eccentrics',level:'Developing',std:'3×5s lower'},
-   {id:'s.strict-pullup.star',name:'Strict Pull-Up',level:'Achievement',std:'1 strict rep',star:true,seed:{gcap:'pullup',min:1}},
-   {id:'m.strict-pullup-5',name:'5 Strict Pull-Ups',level:'Competent',std:'5 reps',seed:{gcap:'pullup',min:5}},
-   {id:'m.strict-pullup-10',name:'10 Strict Pull-Ups',level:'Proficient',std:'10 reps',seed:{gcap:'pullup',min:10}},
-   {id:'m.strict-pullup-15',name:'15 Strict Pull-Ups',level:'Advanced',std:'15 unbroken',seed:{gcap:'pullup',min:15}},
-   {id:'w.weighted-pullup-10',name:'Weighted Pull-Up +10kg',level:'Advanced',std:'+10kg',seed:{test:'weightedpullup',min:10}},
-   {id:'w.weighted-pullup-20',name:'Weighted Pull-Up +20kg',level:'Advanced',std:'+20kg',seed:{test:'weightedpullup',min:20}},
-   {id:'w.weighted-pullup-40',name:'Weighted Pull-Up +40kg',level:'Mastery',std:'+40kg',seed:{test:'weightedpullup',min:40}},
-   {id:'w.weighted-pullup-60',name:'Weighted Pull-Up +60kg',level:'Mastery',std:'+60kg',seed:{test:'weightedpullup',min:60}}
-  ]},
- {id:'s.c2b',name:'Butterfly',group:'Pulling',rated:'c2b1min',
-  readiness:[{id:'m.strict-pullup-5',name:'5 Strict Pull-Ups',seed:{test:'strictpullups',min:5}}],
-  stages:[
-   {id:'bf.kip-swing',name:'Kip Swing',level:'Foundation',std:'10 controlled swings'},
-   {id:'bf.kip-pullup-5',name:'5 Kipping Pull-Ups',level:'Foundation',std:'5 reps'},
-   {id:'bf.kip-pullup-10',name:'10 Kipping Pull-Ups',level:'Developing',std:'10 unbroken'},
-   {id:'m.c2b-1',name:'1 Kipping Chest-to-Bar',level:'Achievement',std:'1 C2B',star:true,seed:{gcap:'c2b',min:1}},
-   {id:'m.c2b-5',name:'5 Kipping Chest-to-Bar',level:'Competent',std:'5 unbroken',seed:{gcap:'c2b',min:5}},
-   {id:'bf.mini-5',name:'5 Mini Butterflys',level:'Competent',std:'5 small-arc reps'},
-   {id:'bf.pullup-5',name:'5 Butterfly Pull-Ups',level:'Proficient',std:'5 unbroken (cycling)'},
-   {id:'bf.c2b-5',name:'5 Butterfly C2B',level:'Proficient',std:'5 unbroken (cycling)'},
-   {id:'bf.c2b-10',name:'10 Butterfly C2B',level:'Advanced',std:'10 unbroken',seed:{gcap:'c2b',min:10}},
-   {id:'bf.c2b-20',name:'20 Butterfly C2B',level:'Advanced',std:'20 unbroken',seed:{gcap:'c2b',min:20}},
-   {id:'bf.c2b-30',name:'30 Butterfly C2B',level:'Mastery',std:'30 unbroken',seed:{gcap:'c2b',min:30}}
-  ]},
- {id:'s.ttb',name:'Toes-to-Bar',group:'Pulling',rated:'t2b',
-  stages:[
-   {id:'f.dead-hang-30',name:'Dead Hang',level:'Foundation',std:'30s'},
-   {id:'d.knee-raise-10',name:'Kipping Knee Raises',level:'Developing',std:'10 reps'},
-   {id:'d.straight-leg-raise',name:'Straight-Leg Raise',level:'Developing',std:'to 90°'},
-   {id:'s.ttb.star',name:'Toes-to-Bar',level:'Achievement',std:'1 TTB',star:true,seed:{gcap:'t2b',min:1}},
-   {id:'d.ttb-5',name:'5 unbroken TTB',level:'Competent',std:'5 unbroken',seed:{gcap:'t2b',min:5}},
-   {id:'m.ttb-10',name:'10 unbroken TTB',level:'Proficient',std:'10 unbroken',seed:{gcap:'t2b',min:10}},
-   {id:'d.ttb-15',name:'15 unbroken TTB',level:'Advanced',std:'15 unbroken',seed:{gcap:'t2b',min:15}},
-   {id:'d.ttb-30',name:'30 unbroken TTB',level:'Mastery',std:'30 unbroken',seed:{gcap:'t2b',min:30}}
-  ]},
- {id:'s.bmu',name:'Bar Muscle-Up',group:'Pulling',rated:'barmuscleup',
-  readiness:[
-   {id:'m.strict-pullup-10',name:'10 Strict Pull-Ups',seed:{test:'strictpullups',min:10}},
-   {id:'m.c2b-5',name:'5 unbroken C2B',seed:{test:'c2b1min',min:5}},
-   {id:'d.dip-10',name:'10 Strict Dips'},
-   {id:'m.ttb-10',name:'10 TTB / kip control',seed:{test:'t2b',min:10}}
-  ],
-  stages:[
-   {id:'d.high-pull',name:'High Pull',level:'Developing',std:'3–5 hips-to-bar'},
-   {id:'d.band-bmu',name:'Band-Assisted BMU',level:'Developing',std:'3 clean'},
-   {id:'s.bmu.star',name:'Bar Muscle-Up',level:'Achievement',std:'1 BMU',star:true,seed:{gcap:'barmu',min:1}},
-   {id:'d.bmu-3',name:'3 unbroken BMU',level:'Competent',std:'3 unbroken',seed:{gcap:'barmu',min:3}},
-   {id:'d.bmu-5',name:'5 unbroken BMU',level:'Proficient',std:'5 unbroken',seed:{gcap:'barmu',min:5}},
-   {id:'d.bmu-10',name:'10 unbroken BMU',level:'Advanced',std:'10 unbroken',seed:{gcap:'barmu',min:10}},
-   {id:'d.bmu-20',name:'20 unbroken BMU',level:'Mastery',std:'20 unbroken',seed:{gcap:'barmu',min:20}}
-  ]},
- {id:'s.rmu',name:'Ring Muscle-Up',group:'Pulling',rated:'ringmu',
-  readiness:[
-   {id:'m.strict-pullup-5',name:'5 Strict Pull-Ups',seed:{test:'strictpullups',min:5}},
-   {id:'rs.dip10',name:'10 Ring Dips'}
-  ],
-  stages:[
-   {id:'f.ring-support-20',name:'Ring Support',level:'Foundation',std:'20s'},
-   {id:'f.false-grip-hang',name:'False-Grip Hang',level:'Developing',std:'20s'},
-   {id:'d.low-ring-trans',name:'Low-Ring Transitions',level:'Developing',std:'5 controlled'},
-   {id:'s.rmu.star',name:'Ring Muscle-Up',level:'Achievement',std:'1 RMU',star:true,seed:{gcap:'ringmu',min:1}},
-   {id:'d.rmu-3',name:'3 unbroken RMU',level:'Competent',std:'3 unbroken',seed:{gcap:'ringmu',min:3}},
-   {id:'d.rmu-5',name:'5 unbroken RMU',level:'Proficient',std:'5 unbroken',seed:{gcap:'ringmu',min:5}},
-   {id:'d.rmu-8',name:'8 unbroken RMU',level:'Advanced',std:'8 unbroken',seed:{gcap:'ringmu',min:8}},
-   {id:'d.rmu-12',name:'12 unbroken RMU',level:'Mastery',std:'12 unbroken',seed:{gcap:'ringmu',min:12}}
-  ]},
- {id:'s.strict-rmu',name:'Strict Ring Muscle-Up',group:'Pulling',rated:null,
-  readiness:[
-   {id:'m.strict-pullup-10',name:'10 Strict Pull-Ups',seed:{test:'strictpullups',min:10}},
-   {id:'rs.dip5',name:'5 Strict Ring Dips'}
-  ],
-  stages:[
-   {id:'srmu.fghang',name:'False-Grip Hang',level:'Developing',std:'30s'},
-   {id:'srmu.dip',name:'Deep Strict Ring Dips',level:'Developing',std:'5 deep, RTO'},
-   {id:'srmu.neg',name:'Slow RMU Negatives',level:'Developing',std:'3× 5s lower'},
-   {id:'srmu.star',name:'Strict Ring Muscle-Up',level:'Achievement',std:'1 strict rep',star:true},
-   {id:'srmu.3',name:'3 Strict RMU',level:'Competent',std:'3 unbroken'},
-   {id:'srmu.5',name:'5 Strict RMU',level:'Proficient',std:'5 unbroken'}
-  ]},
- {id:'s.handstand',name:'Handstand',group:'Handstand',rated:'hshold',
-  stages:[
-   {id:'f.pike-hold-30',name:'Pike Hold',level:'Foundation',std:'30s'},
-   {id:'f.wall-walk-3',name:'Wall Walks',level:'Developing',std:'3 controlled'},
-   {id:'f.wall-hs-30',name:'Chest-to-Wall HS',level:'Developing',std:'30s',seed:{test:'hshold',variant:'wall'}},
-   {id:'s.handstand.star',name:'Freestanding Handstand',level:'Achievement',std:'3s hold',star:true,seed:{test:'hshold',variant:'free',min:3}},
-   {id:'m.free-hs-10',name:'10s Handstand',level:'Competent',std:'10s',seed:{test:'hshold',variant:'free',min:10}},
-   {id:'d.hs-20',name:'20s Handstand',level:'Proficient',std:'20s',seed:{test:'hshold',variant:'free',min:20}},
-   {id:'d.hs-30',name:'30s Handstand',level:'Advanced',std:'30s',seed:{test:'hshold',variant:'free',min:30}},
-   {id:'d.hs-60',name:'60s Handstand',level:'Mastery',std:'60s',seed:{test:'hshold',variant:'free',min:60}}
-  ]},
- {id:'s.strict-hspu',name:'Strict HSPU',group:'Handstand',rated:null,
-  readiness:[
-   {id:'f.wall-hs-30',name:'30s Chest-to-Wall HS'}
-  ],
-  stages:[
-   {id:'f.pushup-25',name:'25 Push-Ups',level:'Foundation',std:'25 unbroken'},
-   {id:'f.pike-pushup-10',name:'Pike Push-Ups',level:'Foundation',std:'10 reps'},
-   {id:'d.box-pike-hspu',name:'Box Pike HSPU',level:'Developing',std:'10 reps'},
-   {id:'s.strict-hspu.star',name:'Strict HSPU',level:'Achievement',std:'1 rep',star:true,seed:{gcap:'hspu',min:1}},
-   {id:'d.strict-hspu-5',name:'5 Strict HSPU',level:'Competent',std:'5 reps',seed:{gcap:'hspu',min:5}},
-   {id:'d.strict-hspu-10',name:'10 Strict HSPU',level:'Advanced',std:'10 reps',seed:{gcap:'hspu',min:10}},
-   {id:'d.deficit-hspu',name:'Deficit HSPU',level:'Advanced',std:'4\u2033+ deficit'},
-   {id:'d.tuck-press-hs',name:'Bent-Arm Tuck Press',level:'Advanced',std:'tucked knees, bent-arm press to handstand'},
-   {id:'d.freestanding-hspu',name:'Freestanding HSPU',level:'Mastery',std:'free-balance, no wall'}
-  ]},
- {id:'s.hsw',name:'Handstand Walk',group:'Handstand',rated:'hswalk',
-  readiness:[
-   {id:'f.wall-walk-3',name:'Wall Walks · 3 controlled'},
-   {id:'f.wall-hs-30',name:'30s Chest-to-Wall HS'},
-   {id:'s.handstand.star',name:'Freestanding Handstand'}
-  ],
-  stages:[
-   {id:'m.shoulder-taps-20',name:'Wall Shoulder Taps',level:'Developing',std:'20 taps'},
-   {id:'m.free-hs-5',name:'Freestanding HS',level:'Developing',std:'5s'},
-   {id:'s.hsw.star',name:'Handstand Walk',level:'Achievement',std:'1 metre',star:true,seed:{test:'hswalk',min:1}},
-   {id:'d.hsw-5',name:'5m Handstand Walk',level:'Competent',std:'5m',seed:{test:'hswalk',min:5}},
-   {id:'d.hsw-10',name:'10m Handstand Walk',level:'Proficient',std:'10m',seed:{test:'hswalk',min:10}},
-   {id:'d.hsw-15',name:'15m / 50ft',level:'Advanced',std:'15m',seed:{test:'hswalk',min:15}},
-   {id:'d.hsw-25',name:'25m+ / Obstacles',level:'Mastery',std:'25m+ or turns (branch)',seed:{test:'hswalk',min:25}}
-  ]},
- {id:'s.lsit',name:'L-Sit',group:'Core / Lever',rated:'lsit',
-  stages:[
-   {id:'f.support-hold-20',name:'Support Hold',level:'Foundation',std:'20s'},
-   {id:'d.tuck-lsit',name:'Tuck L-Sit',level:'Developing',std:'10s',seed:{test:'lsit',variant:'tuck',min:10}},
-   {id:'d.single-lsit',name:'Single-Leg L-Sit',level:'Developing',std:'5s each',seed:{test:'lsit',variant:'single',min:5}},
-   {id:'s.lsit.star',name:'Full L-Sit',level:'Achievement',std:'5s hold',star:true,seed:{test:'lsit',variant:'full',min:5}},
-   {id:'d.lsit-10',name:'10s L-Sit',level:'Competent',std:'10s',seed:{test:'lsit',variant:'full',min:10}},
-   {id:'d.lsit-20',name:'20s L-Sit',level:'Proficient',std:'20s',seed:{test:'lsit',variant:'full',min:20}},
-   {id:'d.lsit-30',name:'30s L-Sit',level:'Advanced',std:'30s',seed:{test:'lsit',variant:'full',min:30}},
-   {id:'d.vsit',name:'V-Sit',level:'Mastery',std:'V-sit / Manna reach (branch)'}
-  ]},
- {id:'s.front-lever',name:'Front Lever',group:'Core / Lever',rated:'frontlever',
-  readiness:[
-   {id:'m.strict-pullup-10',name:'10 Strict Pull-Ups',seed:{test:'strictpullups',min:10}},
-   {id:'ho.star',name:'30s Hollow Hold'},
-   {id:'f.scap-pull-8',name:'Scapular control'}
-  ],
-  stages:[
-   {id:'fl.skincat',name:'Skin-the-Cat',level:'Foundation',std:'3 slow rotations'},
-   {id:'d.tuck-fl',name:'Tuck Front Lever',level:'Developing',std:'10s',seed:{test:'frontlever',variant:'tuck',min:10}},
-   {id:'d.adv-tuck-fl',name:'Advanced Tuck',level:'Competent',std:'10s'},
-   {id:'d.straddle-fl',name:'Straddle / One-Leg',level:'Proficient',std:'5–10s',seed:{test:'frontlever',variant:'straddle',min:5}},
-   {id:'s.front-lever.star',name:'Full Front Lever',level:'Advanced',std:'3s hold',star:true,seed:{test:'frontlever',variant:'full',min:3}},
-   {id:'d.fl-pull',name:'Front Lever Pull-Ups',level:'Mastery',std:'controlled reps (branch)'}
-  ]},
- {id:'s.pistol',name:'Pistol',group:'Lower',rated:null,
-  stages:[
-   {id:'f.air-squat-10',name:'Deep Air Squats',level:'Foundation',std:'10 controlled'},
-   {id:'d.single-box',name:'Single-Leg to Box',level:'Developing',std:'5 each leg'},
-   {id:'s.pistol.star',name:'Pistol',level:'Achievement',std:'1 each leg',star:true},
-   {id:'d.pistol-5',name:'5 Pistols each leg',level:'Competent',std:'5 each'},
-   {id:'d.pistol-10',name:'10 alternating',level:'Proficient',std:'10 unbroken'},
-   {id:'d.pistol-weighted',name:'Weighted Pistol',level:'Mastery',std:'loaded (branch)'}
-  ]},
- {id:'s.du',name:'Double-Unders',group:'Skills',rated:'doubleunders',
-  stages:[
-   {id:'f.singles-50',name:'Unbroken Singles',level:'Foundation',std:'50 unbroken'},
-   {id:'s.du.star',name:'Double-Under',level:'Achievement',std:'1 DU',star:true,seed:{test:'doubleunders',min:1}},
-   {id:'d.du-10',name:'10 Double-Unders',level:'Competent',std:'10 unbroken',seed:{test:'doubleunders',min:10}},
-   {id:'d.du-30',name:'30 Double-Unders',level:'Proficient',std:'30 unbroken',seed:{test:'doubleunders',min:30}},
-   {id:'d.du-50',name:'50 Double-Unders',level:'Advanced',std:'50 unbroken',seed:{test:'doubleunders',min:50}},
-   {id:'d.du-100',name:'100 Double-Unders',level:'Mastery',std:'100 unbroken',seed:{test:'doubleunders',min:100}}
-  ]},
- {id:'s.rope-climb',name:'Rope Climb',group:'Skills',rated:null,
-  stages:[
-   {id:'d.half-climb',name:'Half Rope Climb',level:'Foundation',std:'to halfway'},
-   {id:'s.rope-climb.star',name:'Rope Climb',level:'Achievement',std:'1 full climb',star:true,seed:{gcap:'rope',min:1}},
-   {id:'d.rope-3',name:'3 Rope Climbs',level:'Competent',std:'3 climbs',seed:{gcap:'rope',min:3}},
-   {id:'d.rope-efficient',name:'Efficient 2–3 Pull Climb',level:'Proficient',std:'efficient'},
-   {id:'d.legless',name:'Legless Rope Climb',level:'Mastery',std:'legless (branch)'}
-  ]},
- {id:'s.dip',name:'Strict Dip',group:'Pulling',rated:null,
-  stages:[
-   {id:'f.support-hold-dip',name:'Support Hold',level:'Foundation',std:'20s locked'},
-   {id:'s.dip.star',name:'Strict Dip',level:'Achievement',std:'1 rep',star:true},
-   {id:'d.dip-5',name:'5 Strict Dips',level:'Competent',std:'5 reps'},
-   {id:'d.dip-10',name:'10 Strict Dips',level:'Proficient',std:'10 reps'},
-   {id:'d.dip-15',name:'15 Strict Dips',level:'Advanced',std:'15 reps'},
-   {id:'d.weighted-dip-10',name:'Weighted Dip +10kg',level:'Advanced',std:'+10kg'},
-   {id:'d.weighted-dip-20',name:'Weighted Dip +20kg',level:'Advanced',std:'+20kg'},
-   {id:'d.weighted-dip-40',name:'Weighted Dip +40kg',level:'Mastery',std:'+40kg'},
-   {id:'d.weighted-dip',name:'Weighted Dip +60kg',level:'Mastery',std:'+60kg'}
-  ]},
- {id:'s.squat',name:'Back Squat',group:'Barbell',rated:'backsquat',stages:[{id:'squat.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'backsquat',minScore:20}},{id:'squat.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'backsquat',minScore:35}},{id:'squat.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'backsquat',minScore:50}},{id:'squat.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'backsquat',minScore:65}},{id:'squat.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'backsquat',minScore:80}},{id:'squat.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'backsquat',minScore:92}}]},
- {id:'s.deadlift',name:'Deadlift',group:'Barbell',rated:'deadlift',stages:[{id:'deadlift.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'deadlift',minScore:20}},{id:'deadlift.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'deadlift',minScore:35}},{id:'deadlift.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'deadlift',minScore:50}},{id:'deadlift.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'deadlift',minScore:65}},{id:'deadlift.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'deadlift',minScore:80}},{id:'deadlift.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'deadlift',minScore:92}}]},
- {id:'s.bench',name:'Bench Press',group:'Barbell',rated:'bench',stages:[{id:'bench.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'bench',minScore:20}},{id:'bench.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'bench',minScore:35}},{id:'bench.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'bench',minScore:50}},{id:'bench.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'bench',minScore:65}},{id:'bench.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'bench',minScore:80}},{id:'bench.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'bench',minScore:92}}]},
- {id:'s.press',name:'Strict Press',group:'Barbell',rated:'strictpress',stages:[{id:'press.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'strictpress',minScore:20}},{id:'press.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'strictpress',minScore:35}},{id:'press.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'strictpress',minScore:50}},{id:'press.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'strictpress',minScore:65}},{id:'press.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'strictpress',minScore:80}},{id:'press.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'strictpress',minScore:92}}]},
- {id:'s.powerclean',name:'Power Clean',group:'Barbell',rated:'powerclean',stages:[{id:'powerclean.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'powerclean',minScore:20}},{id:'powerclean.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'powerclean',minScore:35}},{id:'powerclean.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'powerclean',minScore:50}},{id:'powerclean.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'powerclean',minScore:65}},{id:'powerclean.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'powerclean',minScore:80}},{id:'powerclean.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'powerclean',minScore:92}}]},
- {id:'s.cleanjerk',name:'Clean & Jerk',group:'Barbell',rated:'cleanjerk',stages:[{id:'cleanjerk.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'cleanjerk',minScore:20}},{id:'cleanjerk.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'cleanjerk',minScore:35}},{id:'cleanjerk.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'cleanjerk',minScore:50}},{id:'cleanjerk.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'cleanjerk',minScore:65}},{id:'cleanjerk.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'cleanjerk',minScore:80}},{id:'cleanjerk.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'cleanjerk',minScore:92}}]},
- {id:'s.snatch',name:'Snatch',group:'Barbell',rated:'snatch',stages:[{id:'snatch.f',name:'Foundational',level:'Foundation',std:'Rating 20+',seed:{test:'snatch',minScore:20}},{id:'snatch.d',name:'Developing',level:'Developing',std:'Rating 35+',seed:{test:'snatch',minScore:35}},{id:'snatch.c',name:'Competent',level:'Competent',std:'Rating 50+',seed:{test:'snatch',minScore:50}},{id:'snatch.p',name:'Strong',level:'Proficient',std:'Rating 65+',seed:{test:'snatch',minScore:65}},{id:'snatch.a',name:'Advanced',level:'Advanced',std:'Rating 80+',star:true,seed:{test:'snatch',minScore:80}},{id:'snatch.m',name:'Elite',level:'Mastery',std:'Rating 92+',seed:{test:'snatch',minScore:92}}]},
-  {id:'s.ring-support',name:'Ring Support & Dips',group:'Rings',rated:null,
-  stages:[
-   {id:'rs.hold10',name:'Ring Support Hold',level:'Foundation',std:'10s locked'},
-   {id:'rs.hold30',name:'Ring Support 30s',level:'Developing',std:'30s stable'},
-   {id:'rs.dip1',name:'Ring Dip',level:'Achievement',std:'1 rep',star:true},
-   {id:'rs.dip5',name:'5 Ring Dips',level:'Competent',std:'5 unbroken'},
-   {id:'rs.dip10',name:'10 Ring Dips',level:'Proficient',std:'10 unbroken'},
-   {id:'rs.rto',name:'RTO Support / Weighted Dip',level:'Advanced',std:'rings-turned-out or +weight'}
-  ]},
- {id:'s.ring-row',name:'Ring Rows & Pulls',group:'Rings',rated:null,
-  stages:[
-   {id:'rr.row',name:'Ring Row',level:'Foundation',std:'10 controlled'},
-   {id:'rr.feet',name:'Feet-Elevated Ring Row',level:'Developing',std:'8 reps'},
-   {id:'rr.pull1',name:'Ring Pull-Up',level:'Achievement',std:'1 rep',star:true},
-   {id:'rr.fg',name:'False-Grip Hold',level:'Competent',std:'20s false grip'},
-   {id:'rr.fgpull',name:'False-Grip Pull to Sternum',level:'Proficient',std:'3 reps'}
-  ]},
-  {id:'s.strict-bmu',name:'Strict Bar Muscle-Up',group:'Pulling',rated:null,
-  readiness:[
-   {id:'m.strict-pullup-10',name:'10 Strict Pull-Ups',seed:{test:'strictpullups',min:10}}
-  ],
-  stages:[
-   {id:'d.c2b-strict',name:'Strict Chest-to-Bar',level:'Developing',std:'1 strict C2B'},
-   {id:'d.c2b-strict-5',name:'5 Strict Chest-to-Bar',level:'Developing',std:'5 strict'},
-   {id:'sbmu.highpull',name:'Strict High Pull to Sternum',level:'Developing',std:'3 slow reps'},
-   {id:'sbmu.neg',name:'Slow BMU Negatives',level:'Developing',std:'3× 5s lower'},
-   {id:'sbmu.star',name:'Strict Bar Muscle-Up',level:'Achievement',std:'1 strict rep',star:true},
-   {id:'sbmu.3',name:'3 Strict BMU',level:'Competent',std:'3 unbroken'},
-   {id:'sbmu.5',name:'5 Strict BMU',level:'Proficient',std:'5 unbroken'}
-  ]},
- {id:'s.du-cross',name:'Crossovers',group:'Skills',rated:null,
-  readiness:[{id:'d.du-50',name:'50 Double-Unders',seed:{test:'doubleunders',min:50}}],
-  stages:[
-   {id:'x.single',name:'Single-Under Crossover',level:'Foundation',std:'1 crossover'},
-   {id:'x.single5',name:'5 Single Crossovers',level:'Developing',std:'5 unbroken'},
-   {id:'x.du',name:'Double-Under Crossover',level:'Achievement',std:'1 DU crossover',star:true},
-   {id:'x.du5',name:'5 DU Crossovers',level:'Competent',std:'5 unbroken'},
-   {id:'x.du10',name:'10 DU Crossovers',level:'Proficient',std:'10 unbroken'}
-  ]},
- {id:'s.triple',name:'Triple-Unders',group:'Skills',rated:null,
-  readiness:[{id:'d.du-100',name:'100 Double-Unders',seed:{test:'doubleunders',min:100}}],
-  stages:[
-   {id:'t.high',name:'High, Fast Double-Unders',level:'Developing',std:'fast tempo, high pull'},
-   {id:'t.star',name:'Triple-Under',level:'Achievement',std:'1 triple',star:true},
-   {id:'t.3',name:'3 Triple-Unders',level:'Competent',std:'3 in a set'},
-   {id:'t.5',name:'5 unbroken Triples',level:'Proficient',std:'5 unbroken'},
-   {id:'t.10',name:'10 unbroken Triples',level:'Advanced',std:'10 unbroken'}
-  ]},
- {id:'s.shrimp',name:'Shrimp Squat',group:'Lower',rated:null,
-  stages:[
-   {id:'sh.assist',name:'Assisted Shrimp',level:'Foundation',std:'hold a support'},
-   {id:'sh.beg',name:'Beginner Shrimp',level:'Developing',std:'knee taps floor'},
-   {id:'sh.star',name:'Shrimp Squat',level:'Achievement',std:'1 clean rep',star:true},
-   {id:'sh.5',name:'5 Shrimp Squats',level:'Competent',std:'5 each leg'},
-   {id:'sh.adv',name:'Advanced Shrimp',level:'Advanced',std:'rear foot to hand'}
-  ]},
- {id:'s.nordic',name:'Nordic Curl',group:'Lower',rated:null,
-  stages:[
-   {id:'nc.iso',name:'Nordic Negatives',level:'Foundation',std:'5 slow lowers'},
-   {id:'nc.band',name:'Band-Assisted Nordic',level:'Developing',std:'5 reps'},
-   {id:'nc.star',name:'Nordic Curl',level:'Achievement',std:'1 full rep',star:true},
-   {id:'nc.3',name:'3 Nordic Curls',level:'Competent',std:'3 controlled'},
-   {id:'nc.5',name:'5 Nordic Curls',level:'Proficient',std:'5 controlled'}
-  ]},
- {id:'s.boxjump',name:'Box Jump',group:'Lower',rated:null,
-  stages:[
-   {id:'bj.50',name:'20″ Box Jump',level:'Foundation',std:'50 cm'},
-   {id:'bj.60',name:'24″ Box Jump',level:'Developing',std:'60 cm'},
-   {id:'bj.star',name:'30″ Box Jump',level:'Achievement',std:'76 cm',star:true},
-   {id:'bj.90',name:'36″ Box Jump',level:'Advanced',std:'90 cm'},
-   {id:'bj.100',name:'40″+ Box Jump',level:'Mastery',std:'100 cm+'}
-  ]},
- {id:'s.hollow',name:'Hollow & Arch',group:'Core / Lever',rated:null,
-  stages:[
-   {id:'ho.tuck',name:'Tuck Hollow Hold',level:'Foundation',std:'20s'},
-   {id:'ho.star',name:'Hollow Hold',level:'Achievement',std:'30s straight',star:true},
-   {id:'ho.rock',name:'Hollow Rocks',level:'Competent',std:'20 reps'},
-   {id:'ho.arch',name:'Arch / Superman Hold',level:'Proficient',std:'30s'},
-   {id:'ho.60',name:'60s Hollow Hold',level:'Advanced',std:'60s solid'}
-  ]},
- {id:'s.back-lever',name:'Back Lever',group:'Core / Lever',rated:null,
-  readiness:[{id:'d.tuck-fl',name:'Tuck Front Lever'}],
-  stages:[
-   {id:'bl.germanhang',name:'German Hang',level:'Foundation',std:'30s hold'},
-   {id:'bl.tuck',name:'Tuck Back Lever',level:'Developing',std:'10s'},
-   {id:'bl.strad',name:'Straddle Back Lever',level:'Proficient',std:'5s'},
-   {id:'bl.star',name:'Full Back Lever',level:'Advanced',std:'3s',star:true},
-   {id:'bl.10',name:'Back Lever 10s',level:'Advanced',std:'10s'},
-   {id:'bl.pull',name:'Back Lever Pulls',level:'Mastery',std:'from inverted'}
-  ]},
- {id:'s.dragon',name:'Dragon Flag',group:'Core / Lever',rated:null,
-  stages:[
-   {id:'df.neg',name:'Dragon Flag Negatives',level:'Developing',std:'5 slow lowers'},
-   {id:'df.tuck',name:'Tuck Dragon Flag',level:'Competent',std:'5 reps'},
-   {id:'df.star',name:'Dragon Flag',level:'Proficient',std:'1 full rep',star:true},
-   {id:'df.5',name:'5 Dragon Flags',level:'Advanced',std:'5 reps'},
-   {id:'df.10',name:'10 Dragon Flags',level:'Mastery',std:'10 reps'}
-  ]},
- {id:'s.kip-hspu',name:'Kipping HSPU',group:'Handstand',rated:null,
-  readiness:[{id:'d.hs-20',name:'20s Handstand'}],
-  stages:[
-   {id:'kh.knee',name:'Knee-Kip Drills',level:'Developing',std:'box / knee kip'},
-   {id:'kh.star',name:'Kipping HSPU',level:'Achievement',std:'1 rep',star:true},
-   {id:'kh.5',name:'5 Kipping HSPU',level:'Competent',std:'5 unbroken'},
-   {id:'kh.10',name:'10 Kipping HSPU',level:'Proficient',std:'10 unbroken'},
-   {id:'kh.def',name:'Deficit Kipping HSPU',level:'Advanced',std:'4″+ deficit'}
-  ]},
- {id:'s.press-hs',name:'Press to Handstand',group:'Handstand',rated:null,
-  readiness:[{id:'d.hs-30',name:'30s Handstand'}],
-  stages:[
-   {id:'ph.pike',name:'Pike Press Negatives',level:'Developing',std:'5 slow lowers'},
-   {id:'ph.strad',name:'Straddle Press (banded)',level:'Competent',std:'assisted'},
-   {id:'ph.star',name:'Press to Handstand',level:'Proficient',std:'1 straddle press',star:true},
-   {id:'ph.pikefull',name:'Pike Press to Handstand',level:'Advanced',std:'straight-leg'},
-   {id:'ph.3',name:'3 Presses',level:'Mastery',std:'3 unbroken'}
-  ]}
-];
-var DEV_GROUPS=['Pulling','Handstand','Core / Lever','Lower','Skills'];
+var DEV_G=[{"id":"s.strict-pullup","name":"Strict Pull-Up","group":"Pulling","rated":"strictpullups","stages":[{"id":"f.active-hang","name":"Active Hang","level":"Foundation","std":"20s hold","star":false},{"id":"f.scap-pull-8","name":"Scapular Pull-Ups","level":"Developing","std":"8 reps","star":false},{"id":"m.strict-ecc","name":"Controlled Eccentrics","level":"Developing","std":"3×5s lower","star":false},{"id":"s.strict-pullup.star","name":"Strict Pull-Up","level":"Competent","std":"1 strict rep","star":true,"seed":{"gcap":"pullup","min":1}},{"id":"m.strict-pullup-5","name":"5 Strict Pull-Ups","level":"Competent","std":"5 reps","seed":{"gcap":"pullup","min":5},"star":false},{"id":"m.strict-pullup-10","name":"10 Strict Pull-Ups","level":"Proficient","std":"10 reps","seed":{"gcap":"pullup","min":10},"star":false},{"id":"m.strict-pullup-15","name":"15 Strict Pull-Ups","level":"Advanced","std":"15 unbroken","seed":{"gcap":"pullup","min":15},"star":false},{"id":"w.weighted-pullup-10","name":"Weighted Pull-Up +10kg","level":"Advanced","std":"+10kg","seed":{"test":"weightedpullup","min":10},"star":false},{"id":"w.weighted-pullup-20","name":"Weighted Pull-Up +20kg","level":"Advanced","std":"+20kg","seed":{"test":"weightedpullup","min":20},"star":false},{"id":"w.weighted-pullup-40","name":"Weighted Pull-Up +40kg","level":"Mastery","std":"+40kg","seed":{"test":"weightedpullup","min":40},"star":false},{"id":"w.weighted-pullup-60","name":"Weighted Pull-Up +60kg","level":"Mastery","std":"+60kg","seed":{"test":"weightedpullup","min":60},"star":false}]},{"id":"s.c2b","name":"Butterfly","group":"Pulling","rated":"c2b1min","readiness":[{"id":"m.strict-pullup-5","name":"5 Strict Pull-Ups","seed":{"test":"strictpullups","min":5}}],"stages":[{"id":"bf.kip-swing","name":"Kip Swing","level":"Developing","std":"10 controlled swings","star":false},{"id":"bf.kip-pullup-5","name":"5 Kipping Pull-Ups","level":"Developing","std":"5 reps","star":false},{"id":"bf.kip-pullup-10","name":"10 Kipping Pull-Ups","level":"Developing","std":"10 unbroken","star":false},{"id":"m.c2b-1","name":"1 Kipping Chest-to-Bar","level":"Competent","std":"1 C2B","star":false,"seed":{"gcap":"c2b","min":1}},{"id":"m.c2b-5","name":"5 Kipping Chest-to-Bar","level":"Competent","std":"5 unbroken","seed":{"gcap":"c2b","min":5},"star":false},{"id":"bf.mini-5","name":"5 Mini Butterflys","level":"Competent","std":"5 small-arc reps","star":false},{"id":"bf.pullup-5","name":"5 Butterfly Pull-Ups","level":"Proficient","std":"5 unbroken (cycling)","star":true},{"id":"bf.c2b-5","name":"5 Butterfly C2B","level":"Proficient","std":"5 unbroken (cycling)","star":false},{"id":"bf.c2b-10","name":"10 Butterfly C2B","level":"Advanced","std":"10 unbroken","seed":{"gcap":"c2b","min":10},"star":false},{"id":"bf.c2b-20","name":"20 Butterfly C2B","level":"Advanced","std":"20 unbroken","seed":{"gcap":"c2b","min":20},"star":false},{"id":"bf.c2b-30","name":"30 Butterfly C2B","level":"Mastery","std":"30 unbroken","seed":{"gcap":"c2b","min":30},"star":false}]},{"id":"s.ttb","name":"Toes-to-Bar","group":"Pulling","rated":"t2b","stages":[{"id":"f.dead-hang-30","name":"Dead Hang","level":"Foundation","std":"30s","star":false},{"id":"d.knee-raise-10","name":"Kipping Knee Raises","level":"Developing","std":"10 reps","star":false},{"id":"d.straight-leg-raise","name":"Straight-Leg Raise","level":"Developing","std":"to 90°","star":false},{"id":"s.ttb.star","name":"Toes-to-Bar","level":"Competent","std":"1 TTB","star":true,"seed":{"gcap":"t2b","min":1}},{"id":"d.ttb-5","name":"5 unbroken TTB","level":"Competent","std":"5 unbroken","seed":{"gcap":"t2b","min":5},"star":false},{"id":"m.ttb-10","name":"10 unbroken TTB","level":"Proficient","std":"10 unbroken","seed":{"gcap":"t2b","min":10},"star":false},{"id":"d.ttb-15","name":"15 unbroken TTB","level":"Advanced","std":"15 unbroken","seed":{"gcap":"t2b","min":15},"star":false},{"id":"d.ttb-30","name":"30 unbroken TTB","level":"Advanced","std":"30 unbroken","seed":{"gcap":"t2b","min":30},"star":false}]},{"id":"s.bmu","name":"Bar Muscle-Up","group":"Pulling","rated":"barmuscleup","readiness":[{"id":"m.strict-pullup-10","name":"10 Strict Pull-Ups","seed":{"test":"strictpullups","min":10}},{"id":"m.c2b-5","name":"5 unbroken C2B","seed":{"test":"c2b1min","min":5}},{"id":"d.dip-10","name":"10 Strict Dips"},{"id":"m.ttb-10","name":"10 TTB / kip control","seed":{"test":"t2b","min":10}}],"stages":[{"id":"d.high-pull","name":"High Pull","level":"Developing","std":"3–5 hips-to-bar","star":false},{"id":"d.band-bmu","name":"Band-Assisted BMU","level":"Developing","std":"3 clean","star":false},{"id":"s.bmu.star","name":"Bar Muscle-Up","level":"Proficient","std":"1 BMU","star":true,"seed":{"gcap":"barmu","min":1}},{"id":"d.bmu-3","name":"3 unbroken BMU","level":"Proficient","std":"3 unbroken","seed":{"gcap":"barmu","min":3},"star":false},{"id":"d.bmu-5","name":"5 unbroken BMU","level":"Advanced","std":"5 unbroken","seed":{"gcap":"barmu","min":5},"star":false},{"id":"d.bmu-10","name":"10 unbroken BMU","level":"Advanced","std":"10 unbroken","seed":{"gcap":"barmu","min":10},"star":false},{"id":"d.bmu-20","name":"20 unbroken BMU","level":"Mastery","std":"20 unbroken","seed":{"gcap":"barmu","min":20},"star":false}]},{"id":"s.rmu","name":"Ring Muscle-Up","group":"Pulling","rated":"ringmu","readiness":[{"id":"m.strict-pullup-5","name":"5 Strict Pull-Ups","seed":{"test":"strictpullups","min":5}},{"id":"rs.dip10","name":"10 Ring Dips"}],"stages":[{"id":"f.ring-support-20","name":"Ring Support","level":"Foundation","std":"20s","star":false},{"id":"f.false-grip-hang","name":"False-Grip Hang","level":"Developing","std":"20s","star":false},{"id":"d.low-ring-trans","name":"Low-Ring Transitions","level":"Developing","std":"5 controlled","star":false},{"id":"s.rmu.star","name":"Ring Muscle-Up","level":"Advanced","std":"1 RMU","star":true,"seed":{"gcap":"ringmu","min":1}},{"id":"d.rmu-3","name":"3 unbroken RMU","level":"Advanced","std":"3 unbroken","seed":{"gcap":"ringmu","min":3},"star":false},{"id":"d.rmu-5","name":"5 unbroken RMU","level":"Mastery","std":"5 unbroken","seed":{"gcap":"ringmu","min":5},"star":false},{"id":"d.rmu-8","name":"8 unbroken RMU","level":"Mastery","std":"8 unbroken","seed":{"gcap":"ringmu","min":8},"star":false},{"id":"d.rmu-12","name":"12 unbroken RMU","level":"Mastery","std":"12 unbroken","seed":{"gcap":"ringmu","min":12},"star":false}]},{"id":"s.strict-rmu","name":"Strict Ring Muscle-Up","group":"Pulling","rated":null,"readiness":[{"id":"m.strict-pullup-10","name":"10 Strict Pull-Ups","seed":{"test":"strictpullups","min":10}},{"id":"rs.dip5","name":"5 Strict Ring Dips"}],"stages":[{"id":"srmu.fghang","name":"False-Grip Hang","level":"Developing","std":"30s","star":false},{"id":"srmu.dip","name":"Deep Strict Ring Dips","level":"Competent","std":"5 deep, RTO","star":false},{"id":"srmu.neg","name":"Slow RMU Negatives","level":"Proficient","std":"3× 5s lower","star":false},{"id":"srmu.star","name":"Strict Ring Muscle-Up","level":"Advanced","std":"1 strict rep","star":true},{"id":"srmu.3","name":"3 Strict RMU","level":"Advanced","std":"3 unbroken","star":false},{"id":"srmu.5","name":"5 Strict RMU","level":"Mastery","std":"5 unbroken","star":false}]},{"id":"s.handstand","name":"Handstand","group":"Handstand","rated":"hshold","stages":[{"id":"f.pike-hold-30","name":"Pike Hold","level":"Foundation","std":"30s","star":false},{"id":"f.wall-walk-3","name":"Wall Walks","level":"Foundation","std":"3 controlled","star":false},{"id":"f.wall-hs-30","name":"Chest-to-Wall HS","level":"Developing","std":"30s","seed":{"test":"hshold","variant":"wall"},"star":false},{"id":"s.handstand.star","name":"Freestanding Handstand","level":"Competent","std":"3s hold","star":true,"seed":{"test":"hshold","variant":"free","min":3}},{"id":"m.free-hs-10","name":"10s Handstand","level":"Proficient","std":"10s","seed":{"test":"hshold","variant":"free","min":10},"star":false},{"id":"d.hs-20","name":"20s Handstand","level":"Advanced","std":"20s","seed":{"test":"hshold","variant":"free","min":20},"star":false},{"id":"d.hs-30","name":"30s Handstand","level":"Advanced","std":"30s","seed":{"test":"hshold","variant":"free","min":30},"star":false},{"id":"d.hs-60","name":"60s Handstand","level":"Mastery","std":"60s","seed":{"test":"hshold","variant":"free","min":60},"star":false}]},{"id":"s.strict-hspu","name":"Strict HSPU","group":"Handstand","rated":null,"readiness":[{"id":"f.wall-hs-30","name":"30s Chest-to-Wall HS"}],"stages":[{"id":"f.pushup-25","name":"25 Push-Ups","level":"Foundation","std":"25 unbroken","star":false},{"id":"f.pike-pushup-10","name":"Pike Push-Ups","level":"Foundation","std":"10 reps","star":false},{"id":"d.box-pike-hspu","name":"Box Pike HSPU","level":"Competent","std":"10 reps","star":false},{"id":"s.strict-hspu.star","name":"Strict HSPU","level":"Proficient","std":"1 rep","star":true,"seed":{"gcap":"hspu","min":1}},{"id":"d.strict-hspu-5","name":"5 Strict HSPU","level":"Advanced","std":"5 reps","seed":{"gcap":"hspu","min":5},"star":false},{"id":"d.strict-hspu-10","name":"10 Strict HSPU","level":"Advanced","std":"10 reps","seed":{"gcap":"hspu","min":10},"star":false},{"id":"d.deficit-hspu","name":"Deficit HSPU","level":"Advanced","std":"4″+ deficit","star":false},{"id":"d.tuck-press-hs","name":"Yaad Press (bent-arm press to HS)","level":"Advanced","std":"tucked knees, bent-arm press to handstand","star":false},{"id":"d.freestanding-hspu","name":"Freestanding HSPU","level":"Mastery","std":"free-balance, no wall","star":false}]},{"id":"s.hsw","name":"Handstand Walk","group":"Handstand","rated":"hswalk","readiness":[{"id":"f.wall-walk-3","name":"Wall Walks · 3 controlled"},{"id":"f.wall-hs-30","name":"30s Chest-to-Wall HS"},{"id":"s.handstand.star","name":"Freestanding Handstand"}],"stages":[{"id":"m.shoulder-taps-20","name":"Wall Shoulder Taps","level":"Developing","std":"20 taps","star":false},{"id":"m.free-hs-5","name":"Freestanding HS","level":"Competent","std":"5s","star":false},{"id":"s.hsw.star","name":"Handstand Walk","level":"Proficient","std":"1 metre","star":true,"seed":{"test":"hswalk","min":1}},{"id":"d.hsw-5","name":"5m Handstand Walk","level":"Proficient","std":"5m","seed":{"test":"hswalk","min":5},"star":false},{"id":"d.hsw-10","name":"10m Handstand Walk","level":"Advanced","std":"10m","seed":{"test":"hswalk","min":10},"star":false},{"id":"d.hsw-15","name":"15m / 50ft","level":"Advanced","std":"15m","seed":{"test":"hswalk","min":15},"star":false},{"id":"d.hsw-25","name":"25m+ / Obstacles","level":"Mastery","std":"25m+ or turns (branch)","seed":{"test":"hswalk","min":25},"star":false}]},{"id":"s.lsit","name":"L-Sit","group":"Core / Lever","rated":"lsit","stages":[{"id":"f.support-hold-20","name":"Support Hold","level":"Foundation","std":"20s","star":false},{"id":"d.tuck-lsit","name":"Tuck L-Sit","level":"Developing","std":"10s","seed":{"test":"lsit","variant":"tuck","min":10},"star":false},{"id":"d.single-lsit","name":"Single-Leg L-Sit","level":"Developing","std":"5s each","seed":{"test":"lsit","variant":"single","min":5},"star":false},{"id":"s.lsit.star","name":"Full L-Sit","level":"Competent","std":"5s hold","star":true,"seed":{"test":"lsit","variant":"full","min":5}},{"id":"d.lsit-10","name":"10s L-Sit","level":"Proficient","std":"10s","seed":{"test":"lsit","variant":"full","min":10},"star":false},{"id":"d.lsit-20","name":"20s L-Sit","level":"Advanced","std":"20s","seed":{"test":"lsit","variant":"full","min":20},"star":false},{"id":"d.lsit-30","name":"30s L-Sit","level":"Advanced","std":"30s","seed":{"test":"lsit","variant":"full","min":30},"star":false},{"id":"d.vsit","name":"V-Sit","level":"Mastery","std":"V-sit / Manna reach (branch)","star":false}]},{"id":"s.front-lever","name":"Front Lever","group":"Core / Lever","rated":"frontlever","readiness":[{"id":"m.strict-pullup-10","name":"10 Strict Pull-Ups","seed":{"test":"strictpullups","min":10}},{"id":"ho.star","name":"30s Hollow Hold"},{"id":"f.scap-pull-8","name":"Scapular control"}],"stages":[{"id":"fl.skincat","name":"Skin-the-Cat","level":"Developing","std":"3 slow rotations","star":false},{"id":"d.tuck-fl","name":"Tuck Front Lever","level":"Developing","std":"10s","seed":{"test":"frontlever","variant":"tuck","min":10},"star":false},{"id":"d.adv-tuck-fl","name":"Advanced Tuck","level":"Competent","std":"10s","star":false},{"id":"d.straddle-fl","name":"Straddle / One-Leg","level":"Proficient","std":"5–10s","seed":{"test":"frontlever","variant":"straddle","min":5},"star":false},{"id":"s.front-lever.star","name":"Full Front Lever","level":"Advanced","std":"3s hold","star":true,"seed":{"test":"frontlever","variant":"full","min":3}},{"id":"d.fl-pull","name":"Front Lever Pull-Ups","level":"Mastery","std":"controlled reps (branch)","star":false}]},{"id":"s.pistol","name":"Pistol","group":"Lower","rated":null,"stages":[{"id":"f.air-squat-10","name":"Deep Air Squats","level":"Foundation","std":"10 controlled","star":false},{"id":"d.single-box","name":"Single-Leg to Box","level":"Developing","std":"5 each leg","star":false},{"id":"s.pistol.star","name":"Pistol","level":"Competent","std":"1 each leg","star":true},{"id":"d.pistol-5","name":"5 Pistols each leg","level":"Proficient","std":"5 each","star":false},{"id":"d.pistol-10","name":"10 alternating","level":"Advanced","std":"10 unbroken","star":false},{"id":"d.pistol-weighted","name":"Weighted Pistol","level":"Mastery","std":"loaded (branch)","star":false}]},{"id":"s.du","name":"Double-Unders","group":"Skills","rated":"doubleunders","stages":[{"id":"f.singles-50","name":"Unbroken Singles","level":"Foundation","std":"50 unbroken","star":false},{"id":"s.du.star","name":"Double-Under","level":"Competent","std":"1 DU","star":true,"seed":{"test":"doubleunders","min":1}},{"id":"d.du-10","name":"10 Double-Unders","level":"Competent","std":"10 unbroken","seed":{"test":"doubleunders","min":10},"star":false},{"id":"d.du-30","name":"30 Double-Unders","level":"Proficient","std":"30 unbroken","seed":{"test":"doubleunders","min":30},"star":false},{"id":"d.du-50","name":"50 Double-Unders","level":"Advanced","std":"50 unbroken","seed":{"test":"doubleunders","min":50},"star":false},{"id":"d.du-100","name":"100 Double-Unders","level":"Advanced","std":"100 unbroken","seed":{"test":"doubleunders","min":100},"star":false}]},{"id":"s.rope-climb","name":"Rope Climb","group":"Skills","rated":null,"stages":[{"id":"d.half-climb","name":"Half Rope Climb","level":"Foundation","std":"to halfway","star":false},{"id":"s.rope-climb.star","name":"Rope Climb","level":"Competent","std":"1 full climb","star":true,"seed":{"gcap":"rope","min":1}},{"id":"d.rope-3","name":"3 Rope Climbs","level":"Proficient","std":"3 climbs","seed":{"gcap":"rope","min":3},"star":false},{"id":"d.rope-efficient","name":"Efficient 2–3 Pull Climb","level":"Advanced","std":"efficient","star":false},{"id":"d.legless","name":"Legless Rope Climb","level":"Mastery","std":"legless (branch)","star":false}]},{"id":"s.dip","name":"Strict Dip","group":"Pulling","rated":null,"stages":[{"id":"f.support-hold-dip","name":"Support Hold","level":"Foundation","std":"20s locked","star":false},{"id":"s.dip.star","name":"Strict Dip","level":"Competent","std":"1 rep","star":true},{"id":"d.dip-5","name":"5 Strict Dips","level":"Competent","std":"5 reps","star":false},{"id":"d.dip-10","name":"10 Strict Dips","level":"Proficient","std":"10 reps","star":false},{"id":"d.dip-15","name":"15 Strict Dips","level":"Advanced","std":"15 reps","star":false},{"id":"d.weighted-dip-10","name":"Weighted Dip +10kg","level":"Advanced","std":"+10kg","star":false},{"id":"d.weighted-dip-20","name":"Weighted Dip +20kg","level":"Advanced","std":"+20kg","star":false},{"id":"d.weighted-dip-40","name":"Weighted Dip +40kg","level":"Mastery","std":"+40kg","star":false},{"id":"d.weighted-dip","name":"Weighted Dip +60kg","level":"Mastery","std":"+60kg","star":false}]},{"id":"s.squat","name":"Back Squat","group":"Barbell","rated":"backsquat","stages":[{"id":"squat.f","name":"Foundational","level":"Foundation","std":"Rating 20+","seed":{"test":"backsquat","minScore":20}},{"id":"squat.d","name":"Developing","level":"Developing","std":"Rating 35+","seed":{"test":"backsquat","minScore":35}},{"id":"squat.c","name":"Competent","level":"Competent","std":"Rating 50+","seed":{"test":"backsquat","minScore":50}},{"id":"squat.p","name":"Strong","level":"Proficient","std":"Rating 65+","seed":{"test":"backsquat","minScore":65}},{"id":"squat.a","name":"Advanced","level":"Advanced","std":"Rating 80+","star":true,"seed":{"test":"backsquat","minScore":80}},{"id":"squat.m","name":"Elite","level":"Mastery","std":"Rating 92+","seed":{"test":"backsquat","minScore":92}}]},{"id":"s.deadlift","name":"Deadlift","group":"Barbell","rated":"deadlift","stages":[{"id":"deadlift.f","name":"Foundational","level":"Foundation","std":"Rating 20+","seed":{"test":"deadlift","minScore":20}},{"id":"deadlift.d","name":"Developing","level":"Developing","std":"Rating 35+","seed":{"test":"deadlift","minScore":35}},{"id":"deadlift.c","name":"Competent","level":"Competent","std":"Rating 50+","seed":{"test":"deadlift","minScore":50}},{"id":"deadlift.p","name":"Strong","level":"Proficient","std":"Rating 65+","seed":{"test":"deadlift","minScore":65}},{"id":"deadlift.a","name":"Advanced","level":"Advanced","std":"Rating 80+","star":true,"seed":{"test":"deadlift","minScore":80}},{"id":"deadlift.m","name":"Elite","level":"Mastery","std":"Rating 92+","seed":{"test":"deadlift","minScore":92}}]},{"id":"s.bench","name":"Bench Press","group":"Barbell","rated":"bench","stages":[{"id":"bench.f","name":"Foundational","level":"Foundation","std":"Rating 20+","seed":{"test":"bench","minScore":20}},{"id":"bench.d","name":"Developing","level":"Developing","std":"Rating 35+","seed":{"test":"bench","minScore":35}},{"id":"bench.c","name":"Competent","level":"Competent","std":"Rating 50+","seed":{"test":"bench","minScore":50}},{"id":"bench.p","name":"Strong","level":"Proficient","std":"Rating 65+","seed":{"test":"bench","minScore":65}},{"id":"bench.a","name":"Advanced","level":"Advanced","std":"Rating 80+","star":true,"seed":{"test":"bench","minScore":80}},{"id":"bench.m","name":"Elite","level":"Mastery","std":"Rating 92+","seed":{"test":"bench","minScore":92}}]},{"id":"s.press","name":"Strict Press","group":"Barbell","rated":"strictpress","stages":[{"id":"press.f","name":"Foundational","level":"Foundation","std":"Rating 20+","seed":{"test":"strictpress","minScore":20}},{"id":"press.d","name":"Developing","level":"Developing","std":"Rating 35+","seed":{"test":"strictpress","minScore":35}},{"id":"press.c","name":"Competent","level":"Competent","std":"Rating 50+","seed":{"test":"strictpress","minScore":50}},{"id":"press.p","name":"Strong","level":"Proficient","std":"Rating 65+","seed":{"test":"strictpress","minScore":65}},{"id":"press.a","name":"Advanced","level":"Advanced","std":"Rating 80+","star":true,"seed":{"test":"strictpress","minScore":80}},{"id":"press.m","name":"Elite","level":"Mastery","std":"Rating 92+","seed":{"test":"strictpress","minScore":92}}]},{"id":"s.powerclean","name":"Power Clean","group":"Weightlifting","rated":"powerclean","stages":[{"id":"powerclean.f","name":"Foundational","level":"Foundation","std":"Rating 20+","seed":{"test":"powerclean","minScore":20}},{"id":"powerclean.d","name":"Developing","level":"Developing","std":"Rating 35+","seed":{"test":"powerclean","minScore":35}},{"id":"powerclean.c","name":"Competent","level":"Competent","std":"Rating 50+","seed":{"test":"powerclean","minScore":50}},{"id":"powerclean.p","name":"Strong","level":"Proficient","std":"Rating 65+","seed":{"test":"powerclean","minScore":65}},{"id":"powerclean.a","name":"Advanced","level":"Advanced","std":"Rating 80+","star":true,"seed":{"test":"powerclean","minScore":80}},{"id":"powerclean.m","name":"Elite","level":"Mastery","std":"Rating 92+","seed":{"test":"powerclean","minScore":92}}]},{"id":"s.cleanjerk","name":"Clean & Jerk","group":"Weightlifting","rated":"cleanjerk","stages":[{"id":"cleanjerk.f","name":"Foundational","level":"Foundation","std":"Rating 20+","seed":{"test":"cleanjerk","minScore":20}},{"id":"cleanjerk.d","name":"Developing","level":"Developing","std":"Rating 35+","seed":{"test":"cleanjerk","minScore":35}},{"id":"cleanjerk.c","name":"Competent","level":"Competent","std":"Rating 50+","seed":{"test":"cleanjerk","minScore":50}},{"id":"cleanjerk.p","name":"Strong","level":"Proficient","std":"Rating 65+","seed":{"test":"cleanjerk","minScore":65}},{"id":"cleanjerk.a","name":"Advanced","level":"Advanced","std":"Rating 80+","star":true,"seed":{"test":"cleanjerk","minScore":80}},{"id":"cleanjerk.m","name":"Elite","level":"Mastery","std":"Rating 92+","seed":{"test":"cleanjerk","minScore":92}}]},{"id":"s.snatch","name":"Snatch","group":"Weightlifting","rated":"snatch","stages":[{"id":"snatch.f","name":"Foundational","level":"Foundation","std":"Rating 20+","seed":{"test":"snatch","minScore":20}},{"id":"snatch.d","name":"Developing","level":"Developing","std":"Rating 35+","seed":{"test":"snatch","minScore":35}},{"id":"snatch.c","name":"Competent","level":"Competent","std":"Rating 50+","seed":{"test":"snatch","minScore":50}},{"id":"snatch.p","name":"Strong","level":"Proficient","std":"Rating 65+","seed":{"test":"snatch","minScore":65}},{"id":"snatch.a","name":"Advanced","level":"Advanced","std":"Rating 80+","star":true,"seed":{"test":"snatch","minScore":80}},{"id":"snatch.m","name":"Elite","level":"Mastery","std":"Rating 92+","seed":{"test":"snatch","minScore":92}}]},{"id":"s.ring-support","name":"Ring Support & Dips","group":"Rings","rated":null,"stages":[{"id":"rs.hold10","name":"Ring Support Hold","level":"Foundation","std":"10s locked","star":false},{"id":"rs.hold30","name":"Ring Support 30s","level":"Developing","std":"30s stable","star":false},{"id":"rs.dip1","name":"Ring Dip","level":"Competent","std":"1 rep","star":true},{"id":"rs.dip5","name":"5 Ring Dips","level":"Proficient","std":"5 unbroken","star":false},{"id":"rs.dip10","name":"10 Ring Dips","level":"Advanced","std":"10 unbroken","star":false},{"id":"rs.rto","name":"RTO Support / Weighted Dip","level":"Advanced","std":"rings-turned-out or +weight","star":false}]},{"id":"s.ring-row","name":"Ring Rows & Pulls","group":"Rings","rated":null,"stages":[{"id":"rr.row","name":"Ring Row","level":"Foundation","std":"10 controlled","star":false},{"id":"rr.feet","name":"Feet-Elevated Ring Row","level":"Developing","std":"8 reps","star":false},{"id":"rr.pull1","name":"Ring Pull-Up","level":"Competent","std":"1 rep","star":true},{"id":"rr.fg","name":"False-Grip Hold","level":"Competent","std":"20s false grip","star":false},{"id":"rr.fgpull","name":"False-Grip Pull to Sternum","level":"Proficient","std":"3 reps","star":false}]},{"id":"s.strict-bmu","name":"Strict Bar Muscle-Up","group":"Pulling","rated":null,"readiness":[{"id":"m.strict-pullup-10","name":"10 Strict Pull-Ups","seed":{"test":"strictpullups","min":10}}],"stages":[{"id":"d.c2b-strict","name":"Strict Chest-to-Bar","level":"Competent","std":"1 strict C2B","star":false},{"id":"d.c2b-strict-5","name":"5 Strict Chest-to-Bar","level":"Competent","std":"5 strict","star":false},{"id":"sbmu.highpull","name":"Strict High Pull to Sternum","level":"Competent","std":"3 slow reps","star":false},{"id":"sbmu.neg","name":"Slow BMU Negatives","level":"Proficient","std":"3× 5s lower","star":false},{"id":"sbmu.star","name":"Strict Bar Muscle-Up","level":"Advanced","std":"1 strict rep","star":true},{"id":"sbmu.3","name":"3 Strict BMU","level":"Advanced","std":"3 unbroken","star":false},{"id":"sbmu.5","name":"5 Strict BMU","level":"Mastery","std":"5 unbroken","star":false}]},{"id":"s.du-cross","name":"Crossovers","group":"Skills","rated":null,"readiness":[{"id":"d.du-50","name":"50 Double-Unders","seed":{"test":"doubleunders","min":50}}],"stages":[{"id":"x.single","name":"Single-Under Crossover","level":"Developing","std":"1 crossover","star":false},{"id":"x.single5","name":"5 Single Crossovers","level":"Developing","std":"5 unbroken","star":false},{"id":"x.du","name":"Double-Under Crossover","level":"Proficient","std":"1 DU crossover","star":true},{"id":"x.du5","name":"5 DU Crossovers","level":"Advanced","std":"5 unbroken","star":false},{"id":"x.du10","name":"10 DU Crossovers","level":"Advanced","std":"10 unbroken","star":false}]},{"id":"s.triple","name":"Triple-Unders","group":"Skills","rated":null,"readiness":[{"id":"d.du-100","name":"100 Double-Unders","seed":{"test":"doubleunders","min":100}}],"stages":[{"id":"t.high","name":"High, Fast Double-Unders","level":"Developing","std":"fast tempo, high pull","star":false},{"id":"t.star","name":"Triple-Under","level":"Advanced","std":"1 triple","star":true},{"id":"t.3","name":"3 Triple-Unders","level":"Advanced","std":"3 in a set","star":false},{"id":"t.5","name":"5 unbroken Triples","level":"Advanced","std":"5 unbroken","star":false},{"id":"t.10","name":"10 unbroken Triples","level":"Mastery","std":"10 unbroken","star":false}]},{"id":"s.shrimp","name":"Shrimp Squat","group":"Lower","rated":null,"stages":[{"id":"sh.assist","name":"Assisted Shrimp","level":"Foundation","std":"hold a support","star":false},{"id":"sh.beg","name":"Beginner Shrimp","level":"Developing","std":"knee taps floor","star":false},{"id":"sh.star","name":"Shrimp Squat","level":"Competent","std":"1 clean rep","star":true},{"id":"sh.5","name":"5 Shrimp Squats","level":"Proficient","std":"5 each leg","star":false},{"id":"sh.adv","name":"Advanced Shrimp","level":"Advanced","std":"rear foot to hand","star":false}]},{"id":"s.nordic","name":"Nordic Curl","group":"Lower","rated":null,"stages":[{"id":"nc.iso","name":"Nordic Negatives","level":"Foundation","std":"5 slow lowers","star":false},{"id":"nc.band","name":"Band-Assisted Nordic","level":"Developing","std":"5 reps","star":false},{"id":"nc.star","name":"Nordic Curl","level":"Proficient","std":"1 full rep","star":true},{"id":"nc.3","name":"3 Nordic Curls","level":"Advanced","std":"3 controlled","star":false},{"id":"nc.5","name":"5 Nordic Curls","level":"Advanced","std":"5 controlled","star":false}]},{"id":"s.boxjump","name":"Box Jump","group":"Lower","rated":null,"stages":[{"id":"bj.50","name":"20″ Box Jump","level":"Foundation","std":"50 cm","star":false},{"id":"bj.60","name":"24″ Box Jump","level":"Developing","std":"60 cm","star":false},{"id":"bj.star","name":"30″ Box Jump","level":"Competent","std":"76 cm","star":true},{"id":"bj.90","name":"36″ Box Jump","level":"Proficient","std":"90 cm","star":false},{"id":"bj.100","name":"40″+ Box Jump","level":"Advanced","std":"100 cm+","star":false}]},{"id":"s.hollow","name":"Hollow & Arch","group":"Core / Lever","rated":null,"stages":[{"id":"ho.tuck","name":"Tuck Hollow Hold","level":"Foundation","std":"20s","star":false},{"id":"ho.star","name":"Hollow Hold","level":"Developing","std":"30s straight","star":true},{"id":"ho.rock","name":"Hollow Rocks","level":"Developing","std":"20 reps","star":false},{"id":"ho.arch","name":"Arch / Superman Hold","level":"Developing","std":"30s","star":false},{"id":"ho.60","name":"60s Hollow Hold","level":"Competent","std":"60s solid","star":false}]},{"id":"s.back-lever","name":"Back Lever","group":"Core / Lever","rated":null,"readiness":[{"id":"d.tuck-fl","name":"Tuck Front Lever"}],"stages":[{"id":"bl.germanhang","name":"German Hang","level":"Developing","std":"30s hold","star":false},{"id":"bl.tuck","name":"Tuck Back Lever","level":"Competent","std":"10s","star":false},{"id":"bl.strad","name":"Straddle Back Lever","level":"Proficient","std":"5s","star":false},{"id":"bl.star","name":"Full Back Lever","level":"Advanced","std":"3s","star":true},{"id":"bl.10","name":"Back Lever 10s","level":"Advanced","std":"10s","star":false},{"id":"bl.pull","name":"Back Lever Pulls","level":"Mastery","std":"from inverted","star":false}]},{"id":"s.dragon","name":"Dragon Flag","group":"Core / Lever","rated":null,"stages":[{"id":"df.neg","name":"Dragon Flag Negatives","level":"Developing","std":"5 slow lowers","star":false},{"id":"df.tuck","name":"Tuck Dragon Flag","level":"Competent","std":"5 reps","star":false},{"id":"df.star","name":"Dragon Flag","level":"Advanced","std":"1 full rep","star":true},{"id":"df.5","name":"5 Dragon Flags","level":"Advanced","std":"5 reps","star":false},{"id":"df.10","name":"10 Dragon Flags","level":"Mastery","std":"10 reps","star":false}]},{"id":"s.kip-hspu","name":"Kipping HSPU","group":"Handstand","rated":null,"readiness":[{"id":"d.hs-20","name":"20s Handstand"}],"stages":[{"id":"kh.knee","name":"Knee-Kip Drills","level":"Developing","std":"box / knee kip","star":false},{"id":"kh.star","name":"Kipping HSPU","level":"Competent","std":"1 rep","star":true},{"id":"kh.5","name":"5 Kipping HSPU","level":"Proficient","std":"5 unbroken","star":false},{"id":"kh.10","name":"10 Kipping HSPU","level":"Advanced","std":"10 unbroken","star":false},{"id":"kh.def","name":"Deficit Kipping HSPU","level":"Advanced","std":"4″+ deficit","star":false}]},{"id":"s.press-hs","name":"Press to Handstand","group":"Handstand","rated":null,"readiness":[{"id":"d.hs-30","name":"30s Handstand"}],"stages":[{"id":"ph.pike","name":"Pike Press Negatives","level":"Developing","std":"5 slow lowers","star":false},{"id":"ph.strad","name":"Straddle Press (banded)","level":"Competent","std":"assisted","star":false},{"id":"ph.star","name":"Press to Handstand","level":"Advanced","std":"1 straddle press","star":true},{"id":"ph.pikefull","name":"Pike Press to Handstand","level":"Advanced","std":"straight-leg","star":false},{"id":"ph.3","name":"3 Presses","level":"Mastery","std":"3 unbroken","star":false}]}];
+var DEV_GROUPS=["Pulling","Handstand","Core / Lever","Lower","Skills","Rings","Weightlifting"];
 function devSkill(id){for(var i=0;i<DEV_G.length;i++)if(DEV_G[i].id===id)return DEV_G[i];return null;}
 function devSeedMet(seed){try{if(!seed)return false;
   if(seed.gcap){var c=(typeof gcap==='function')?gcap(seed.gcap):0;return c>0&&c>=(seed.min||1);}   // gymnastic capacity (gym entry OR mapped test) — reps/effort
@@ -2953,7 +2641,7 @@ function renderDevSkill(id){var el=document.getElementById('devInner');if(!el)re
    +youClose+nextObj
    +'<div class="dev-sec-l">Your pathway</div><div class="dev-path">'+path+'</div>'
    +bestBox
-   +(markBtn?'<div class="ss-sticky">'+markBtn+'</div>':'');}
+   +((markBtn||_unmarkBtn(sk))?'<div class="ss-sticky">'+markBtn+_unmarkBtn(sk)+'</div>':'');}
 window.openDev=function(){var m=document.getElementById('devMask');if(!m){m=document.createElement('div');m.id='devMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="devInner"></div>';document.body.appendChild(m);}cap2List();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.closeDev=function(){var m=document.getElementById('devMask');if(m)m.style.display='none';};
 window.openDevSkill=function(id){var m=document.getElementById('devMask');if(!m)return;var cat=CAP_NAV[id];_devOpen[id]=true;if(cat){openDevCat(cat);}else{cap2Skill(id);}m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
@@ -2973,8 +2661,8 @@ var CAP_CATMETA={
 var _devCat=null;var _devOpen={};
 var CAP_FEEDS={'s.strict-pullup':'Skill · Pulling Gymnastics','s.c2b':'Skill · Pulling Gymnastics','s.ttb':'Skill · Pulling Gymnastics','s.bmu':'Skill · Pulling Gymnastics','s.rmu':'Skill · Pulling Gymnastics','s.rope-climb':'Skill · Coordination','s.dip':'Skill · Support','s.handstand':'Skill · Inversion','s.strict-hspu':'Skill · Inversion','s.hsw':'Skill · Inversion','s.lsit':'Skill · Static / Core','s.front-lever':'Skill · Static / Core','s.pistol':'Skill · Coordination','s.du':'Skill · Coordination'};
 _CIC.barbell='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 12h18M6 8v8M9 6v12M15 6v12M18 8v8"/></svg>';
-CAP_CATMETA['BARBELL']={key:'barbell',ca:'#ff5c5c',caBg:'rgba(255,92,92,.15)',sub:'Squat · deadlift · olympic lifts',ic:_CIC.barbell};
-Object.assign(CAP_NAV,{'s.squat':'BARBELL','s.deadlift':'BARBELL','s.bench':'BARBELL','s.press':'BARBELL','s.powerclean':'BARBELL','s.cleanjerk':'BARBELL','s.snatch':'BARBELL','s.ring-support':'RINGS','s.ring-row':'RINGS','s.strict-rmu':'RINGS','s.strict-bmu':'RIG'});
+CAP_CATMETA['BARBELL']={key:'barbell',ca:'#ff5c5c',caBg:'rgba(255,92,92,.15)',sub:'Snatch · clean & jerk · power clean',ic:_CIC.barbell};
+Object.assign(CAP_NAV,{'s.powerclean':'BARBELL','s.cleanjerk':'BARBELL','s.snatch':'BARBELL','s.ring-support':'RINGS','s.ring-row':'RINGS','s.strict-rmu':'RINGS','s.strict-bmu':'RIG'});
 Object.assign(CAP_FEEDS,{'s.squat':'Rating · Strength','s.deadlift':'Rating · Strength','s.bench':'Rating · Strength','s.press':'Rating · Strength','s.powerclean':'Rating · Power','s.cleanjerk':'Off-card · Olympic lift','s.snatch':'Rating · Skill','s.ring-support':'Skill · Support','s.ring-row':'Skill · Pulling Gymnastics','s.strict-rmu':'Skill · Pulling Gymnastics','s.strict-bmu':'Skill · Pulling Gymnastics'});
 Object.assign(CAP_NAV,{'s.du-cross':'COORDINATION','s.triple':'COORDINATION'});
 Object.assign(CAP_FEEDS,{'s.du-cross':'Skill · Coordination','s.triple':'Skill · Coordination'});
@@ -2999,7 +2687,7 @@ function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);
     return '<div class="dev-node '+stt+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+tag+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';}).join('');
   var next=st.next;var markBtn=(next&&!isAutoRung(next))?'<button class="btn2 skf-mark" onclick="devMarkNext(&#39;'+sk.id+'&#39;)">Mark &ldquo;'+esc(next.name)+'&rdquo; done</button>':'';
   var pendHint=st.pendingCount>0?'<div class="dev-pendhint">'+ICO.clock+' '+st.pendingCount+' marked \u2014 awaiting coach verification to count</div>':'';
-  return capsHTML+'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'+pendHint+'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'+markBtn;}
+  return capsHTML+'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'+pendHint+'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'+markBtn+_unmarkBtn(sk);}
 function openDevCat(cat){_devCat=cat;var el=document.getElementById('devInner');if(!el)return;var meta=CAP_CATMETA[cat]||{};
   var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===cat;});
   var rows=sks.map(function(sk){var st=devSkillState(sk);var pct=Math.round(st.done/st.total*100);var op=_devOpen[sk.id]?' open':'';
@@ -3035,7 +2723,7 @@ function cap2Skill(id){var el=document.getElementById('devInner');if(!el)return;
    +'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'
    +capsHTML+nextHTML
    +'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'
-   +(markBtn?'<div class="ss-sticky">'+markBtn+'</div>':'');}
+   +((markBtn||_unmarkBtn(sk))?'<div class="ss-sticky">'+markBtn+_unmarkBtn(sk)+'</div>':'');}
 window.devBackToList=function(){cap2List();try{window.scrollTo(0,0);}catch(e){}};
 /* ===== CAPABILITY-NETWORK slice (v1, flagged/preview — non-destructive) ============================
    Reference implementation of the four-layer Development model (Capability -> Skill -> Milestone -> Exercise).
@@ -3114,10 +2802,11 @@ function renderCapSkill(id){var el=document.getElementById('capInner');if(!el)re
 window.capSlice=function(id){var m=document.getElementById('capMask');if(!m){m=document.createElement('div');m.id='capMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="capInner"></div>';document.body.appendChild(m);}renderCapSkill(id||'bar-muscle-up');m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.capClose=function(){var m=document.getElementById('capMask');if(m)m.style.display='none';};
 window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual',verified:false};devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}};
+window.devUnmarkLast=function(sid){var sk=devSkill(sid);if(!sk)return;for(var i=sk.stages.length-1;i>=0;i--){var st=sk.stages[i];var d=DEVP[st.id];if(d&&d.done&&!d.verified&&d.src==='manual'){delete DEVP[st.id];devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}return;}}};
+function _unmarkBtn(sk){var lm=null;for(var i=sk.stages.length-1;i>=0;i--){var d=DEVP[sk.stages[i].id];if(d&&d.done&&!d.verified&&d.src==='manual'){lm=sk.stages[i];break;}}return lm?'<button class="btn2 dev-unmark" onclick="devUnmarkLast(&#39;'+sk.id+'&#39;)">Undo &ldquo;'+esc(lm.name)+'&rdquo;</button>':'';}
 function pendingRungs(){var out=[];DEV_G.forEach(function(sk){sk.stages.forEach(function(st){if(DEVP[st.id]&&DEVP[st.id].verified)return;var pend=(DEVP[st.id]&&DEVP[st.id].done)||(st.seed&&st.seed.gcap&&devSeedMet(st.seed));if(pend)out.push({sk:sk,st:st});});});return out;}
 window.devLogBest=function(sid,key){var el=document.getElementById('devBestIn');if(!el)return;var v=parseInt(el.value,10);if(!v||v<1){showToast('Enter your best rep count');return;}var r=devIngest(key,v,{source:'best'});renderDevSkill(sid);try{window.scrollTo(0,0);}catch(e){}if(!(r&&r.crossed.length))showToast('Saved &mdash; best updated');};
-function progressChooserHTML(){return '<div class="dsec">Progress</div>'
-  +'<button class="dev-launch" onclick="openDev()"><span class="dev-ll"><span class="dev-lk">Skill Tree</span></span><span class="ss-chev">&rsaquo;</span></button>';}
+function progressChooserHTML(){var pursuit=(typeof pursuitHTML==='function')?pursuitHTML():'';var npc=(typeof nextPointHTML==='function')?nextPointHTML():'';return '<div class="dsec">Your Journey</div>'+(pursuit?'<div class="ppsec">'+pursuit+'</div>':'')+(npc?'<div class="ppsec">'+npc+'</div>':'')+'<div class="dsec">The tree</div>'+'<button class="dev-launch" onclick="openDev()"><span class="dev-ll"><span class="dev-lk">Skill Tree</span></span><span class="ss-chev">&rsaquo;</span></button>'+'<button class="dcard trn-btn" onclick="goNav(&#39;submit&#39;)"><span class="dc-ic">'+(ICO.target||'')+'</span><span class="dc-t"><b>Log a score</b><span>feeds your card &amp; unlocks</span></span><span class="dc-chev">&rsaquo;</span></button>'+'<button class="dcard trn-btn" onclick="openTrainPage(&#39;scale&#39;)"><span class="dc-ic">'+(ICO.gear||'')+'</span><span class="dc-t"><b>WOD scaling</b><span>numbers that size your WOD weights</span></span><span class="dc-chev">&rsaquo;</span></button>';}
 window.pickSessTrack=function(t){sessTrack=t;renderSession();var m=document.getElementById('sessMask');if(m)m.scrollTop=0;};
 window.sessBack=function(){sessTrack=null;renderSession();};
 window.sessToggle=function(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');};
@@ -3728,7 +3417,7 @@ function buildHomeHTML(hint,cardToggle,card,tree){
     return '<button class="dcard" onclick="'+onclick+'" aria-label="'+esc(label)+'"><span class="dc-ic">'+ico+'</span><span class="dc-t"><b>'+esc(label)+'</b><span>'+esc(sub)+'</span></span><span class="dc-chev">›</span></button>';
   }
   var bighub='<div class="homehub">'
-    +'<button class="hubtile ht-prog" onclick="goNav(&#39;tree&#39;)"><span class="hubic">'+ICO.tree+'</span><span class="hubl">Progress</span></button>'
+    +'<button class="hubtile ht-prog" onclick="goNav(&#39;tree&#39;)"><span class="hubic">'+ICO.tree+'</span><span class="hubl">Journey</span></button>'
     +'<button class="hubtile ht-vault" onclick="goNav(&#39;vault&#39;)"><span class="hubic">'+ICO.vault+'</span><span class="hubl">Vault</span></button>'
     +'<button class="hubtile ht-shop" onclick="openShop()"><span class="hubic">'+ICO.shop+'</span><span class="hubl">Shop</span></button>'
     +'</div>';
@@ -3824,7 +3513,7 @@ function buildTrainHTML(){
     +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+questCompactHTML()+'<button class="tt-week" onclick="openWeek()"><span class="tt-wk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg></span><span class="tt-wk-l">Week ahead</span><span class="arw">›</span></button></div>';
   var TB=[['card','Log Scores',ICO.target],['scale','For your WODs',ICO.gear]];
   var btns=TB.map(function(x){return '<button class="dcard trn-btn" onclick="openTrainPage(&#39;'+x[0]+'&#39;)"><span class="dc-ic">'+x[2]+'</span><span class="dc-t"><b>'+x[1]+'</b></span><span class="dc-chev">›</span></button>';}).join('');
-  return today+'<div class="dsec">Log your training</div>'+btns;
+  return today;
 }
 // COMPETE / EXPLORE / FANTASY — locked, coming soon (shows the shape of the full app)
 // Closed beta: descriptions of unreleased features intentionally removed so they don't ship in the client bundle.
@@ -3959,7 +3648,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
   var settings='<div class="ppsec"><div class="rmhdr">Settings <button class="minibtn" onclick="openRM()">Edit</button></div>'
     +'<div class="ml-line"><span>You</span><span class="ml-res">'+(setBits.length?setBits.join(' · '):'tap Edit to set up')+'</span></div>'
     +'<div class="rmnote">Used to scale WOD loads to you — never affects your card or ranking.</div>'
-    +'<div class="pprow" style="padding:10px 0 0"><button class="ghost" onclick="startTour(false)">Walkthrough</button><button class="ghost" onclick="openPrivacy()">Privacy &amp; data</button></div></div>'
+    +'<div class="pprow" style="padding:10px 0 0"><button class="ghost" onclick="openTrainPage(&#39;scale&#39;)">WOD scaling</button><button class="ghost" onclick="startTour(false)">Walkthrough</button><button class="ghost" onclick="openPrivacy()">Privacy &amp; data</button></div></div>'
     +'<div class="ppsec ppabout"><div class="rmhdr">About</div>'
       +'<div class="ab-brand">UN<b>RANKED</b> · PRIVATE BETA · v0.9.0-beta</div>'
       +'<p class="ab-legal">Pre-release software. <b>Confidential.</b> © 2026 My Fitness Local Ltd. All rights reserved.</p>'
@@ -3968,7 +3657,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
   var hint=(cc.entered===0)?'<div class="pphint"><b>Welcome!</b> Tap <b>“Enter your first score”</b> on your card below. As a coach verifies your scores, your card, stats and class light up.</div>':(cc.pending>0?'<div class="pphint">⏳ You have <b>'+cc.pending+'</b> score'+(cc.pending===1?'':'s')+' waiting for coach verification — ask a coach to verify to update your card.</div>':'');
   var histLog=prHtml+hist;   // personal records + every session (folds into the Vault's collapsible log)
   // render the active page only (bottom-nav drives which); coach never gets here
-  var titles={home:'Home',tree:'Progress',train:'Train',submit:'Log a score',vault:'The Vault',compete:'In Development',explore:'In Development',fantasy:'In Development'};
+  var titles={home:'Home',tree:'Journey',train:'Train',submit:'Log a score',vault:'The Vault',compete:'In Development',explore:'In Development',fantasy:'In Development'};
   var tt=document.getElementById('ppTitle');if(tt)tt.innerHTML=(titles[profilePage]||'Home')+' <span class="betap">beta</span>';
   var bk=document.getElementById('ni-back');if(bk)bk.style.display=(profilePage==='tree'||profilePage==='vault'||profilePage==='submit')?'':'none';   // sub-pages reached from Home/Train links get a back affordance; top-level tabs don't
   var pageHtml;
