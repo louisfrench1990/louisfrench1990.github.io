@@ -1199,6 +1199,54 @@ body.hasnav #foot{bottom:60px}
 .dev-dot.pend svg{width:11px;height:11px}
 .dev-node.pend .dev-nnm{color:var(--acc)}
 .dev-pendchip{font-size:9px;font-weight:800;letter-spacing:.06em;color:var(--acc);border:1px solid rgba(255,194,71,.5);border-radius:4px;padding:1px 4px;margin-left:2px}
+.dev-rung-undo{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-left:6px;vertical-align:middle;font-size:11px;line-height:1;color:var(--acc);background:rgba(255,194,71,.08);border:1px solid rgba(255,194,71,.45);border-radius:50%;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}
+.dev-rung-undo:hover,.dev-rung-undo:active{background:rgba(255,194,71,.2)}
+.dev-node.unmarkable{cursor:default}
+/* Progress chooser sub-labels */
+.dev-launch .dl-ic{flex:0 0 auto;width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:var(--acc)}
+.dev-launch .dl-ic svg{width:20px;height:20px}
+.dev-ll{display:flex;flex-direction:column;gap:3px;flex:1 1 auto;min-width:0}
+.dev-lk{font-weight:800;font-size:1rem}
+.dev-lsub{font-size:.72rem;line-height:1.25;color:var(--dim)}
+/* Train-this prescription on a skill (skill tree merge) */
+.dev-trainthis{margin:10px 0 2px;padding:10px 12px;border-radius:11px;background:rgba(255,194,71,.07);border:1px solid rgba(255,194,71,.28);display:flex;flex-direction:column;gap:5px}
+.dev-tt-l{font-size:.68rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--acc)}
+.dev-tt-l em{font-style:normal;color:var(--dim);font-weight:700}
+.dev-tt-do{font-size:.86rem;line-height:1.4;color:var(--txt)}
+.dev-tt-fq{font-size:.72rem;color:var(--dim)}
+.dev-objrx{margin-top:8px;font-size:.84rem;line-height:1.4;color:var(--txt);border-top:1px dashed var(--line);padding-top:8px}
+.dev-objfq{display:block;margin-top:4px;font-size:.72rem;color:var(--dim)}
+/* ===== Journey (title guide) ===== */
+.tt-tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;-webkit-overflow-scrolling:touch}
+.tt-tab{flex:0 0 auto;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--s1);color:var(--dim);font:inherit;font-weight:700;font-size:.82rem;cursor:pointer}
+.tt-tab.on{background:var(--acc);color:#10121a;border-color:var(--acc)}
+.tt-ladder{display:flex;flex-direction:column;gap:0}
+.tt-rankrow{position:relative;padding:6px 0}
+.tt-rankrow:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:-2px;width:2px;height:12px;background:var(--line);transform:translateX(-50%)}
+.tt-ranklbl{font-size:.6rem;font-weight:800;letter-spacing:.12em;color:var(--dim);text-align:center;margin:2px 0 7px}
+.tt-rankcards{display:grid;gap:9px}
+.tt-rankcards.c1{grid-template-columns:1fr;max-width:340px;margin:0 auto}
+.tt-rankcards.c2{grid-template-columns:1fr 1fr}
+.tt-cardwrap{display:flex;flex-direction:column}
+.tt-card{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--tc);border-radius:12px;padding:11px 12px;cursor:pointer;color:var(--txt);font:inherit}
+.tt-card.open{border-bottom-left-radius:0;border-bottom-right-radius:0}
+.tt-card.unlocked{background:linear-gradient(90deg,color-mix(in srgb,var(--tc) 16%,transparent),transparent)}
+.tt-card.pre-locked{opacity:.62}
+.tt-rankpip{flex:0 0 auto;width:9px;height:9px;border-radius:50%}
+.tt-mid{display:flex;flex-direction:column;gap:2px;flex:1 1 auto;min-width:0}
+.tt-nm{font-weight:800;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tt-sub{font-size:.68rem;color:var(--dim);line-height:1.2}
+.tt-badge{flex:0 0 auto;font-size:.95rem;color:var(--tc)}
+.tt-detail{background:var(--s1);border:1px solid var(--line);border-top:none;border-left:3px solid var(--tc);border-radius:0 0 12px 12px;padding:10px 12px 12px}
+.tt-pre,.tt-adds{font-size:.74rem;line-height:1.35;color:var(--dim);margin:2px 0}
+.tt-pre b,.tt-adds b{color:var(--txt)}
+.tt-reqs{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.tt-req{display:flex;align-items:center;gap:8px}
+.tt-req-nm{flex:0 0 40%;font-size:.78rem;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tt-req-nm.met{color:var(--acc)}
+.tt-req-bar{flex:1 1 auto;height:6px;border-radius:3px;background:rgba(255,255,255,.09);overflow:hidden}
+.tt-req-bar i{display:block;height:100%;border-radius:3px}
+.tt-req-val{flex:0 0 auto;font-size:.72rem;font-variant-numeric:tabular-nums;color:var(--dim);min-width:52px;text-align:right}
 .dev-pendhint{font-size:11.5px;color:var(--acc);font-weight:600;margin:9px 0 2px;display:flex;align-items:center;gap:5px}
 .dev-pendhint svg{width:13px;height:13px}
 .trn-prog{cursor:pointer;background:linear-gradient(120deg,rgba(255,45,138,.15),rgba(255,45,138,.03));border-color:rgba(255,45,138,.45)}
@@ -2261,7 +2309,7 @@ function logBtnHTML(){if(boardMode||viewMode!=='day'||!canLog())return '';
   var done=items.filter(function(p){return ent[p.id];}).length,all=done>=items.length;
   var lbl=all?(ICO.check+' Session logged — tap to edit'):(done>0?(ICO.check+' Logged '+done+' of '+items.length+' — tap to finish'):(ICO.check+' Log this session'));
   return '<div class="logbar"><button class="logbtn'+(all?' done':'')+'" onclick="openLog()">'+lbl+'</button></div>';}
-function logLoggable(){var d=cur&&cur.d;if(!d||!d.tracks)return [];var out=[];(d.tracks.class||[]).forEach(function(id){var p=piece(id);if(p&&(p.type==='strength'||clsFor(p)==='wod'||p.type==='skill'))out.push(p);});return out;}
+function logLoggable(){var d=cur&&cur.d;if(!d||!d.tracks)return [];var out=[];var seen={};(d.tracks[track]||d.tracks.class||[]).forEach(function(id){if(seen[id])return;seen[id]=1;var p=piece(id);if(p&&(p.type==='strength'||p.type==='wod'||clsFor(p)==='wod'||p.type==='skill'))out.push(p);});return out;}   // follows the CURRENT track (class/athlete/lifting/gymnastics/engine), not just class — p.type==='wod' also catches engine conditioning pieces (which clsFor doesn't tag as 'wod'), so athlete-programme, lifter, gymnast & engine work is all loggable
 function liftKeyOf(p){if(!p||p.type!=='strength')return null;var m=(p.id||'').match(/^lift-([a-z0-9_]+)-/i);return m?m[1].replace(/_/g,' '):String(p.title||'').split('—')[0].trim().toLowerCase();}
 function parseRes(s){s=String(s||'');var lm=s.match(/(\d+(?:\.\d+)?)\s*kg/i);if(!lm)return null;var rm=s.match(/[x×]\s*(\d+)/i)||s.match(/(\d+)\s*reps?/i);var load=parseFloat(lm[1]);var reps=rm?parseInt(rm[1],10):1;return {load:load,reps:reps,e1rm:Math.round(load*(1+reps/30))};}
 function logDates(){return Object.keys(LOG).filter(function(d){var e=LOG[d];return e&&e.pieces&&Object.keys(e.pieces).length;});}
@@ -2731,7 +2779,7 @@ function jrnById(id){return (typeof devSkill==='function')?devSkill(id):null;}
 function jrnStarIdx(sk){for(var i=0;i<sk.stages.length;i++)if(sk.stages[i].star)return i;return sk.stages.length-1;}
 function jrnGoals(){try{var a=JSON.parse(localStorage.getItem('unranked-journey-goals')||'[]');return Array.isArray(a)?a.filter(function(g){return !!jrnById(g);}):[];}catch(e){return [];}}
 function jrnSetGoals(a){try{localStorage.setItem('unranked-journey-goals',JSON.stringify(a));}catch(e){}}
-window.jrnToggleGoal=function(id){var g=jrnGoals();var k=g.indexOf(id);if(k>=0)g.splice(k,1);else g.push(id);jrnSetGoals(g);try{if(typeof openMyLog==='function'&&profilePage==='tree')openMyLog();}catch(e){}};
+window.jrnToggleGoal=function(id){var g=jrnGoals();var k=g.indexOf(id);if(k>=0)g.splice(k,1);else g.push(id);jrnSetGoals(g);try{var tm=document.getElementById('trainNowMask');if(tm&&tm.style.display!=='none'){renderTrainNow();return;}}catch(e){}try{if(typeof openMyLog==='function'&&profilePage==='tree')openMyLog();}catch(e){}};
 function jrnBuildRoute(goals){var order=[],seen={};
   function add(skillId,uptoName){if(seen[skillId])return;seen[skillId]=1;(JRN_PREREQ[skillId]||[]).forEach(function(pr){add(pr[0],pr[1]);});var sk=jrnById(skillId);if(!sk)return;var up=uptoName?sk.stages.map(function(x){return x.name;}).indexOf(uptoName):jrnStarIdx(sk);if(up<0)up=jrnStarIdx(sk);order.push({skill:sk,upto:up});}
   goals.forEach(function(g){var sk=jrnById(g);if(sk)add(g,sk.stages[jrnStarIdx(sk)].name);});return order;}
@@ -2781,10 +2829,12 @@ function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);var _rr=jrn
   var pathHTML=sk.stages.map(function(n,i){var stt=st.ach[i]?'done':(st.pend[i]?'pend':(i===st.cur?'now':'up'));
     var dot=st.ach[i]?'<span class="dev-dot done">'+devTick()+'</span>':(st.pend[i]?'<span class="dev-dot pend">'+ICO.clock+'</span>':(i===st.cur?'<span class="dev-dot now"></span>':'<span class="dev-dot"></span>'));
     var starmk=n.star?' <span class="dev-star">&#9733;</span>':'';var tag=st.pend[i]?' <span class="dev-pendchip">PENDING</span>':((i===st.cur)?' <span class="dev-nowchip">NOW</span>':'');
-    return '<div class="dev-node '+stt+jrnRungCls(_rr,i)+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+tag+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';}).join('');
+    return '<div class="dev-node '+stt+(_rungManual(n)?' unmarkable':'')+jrnRungCls(_rr,i)+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+tag+_rungUndo(sk,n)+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';}).join('');
   var next=st.next;var markBtn=(next&&!isAutoRung(next))?'<button class="btn2 skf-mark" onclick="devMarkNext(&#39;'+sk.id+'&#39;)">Mark &ldquo;'+esc(next.name)+'&rdquo; done</button>':'';
   var pendHint=st.pendingCount>0?'<div class="dev-pendhint">'+ICO.clock+' '+st.pendingCount+' marked \u2014 awaiting coach verification to count</div>':'';
-  return jrnRouteBanner(sk,_rr)+capsHTML+'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'+pendHint+'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'+markBtn+_unmarkBtn(sk);}
+  var _nrx=next?jrnPresc(next.name):null;
+  var rxHTML=_nrx?('<div class="dev-trainthis"><span class="dev-tt-l">Train this \u2192 '+esc(next.name)+(next.std?' <em>(clears at '+esc(next.std)+')</em>':'')+'</span><span class="dev-tt-do">'+esc(_nrx.do)+'</span>'+(_nrx.freq?'<span class="dev-tt-fq">'+esc(_nrx.freq)+'</span>':'')+'</div>'):'';
+  return jrnRouteBanner(sk,_rr)+capsHTML+'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'+pendHint+rxHTML+'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'+markBtn+_unmarkBtn(sk);}
 function openDevCat(cat){_devCat=cat;var el=document.getElementById('devInner');if(!el)return;var meta=CAP_CATMETA[cat]||{};var _RM=jrnRouteInfo();
   var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===cat;});
   var rows=sks.map(function(sk){var st=devSkillState(sk);var pct=Math.round(st.done/st.total*100);var op=_devOpen[sk.id]?' open':'';
@@ -2808,11 +2858,12 @@ function cap2Skill(id){var el=document.getElementById('devInner');if(!el)return;
     capsHTML='<div class="dev-sec-l">Readiness</div><div class="cn-caps">'+items.map(function(x){var isL=lim&&x.name===lim.name;
       return '<div class="cn-cap"><span class="cn-cap-nm'+(isL?' cn-lim':'')+'">'+esc(x.name)+'</span>'+capBar(x.frac)+(isL?'<span class="cn-limtag">limiter</span>':(x.met?'<span class="cn-metmk">'+devTick()+'</span>':''))+'</div>';}).join('')+'</div>';}
   var next=st.next;
-  var nextHTML=next?('<div class="dev-obj"><div class="dev-objl">Next milestone</div><div class="dev-objt">'+esc(next.name)+' &mdash; '+esc(next.std)+'</div></div>'):('<div class="dev-obj"><div class="dev-objt">Mastered &mdash; every milestone complete.</div></div>');
-  var pathHTML=sk.stages.map(function(n,i){var stt=st.ach[i]?'done':(i===st.cur?'now':'up');
-    var dot=st.ach[i]?'<span class="dev-dot done">'+devTick()+'</span>':(i===st.cur?'<span class="dev-dot now"></span>':'<span class="dev-dot"></span>');
-    var starmk=n.star?' <span class="dev-star">&#9733;</span>':'';
-    return '<div class="dev-node '+stt+jrnRungCls(_rr,i)+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';}).join('');
+  var _nrx=next?jrnPresc(next.name):null;
+  var nextHTML=next?('<div class="dev-obj"><div class="dev-objl">Next milestone · clears at '+esc(next.std)+'</div><div class="dev-objt">'+esc(next.name)+'</div>'+(_nrx?('<div class="dev-objrx">'+esc(_nrx.do)+(_nrx.freq?'<span class="dev-objfq">'+esc(_nrx.freq)+'</span>':'')+'</div>'):'')+'</div>'):('<div class="dev-obj"><div class="dev-objt">Mastered &mdash; every milestone complete.</div></div>');
+  var pathHTML=sk.stages.map(function(n,i){var stt=st.ach[i]?'done':(st.pend[i]?'pend':(i===st.cur?'now':'up'));
+    var dot=st.ach[i]?'<span class="dev-dot done">'+devTick()+'</span>':(st.pend[i]?'<span class="dev-dot pend">'+ICO.clock+'</span>':(i===st.cur?'<span class="dev-dot now"></span>':'<span class="dev-dot"></span>'));
+    var starmk=n.star?' <span class="dev-star">&#9733;</span>':'';var tag=st.pend[i]?' <span class="dev-pendchip">PENDING</span>':((i===st.cur)?' <span class="dev-nowchip">NOW</span>':'');
+    return '<div class="dev-node '+stt+(_rungManual(n)?' unmarkable':'')+jrnRungCls(_rr,i)+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+tag+_rungUndo(sk,n)+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';}).join('');
   var markBtn=(next&&!isAutoRung(next))?'<button class="btn-primary" onclick="devMarkNext(&#39;'+sk.id+'&#39;)">Mark &ldquo;'+esc(next.name)+'&rdquo; done</button>':'';
   el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="devBackToList()">&lsaquo;</button><span class="ss-topttl">'+esc(sk.name)+'</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
    +'<div class="ss-h">'+esc(sk.name)+'</div>'
@@ -2901,6 +2952,9 @@ window.capClose=function(){var m=document.getElementById('capMask');if(m)m.style
 window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual',verified:false};devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}};
 window.devUnmarkLast=function(sid){var sk=devSkill(sid);if(!sk)return;for(var i=sk.stages.length-1;i>=0;i--){var st=sk.stages[i];var d=DEVP[st.id];if(d&&d.done&&!d.verified&&d.src==='manual'){delete DEVP[st.id];devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}return;}}};
 function _unmarkBtn(sk){var lm=null;for(var i=sk.stages.length-1;i>=0;i--){var d=DEVP[sk.stages[i].id];if(d&&d.done&&!d.verified&&d.src==='manual'){lm=sk.stages[i];break;}}return lm?'<button class="btn2 dev-unmark" onclick="devUnmarkLast(&#39;'+sk.id+'&#39;)">Undo &ldquo;'+esc(lm.name)+'&rdquo;</button>':'';}
+function _rungManual(st){var d=DEVP[st.id];return !!(d&&d.done&&!d.verified&&d.src==='manual');}   // manually self-marked, not yet coach-verified -> safe for the athlete to un-mark
+window.devUnmarkStage=function(sid,stid){var sk=devSkill(sid);if(!sk)return;var hit=false;for(var i=0;i<sk.stages.length;i++){var st=sk.stages[i];if(st.id===stid)hit=true;if(hit&&_rungManual(st))delete DEVP[st.id];}devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}};   // un-mark THIS rung and any self-marked rungs above it (the ladder is sequential) — verified/auto rungs are left alone
+function _rungUndo(sk,st){return _rungManual(st)?'<button class="dev-rung-undo" onclick="event.stopPropagation();devUnmarkStage(&#39;'+sk.id+'&#39;,&#39;'+st.id+'&#39;)" title="Un-mark this" aria-label="Un-mark this">&#10005;</button>':'';}
 function pendingRungs(){var out=[];DEV_G.forEach(function(sk){sk.stages.forEach(function(st){if(DEVP[st.id]&&DEVP[st.id].verified)return;var pend=(DEVP[st.id]&&DEVP[st.id].done)||(st.seed&&st.seed.gcap&&devSeedMet(st.seed));if(pend)out.push({sk:sk,st:st});});});return out;}
 window.devLogBest=function(sid,key){var el=document.getElementById('devBestIn');if(!el)return;var v=parseInt(el.value,10);if(!v||v<1){showToast('Enter your best rep count');return;}var r=devIngest(key,v,{source:'best'});renderDevSkill(sid);try{window.scrollTo(0,0);}catch(e){}if(!(r&&r.crossed.length))showToast('Saved &mdash; best updated');};
 
@@ -2938,7 +2992,58 @@ function titleGuideHTML(){
   }).join('');
   return head+cards;
 }
-function progressChooserHTML(){return journeyGuideHTML()+titleGuideHTML()+'<button class="dev-launch" onclick="openDev()"><span class="dev-ll"><span class="dev-lk">Browse the full skill tree</span></span><span class="ss-chev">&rsaquo;</span></button>'+'<div class="dsec">Log &amp; unlock</div>'+'<button class="dcard trn-btn" onclick="goNav(&#39;submit&#39;)"><span class="dc-ic">'+(ICO.target||'')+'</span><span class="dc-t"><b>Log a score</b><span>enter a lift or benchmark \u2014 feeds your card</span></span><span class="dc-chev">&rsaquo;</span></button>'+'<button class="dcard trn-btn" onclick="openTrainPage(&#39;dev&#39;)"><span class="dc-ic">'+(ICO.check||'')+'</span><span class="dc-t"><b>Benchmark tests</b><span>conditioning &amp; skill benchmarks \u2014 unlock titles</span></span><span class="dc-chev">&rsaquo;</span></button>';}
+function progressChooserHTML(){return ''
+  +'<div class="dsec">Your progress</div>'
+  +'<button class="dev-launch" onclick="openDev()"><span class="dl-ic">'+(ICO.tree||'')+'</span><span class="dev-ll"><span class="dev-lk">Skill Tree</span><span class="dev-lsub">every skill &amp; level \u2014 with the programming to reach the next rung</span></span><span class="ss-chev">&rsaquo;</span></button>'
+  +'<button class="dev-launch" onclick="openTitles()"><span class="dl-ic">'+(ICO.star||'')+'</span><span class="dev-ll"><span class="dev-lk">Journey</span><span class="dev-lsub">the titles you can unlock \u2014 what each one needs &amp; how close you are</span></span><span class="ss-chev">&rsaquo;</span></button>'
+  +'<button class="dev-launch" onclick="openTrainNow()"><span class="dl-ic">'+(ICO.target||'')+'</span><span class="dev-ll"><span class="dev-lk">Train now</span><span class="dev-lsub">pick a goal \u2014 I\u2019ll tell you the one thing to train next</span></span><span class="ss-chev">&rsaquo;</span></button>'
+  +'<div class="dsec">Log &amp; unlock</div>'
+  +'<button class="dcard trn-btn" onclick="goNav(&#39;submit&#39;)"><span class="dc-ic">'+(ICO.target||'')+'</span><span class="dc-t"><b>Log a score</b><span>enter a lift or benchmark \u2014 feeds your card</span></span><span class="dc-chev">&rsaquo;</span></button>'
+  +'<button class="dcard trn-btn" onclick="openTrainPage(&#39;dev&#39;)"><span class="dc-ic">'+(ICO.check||'')+'</span><span class="dc-t"><b>Benchmark tests</b><span>conditioning &amp; skill benchmarks \u2014 unlock titles</span></span><span class="dc-chev">&rsaquo;</span></button>';}
+
+/* ===== Train now (guided journey) \u2014 its own page off Progress (2026-09-17) ===== */
+window.openTrainNow=function(){var m=document.getElementById('trainNowMask');if(!m){m=document.createElement('div');m.id='trainNowMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="trainNowInner"></div>';document.body.appendChild(m);}renderTrainNow();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
+window.closeTrainNow=function(){var m=document.getElementById('trainNowMask');if(m)m.style.display='none';};
+function renderTrainNow(){var el=document.getElementById('trainNowInner');if(!el)return;el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeTrainNow()">&lsaquo;</button><span class="ss-topttl">Train now</span><button class="ss-close" onclick="closeTrainNow()">Close</button></div><div class="ss-h">Train now</div><p class="skt-intro">Pick one or more goals \u2014 I\u2019ll map the route from where you are and tell you exactly what to train next.</p>'+journeyGuideHTML();}
+
+/* ===== Journey \u2014 SWGOH-style title guide: every title, hardest at the bottom (2026-09-17) ===== */
+var TITLE_CV={blue:'#3aa0ff',purple:'#a86bff',crimson:'#ff3b6b',gold:'#ffc23b'};
+var TITLE_RANKS=[['base','FOUNDATION'],['int','INTERMEDIATE'],['adv','ADVANCED'],['apex','APEX \u00b7 S+']];
+var _titleTree=null,_titleOpen={};
+function titleClassName(slug){var n=slug;SCORING.trees.forEach(function(t){t.classes.forEach(function(c){if(c.slug===slug)n=c.name;});});return n;}
+function titleCardHTML(cls,st){var col=TITLE_CV[cls.colour]||'#888';
+  var unlocked=!!(st[cls.slug]&&st[cls.slug].unlocked);
+  var preLock=cls.prereq&&cls.prereq.length&&cls.prereq.some(function(p){return !(st[p]&&st[p].unlocked);});
+  var g=jrnClassGap(cls);
+  var sub=unlocked?'Unlocked':(preLock?'Locked \u2014 earn the titles below first':(g.unmet===0?'Ready to unlock':(g.unmet+' benchmark'+(g.unmet===1?'':'s')+' to go')));
+  var open=_titleOpen[cls.slug];
+  var reqRows=g.reqs.map(function(r){var frac=Math.max(0.06,Math.min(1,(r.need?r.cur/r.need:0)));
+    return '<div class="tt-req"><span class="tt-req-nm'+(r.met?' met':'')+'">'+esc(r.name)+'</span><span class="tt-req-bar"><i style="width:'+Math.round(frac*100)+'%;background:'+col+'"></i></span><span class="tt-req-val">'+r.cur+'/'+r.need+(r.met?' \u2713':'')+'</span></div>';}).join('');
+  var addsTxt=(cls.adds&&cls.adds.length)?('<div class="tt-adds"><b>Unlocks:</b> '+cls.adds.map(function(a){var mv=(typeof scMove==='function')?scMove(a):null;return esc(mv?mv.name:a);}).join(', ')+'</div>'):'';
+  var preTxt=(cls.prereq&&cls.prereq.length)?('<div class="tt-pre"><b>Needs first:</b> '+cls.prereq.map(function(p){return esc(titleClassName(p));}).join(' + ')+'</div>'):'';
+  return '<div class="tt-cardwrap">'
+    +'<button class="tt-card'+(unlocked?' unlocked':'')+(preLock?' pre-locked':'')+(open?' open':'')+'" style="--tc:'+col+'" onclick="titleToggle(&#39;'+cls.slug+'&#39;)" aria-expanded="'+(open?'true':'false')+'">'
+    +'<span class="tt-rankpip" style="background:'+col+'"></span>'
+    +'<span class="tt-mid"><span class="tt-nm">'+esc(cls.name)+'</span><span class="tt-sub">'+sub+'</span></span>'
+    +'<span class="tt-badge">'+(unlocked?'\u2605':(preLock?'\u{1F512}':'\u203a'))+'</span>'
+    +'</button>'
+    +(open?('<div class="tt-detail" style="--tc:'+col+'">'+preTxt+'<div class="tt-reqs">'+reqRows+'</div>'+addsTxt+'</div>'):'')
+    +'</div>';}
+window.setTitleTree=function(k){_titleTree=k;_titleOpen={};renderTitles();try{window.scrollTo(0,0);}catch(e){}};
+window.titleToggle=function(slug){_titleOpen[slug]=!_titleOpen[slug];renderTitles();};
+function renderTitles(){var el=document.getElementById('titlesInner');if(!el)return;var trees=jrnTitleTrees();var st=classStates();
+  var tabs=trees.map(function(t){return '<button class="tt-tab'+(t.key===_titleTree?' on':'')+'" onclick="setTitleTree(&#39;'+t.key+'&#39;)">'+esc(t.name)+'</button>';}).join('');
+  var classes=jrnTreeClasses(_titleTree);
+  var ladder=TITLE_RANKS.map(function(rk){var inRank=classes.filter(function(c){return c.rank===rk[0];});if(!inRank.length)return '';
+    var cards=inRank.map(function(c){return titleCardHTML(c,st);}).join('');
+    return '<div class="tt-rankrow"><div class="tt-ranklbl">'+rk[1]+'</div><div class="tt-rankcards c'+inRank.length+'">'+cards+'</div></div>';}).join('');
+  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeTitles()">&lsaquo;</button><span class="ss-topttl">Journey</span><button class="ss-close" onclick="closeTitles()">Close</button></div>'
+   +'<div class="ss-h">Journey</div><p class="skt-intro">Every title you can earn. Hardest sits at the bottom \u2014 tap any title to see what it needs and how close you are.</p>'
+   +'<div class="tt-tabs">'+tabs+'</div>'
+   +'<div class="tt-ladder">'+ladder+'</div>';}
+window.openTitles=function(){var m=document.getElementById('titlesMask');if(!m){m=document.createElement('div');m.id='titlesMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="titlesInner"></div>';document.body.appendChild(m);}if(!_titleTree){var ts=jrnTitleTrees();_titleTree=ts.length?ts[0].key:null;}renderTitles();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
+window.closeTitles=function(){var m=document.getElementById('titlesMask');if(m)m.style.display='none';};
+function jrnPresc(name){return (typeof JRN_PRESC!=='undefined'&&JRN_PRESC[name])?JRN_PRESC[name]:null;}
 window.pickSessTrack=function(t){sessTrack=t;renderSession();var m=document.getElementById('sessMask');if(m)m.scrollTop=0;};
 window.sessBack=function(){sessTrack=null;renderSession();};
 window.sessToggle=function(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');};
@@ -3549,7 +3654,7 @@ function buildHomeHTML(hint,cardToggle,card,tree){
     return '<button class="dcard" onclick="'+onclick+'" aria-label="'+esc(label)+'"><span class="dc-ic">'+ico+'</span><span class="dc-t"><b>'+esc(label)+'</b><span>'+esc(sub)+'</span></span><span class="dc-chev">›</span></button>';
   }
   var bighub='<div class="homehub">'
-    +'<button class="hubtile ht-prog" onclick="goNav(&#39;tree&#39;)"><span class="hubic">'+ICO.tree+'</span><span class="hubl">Journey</span></button>'
+    +'<button class="hubtile ht-prog" onclick="goNav(&#39;tree&#39;)"><span class="hubic">'+ICO.tree+'</span><span class="hubl">Progress</span></button>'
     +'<button class="hubtile ht-vault" onclick="goNav(&#39;vault&#39;)"><span class="hubic">'+ICO.vault+'</span><span class="hubl">Vault</span></button>'
     +'<button class="hubtile ht-shop" onclick="openShop()"><span class="hubic">'+ICO.shop+'</span><span class="hubl">Shop</span></button>'
     +'</div>';
@@ -3787,7 +3892,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
   var hint=(cc.entered===0)?'<div class="pphint"><b>Welcome!</b> Tap <b>“Enter your first score”</b> on your card below. As a coach verifies your scores, your card, stats and class light up.</div>':(cc.pending>0?'<div class="pphint">⏳ You have <b>'+cc.pending+'</b> score'+(cc.pending===1?'':'s')+' waiting for coach verification — ask a coach to verify to update your card.</div>':'');
   var histLog=prHtml+hist;   // personal records + every session (folds into the Vault's collapsible log)
   // render the active page only (bottom-nav drives which); coach never gets here
-  var titles={home:'Home',tree:'Journey',train:'Train',submit:'Log a score',vault:'The Vault',compete:'In Development',explore:'In Development',fantasy:'In Development'};
+  var titles={home:'Home',tree:'Progress',train:'Train',submit:'Log a score',vault:'The Vault',compete:'In Development',explore:'In Development',fantasy:'In Development'};
   var tt=document.getElementById('ppTitle');if(tt)tt.innerHTML=(titles[profilePage]||'Home')+' <span class="betap">beta</span>';
   var bk=document.getElementById('ni-back');if(bk)bk.style.display=(profilePage==='tree'||profilePage==='vault'||profilePage==='submit')?'':'none';   // sub-pages reached from Home/Train links get a back affordance; top-level tabs don't
   var pageHtml;
