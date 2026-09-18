@@ -49,12 +49,12 @@
 .sess-inner{max-width:440px;margin:0 auto;padding:0 18px calc(40px + env(safe-area-inset-bottom,0px));position:relative}
 .ss-top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;margin:0 -18px 18px;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px 13px;background:#08080d;border-bottom:1px solid var(--line)}
 .ss-topttl{flex:1;min-width:0;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--di);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ss-close{background:var(--s1);border:1px solid rgba(255,255,255,.14);color:var(--di);border-radius:9px;padding:8px 13px;font-size:.72rem;cursor:pointer;flex-shrink:0}
+.ss-close{display:inline-flex;align-items:center;min-height:44px;background:var(--s1);border:1px solid rgba(255,255,255,.14);color:var(--di);border-radius:9px;padding:8px 15px;font-size:.72rem;cursor:pointer;flex-shrink:0}
 .ss-kick{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--di);font-weight:700}
 .ss-h{font-family:var(--disp);font-size:2.3rem;letter-spacing:.02em;line-height:.95}
 .ss-sub{color:#8b8b95;font-size:.82rem;margin:6px 0 22px}
 .ss-head{display:flex;align-items:center;gap:14px}
-.ss-back{background:var(--s1);border:1px solid rgba(255,255,255,.14);color:var(--txt);width:40px;height:40px;border-radius:11px;font-size:1.3rem;cursor:pointer;flex-shrink:0}
+.ss-back{background:var(--s1);border:1px solid rgba(255,255,255,.14);color:var(--txt);width:44px;height:44px;border-radius:11px;font-size:1.3rem;cursor:pointer;flex-shrink:0}
 .ss-picker{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.07);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.07)}
 .ss-track{display:flex;align-items:center;gap:15px;background:var(--s1);border:0;border-left:2px solid transparent;padding:17px;cursor:pointer;text-align:left;color:var(--txt);font:inherit;width:100%}
 .ss-track:hover{background:#1c1c26}.ss-track.primary{border-left-color:var(--acc)}
@@ -126,6 +126,8 @@
 .dev-rdc{font-size:.75rem;color:var(--di)}
 .dev-sec-l{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--di);margin:22px 0 10px}
 .dev-path{display:flex;flex-direction:column;margin-left:11px}
+.dev-mlmore{align-self:flex-start;min-height:44px;display:inline-flex;align-items:center;margin:2px 0 2px 20px;padding:6px 12px;background:transparent;border:none;color:var(--dim);font:inherit;font-size:.76rem;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.dev-mlmore:active{color:var(--txt)}
 .cn-status{display:flex;align-items:center;gap:10px;margin:6px 0 2px}
 .cn-ach{color:var(--acc2);font-weight:800;font-size:14px}
 .cn-na{color:var(--dim);font-weight:700;font-size:14px}
@@ -1157,6 +1159,13 @@ body.hasnav #foot{bottom:60px}
 .trn-acc[open]>summary .trn-chev{transform:rotate(90deg)}
 .trn-body{padding:2px 14px 14px;border-top:1px solid var(--line)}
 .skt-intro{font-size:12.5px;color:var(--dim);margin:2px 2px 12px;line-height:1.45}
+.tierprog{margin:0 0 14px;padding:11px 13px;border-radius:12px;background:var(--s1);border:1px solid var(--line)}
+.tierprog.tp-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.tp-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:8px}
+.tp-nm{font-family:var(--disp);letter-spacing:.03em;font-size:16px;font-weight:800;color:var(--acc)}
+.tp-to{font-size:.74rem;color:var(--dim)}.tp-to b{color:var(--txt)}
+.tp-bar{height:7px;border-radius:99px;background:var(--s2);overflow:hidden}
+.tp-bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--acc),#ffe08a)}
 .skcats{display:flex;flex-direction:column;gap:10px}
 .skcat{display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--ca);border-radius:var(--r-md);padding:14px;cursor:pointer;color:var(--txt)}
 .skcat:active{background:var(--s2)}
@@ -1172,10 +1181,10 @@ body.hasnav #foot{bottom:60px}
 .skcat-meta{font-size:10.5px;color:var(--ca);font-weight:800;flex:none;text-align:right;line-height:1.35;text-transform:uppercase;letter-spacing:.03em}
 .skcat-chev{color:var(--dim);font-size:22px;flex:none;line-height:1}
 .skcatwrap{display:block}
-.skcat-hero{display:flex;align-items:center;gap:12px;padding:16px;border-radius:var(--r-md);background:var(--caBg);border:1px solid var(--ca);margin-bottom:12px}
-.skcat-heroic{width:40px;height:40px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--ca)}
-.skcat-heroic svg{width:27px;height:27px}
-.skcat-heronm{font-family:var(--disp);letter-spacing:.04em;font-size:20px;font-weight:800;color:var(--txt)}
+.skcat-hero{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-md);background:var(--caBg);border:1px solid var(--ca);margin-bottom:10px}
+.skcat-heroic{width:26px;height:26px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--ca)}
+.skcat-heroic svg{width:19px;height:19px}
+.skcat-heronm{font-family:var(--disp);letter-spacing:.04em;font-size:17px;font-weight:800;color:var(--txt)}
 .skt-legend{display:flex;gap:15px;flex-wrap:wrap;padding:6px 2px 14px;font-size:11px;color:var(--dim)}
 .skl-i{display:inline-flex;align-items:center;gap:5px}
 .skl-dot{width:9px;height:9px;border-radius:3px;display:inline-block}
@@ -1199,7 +1208,8 @@ body.hasnav #foot{bottom:60px}
 .dev-dot.pend svg{width:11px;height:11px}
 .dev-node.pend .dev-nnm{color:var(--acc)}
 .dev-pendchip{font-size:9px;font-weight:800;letter-spacing:.06em;color:var(--acc);border:1px solid rgba(255,194,71,.5);border-radius:4px;padding:1px 4px;margin-left:2px}
-.dev-rung-undo{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-left:6px;vertical-align:middle;font-size:11px;line-height:1;color:var(--acc);background:rgba(255,194,71,.08);border:1px solid rgba(255,194,71,.45);border-radius:50%;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}
+.dev-rung-undo{position:relative;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-left:6px;vertical-align:middle;font-size:11px;line-height:1;color:var(--acc);background:rgba(255,194,71,.08);border:1px solid rgba(255,194,71,.45);border-radius:50%;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}
+.dev-rung-undo::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px}   /* invisible ≥44px hit-area, glyph stays 20px */
 .dev-rung-undo:hover,.dev-rung-undo:active{background:rgba(255,194,71,.2)}
 .dev-node.unmarkable{cursor:default}
 /* Progress chooser sub-labels */
@@ -1221,6 +1231,7 @@ body.hasnav #foot{bottom:60px}
 .dev-nextup.empty{background:var(--s1);border:1px dashed var(--line)}
 .dnu-l{font-size:.62rem;font-weight:800;letter-spacing:.1em;color:var(--acc);margin-bottom:5px}
 .dnu-hint,.dnu-done{font-size:.82rem;line-height:1.4;color:var(--dim)}
+.dnu-basics{margin:2px 0 9px;font-size:.78rem;line-height:1.4;color:var(--acc)}
 .dnu-rung{font-size:1.05rem;font-weight:800;color:var(--txt);display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
 .dnu-std{font-size:.7rem;font-weight:700;color:var(--dim)}
 .dnu-do{margin-top:6px;font-size:.86rem;line-height:1.4;color:var(--txt)}
@@ -1246,9 +1257,9 @@ body.hasnav #foot{bottom:60px}
 .dnu-chips-l{font-size:.66rem;font-weight:800;letter-spacing:.08em;color:var(--dim);text-transform:uppercase}
 .dnu-chip{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--s1)}
 .dnu-chip.on{border-color:var(--acc);background:rgba(255,194,71,.14)}
-.dnu-chip-nm{border:none;background:transparent;color:var(--txt);font:inherit;font-weight:700;font-size:.76rem;padding:6px 4px 6px 11px;cursor:pointer}
+.dnu-chip-nm{border:none;background:transparent;color:var(--txt);font:inherit;font-weight:700;font-size:.76rem;padding:12px 4px 12px 13px;cursor:pointer}   /* ≥44px tall for touch */
 .dnu-chip.on .dnu-chip-nm{color:var(--acc)}
-.dnu-chip-x{border:none;background:transparent;color:var(--dim);font:inherit;font-size:.95rem;line-height:1;padding:5px 9px 6px 5px;cursor:pointer}
+.dnu-chip-x{border:none;background:transparent;color:var(--dim);font:inherit;font-size:.95rem;line-height:1;padding:12px 13px 12px 7px;cursor:pointer}
 .dnu-more{margin-top:10px;font-size:.72rem;color:var(--dim);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .dnu-cycle{padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--txt);font:inherit;font-weight:700;font-size:.72rem;cursor:pointer}
 .dnu-norx{color:var(--dim);font-style:italic}
@@ -1262,17 +1273,17 @@ body.hasnav #foot{bottom:60px}
 .pz-lead{font-size:.92rem;line-height:1.45;color:var(--dim);margin:0 0 16px}
 .pz-lead b{color:var(--txt)}
 .pz-cards{display:flex;flex-direction:column;gap:12px}
-.pz-card{background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:13px;padding:14px 15px}
+.pz-card{background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:13px;padding:12px 14px}
 .pz-card.pz-prio{border-left-color:var(--acc);border-color:rgba(255,194,71,.4);background:linear-gradient(135deg,rgba(255,194,71,.1),transparent)}
 .pz-card.pz-prio .pz-type{color:var(--acc)}
 .pz-optl{font-size:.66rem;font-weight:800;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;margin:6px 0 10px}
-.pz-top{display:flex;align-items:center;gap:11px;margin-bottom:9px}
+.pz-top{display:flex;align-items:center;gap:11px;margin-bottom:6px}
 .pz-ic{flex:0 0 auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--acc)}
 .pz-ic svg{width:22px;height:22px}
 .pz-tt{display:flex;flex-direction:column;gap:2px;min-width:0}
 .pz-type{font-size:.6rem;font-weight:800;letter-spacing:.12em;color:var(--acc)}
 .pz-title{font-size:1.02rem;font-weight:800}
-.pz-why{font-size:.8rem;line-height:1.4;color:var(--dim);margin-bottom:9px}
+.pz-why{font-size:.78rem;line-height:1.35;color:var(--dim);margin-bottom:8px}
 .pz-rx{font-size:.92rem;line-height:1.45;color:var(--txt);background:var(--s2);border-radius:10px;padding:10px 12px}
 .pz-fq{display:block;margin-top:5px;font-size:.74rem;color:var(--dim)}
 .pz-btns{display:flex;gap:8px;margin-top:10px}
@@ -1582,6 +1593,10 @@ body.hasnav #myLogMask .ts-actions{bottom:calc(54px + env(safe-area-inset-bottom
 .ob-help{font-size:11px;color:var(--dim);margin:-4px 0 8px}
 .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#12121c;border:1px solid var(--line);color:var(--txt);font-size:13px;font-weight:700;padding:11px 16px;border-radius:11px;box-shadow:0 8px 30px -8px #000;z-index:120;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:88vw;text-align:center}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.celeb{border-color:var(--acc);color:var(--txt);background:linear-gradient(135deg,rgba(255,194,71,.22),#12121c);box-shadow:0 8px 34px -6px rgba(255,194,71,.5)}
+.toast.celeb.on{animation:tcelebpop .5s ease}
+.toast.celeb .tc-star{color:var(--acc)}
+@keyframes tcelebpop{0%{transform:translateX(-50%) translateY(10px) scale(.9)}55%{transform:translateX(-50%) translateY(0) scale(1.06)}100%{transform:translateX(-50%) translateY(0) scale(1)}}
 .ob-card .sexb{padding:10px 22px!important;font-size:16px;margin-left:8px}
 /* ---- onboarding walkthrough (tour) ---- */
 .tour-card{text-align:center;max-width:360px}
@@ -1853,7 +1868,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
 
 /* ===== Guided Journey ===== */
 .jrn-pick{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 10px}
-.jrn-goal{font:600 12px/1 var(--ui);color:var(--dim);background:var(--s2);border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;transition:.12s}
+.jrn-goal{display:inline-flex;align-items:center;min-height:44px;font:600 12px/1 var(--ui);color:var(--dim);background:var(--s2);border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;transition:.12s}
 .jrn-goal.on{color:#0A0A11;background:var(--gold);border-color:var(--gold)}
 .jrn-hint{font:500 13px/1.5 var(--ui);color:var(--dim);background:var(--s1);border:1px dashed var(--line);border-radius:var(--r-sm);padding:14px 14px;margin-bottom:12px}
 .jrn-now{background:linear-gradient(180deg,var(--s2),var(--s1));border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:var(--r-sm);padding:14px 14px 12px;margin-bottom:12px}
@@ -2829,7 +2844,8 @@ var CAP_CATMETA={
  'LOWER BODY':{key:'lower',ca:'#34d399',caBg:'rgba(52,211,153,.15)',sub:'Pistol squat',ic:_CIC.lower},
  'COORDINATION':{key:'coord',ca:'#4c8dff',caBg:'rgba(76,141,255,.15)',sub:'Double-unders',ic:_CIC.coord}
 };
-var _devCat=null;var _devOpen={};
+var _devCat=null;var _devOpen={};var _mlAll={};
+window.mlToggle=function(sid){_mlAll[sid]=!_mlAll[sid];_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2List();}};   // expand/collapse a skill's full milestone ladder in the row
 var CAP_FEEDS={'s.strict-pullup':'Skill · Pulling Gymnastics','s.c2b':'Skill · Pulling Gymnastics','s.ttb':'Skill · Pulling Gymnastics','s.bmu':'Skill · Pulling Gymnastics','s.rmu':'Skill · Pulling Gymnastics','s.rope-climb':'Skill · Coordination','s.dip':'Skill · Support','s.handstand':'Skill · Inversion','s.strict-hspu':'Skill · Inversion','s.hsw':'Skill · Inversion','s.lsit':'Skill · Static / Core','s.front-lever':'Skill · Static / Core','s.pistol':'Skill · Coordination','s.du':'Skill · Coordination'};
 _CIC.barbell='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 12h18M6 8v8M9 6v12M15 6v12M18 8v8"/></svg>';
 CAP_CATMETA['BARBELL']={key:'barbell',ca:'#ff5c5c',caBg:'rgba(255,92,92,.15)',sub:'Snatch · clean & jerk · power clean',ic:_CIC.barbell};
@@ -2884,13 +2900,26 @@ function journeyGuideHTML(){
 /* ===== route highlight through the tree (2026-09-10) ===== */
 function jrnRouteInfo(){try{var goals=(typeof jrnGoals==='function')?jrnGoals():[];if(!goals.length)return null;var gid=goals[goals.length-1];var by={};var route=jrnBuildRoute([gid]);var gname=(jrnById(gid)||{}).name||gid;route.forEach(function(r){var e=by[r.skill.id]||(by[r.skill.id]={upto:-1,goals:[]});if(r.upto>e.upto)e.upto=r.upto;if(e.goals.indexOf(gname)<0)e.goals.push(gname);});return by;}catch(e){return null;}}   // route highlight tracks ONLY the PRIMARY (most-recent) goal — no more "on route" lighting up every category
 function jrnRungCls(rr,i){return (rr&&i<=rr.upto)?(' onroute'+(i===rr.upto?' rtarget':'')):'';}
-function jrnRouteBanner(sk,rr){if(!rr)return '';var t=sk.stages[rr.upto];return '<div class="dev-routebar"><span class="drb-ic">'+(ICO.target||'')+'</span><span>On your route to <b>'+esc(rr.goals.join(' &amp; '))+'</b>'+(t?' \u2014 reach <b>'+esc(t.name)+'</b>':'')+'</span></div>';}
+function jrnRouteBanner(sk,rr){if(!rr)return '';var t=sk.stages[rr.upto];var isGoal=rr.goals.indexOf(sk.name)>=0;
+  var msg=isGoal
+    ?('Your goal: <b>'+esc(rr.goals.join(' &amp; '))+'</b>'+(t?' \u2014 next milestone <b>'+esc(t.name)+'</b>':''))
+    :('Basics first for <b>'+esc(rr.goals.join(' &amp; '))+'</b>'+(t?' \u2014 build to <b>'+esc(t.name)+'</b> here before it':''));
+  return '<div class="dev-routebar"><span class="drb-ic">'+(ICO.target||'')+'</span><span>'+msg+'</span></div>';}
+// TIER PROGRESS (UX audit #8): a "% to your next tier" hook at the top of the tree — the climb the whole product is about.
+function tierProgressHTML(){try{var cc=(typeof computeCard==='function')?computeCard():null;if(!cc||!cc.entered)return '';
+  var t=cc.tier||{},nt=cc.nextTier;
+  if(!nt)return '<div class="tierprog tp-top"><span class="tp-nm">'+esc(t.name||'Top tier')+'</span><span class="tp-to">Top tier — respect.</span></div>';
+  var lo=(t.ov!=null)?t.ov:0,hi=(nt.ov!=null)?nt.ov:100,ov=(cc.overall!=null)?cc.overall:lo;
+  var pct=Math.max(2,Math.min(100,Math.round((ov-lo)/((hi-lo)||1)*100)));
+  return '<div class="tierprog"><div class="tp-row"><span class="tp-nm">'+esc(t.name||'')+'</span><span class="tp-to"><b>'+(hi-ov)+'</b> to '+esc(nt.name)+'</span></div><div class="tp-bar"><i style="width:'+pct+'%"></i></div></div>';
+}catch(e){return '';}}
 function cap2List(){_devCat=null;var el=document.getElementById('devInner');if(!el)return;var _RM=jrnRouteInfo();
   var tiles=CAP_NAVGROUPS.map(function(g){var meta=CAP_CATMETA[g]||{};var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===g;});var _cr=_RM?sks.some(function(x){return !!_RM[x.id];}):false;
     var pct=0;if(sks.length){var sum=0;sks.forEach(function(sk){var st=devSkillState(sk);sum+=(st.total?st.done/st.total:0);});pct=Math.round(sum/sks.length*100);}
     return '<button class="skcat skcat-'+(meta.key||'x')+(_cr?' skcat-route':'')+'" style="--ca:'+(meta.ca||'#888')+';--caBg:'+(meta.caBg||'rgba(255,255,255,.1)')+'" onclick="openDevCat(&#39;'+g+'&#39;)"><span class="skcat-ic">'+(meta.ic||'')+'</span><span class="skcat-mid"><span class="skcat-nm">'+esc(g)+'</span><span class="skcat-bar"><i style="width:'+pct+'%"></i></span></span><span class="skcat-meta">'+pct+'%</span>'+(_cr?'<span class="skcat-rpip">on route</span>':'')+'<span class="skcat-chev">&rsaquo;</span></button>';}).join('');
   el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeDev()">&lsaquo;</button><span class="ss-topttl">Skill Tree</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
    +'<div class="ss-h">Skill Tree</div><p class="skt-intro">Open a discipline to track your skills and levels.</p>'
+   +tierProgressHTML()
    +devNextUpHTML()
    +'<div class="skcats">'+tiles+'</div>'+'<div class="skt-legend"><span class="skl-i"><span class="skl-dot skl-found"></span>Foundations</span><span class="skl-i"><span class="skl-dot skl-ready"></span>Readiness</span><span class="skl-i"><span class="skl-star">&#9733;</span>Achievement</span></div>';}
 function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);var _rr=jrnRouteInfo();_rr=_rr&&_rr[sk.id];
@@ -2899,10 +2928,18 @@ function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);var _rr=jrn
     var lim=null;items.forEach(function(x){if(!x.met&&(lim===null||x.frac<lim.frac))lim=x;});
     capsHTML='<div class="dev-sec-l">Readiness</div><div class="cn-caps">'+items.map(function(x){var isL=lim&&x.name===lim.name;
       return '<div class="cn-cap"><span class="cn-cap-nm'+(isL?' cn-lim':'')+'">'+esc(x.name)+'</span>'+capBar(x.frac)+(isL?'<span class="cn-limtag">limiter</span>':(x.met?'<span class="cn-metmk">'+devTick()+'</span>':''))+'</div>';}).join('')+'</div>';}
-  var pathHTML=sk.stages.map(function(n,i){var stt=st.ach[i]?'done':(st.pend[i]?'pend':(i===st.cur?'now':'up'));
+  var _mlNode=function(n,i){var stt=st.ach[i]?'done':(st.pend[i]?'pend':(i===st.cur?'now':'up'));
     var dot=st.ach[i]?'<span class="dev-dot done">'+devTick()+'</span>':(st.pend[i]?'<span class="dev-dot pend">'+ICO.clock+'</span>':(i===st.cur?'<span class="dev-dot now"></span>':'<span class="dev-dot"></span>'));
     var starmk=n.star?' <span class="dev-star">&#9733;</span>':'';var tag=st.pend[i]?' <span class="dev-pendchip">PENDING</span>':((i===st.cur)?' <span class="dev-nowchip">NOW</span>':'');
-    return '<div class="dev-node '+stt+(_rungManual(n)?' unmarkable':'')+jrnRungCls(_rr,i)+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+tag+_rungUndo(sk,n)+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';}).join('');
+    return '<div class="dev-node '+stt+(_rungManual(n)?' unmarkable':'')+jrnRungCls(_rr,i)+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+tag+_rungUndo(sk,n)+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';};
+  // DENSITY (UX audit #7): in the ROW, collapse long ladders to current ±1 (+ the goal rung) with a "show all" toggle; the full ladder still lives in the detail view.
+  var _total=sk.stages.length,_showAll=!!_mlAll[sk.id],_cur=Math.min(st.cur,_total-1),pathHTML;
+  if(_total<=4||_showAll){pathHTML=sk.stages.map(_mlNode).join('')+(_showAll&&_total>4?'<button class="dev-mlmore" onclick="mlToggle(&#39;'+sk.id+'&#39;)">Collapse milestones</button>':'');}
+  else{var _vis={};_vis[_cur]=1;if(_cur>0)_vis[_cur-1]=1;if(_cur+1<_total)_vis[_cur+1]=1;for(var _s=0;_s<_total;_s++){if(sk.stages[_s].star)_vis[_s]=1;}
+    var _idx=Object.keys(_vis).map(Number).sort(function(a,b){return a-b;});var _parts=[],_prev=-1;
+    _idx.forEach(function(i){if(i-_prev>1)_parts.push('<button class="dev-mlmore" onclick="mlToggle(&#39;'+sk.id+'&#39;)">&middot;&middot;&middot; show all '+_total+' milestones</button>');_parts.push(_mlNode(sk.stages[i],i));_prev=i;});
+    if(_prev<_total-1)_parts.push('<button class="dev-mlmore" onclick="mlToggle(&#39;'+sk.id+'&#39;)">&middot;&middot;&middot; show all '+_total+' milestones</button>');
+    pathHTML=_parts.join('');}
   var next=st.next;var markBtn=(next&&!isAutoRung(next))?'<button class="btn2 skf-mark'+(_markArmed===sk.id?' arming':'')+'" onclick="devMarkArm(&#39;'+sk.id+'&#39;)">'+(_markArmed===sk.id?'Tap again to confirm \u2713':'Mark &ldquo;'+esc(next.name)+'&rdquo; done')+'</button>':'';
   var pendHint=st.pendingCount>0?'<div class="dev-pendhint">'+ICO.clock+' '+st.pendingCount+' marked \u2014 awaiting coach verification to count</div>':'';
   var _nrx=next?jrnPresc(next.name):null;
@@ -3023,7 +3060,12 @@ function renderCapSkill(id){var el=document.getElementById('capInner');if(!el)re
    +'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>';}
 window.capSlice=function(id){var m=document.getElementById('capMask');if(!m){m=document.createElement('div');m.id='capMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="capInner"></div>';document.body.appendChild(m);}renderCapSkill(id||'bar-muscle-up');m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.capClose=function(){var m=document.getElementById('capMask');if(m)m.style.display='none';};
-window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual',verified:false};devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}};
+// REWARD MOMENT (UX audit #8): clearing a rung is no longer a silent tick — a celebratory toast fires, calling out the new skill level.
+function rungCeleb(sk,rungName){try{var lvlBefore=arguments[2];var lvl=devSkillState(sk).level;var t=document.getElementById('toast');if(t)t.classList.add('celeb');
+  var levelUp=(lvlBefore&&lvl&&lvl!==lvlBefore)?(' &mdash; <b>'+esc(sk.name)+'</b> now <b>'+esc(lvl)+'</b>'):'';
+  showToast('<span class="tc-star">&#9733;</span> <b>'+esc(rungName)+'</b> cleared'+levelUp);
+  if(t){clearTimeout(t._celebT);t._celebT=setTimeout(function(){t.classList.remove('celeb');},2700);}}catch(e){}}
+window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;var _lb=st.level;DEVP[n.id]={done:true,at:Date.now(),src:'manual',verified:false};devSave();rungCeleb(sk,n.name,_lb);_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}};
 /* Two-tap confirm on manual marks — a single accidental tap can't set a rung 'done' (2026-09-18) */
 var _markArmed=null,_markT=null;
 function _devMarkReRender(sid){if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}}
@@ -3133,9 +3175,10 @@ function devNextUpHTML(){var goals=jrnGoals();
   var p=jrnPrimaryNext();var gid=p.goalId;var goalName=(jrnById(gid)||{}).name||'';
   var more=jrnChipsHTML();
   if(!p.nx)return '<div class="dev-nextup"><div class="dnu-l">NEXT UP · '+esc(goalName).toUpperCase()+'</div><div class="dnu-done">★ You’ve reached <b>'+esc(goalName)+'</b> — nice. '+(goals.length>1?'Cycle to another goal, or star a new skill.':'Star a new skill to keep climbing.')+'</div>'+more+'</div>';
-  var nx=p.nx;var via=(nx.skill.id!==gid)?(' · via '+esc(nx.skill.name)):'';
+  var nx=p.nx;var isVia=(nx.skill.id!==gid);var via=isVia?(' · via '+esc(nx.skill.name)):'';
   var g=nx.skill.stages[nx.idx];var rx=jrnPresc(g.name);var need=(typeof jrnNeed==='function')?jrnNeed(nx.skill):'';
-  return '<div class="dev-nextup"><div class="dnu-l">NEXT UP · ROUTE TO '+esc(goalName).toUpperCase()+via+'</div>'
+  return '<div class="dev-nextup"><div class="dnu-l">NEXT UP · '+(isVia?'BASICS FOR ':'')+esc(goalName).toUpperCase()+via+'</div>'
+    +(isVia?'<div class="dnu-basics">Start here — <b>'+esc(goalName)+'</b> builds on <b>'+esc(nx.skill.name)+'</b> first.</div>':'')
     +'<div class="dnu-rung">'+(g.star?'★ ':'')+esc(g.name)+'<span class="dnu-std">clears at '+esc(g.std||'—')+'</span></div>'
     +(rx?'<div class="dnu-do">'+esc(rx.do)+(rx.freq?'<span class="dnu-fq">'+esc(rx.freq)+'</span>':'')+'</div>':'<div class="dnu-do dnu-norx">No programming written for this rung yet — aim for the standard above.</div>')
     +(need?'<div class="dnu-need"><b>'+esc(nx.skill.name)+'</b> needs first: '+need+'</div>':'')
@@ -3143,7 +3186,7 @@ function devNextUpHTML(){var goals=jrnGoals();
     +(isAutoRung(g)?'':'<button class="dnu-mark'+(_nuArmed===nx.skill.id?' arming':'')+'" onclick="nuMark(&#39;'+nx.skill.id+'&#39;)">'+(_nuArmed===nx.skill.id?'Confirm ✓':'Mark done')+'</button>')
     +'</div>'+more+'</div>';}
 var _nuArmed=null,_nuT=null;
-window.nuMark=function(sid){if(_nuArmed===sid){_nuArmed=null;clearTimeout(_nuT);var sk=devSkill(sid);if(sk){var st=devSkillState(sk);var n=st.next;if(n&&!isAutoRung(n)){DEVP[n.id]={done:true,at:Date.now(),src:'manual',verified:false};devSave();}}cap2List();return;}_nuArmed=sid;clearTimeout(_nuT);_nuT=setTimeout(function(){if(_nuArmed===sid){_nuArmed=null;cap2List();}},4000);cap2List();};   // mark the next rung straight from Next-up (two-tap), then re-render the list
+window.nuMark=function(sid){if(_nuArmed===sid){_nuArmed=null;clearTimeout(_nuT);var sk=devSkill(sid);if(sk){var st=devSkillState(sk);var n=st.next;if(n&&!isAutoRung(n)){var _lb=st.level;DEVP[n.id]={done:true,at:Date.now(),src:'manual',verified:false};devSave();rungCeleb(sk,n.name,_lb);}}cap2List();return;}_nuArmed=sid;clearTimeout(_nuT);_nuT=setTimeout(function(){if(_nuArmed===sid){_nuArmed=null;cap2List();}},4000);cap2List();};   // mark the next rung straight from Next-up (two-tap), then re-render the list
 window.jrnCyclePrimary=function(){var g=jrnGoals();if(g.length<2)return;g.unshift(g.pop());jrnSetGoals(g);if(_devCat){openDevCat(_devCat);}else{cap2List();}};   // (legacy) rotate primary — superseded by tappable chips
 function jrnChipsHTML(){var g=jrnGoals();if(g.length<2)return '';var prim=g[g.length-1];
   return '<div class="dnu-chips"><span class="dnu-chips-l">Chasing:</span>'+g.map(function(id){var nm=(jrnById(id)||{}).name||id;var on=id===prim;
@@ -3244,7 +3287,17 @@ function personalStrengthExtra(focus,wk){wk=wk||(typeof personalWeekLoad==='func
   return {type:'Strength',ic:(ICO.dumbbell||ICO.target||''),title:acc.name,
     why:'your barbell ratios are balanced — so this tops up a pattern class is lighter on this week ('+pat+')',
     rx:acc.rx,freq:'',sev:0.9};}
-function _earliestSkillIn(list,excl){excl=excl||{};var best=null;list.forEach(function(sk){if(excl[sk.id])return;var st=devSkillState(sk);if(!st.next)return;var frac=st.total?st.done/st.total:0;if(!best||frac<best.frac)best={sk:sk,st:st,frac:frac};});return best;}
+// FOUNDATIONAL-FIRST (UX audit #5): don't route to the emptiest ladder (that sends a weak puller to Weighted Pull-Up 0/4 over Strict Pull-Up 3/7).
+// Prefer skills you can actually train now (readiness caps met — advanced variants gate out), then continue what you've started, then the most foundational (lowest progress).
+function _earliestSkillIn(list,excl){excl=excl||{};var best=null;
+  list.forEach(function(sk){if(excl[sk.id])return;var st=devSkillState(sk);if(!st.next)return;
+    var rd=(typeof devReady==='function')?devReady(sk):{met:0,total:0};
+    var ready=(rd.total===0)||(rd.met>=rd.total);   // no unmet prerequisite caps = appropriate level to train now
+    var frac=st.total?st.done/st.total:0;var started=(st.mdone||0)>0;
+    var score=(ready?0:1000)+(started?0:100)+frac*10;   // lower = better: ready first, then continue-started, then most foundational
+    if(!best||score<best.score)best={sk:sk,st:st,frac:frac,score:score};});
+  return best;}
+function _skillTitle(skName,rungName){try{return (String(rungName).toLowerCase().indexOf(String(skName).toLowerCase())>=0)?rungName:(skName+' — '+rungName);}catch(e){return skName+' — '+rungName;}}   // trim "Weighted Pull-Up — Weighted Pull-Up +10kg" to just the rung
 // which tree skills does the week's class already train (today + the week's skill day) — Personal routes around them (C)
 function _weekSkillExcl(focus,wk){var excl={};var t=(focus==='skill')?_todayClassSkillLine():null;if(t)excl[t]=1;
   try{if(wk){var w=(cur&&cur.w)||null;if(w&&w.days){Object.keys(w.days).forEach(function(k){var d=w.days[k];if(!d)return;var mv=((d.focus==='skill'?d.movement:'')||'').toLowerCase();if(!mv)return;DEV_G.forEach(function(sk){if(mv.indexOf(sk.name.toLowerCase())>=0)excl[sk.id]=1;});});}}}catch(e){}
@@ -3258,7 +3311,7 @@ function personalSkillExtra(focus,wk){var excl=_weekSkillExcl(focus,wk);
     var b=_earliestSkillIn(inDom,excl);if(b){pick=b;domUsed=dn;}}
   if(!pick){pick=_earliestSkillIn(DEV_G.filter(function(sk){return (CAP_FEEDS[sk.id]||'').indexOf('Skill')===0;}),excl);}
   if(!pick)return null;var n=pick.st.next;var rx=jrnPresc(n.name);
-  return {type:'Skill',ic:(ICO.star||''),title:pick.sk.name+' — '+n.name,why:(domUsed?esc(domUsed)+' is your weakest skill area — your '+pick.sk.name+' ladder is early':'Skill is a weak stat and your '+pick.sk.name+' ladder is early'),rx:(rx?rx.do:('Work toward '+n.name+' — clears at '+esc(n.std||'the next standard'))),freq:(rx?rx.freq:''),std:n.std,openId:pick.sk.id,sev:1+(1-pick.frac)*2};}
+  return {type:'Skill',ic:(ICO.star||''),title:_skillTitle(pick.sk.name,n.name),why:(domUsed?esc(domUsed)+' is your weakest skill area — your '+pick.sk.name+' ladder is early':'Skill is a weak stat and your '+pick.sk.name+' ladder is early'),rx:(rx?rx.do:('Work toward '+n.name+' — clears at '+esc(n.std||'the next standard'))),freq:(rx?rx.freq:''),std:n.std,openId:pick.sk.id,sev:1+(1-pick.frac)*2};}
 // Always yields an engine piece (D). Modality shaped by the week (C): a hard/engine-heavy week gets easy Zone 2 (don't fry a fried athlete);
 // a strength-heavy week with little conditioning gets a threshold/interval piece to keep the engine honest.
 function personalEngineExtra(focus,wk){wk=wk||(typeof personalWeekLoad==='function'?personalWeekLoad():null);
@@ -3286,8 +3339,11 @@ function computePersonal(){
   var sk=tag(personalSkillExtra(focus,wk),'SKL');if(sk){sk.domain='skill';trio.push(sk);}
   var lf=tag(personalStrengthExtra(focus,wk),'STR');if(lf){lf.domain='lift';trio.push(lf);}
   var en=tag(personalEngineExtra(focus,wk),'END');if(en){en.domain='engine';trio.push(en);}
-  // priority = the domain matching the athlete's weakest stat (so a genuine weakness still leads)
-  trio.sort(function(a,b){return (a.statVal-b.statVal)||(b.sev-a.sev);});
+  // PRIORITY (UX audit #6): headline the most actionable/impactful piece, not merely the lowest raw stat —
+  // so Zone 2 no longer leads just because Endurance is low. sev encodes how flagged/actionable a piece is
+  // (early skill ladder, a real ratio limiter); a genuinely severe weakness still lifts its domain via the bonus.
+  function _prio(e){var sv=(e.statVal!=null)?e.statVal:mean;var weak=Math.max(0,(mean-sv))/(mean||1);return (e.sev||1)+weak*2;}
+  trio.sort(function(a,b){return _prio(b)-_prio(a);});
   var picks=trio.slice();
   // optional extra ONLY when speed/core is the single weakest stat overall and not already covered — keeps the menu tight
   var weakest=['STR','PWR','SPD','END','SKL'].slice().sort(function(a,b){return (stats[a]||0)-(stats[b]||0);})[0];
@@ -3306,7 +3362,7 @@ function personalHTML(){
   function card(e,prio){
     var done=pIsDone(e.title);
     return '<div class="pz-card'+(prio?' pz-prio':'')+(done?' pz-done':'')+'"><div class="pz-top"><span class="pz-ic">'+(done?'✓':(e.ic||''))+'</span><span class="pz-tt"><span class="pz-type">'+(prio?'TODAY’S PRIORITY':esc(e.type).toUpperCase())+'</span><span class="pz-title">'+esc(e.title)+'</span></span></div>'
-     +'<div class="pz-why">Why: '+e.why+'</div>'
+     +'<div class="pz-why">'+e.why+'</div>'
      +'<div class="pz-rx">'+esc(e.rx)+(e.freq?'<span class="pz-fq">'+esc(e.freq)+'</span>':'')+'</div>'
      +'<div class="pz-btns">'
      +(e.openId?'<button class="pz-openskill" onclick="closeSession();openDevSkill(&#39;'+e.openId+'&#39;)">Open in Skill Tree →</button>':'')
