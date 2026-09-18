@@ -1230,6 +1230,33 @@ body.hasnav #foot{bottom:60px}
 /* Chase-this (set a skill as a goal) */
 .dev-chase{display:inline-flex;align-items:center;gap:6px;margin:2px 0 12px;padding:9px 14px;border-radius:999px;border:1px solid rgba(255,194,71,.45);background:rgba(255,194,71,.06);color:var(--acc);font:inherit;font-weight:700;font-size:.82rem;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .dev-chase.on{background:var(--acc);color:#10121a;border-color:var(--acc)}
+/* Personal track */
+.ss-spec{margin-top:10px;border:1px solid var(--line);border-radius:12px;background:var(--s1);overflow:hidden}
+.ss-spec>summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:700;font-size:.85rem;color:var(--dim)}
+.ss-spec>summary::-webkit-details-marker{display:none}
+.ss-spec>summary::after{content:"\203A";float:right;transition:transform .2s}
+.ss-spec[open]>summary::after{transform:rotate(90deg)}
+.ss-spec .ss-track{border-radius:0;border-left:none;border-right:none;border-bottom:none}
+.pz-lead{font-size:.92rem;line-height:1.45;color:var(--dim);margin:0 0 16px}
+.pz-lead b{color:var(--txt)}
+.pz-cards{display:flex;flex-direction:column;gap:12px}
+.pz-card{background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:13px;padding:14px 15px}
+.pz-top{display:flex;align-items:center;gap:11px;margin-bottom:9px}
+.pz-ic{flex:0 0 auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--acc)}
+.pz-ic svg{width:22px;height:22px}
+.pz-tt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pz-type{font-size:.6rem;font-weight:800;letter-spacing:.12em;color:var(--acc)}
+.pz-title{font-size:1.02rem;font-weight:800}
+.pz-why{font-size:.8rem;line-height:1.4;color:var(--dim);margin-bottom:9px}
+.pz-rx{font-size:.92rem;line-height:1.45;color:var(--txt);background:var(--s2);border-radius:10px;padding:10px 12px}
+.pz-fq{display:block;margin-top:5px;font-size:.74rem;color:var(--dim)}
+.pz-openskill{margin-top:10px;width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--txt);font:inherit;font-weight:700;cursor:pointer}
+.pz-note{margin-top:16px;font-size:.76rem;line-height:1.5;color:var(--dim)}
+.pz-empty{text-align:center;padding:22px 16px;background:var(--s1);border:1px dashed var(--line);border-radius:14px}
+.pz-el{font-size:.62rem;font-weight:800;letter-spacing:.12em;color:var(--acc);margin-bottom:6px}
+.pz-eh{font-size:1.05rem;font-weight:800;margin-bottom:8px}
+.pz-empty p{font-size:.86rem;line-height:1.5;color:var(--dim);margin:0 0 14px}
+.pz-open{padding:11px 18px;border-radius:10px;border:none;background:var(--acc);color:#10121a;font:inherit;font-weight:800;cursor:pointer}
 /* ===== Journey (title guide) ===== */
 .tt-tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;-webkit-overflow-scrolling:touch}
 .tt-tab{flex:0 0 auto;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--s1);color:var(--dim);font:inherit;font-weight:700;font-size:.82rem;cursor:pointer}
@@ -3080,11 +3107,18 @@ window.sessToggle=function(id){var e=document.getElementById(id);if(e)e.classLis
 window.sessLog=function(){try{setTrack(sessTrack);}catch(e){}closeSession();try{openLog();}catch(e){}};
 function renderSession(){var el=document.getElementById('sessInner');if(!el)return;var day=sessDay();
  if(!sessTrack){
-  var avail=_SESS_TRK.filter(function(t){return day&&day.tracks&&day.tracks[t[0]]&&day.tracks[t[0]].length;});
-  if(!avail.length)avail=_SESS_TRK.slice(0,1);
+  var hasClass=day&&day.tracks&&day.tracks.class&&day.tracks.class.length;
+  var spec=_SESS_TRK.filter(function(t){return t[0]!=='class'&&day&&day.tracks&&day.tracks[t[0]]&&day.tracks[t[0]].length;});
+  var classBtn=hasClass?_sessTrackBtn(['class','Class','The daily class session, coach-led'],true,'Your usual'):'';
+  var personalBtn='<button class="ss-track primary" onclick="pickSessTrack(\'personal\')"><span class="ss-tic">'+(_SESS_ICO['personal']||ICO.target||'')+'</span><span class="ss-tmid"><span class="ss-tnm">Personal</span><span class="ss-td">your tailored extras for today, built around class</span><span class="ss-tag">Auto</span></span><span class="ss-chev">&rsaquo;</span></button>';
+  var specHTML=spec.length?('<details class="ss-spec"><summary>Specialist tracks</summary>'+spec.map(function(t){return _sessTrackBtn(t,false,'');}).join('')+'</details>'):'';
   el.innerHTML='<div class="ss-top"><span class="ss-topttl">Start session</span><button class="ss-close" onclick="closeSession()">Close</button></div>'
    +'<div class="ss-h">Today&#39;s session</div><div class="ss-sub">'+esc(sessDateStr())+' &mdash; which program?</div>'
-   +'<div class="ss-picker">'+avail.map(function(t){return '<button class="ss-track'+(t[0]==='class'?' primary':'')+'" onclick="pickSessTrack(\''+t[0]+'\')"><span class="ss-tic">'+(_SESS_ICO[t[0]]||'')+'</span><span class="ss-tmid"><span class="ss-tnm">'+t[1]+'</span><span class="ss-td">'+t[2]+'</span>'+(t[0]==='class'?'<span class="ss-tag">Your usual</span>':'')+'</span><span class="ss-chev">&rsaquo;</span></button>';}).join('')+'</div>';
+   +'<div class="ss-picker">'+classBtn+personalBtn+'</div>'+specHTML;
+  return;}
+ if(sessTrack==='personal'){
+  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="sessBack()">&lsaquo;</button><span class="ss-topttl">Personal &middot; today</span><button class="ss-close" onclick="closeSession()">Close</button></div>'
+   +'<div class="ss-h">Personal</div><div class="ss-sub">'+esc(sessDateStr())+'</div>'+personalHTML();
   return;}
  var tName=(_SESS_TRK.filter(function(x){return x[0]===sessTrack;})[0]||[0,sessTrack])[1];
  var ids=(day&&day.tracks&&day.tracks[sessTrack])||[];var n=0;
@@ -3095,6 +3129,74 @@ function renderSession(){var el=document.getElementById('sessInner');if(!el)retu
   +'<div class="ss-sub">Tap any block to open it.</div><div class="ss-sess">'+blocks+'</div>'
   +'<div class="ss-sticky"><button class="btn-primary" onclick="sessLog()">Log this session</button></div>';
 }
+
+/* ===== PERSONAL track — auto-built daily extras around the class focus (2026-09-18) ===== */
+var FOCUS_LABEL={squat:'squats',press:'pressing',hinge:'deadlifts & hinge',olympic:'the Olympic lifts',skill:'a skill',engine:'engine work'};
+var PERSONAL_FOCUS_LIFT={squat:['backsquat','frontsquat'],hinge:['deadlift'],press:['strictpress','bench'],olympic:['snatch','cleanjerk','powerclean']};
+var PERSONAL_RATIOS={
+  deadlift:{name:'Deadlift',lo:1.15,rx:'Posterior-chain strength — 3×5 Romanian deadlift or 4×3 pause deadlift @ ~70%, controlled.'},
+  frontsquat:{name:'Front Squat',lo:0.82,rx:'Front-rack & upright torso — 4×3 front squat @ ~70% + 3 min rack / t-spine mobility. Feeds your cleans.'},
+  cleanjerk:{name:'Clean & Jerk',lo:0.76,rx:'Turnover & jerk technique — 5×2 tall / hang cleans + jerk footwork drills, light.'},
+  powerclean:{name:'Power Clean',lo:0.62,rx:'Pull speed — 5×2 hang power cleans + 3×3 high pulls, snappy not heavy.'},
+  snatch:{name:'Snatch',lo:0.60,rx:'Snatch positions — 3×3 overhead squat + 3×3 snatch balance + 5×1 tall / hang snatch, light & crisp.'},
+  bench:{name:'Bench Press',lo:0.90,rx:'Horizontal press — 4×6 bench + 3×8 dips.'},
+  strictpress:{name:'Strict Press',lo:0.45,rx:'Overhead press — 5×5 strict press + 3×8 push-press, own the lockout.'}
+};
+function _liftMax(id){try{if(typeof VERIF!=='undefined'&&VERIF[id]!=null)return VERIF[id];if(typeof TESTS!=='undefined'&&TESTS[id]!=null)return TESTS[id];}catch(e){}return null;}
+function _todayClassSkillLine(){try{var mv=((cur&&cur.d&&cur.d.movement)||'').toLowerCase();var hit=null;DEV_G.forEach(function(sk){if(mv.indexOf(sk.name.toLowerCase())>=0)hit=sk.id;});return hit;}catch(e){return null;}}
+function personalStrengthExtra(focus){var bs=_liftMax('backsquat');if(!bs)return null;var ex=PERSONAL_FOCUS_LIFT[focus]||[];var worst=null;
+  for(var id in PERSONAL_RATIOS){if(ex.indexOf(id)>=0)continue;var v=_liftMax(id);if(!v)continue;var band=PERSONAL_RATIOS[id];var ratio=v/bs;if(ratio>=band.lo)continue;var gap=band.lo-ratio;if(!worst||gap>worst.gap)worst={id:id,gap:gap,ratio:ratio,band:band};}
+  if(!worst)return null;var b=worst.band;
+  return {type:'Strength',ic:(ICO.dumbbell||ICO.target||''),title:b.name+' — positional work',why:'your '+b.name.toLowerCase()+' is '+Math.round(worst.ratio*100)+'% of your squat (want '+Math.round(b.lo*100)+'%+) — that’s technique, not strength',rx:b.rx,freq:'',sev:1.5+worst.gap*4};}
+function _earliestSkillIn(list,todaySkill){var best=null;list.forEach(function(sk){if(sk.id===todaySkill)return;var st=devSkillState(sk);if(!st.next)return;var frac=st.total?st.done/st.total:0;if(!best||frac<best.frac)best={sk:sk,st:st,frac:frac};});return best;}
+function personalSkillExtra(focus){var todaySkill=(focus==='skill')?_todayClassSkillLine():null;
+  // DOMAIN-ROUTED: find the weakest SKILL sub-domain (the app's own per-domain score), then the earliest ladder inside it
+  var doms=[];try{doms=treeDomainRatings().slice().sort(function(a,b){return (a.score||0)-(b.score||0);});}catch(e){}
+  var pick=null,domUsed=null;
+  for(var i=0;i<doms.length&&!pick;i++){var dn=doms[i].name;
+    var inDom=DEV_G.filter(function(sk){var f=CAP_FEEDS[sk.id]||'';return f.indexOf('Skill · ')===0&&f.indexOf(dn)>=0;});
+    var b=_earliestSkillIn(inDom,todaySkill);if(b){pick=b;domUsed=dn;}}
+  if(!pick){pick=_earliestSkillIn(DEV_G.filter(function(sk){return (CAP_FEEDS[sk.id]||'').indexOf('Skill')===0;}),todaySkill);}
+  if(!pick)return null;var n=pick.st.next;var rx=jrnPresc(n.name);
+  return {type:'Skill',ic:(ICO.star||''),title:pick.sk.name+' — '+n.name,why:(domUsed?esc(domUsed)+' is your weakest skill area — your '+pick.sk.name+' ladder is early':'Skill is a weak stat and your '+pick.sk.name+' ladder is early'),rx:(rx?rx.do:('Work toward '+n.name+' — clears at '+esc(n.std||'the next standard'))),freq:(rx?rx.freq:''),std:n.std,openId:pick.sk.id,sev:1+(1-pick.frac)*2};}
+function personalEngineExtra(focus){if(focus==='engine')return null;
+  return {type:'Engine',ic:(ICO.history||ICO.check||''),title:'Zone 2 aerobic',why:'Endurance is a weak stat and it’s not in class today',rx:'20–30 min easy run / row / bike — nose-breathing, conversational pace. One machine throughout.',freq:'',sev:1};}
+function personalSpeedExtra(focus){return {type:'Speed',ic:(ICO.target||''),title:'Alactic power',why:'Speed / power is a weak stat',rx:'6–8 × 15–20m sprint (or 8×10s bike sprint) — full recovery, quality only.',freq:'',sev:0.8};}
+function computePersonal(){
+  var cc=(typeof computeCard==='function')?computeCard():null;var stats=cc?cc.stats:null;
+  var focus=(cur&&cur.d&&cur.d.focus)||null;
+  if(!stats||(cc.entered||0)<3)return {ready:false,entered:cc?cc.entered:0};
+  var cardStats=['STR','PWR','SPD','END','SKL'];
+  var vals=cardStats.map(function(k){return stats[k]||0;});var mean=vals.reduce(function(a,b){return a+b;},0)/vals.length;
+  var ranked=cardStats.map(function(k){return {k:k,v:stats[k]||0};}).sort(function(a,b){return a.v-b.v;});
+  var cands=[];
+  ranked.forEach(function(s){var e=null;
+    if(s.k==='SKL')e=personalSkillExtra(focus);
+    else if(s.k==='STR'||s.k==='PWR')e=personalStrengthExtra(focus);
+    else if(s.k==='END')e=personalEngineExtra(focus);
+    else if(s.k==='SPD')e=personalSpeedExtra(focus);
+    if(e){e.stat=s.k;e.statVal=s.v;cands.push(e);}});
+  // keep candidates for genuinely-weak stats (below the athlete's own average), always at least the single weakest, dedup by type, cap 3
+  var seen={};var picks=[];
+  cands.sort(function(a,b){return (a.statVal-b.statVal)||(b.sev-a.sev);});
+  cands.forEach(function(c){if(seen[c.type])return;var weak=c.statVal<=mean+2;if(picks.length&&!weak)return;if(picks.length>=3)return;seen[c.type]=1;picks.push(c);});
+  if(!picks.length&&cands.length){seen={};picks=[cands[0]];}
+  return {ready:true,focus:focus,extras:picks};}
+function personalHTML(){
+  var r=computePersonal();
+  if(!r.ready)return '<div class="pz-empty"><div class="pz-el">UNLOCK YOUR EXTRAS</div><div class="pz-eh">Log &amp; verify a few scores first</div><p>Personal builds your daily extras from your card. Log a handful of lifts and skills (you’re at '+(r.entered||0)+') and I’ll start prescribing what to work on — built around what class is already doing.</p><button class="pz-open" onclick="closeSession();goNav(&#39;submit&#39;)">Log a score →</button></div>';
+  var focusTxt=r.focus?('Class today is <b>'+esc(FOCUS_LABEL[r.focus]||r.focus)+'</b> — these dodge that and hit your weak spots.'):'Your weak spots for today.';
+  if(!r.extras.length)return '<div class="pz-lead">'+focusTxt+'</div><div class="pz-empty"><div class="pz-eh">You’re balanced right now</div><p>Nothing screaming for extra work today — hit class and log your scores to keep this sharp.</p></div>';
+  var cards=r.extras.map(function(e,i){
+    return '<div class="pz-card"><div class="pz-top"><span class="pz-ic">'+(e.ic||'')+'</span><span class="pz-tt"><span class="pz-type">'+esc(e.type).toUpperCase()+' EXTRA</span><span class="pz-title">'+esc(e.title)+'</span></span></div>'
+     +'<div class="pz-why">Why: '+e.why+'</div>'
+     +'<div class="pz-rx">'+esc(e.rx)+(e.freq?'<span class="pz-fq">'+esc(e.freq)+'</span>':'')+'</div>'
+     +(e.openId?'<button class="pz-openskill" onclick="closeSession();openDevSkill(&#39;'+e.openId+'&#39;)">Open in Skill Tree →</button>':'')
+     +'</div>';}).join('');
+  return '<div class="pz-lead">'+focusTxt+'</div><div class="pz-cards">'+cards+'</div>'
+   +'<div class="pz-note">Built from your card — your weakest stats first, minus whatever class already trains today. Log your scores to keep it accurate.</div>';
+}
+function _sessTrackBtn(t,primary,tag){return '<button class="ss-track'+(primary?' primary':'')+'" onclick="pickSessTrack(\''+t[0]+'\')"><span class="ss-tic">'+(_SESS_ICO[t[0]]||'')+'</span><span class="ss-tmid"><span class="ss-tnm">'+t[1]+'</span><span class="ss-td">'+t[2]+'</span>'+(tag?'<span class="ss-tag">'+tag+'</span>':'')+'</span><span class="ss-chev">&rsaquo;</span></button>';}
 var cardMode='form';   // 'form' (current) | 'legacy' (best-ever)
 var _holdToasts=false,_celebPayload=null;   // verify→handback→celebrate: suppress live toasts, then reveal on athlete tap
 /* New rated tests (2026-09-03): retire the V2 proxies — Weighted Pull-Up is the real Strength pull test,
@@ -3110,6 +3212,11 @@ var _holdToasts=false,_celebPayload=null;   // verify→handback→celebrate: su
  var have={};SCORING.moves.forEach(function(m){have[m.id]=1;});
  if(!have.weightedpullup)SCORING.moves.push(wpu);
  if(!have.sprint20m)SCORING.moves.push(s20);
+ // Front Squat — tracked, OFF-CARD (feeds the Personal weak-point engine; never moves the five card stats).
+ // Curve derived from Back Squat ×0.85 (a front squat ~85% of back squat at each level).
+ if(!have.frontsquat){var bsq=SCORING.moves.filter(function(m){return m.id==='backsquat';})[0];
+   if(bsq&&bsq.bands){var sc=function(arr){return arr.map(function(p){return [Math.round(p[0]*0.85*2)/2,p[1]];});};
+     SCORING.moves.push({id:'frontsquat',name:'Front Squat',stat:'STR',unit:'kg',dir:'hi',unlockedBy:null,offCard:true,bands:{m:sc(bsq.bands.m),f:sc(bsq.bands.f)}});}}
 }catch(e){}})();
 var _MOVE={};SCORING.moves.forEach(function(m){_MOVE[m.id]=m;});
 function scMove(id){return _MOVE[id]||null;}
@@ -3148,7 +3255,7 @@ function _stdev(a){if(a.length<2)return 0;var m=_mean(a),s=0;for(var i=0;i<a.len
 // the breadth-driven Overall (a partial card reads low across the board, not deceptively high on a couple of tests).
 // The consistency/spread bonus only applies once EVERY test in the stat is in (a complete, even stat earns the polish).
 function _statFrom(key,rate,counts){var all=[],done=[];
-  SCORING.moves.forEach(function(m){if(m.stat!==key)return;var c=counts(m.id);
+  SCORING.moves.forEach(function(m){if(m.offCard)return;if(m.stat!==key)return;var c=counts(m.id);
     if(!c&&!moveAvail(m))return;   // a test that's LOCKED and not yet done doesn't count as a 0 — you can't be penalised for a test the tree won't let you attempt. Available-but-untested still counts as 0 (breadth incentive); a verified score always counts even if its node was later relocated behind a lock.
     all.push(c?rate(m.id):0);if(c)done.push(rate(m.id));});
   if(!all.length)return 0;
@@ -3243,7 +3350,7 @@ function computeCard(rate,counts){rate=rate||ratingOf;counts=counts||isVerified;
   if(TREE_SKILL&&stats.SKL!=null)stats.SKL=treeSkillRating(rate);   // Skill sourced from the Development Tree
   // TOTAL POWER = sum over tests of (points × that tree's depth multiplier). Depth rewards specialists; breadth (all 40
   // tests) is the only route to the top tiers, because one tree is just ~7 tests. Louis 2026-08-16.
-  var raw=0;SCORING.moves.forEach(function(m){var r=rate(m.id);raw+=r*powerMult(r);});raw=Math.min(SCORING.tp.rawCap,raw);
+  var raw=0;SCORING.moves.forEach(function(m){if(m.offCard)return;var r=rate(m.id);raw+=r*powerMult(r);});raw=Math.min(SCORING.tp.rawCap,raw);
   // BREADTH BONUSES (tunable SCORING.tp.bonusTP): flat TP per VERIFIED class unlock (deeper=more) + the sum of the 5 card
   // stats. Lifts complete, advanced all-rounders toward the top tiers without lowering the Mythic bar. Provisional.
   var _bt=SCORING.tp.bonusTP,bonusUnlock=0,bonusStat=0;
