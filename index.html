@@ -1258,7 +1258,10 @@ body.hasnav #foot{bottom:60px}
 .pz-lead{font-size:.92rem;line-height:1.45;color:var(--dim);margin:0 0 16px}
 .pz-lead b{color:var(--txt)}
 .pz-cards{display:flex;flex-direction:column;gap:12px}
-.pz-card{background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:13px;padding:14px 15px}
+.pz-card{background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:13px;padding:14px 15px}
+.pz-card.pz-prio{border-left-color:var(--acc);border-color:rgba(255,194,71,.4);background:linear-gradient(135deg,rgba(255,194,71,.1),transparent)}
+.pz-card.pz-prio .pz-type{color:var(--acc)}
+.pz-optl{font-size:.66rem;font-weight:800;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;margin:6px 0 10px}
 .pz-top{display:flex;align-items:center;gap:11px;margin-bottom:9px}
 .pz-ic{flex:0 0 auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--acc)}
 .pz-ic svg{width:22px;height:22px}
@@ -3196,40 +3199,41 @@ function personalSkillExtra(focus){var todaySkill=(focus==='skill')?_todayClassS
   return {type:'Skill',ic:(ICO.star||''),title:pick.sk.name+' — '+n.name,why:(domUsed?esc(domUsed)+' is your weakest skill area — your '+pick.sk.name+' ladder is early':'Skill is a weak stat and your '+pick.sk.name+' ladder is early'),rx:(rx?rx.do:('Work toward '+n.name+' — clears at '+esc(n.std||'the next standard'))),freq:(rx?rx.freq:''),std:n.std,openId:pick.sk.id,sev:1+(1-pick.frac)*2};}
 function personalEngineExtra(focus){if(focus==='engine')return null;
   return {type:'Engine',ic:(ICO.history||ICO.check||''),title:'Zone 2 aerobic',why:'Endurance is a weak stat and it’s not in class today',rx:'20–30 min easy run / row / bike — RPE 3–4, nasal-breathing, hold a conversation. One machine throughout.',freq:'',sev:1};}
-function personalSpeedExtra(focus){return {type:'Speed',ic:(ICO.target||''),title:'Alactic power',why:'Speed / power is a weak stat',rx:'6–8 × 15–20m sprint (or 8×10s bike sprint) — full recovery, quality only.',freq:'',sev:0.8};}
+function personalSpeedExtra(focus){return {type:'Speed',ic:(ICO.target||''),title:'Alactic power',why:'sharpen top-end speed & power',rx:'6–8 × 15–20m sprint (or 8×10s bike sprint) — full recovery, quality only.',freq:'',sev:0.8};}
+function personalCoreExtra(focus){return {type:'Core',ic:(ICO.check||''),title:'Midline & trunk',why:'a few minutes that protects every other lift',rx:'3 rounds: 45s hollow hold + 30s side plank each side + 10 slow hollow rocks. Brace, breathe, no sagging.',freq:'',sev:0.5};}
+// A MENU, not a single prescription: build every applicable option, rank by the athlete's weakest stats, show a priority + a few options.
 function computePersonal(){
   var cc=(typeof computeCard==='function')?computeCard():null;var stats=cc?cc.stats:null;
   var focus=(cur&&cur.d&&cur.d.focus)||null;
   if(!stats||(cc.entered||0)<3)return {ready:false,entered:cc?cc.entered:0};
-  var cardStats=['STR','PWR','SPD','END','SKL'];
-  var vals=cardStats.map(function(k){return stats[k]||0;});var mean=vals.reduce(function(a,b){return a+b;},0)/vals.length;
-  var ranked=cardStats.map(function(k){return {k:k,v:stats[k]||0};}).sort(function(a,b){return a.v-b.v;});
+  var vals=['STR','PWR','SPD','END','SKL'].map(function(k){return stats[k]||0;});var mean=vals.reduce(function(a,b){return a+b;},0)/vals.length;
   var cands=[];
-  ranked.forEach(function(s){var e=null;
-    if(s.k==='SKL')e=personalSkillExtra(focus);
-    else if(s.k==='STR'||s.k==='PWR')e=personalStrengthExtra(focus);
-    else if(s.k==='END')e=personalEngineExtra(focus);
-    else if(s.k==='SPD')e=personalSpeedExtra(focus);
-    if(e){e.stat=s.k;e.statVal=s.v;cands.push(e);}});
-  // keep candidates for genuinely-weak stats (below the athlete's own average), always at least the single weakest, dedup by type, cap 3
-  var seen={};var picks=[];
+  function add(e,stat){if(!e)return;e.stat=e.stat||stat;e.statVal=(stat&&stats[stat]!=null)?stats[stat]:mean;cands.push(e);}
+  add(personalSkillExtra(focus),'SKL');            // always available
+  add(personalStrengthExtra(focus),'STR');         // only if a lift is actually a limiter
+  add(personalEngineExtra(focus),'END');           // aerobic option
+  add(personalSpeedExtra(focus),'SPD');            // speed option
+  add(personalCoreExtra(focus),null);              // midline filler (ranks at mean, so it only fills spare slots)
+  // rank weakest-stat first (so genuine weaknesses lead), dedup by type, keep a menu of up to 3
   cands.sort(function(a,b){return (a.statVal-b.statVal)||(b.sev-a.sev);});
-  cands.forEach(function(c){if(seen[c.type])return;var weak=c.statVal<=mean+2;if(picks.length&&!weak)return;if(picks.length>=3)return;seen[c.type]=1;picks.push(c);});
-  if(!picks.length&&cands.length){seen={};picks=[cands[0]];}
+  var seen={};var picks=[];
+  cands.forEach(function(c){if(seen[c.type])return;seen[c.type]=1;if(picks.length<3)picks.push(c);});
   return {ready:true,focus:focus,extras:picks};}
 function personalHTML(){
   var r=computePersonal();
   if(!r.ready)return '<div class="pz-empty"><div class="pz-el">UNLOCK YOUR EXTRAS</div><div class="pz-eh">Log &amp; verify a few scores first</div><p>Personal builds your daily extras from your card. Log a handful of lifts and skills (you’re at '+(r.entered||0)+') and I’ll start prescribing what to work on — built around what class is already doing.</p><button class="pz-open" onclick="closeSession();goNav(&#39;submit&#39;)">Log a score →</button></div>';
-  var focusTxt=r.focus?('Class today is <b>'+esc(FOCUS_LABEL[r.focus]||r.focus)+'</b> — these dodge that and hit your weak spots.'):'Your weak spots for today.';
+  var focusTxt=r.focus?('Class today is <b>'+esc(FOCUS_LABEL[r.focus]||r.focus)+'</b> — these work around it. Do the priority; add more if you’ve got time.'):'Your extras today. Do the priority; add more if you’ve got time.';
   if(!r.extras.length)return '<div class="pz-lead">'+focusTxt+'</div><div class="pz-empty"><div class="pz-eh">You’re balanced right now</div><p>Nothing screaming for extra work today — hit class and log your scores to keep this sharp.</p></div>';
-  var cards=r.extras.map(function(e,i){
-    return '<div class="pz-card"><div class="pz-top"><span class="pz-ic">'+(e.ic||'')+'</span><span class="pz-tt"><span class="pz-type">'+esc(e.type).toUpperCase()+' EXTRA</span><span class="pz-title">'+esc(e.title)+'</span></span></div>'
+  function card(e,prio){
+    return '<div class="pz-card'+(prio?' pz-prio':'')+'"><div class="pz-top"><span class="pz-ic">'+(e.ic||'')+'</span><span class="pz-tt"><span class="pz-type">'+(prio?'TODAY’S PRIORITY':esc(e.type).toUpperCase())+'</span><span class="pz-title">'+esc(e.title)+'</span></span></div>'
      +'<div class="pz-why">Why: '+e.why+'</div>'
      +'<div class="pz-rx">'+esc(e.rx)+(e.freq?'<span class="pz-fq">'+esc(e.freq)+'</span>':'')+'</div>'
      +(e.openId?'<button class="pz-openskill" onclick="closeSession();openDevSkill(&#39;'+e.openId+'&#39;)">Open in Skill Tree →</button>':'')
-     +'</div>';}).join('');
-  return '<div class="pz-lead">'+focusTxt+'</div><div class="pz-cards">'+cards+'</div>'
-   +'<div class="pz-note">Built from your card — your weakest stats first, minus whatever class already trains today. Log your scores to keep it accurate.</div>';
+     +'</div>';}
+  var rest=r.extras.slice(1);
+  var body=card(r.extras[0],true)+(rest.length?('<div class="pz-optl">More options — pick what suits</div>'+rest.map(function(e){return card(e,false);}).join('')):'');
+  return '<div class="pz-lead">'+focusTxt+'</div><div class="pz-cards">'+body+'</div>'
+   +'<div class="pz-note">Built from your card — weakest areas first, working around what class already trains today. Log &amp; verify your scores to keep it sharp.</div>';
 }
 function _sessTrackBtn(t,primary,tag){return '<button class="ss-track'+(primary?' primary':'')+'" onclick="pickSessTrack(\''+t[0]+'\')"><span class="ss-tic">'+(_SESS_ICO[t[0]]||'')+'</span><span class="ss-tmid"><span class="ss-tnm">'+t[1]+'</span><span class="ss-td">'+t[2]+'</span>'+(tag?'<span class="ss-tag">'+tag+'</span>':'')+'</span><span class="ss-chev">&rsaquo;</span></button>';}
 var cardMode='form';   // 'form' (current) | 'legacy' (best-ever)
