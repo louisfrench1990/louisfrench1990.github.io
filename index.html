@@ -1236,6 +1236,15 @@ body.hasnav #foot{bottom:60px}
 .dcn-std{font-size:.75rem;font-weight:600;color:var(--dim)}
 .dcn-do{margin-top:6px;font-size:.85rem;line-height:1.4;color:var(--txt)}
 .dcn-fq{display:block;margin-top:3px;font-size:.72rem;color:var(--dim)}
+.arming{background:var(--acc)!important;color:#10121a!important;border-color:var(--acc)!important;animation:armpulse 1s ease-in-out infinite}
+@keyframes armpulse{0%,100%{opacity:1}50%{opacity:.78}}
+.dnu-chips{margin-top:12px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.dnu-chips-l{font-size:.66rem;font-weight:800;letter-spacing:.08em;color:var(--dim);text-transform:uppercase}
+.dnu-chip{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--s1)}
+.dnu-chip.on{border-color:var(--acc);background:rgba(255,194,71,.14)}
+.dnu-chip-nm{border:none;background:transparent;color:var(--txt);font:inherit;font-weight:700;font-size:.76rem;padding:6px 4px 6px 11px;cursor:pointer}
+.dnu-chip.on .dnu-chip-nm{color:var(--acc)}
+.dnu-chip-x{border:none;background:transparent;color:var(--dim);font:inherit;font-size:.95rem;line-height:1;padding:5px 9px 6px 5px;cursor:pointer}
 .dnu-more{margin-top:10px;font-size:.72rem;color:var(--dim);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .dnu-cycle{padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--txt);font:inherit;font-weight:700;font-size:.72rem;cursor:pointer}
 .dnu-norx{color:var(--dim);font-style:italic}
@@ -2778,7 +2787,7 @@ function renderDevSkill(id){var el=document.getElementById('devInner');if(!el)re
     youClose='<div class="dev-sec-l">You\'re close &mdash; '+rd.met+' / '+rd.total+' readiness</div><div class="dev-rdlist">'+ri+'</div>';}
   var next=st.next;
   var nextObj=next?('<div class="dev-obj"><div class="dev-objl">Next objective</div><div class="dev-objt">'+esc(next.name)+' &mdash; '+esc(next.std)+'</div></div>'):('<div class="dev-obj"><div class="dev-objt">Mastered &mdash; every stage complete.</div></div>');
-  var markBtn=(next&&!isAutoRung(next))?'<button class="btn-primary" onclick="devMarkNext(&#39;'+sk.id+'&#39;)">Mark &ldquo;'+esc(next.name)+'&rdquo; done</button>':'';
+  var markBtn=(next&&!isAutoRung(next))?'<button class="btn-primary'+(_markArmed===sk.id?' arming':'')+'" onclick="devMarkArm(&#39;'+sk.id+'&#39;)">'+(_markArmed===sk.id?'Tap again to confirm \u2713':'Mark &ldquo;'+esc(next.name)+'&rdquo; done')+'</button>':'';
   var lgk=null;for(var _g in GCAP2SKILL){if(GCAP2SKILL[_g]===sk.id)lgk=_g;}
   var bestBox='';
   if(lgk){var have=(typeof gcap==='function')?gcap(lgk):0;
@@ -2882,7 +2891,7 @@ function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);var _rr=jrn
     var dot=st.ach[i]?'<span class="dev-dot done">'+devTick()+'</span>':(st.pend[i]?'<span class="dev-dot pend">'+ICO.clock+'</span>':(i===st.cur?'<span class="dev-dot now"></span>':'<span class="dev-dot"></span>'));
     var starmk=n.star?' <span class="dev-star">&#9733;</span>':'';var tag=st.pend[i]?' <span class="dev-pendchip">PENDING</span>':((i===st.cur)?' <span class="dev-nowchip">NOW</span>':'');
     return '<div class="dev-node '+stt+(_rungManual(n)?' unmarkable':'')+jrnRungCls(_rr,i)+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+tag+_rungUndo(sk,n)+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';}).join('');
-  var next=st.next;var markBtn=(next&&!isAutoRung(next))?'<button class="btn2 skf-mark" onclick="devMarkNext(&#39;'+sk.id+'&#39;)">Mark &ldquo;'+esc(next.name)+'&rdquo; done</button>':'';
+  var next=st.next;var markBtn=(next&&!isAutoRung(next))?'<button class="btn2 skf-mark'+(_markArmed===sk.id?' arming':'')+'" onclick="devMarkArm(&#39;'+sk.id+'&#39;)">'+(_markArmed===sk.id?'Tap again to confirm \u2713':'Mark &ldquo;'+esc(next.name)+'&rdquo; done')+'</button>':'';
   var pendHint=st.pendingCount>0?'<div class="dev-pendhint">'+ICO.clock+' '+st.pendingCount+' marked \u2014 awaiting coach verification to count</div>':'';
   var _nrx=next?jrnPresc(next.name):null;
   var rxHTML=_nrx?('<div class="dev-trainthis"><span class="dev-tt-l">Train this \u2192 '+esc(next.name)+(next.std?' <em>(clears at '+esc(next.std)+')</em>':'')+'</span><span class="dev-tt-do">'+esc(_nrx.do)+'</span>'+(_nrx.freq?'<span class="dev-tt-fq">'+esc(_nrx.freq)+'</span>':'')+'</div>'):'';
@@ -2916,7 +2925,7 @@ function cap2Skill(id){var el=document.getElementById('devInner');if(!el)return;
     var dot=st.ach[i]?'<span class="dev-dot done">'+devTick()+'</span>':(st.pend[i]?'<span class="dev-dot pend">'+ICO.clock+'</span>':(i===st.cur?'<span class="dev-dot now"></span>':'<span class="dev-dot"></span>'));
     var starmk=n.star?' <span class="dev-star">&#9733;</span>':'';var tag=st.pend[i]?' <span class="dev-pendchip">PENDING</span>':((i===st.cur)?' <span class="dev-nowchip">NOW</span>':'');
     return '<div class="dev-node '+stt+(_rungManual(n)?' unmarkable':'')+jrnRungCls(_rr,i)+'">'+dot+'<span class="dev-nmid"><span class="dev-nnm">'+esc(n.name)+starmk+tag+_rungUndo(sk,n)+'</span><span class="dev-nlv">'+esc(n.level)+' &middot; '+esc(n.std)+'</span></span></div>';}).join('');
-  var markBtn=(next&&!isAutoRung(next))?'<button class="btn-primary" onclick="devMarkNext(&#39;'+sk.id+'&#39;)">Mark &ldquo;'+esc(next.name)+'&rdquo; done</button>':'';
+  var markBtn=(next&&!isAutoRung(next))?'<button class="btn-primary'+(_markArmed===sk.id?' arming':'')+'" onclick="devMarkArm(&#39;'+sk.id+'&#39;)">'+(_markArmed===sk.id?'Tap again to confirm \u2713':'Mark &ldquo;'+esc(next.name)+'&rdquo; done')+'</button>':'';
   el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="devBackToList()">&lsaquo;</button><span class="ss-topttl">'+esc(sk.name)+'</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
    +'<div class="ss-h">'+esc(sk.name)+'</div>'
    +'<div class="cn-status">'+(achieved?'<span class="cn-ach">&#9733; Achieved</span>':'<span class="cn-na">In progress</span>')+'<span class="cn-lvl">'+esc(st.level)+'</span></div>'
@@ -3003,6 +3012,10 @@ function renderCapSkill(id){var el=document.getElementById('capInner');if(!el)re
 window.capSlice=function(id){var m=document.getElementById('capMask');if(!m){m=document.createElement('div');m.id='capMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="capInner"></div>';document.body.appendChild(m);}renderCapSkill(id||'bar-muscle-up');m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.capClose=function(){var m=document.getElementById('capMask');if(m)m.style.display='none';};
 window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSkillState(sk);var n=st.next;if(!n)return;DEVP[n.id]={done:true,at:Date.now(),src:'manual',verified:false};devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}};
+/* Two-tap confirm on manual marks — a single accidental tap can't set a rung 'done' (2026-09-18) */
+var _markArmed=null,_markT=null;
+function _devMarkReRender(sid){if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}}
+window.devMarkArm=function(sid){if(_markArmed===sid){_markArmed=null;clearTimeout(_markT);devMarkNext(sid);return;}_markArmed=sid;clearTimeout(_markT);_markT=setTimeout(function(){if(_markArmed===sid){_markArmed=null;_devMarkReRender(sid);}},4000);_devMarkReRender(sid);};
 window.devUnmarkLast=function(sid){var sk=devSkill(sid);if(!sk)return;for(var i=sk.stages.length-1;i>=0;i--){var st=sk.stages[i];var d=DEVP[st.id];if(d&&d.done&&!d.verified&&d.src==='manual'){delete DEVP[st.id];devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}return;}}};
 function _unmarkBtn(sk){var lm=null;for(var i=sk.stages.length-1;i>=0;i--){var d=DEVP[sk.stages[i].id];if(d&&d.done&&!d.verified&&d.src==='manual'){lm=sk.stages[i];break;}}return lm?'<button class="btn2 dev-unmark" onclick="devUnmarkLast(&#39;'+sk.id+'&#39;)">Undo &ldquo;'+esc(lm.name)+'&rdquo;</button>':'';}
 function _rungManual(st){var d=DEVP[st.id];return !!(d&&d.done&&!d.verified&&d.src==='manual');}   // manually self-marked, not yet coach-verified -> safe for the athlete to un-mark
@@ -3106,7 +3119,7 @@ function jrnPrimaryNext(){var g=jrnGoals();if(!g.length)return null;var gid=g[g.
 function devNextUpHTML(){var goals=jrnGoals();
   if(!goals.length)return '<div class="dev-nextup empty"><div class="dnu-l">NEXT UP</div><div class="dnu-hint">Star a skill ☆ to chase it — I’ll show the exact next thing to train, right here.</div></div>';
   var p=jrnPrimaryNext();var gid=p.goalId;var goalName=(jrnById(gid)||{}).name||'';
-  var more=goals.length>1?'<div class="dnu-more">Chasing '+goals.length+' — <button class="dnu-cycle" onclick="jrnCyclePrimary()">Next goal ↻</button></div>':'';
+  var more=jrnChipsHTML();
   if(!p.nx)return '<div class="dev-nextup"><div class="dnu-l">NEXT UP · '+esc(goalName).toUpperCase()+'</div><div class="dnu-done">★ You’ve reached <b>'+esc(goalName)+'</b> — nice. '+(goals.length>1?'Cycle to another goal, or star a new skill.':'Star a new skill to keep climbing.')+'</div>'+more+'</div>';
   var nx=p.nx;var via=(nx.skill.id!==gid)?(' · via '+esc(nx.skill.name)):'';
   var g=nx.skill.stages[nx.idx];var rx=jrnPresc(g.name);var need=(typeof jrnNeed==='function')?jrnNeed(nx.skill):'';
@@ -3115,7 +3128,12 @@ function devNextUpHTML(){var goals=jrnGoals();
     +(rx?'<div class="dnu-do">'+esc(rx.do)+(rx.freq?'<span class="dnu-fq">'+esc(rx.freq)+'</span>':'')+'</div>':'<div class="dnu-do dnu-norx">No programming written for this rung yet — aim for the standard above.</div>')
     +(need?'<div class="dnu-need"><b>'+esc(nx.skill.name)+'</b> needs first: '+need+'</div>':'')
     +'<button class="dnu-open" onclick="openDevSkill(&#39;'+nx.skill.id+'&#39;)">Open '+esc(nx.skill.name)+' →</button>'+more+'</div>';}
-window.jrnCyclePrimary=function(){var g=jrnGoals();if(g.length<2)return;g.unshift(g.pop());jrnSetGoals(g);if(_devCat){openDevCat(_devCat);}else{cap2List();}};   // rotate: move current primary (last) to front, so the next-most-recent becomes primary — cycles through ALL chased goals
+window.jrnCyclePrimary=function(){var g=jrnGoals();if(g.length<2)return;g.unshift(g.pop());jrnSetGoals(g);if(_devCat){openDevCat(_devCat);}else{cap2List();}};   // (legacy) rotate primary — superseded by tappable chips
+function jrnChipsHTML(){var g=jrnGoals();if(g.length<2)return '';var prim=g[g.length-1];
+  return '<div class="dnu-chips"><span class="dnu-chips-l">Chasing:</span>'+g.map(function(id){var nm=(jrnById(id)||{}).name||id;var on=id===prim;
+    return '<span class="dnu-chip'+(on?' on':'')+'"><button class="dnu-chip-nm" onclick="jrnSetPrimary(&#39;'+id+'&#39;)">'+esc(nm)+'</button><button class="dnu-chip-x" onclick="jrnUnchase(&#39;'+id+'&#39;)" aria-label="Stop chasing">×</button></span>';}).join('')+'</div>';}
+window.jrnSetPrimary=function(id){var g=jrnGoals();var k=g.indexOf(id);if(k<0)return;g.splice(k,1);g.push(id);jrnSetGoals(g);if(_devCat){openDevCat(_devCat);}else{cap2List();}};
+window.jrnUnchase=function(id){var g=jrnGoals();var k=g.indexOf(id);if(k>=0)g.splice(k,1);jrnSetGoals(g);if(_devCat){openDevCat(_devCat);}else{cap2List();}};
 window.pickSessTrack=function(t){sessTrack=t;renderSession();var m=document.getElementById('sessMask');if(m)m.scrollTop=0;};
 window.sessBack=function(){sessTrack=null;renderSession();};
 window.sessToggle=function(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');};
