@@ -1166,6 +1166,18 @@ body.hasnav #foot{bottom:60px}
 .tp-to{font-size:.74rem;color:var(--dim)}.tp-to b{color:var(--txt)}
 .tp-bar{height:7px;border-radius:99px;background:var(--s2);overflow:hidden}
 .tp-bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--acc),#ffe08a)}
+.skt-nudge{margin:0 0 14px;padding:13px 14px;border-radius:12px;background:var(--s1);border:1px dashed var(--line)}
+.skt-nudge-h{font-size:.95rem;font-weight:800;margin-bottom:5px}
+.skt-nudge p{font-size:.8rem;line-height:1.5;color:var(--dim);margin:0 0 11px}
+.skt-nudge-btn{min-height:44px;padding:10px 16px;border-radius:10px;border:none;background:var(--mag);color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.skcat-meta.is-start{color:var(--dim);font-weight:700;font-size:.72rem;opacity:.75}
+.skt-lvkey{margin:12px 2px 4px;border-top:1px solid var(--line);padding-top:10px}
+.skt-lvkey>summary{font-size:.78rem;color:var(--dim);font-weight:700;cursor:pointer;list-style:none;min-height:32px;display:flex;align-items:center}
+.skt-lvkey>summary::-webkit-details-marker{display:none}
+.skt-lvkey-b{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.lvk-i{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;color:var(--txt);background:var(--s2);border:1px solid var(--line);border-radius:999px;padding:5px 11px 5px 6px}
+.lvk-n{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--mag);color:#fff;font-size:.66rem;font-weight:800}
+.lvk-note{flex-basis:100%;font-size:.74rem;line-height:1.45;color:var(--dim);margin:4px 0 0}
 .skcats{display:flex;flex-direction:column;gap:10px}
 .skcat{display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--ca);border-radius:var(--r-md);padding:14px;cursor:pointer;color:var(--txt)}
 .skcat:active{background:var(--s2)}
@@ -1290,6 +1302,11 @@ body.hasnav #foot{bottom:60px}
 .pz-openskill{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--txt);font:inherit;font-weight:700;cursor:pointer}
 .pz-donebtn{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--dim);font:inherit;font-weight:700;cursor:pointer}
 .pz-donebtn.is-done{background:var(--acc);border-color:var(--acc);color:#10121a}
+.pz-skip{display:block;width:100%;min-height:40px;margin-top:8px;padding:8px;background:transparent;border:none;color:var(--dim);font:inherit;font-size:.76rem;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pz-skip:active{color:var(--txt)}
+.pz-skiprow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 13px;margin-bottom:8px;border-radius:11px;background:var(--s1);border:1px solid var(--line);opacity:.7}
+.pz-skiptt{font-size:.78rem;color:var(--dim);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pz-skiptt b{color:var(--txt)}
+.pz-undo{flex:0 0 auto;min-height:40px;padding:6px 13px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--txt);font:inherit;font-size:.74rem;font-weight:700;cursor:pointer}
 .pz-card.pz-done{opacity:.6}
 .pz-card.pz-done .pz-ic{color:var(--acc)}
 .pz-note{margin-top:16px;font-size:.76rem;line-height:1.5;color:var(--dim)}
@@ -2916,12 +2933,22 @@ function tierProgressHTML(){try{var cc=(typeof computeCard==='function')?compute
 function cap2List(){_devCat=null;var el=document.getElementById('devInner');if(!el)return;var _RM=jrnRouteInfo();
   var tiles=CAP_NAVGROUPS.map(function(g){var meta=CAP_CATMETA[g]||{};var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===g;});var _cr=_RM?sks.some(function(x){return !!_RM[x.id];}):false;
     var pct=0;if(sks.length){var sum=0;sks.forEach(function(sk){var st=devSkillState(sk);sum+=(st.total?st.done/st.total:0);});pct=Math.round(sum/sks.length*100);}
-    return '<button class="skcat skcat-'+(meta.key||'x')+(_cr?' skcat-route':'')+'" style="--ca:'+(meta.ca||'#888')+';--caBg:'+(meta.caBg||'rgba(255,255,255,.1)')+'" onclick="openDevCat(&#39;'+g+'&#39;)"><span class="skcat-ic">'+(meta.ic||'')+'</span><span class="skcat-mid"><span class="skcat-nm">'+esc(g)+'</span><span class="skcat-bar"><i style="width:'+pct+'%"></i></span></span><span class="skcat-meta">'+pct+'%</span>'+(_cr?'<span class="skcat-rpip">on route</span>':'')+'<span class="skcat-chev">&rsaquo;</span></button>';}).join('');
+    return '<button class="skcat skcat-'+(meta.key||'x')+(_cr?' skcat-route':'')+'" style="--ca:'+(meta.ca||'#888')+';--caBg:'+(meta.caBg||'rgba(255,255,255,.1)')+'" onclick="openDevCat(&#39;'+g+'&#39;)"><span class="skcat-ic">'+(meta.ic||'')+'</span><span class="skcat-mid"><span class="skcat-nm">'+esc(g)+'</span><span class="skcat-bar"><i style="width:'+pct+'%"></i></span></span><span class="skcat-meta'+(pct===0?' is-start':'')+'">'+(pct>0?pct+'%':'Start')+'</span>'+(_cr?'<span class="skcat-rpip">on route</span>':'')+'<span class="skcat-chev">&rsaquo;</span></button>';}).join('');
   el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeDev()">&lsaquo;</button><span class="ss-topttl">Skill Tree</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
    +'<div class="ss-h">Skill Tree</div><p class="skt-intro">Open a discipline to track your skills and levels.</p>'
    +tierProgressHTML()
    +devNextUpHTML()
-   +'<div class="skcats">'+tiles+'</div>'+'<div class="skt-legend"><span class="skl-i"><span class="skl-dot skl-found"></span>Foundations</span><span class="skl-i"><span class="skl-dot skl-ready"></span>Readiness</span><span class="skl-i"><span class="skl-star">&#9733;</span>Achievement</span></div>';}
+   +_treeNudgeHTML()
+   +'<div class="skcats">'+tiles+'</div>'+'<div class="skt-legend"><span class="skl-i"><span class="skl-dot skl-found"></span>Foundations</span><span class="skl-i"><span class="skl-dot skl-ready"></span>Readiness</span><span class="skl-i"><span class="skl-star">&#9733;</span>Achievement</span></div>'+_levelKeyHTML();}
+// DATA-GATE PRESENTATION (UX audit): when the tree is near-empty, explain WHY (it fills from verified scores) rather than showing a bleak wall of 0%.
+function _treeNudgeHTML(){try{var marks=0;DEV_G.forEach(function(sk){marks+=devSkillState(sk).done;});var cc=(typeof computeCard==='function')?computeCard():null;var ver=cc?(cc.verified||0):0;
+  if(marks>2||ver>3)return '';
+  return '<div class="skt-nudge"><div class="skt-nudge-h">Your tree’s just getting started</div><p>Ladders fill in automatically from your <b>verified</b> scores — every lift, hold and skill you log and get signed off clears the rungs it earns. Tap a skill to mark what you’ve already got.</p><button class="skt-nudge-btn" onclick="closeDev();goNav(&#39;submit&#39;)">Log a score →</button></div>';
+}catch(e){return '';}}
+// LEVEL KEY (UX audit): the level labels were jargon without a legend — name them once, in order.
+function _levelKeyHTML(){try{var lv=(typeof SKILL_LEVELS!=='undefined'&&SKILL_LEVELS)||['Foundation','Developing','Competent','Proficient','Advanced','Mastery'];
+  return '<details class="skt-lvkey"><summary>What do the levels mean?</summary><div class="skt-lvkey-b">'+lv.map(function(n,i){return '<span class="lvk-i"><span class="lvk-n">'+(i+1)+'</span>'+esc(n)+'</span>';}).join('')+'<p class="lvk-note">Your level on a skill rises as you clear its milestones — from first Foundation reps up to full Mastery.</p></div></details>';
+}catch(e){return '';}}
 function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);var _rr=jrnRouteInfo();_rr=_rr&&_rr[sk.id];
   var capsHTML='';
   if(rd.total){var items=rd.items.map(function(it){var frac=it.met?1:((it.cur!=null&&it.target)?Math.max(0.12,Math.min(0.95,it.cur/it.target)):0.25);return {name:it.name,frac:frac,met:it.met};});
@@ -3354,11 +3381,17 @@ function _pDoneKey(){var d=new Date();return 'unranked-personal-done-'+d.getFull
 function pDoneList(){try{var v=localStorage.getItem(_pDoneKey());return v?JSON.parse(v):[];}catch(e){return [];}}
 function pIsDone(t){return pDoneList().indexOf(t)>=0;}
 window.pMarkDone=function(t){try{var l=pDoneList();var i=l.indexOf(t);if(i>=0)l.splice(i,1);else l.push(t);localStorage.setItem(_pDoneKey(),JSON.stringify(l));}catch(e){}if(typeof renderSession==='function')renderSession();};
+// SKIP (UX audit): "Not today" dismisses an option you can't do (no rings, no time) so the menu adapts to reality — per-day, recoverable.
+function _pSkipKey(){var d=new Date();return 'unranked-personal-skip-'+d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function pSkipList(){try{var v=localStorage.getItem(_pSkipKey());return v?JSON.parse(v):[];}catch(e){return [];}}
+function pIsSkip(t){return pSkipList().indexOf(t)>=0;}
+window.pSkip=function(t){try{var l=pSkipList();var i=l.indexOf(t);if(i>=0)l.splice(i,1);else l.push(t);localStorage.setItem(_pSkipKey(),JSON.stringify(l));}catch(e){}if(typeof renderSession==='function')renderSession();};
 function personalHTML(){
   var r=computePersonal();
   if(!r.ready)return '<div class="pz-empty"><div class="pz-el">UNLOCK YOUR EXTRAS</div><div class="pz-eh">Log &amp; verify a few scores first</div><p>Personal builds your daily extras from your card. Log a handful of lifts and skills (you’re at '+(r.entered||0)+') and I’ll start prescribing what to work on — built around what class is already doing.</p><button class="pz-open" onclick="closeSession();goNav(&#39;submit&#39;)">Log a score →</button></div>';
   var focusTxt=r.focus?('Class today is <b>'+esc(FOCUS_LABEL[r.focus]||r.focus)+'</b> — a skill, a lift and an engine piece that work around it and the rest of your week. Lead with the priority; add more if you’ve got time.'):'A skill, a lift and an engine piece for today — built around your week. Lead with the priority; add more if you’ve got time.';
   if(!r.extras.length)return '<div class="pz-lead">'+focusTxt+'</div><div class="pz-empty"><div class="pz-eh">You’re balanced right now</div><p>Nothing screaming for extra work today — hit class and log your scores to keep this sharp.</p></div>';
+  function _q(t){return esc(t).replace(/'/g,"\\&#39;");}
   function card(e,prio){
     var done=pIsDone(e.title);
     return '<div class="pz-card'+(prio?' pz-prio':'')+(done?' pz-done':'')+'"><div class="pz-top"><span class="pz-ic">'+(done?'✓':(e.ic||''))+'</span><span class="pz-tt"><span class="pz-type">'+(prio?'TODAY’S PRIORITY':esc(e.type).toUpperCase())+'</span><span class="pz-title">'+esc(e.title)+'</span></span></div>'
@@ -3366,11 +3399,17 @@ function personalHTML(){
      +'<div class="pz-rx">'+esc(e.rx)+(e.freq?'<span class="pz-fq">'+esc(e.freq)+'</span>':'')+'</div>'
      +'<div class="pz-btns">'
      +(e.openId?'<button class="pz-openskill" onclick="closeSession();openDevSkill(&#39;'+e.openId+'&#39;)">Open in Skill Tree →</button>':'')
-     +'<button class="pz-donebtn'+(done?' is-done':'')+'" onclick="pMarkDone(&#39;'+esc(e.title).replace(/'/g,"\\&#39;")+'&#39;)">'+(done?'Done ✓':'Mark done')+'</button>'
+     +'<button class="pz-donebtn'+(done?' is-done':'')+'" onclick="pMarkDone(&#39;'+_q(e.title)+'&#39;)">'+(done?'Done ✓':'Mark done')+'</button>'
      +'</div>'
+     +(done?'':'<button class="pz-skip" onclick="pSkip(&#39;'+_q(e.title)+'&#39;)">Not today</button>')
      +'</div>';}
-  var rest=r.extras.slice(1);
-  var body=card(r.extras[0],true)+(rest.length?('<div class="pz-optl">Also today — a piece from each area</div>'+rest.map(function(e){return card(e,false);}).join('')):'');
+  function skipRow(e){return '<div class="pz-skiprow"><span class="pz-skiptt"><b>'+esc(e.type)+'</b> · '+esc(e.title)+'</span><button class="pz-undo" onclick="pSkip(&#39;'+_q(e.title)+'&#39;)">Undo</button></div>';}
+  var active=r.extras.filter(function(e){return !pIsSkip(e.title);});
+  var skipped=r.extras.filter(function(e){return pIsSkip(e.title);});
+  var body;
+  if(active.length){var rest=active.slice(1);body=card(active[0],true)+(rest.length?('<div class="pz-optl">Also today — a piece from each area</div>'+rest.map(function(e){return card(e,false);}).join('')):'');}
+  else{body='<div class="pz-empty"><div class="pz-eh">All set for today</div><p>You’ve ticked or skipped everything — nice work.</p></div>';}
+  if(skipped.length)body+='<div class="pz-optl">Skipped today</div>'+skipped.map(skipRow).join('');
   return '<div class="pz-lead">'+focusTxt+'</div><div class="pz-cards">'+body+'</div>'
    +'<div class="pz-note">One gymnastics/skill, one lift and one engine piece each day — weakest area leads, and each is steered around what class already trains this week. Log &amp; verify your scores to keep it sharp.</div>';
 }
