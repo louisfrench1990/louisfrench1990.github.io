@@ -1334,7 +1334,11 @@ body.hasnav #foot{bottom:60px}
 .tt-rankpip{flex:0 0 auto;width:9px;height:9px;border-radius:50%}
 .tt-mid{display:flex;flex-direction:column;gap:2px;flex:1 1 auto;min-width:0}
 .tt-nm{font-weight:800;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tt-sub{font-size:.68rem;color:var(--dim);line-height:1.2}
+.tt-sub{font-size:.68rem;color:var(--dim);line-height:1.2;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.tt-status{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;border:1px solid currentColor}
+.tt-status.st-locked{color:#8b8f9a}
+.tt-status.st-unlocked{color:var(--acc)}
+.tt-status.st-complete{color:#38d66b}
 .tt-badge{flex:0 0 auto;font-size:.95rem;color:var(--tc)}
 .tt-detail{background:var(--s1);border:1px solid var(--line);border-top:none;border-left:3px solid var(--tc);border-radius:0 0 12px 12px;padding:10px 12px 12px}
 .tt-pre,.tt-adds{font-size:.74rem;line-height:1.35;color:var(--dim);margin:2px 0}
@@ -2559,6 +2563,11 @@ function achSync(){try{var cc=computeCard();var newly=[];ACH.forEach(function(a)
  var strip=function(key){try{var o=JSON.parse(localStorage.getItem(key)||'null');if(o&&typeof o==='object'){ids.forEach(function(id){delete o[id];});localStorage.setItem(key,JSON.stringify(o));}}catch(e){}};
  ['unranked-tests','unranked-verified','unranked-best','unranked-prev','unranked-prevv','unranked-tests-ts','unranked-edits'].forEach(strip);
  localStorage.setItem('unranked-mig-hybridapex','1');}catch(e){}})();
+(function(){try{if(localStorage.getItem('unranked-mig-sprint10'))return;   // 2026-09-18: 20m Sprint replaced by 10m Sprint (new id + bands). Drop old sprint20m values so 20m times aren't misread as 10m.
+ var ids=['sprint20m'];
+ var strip=function(key){try{var o=JSON.parse(localStorage.getItem(key)||'null');if(o&&typeof o==='object'){ids.forEach(function(id){delete o[id];});localStorage.setItem(key,JSON.stringify(o));}}catch(e){}};
+ ['unranked-tests','unranked-verified','unranked-best','unranked-prev','unranked-prevv','unranked-tests-ts','unranked-edits'].forEach(strip);
+ localStorage.setItem('unranked-mig-sprint10','1');}catch(e){}})();
 (function(){try{if(localStorage.getItem('unranked-mig-battery40'))return;   // 2026-08-23: Fran & Amanda retired as rated tests (battery back to 40). Drop stale values so they don't linger as orphans.
  var ids=['fran','amanda'];
  var strip=function(key){try{var o=JSON.parse(localStorage.getItem(key)||'null');if(o&&typeof o==='object'){ids.forEach(function(id){delete o[id];});localStorage.setItem(key,JSON.stringify(o));}}catch(e){}};
@@ -3161,7 +3170,10 @@ function titleCardHTML(cls,st){var col=TITLE_CV[cls.colour]||'#888';
   var unlocked=!!(st[cls.slug]&&st[cls.slug].unlocked);
   var preLock=cls.prereq&&cls.prereq.length&&cls.prereq.some(function(p){return !(st[p]&&st[p].unlocked);});
   var g=jrnClassGap(cls);
-  var sub=unlocked?'Unlocked':(preLock?'Locked \u2014 earn the titles below first':(g.unmet===0?'Ready to unlock':(g.unmet+' benchmark'+(g.unmet===1?'':'s')+' to go')));
+  // three clear states (Ash 2026-09-18): Locked = prereqs not met \u00b7 Unlocked = available to work on \u00b7 Complete = earned
+  var status=unlocked?'Complete':(preLock?'Locked':'Unlocked');
+  var statusCls=unlocked?'st-complete':(preLock?'st-locked':'st-unlocked');
+  var sub=unlocked?'Title earned':(preLock?'Earn the titles below first':(g.unmet===0?'Ready to unlock \u2014 all benchmarks met':(g.unmet+' benchmark'+(g.unmet===1?'':'s')+' to go')));
   var open=_titleOpen[cls.slug];
   var reqRows=g.reqs.map(function(r){var frac=Math.max(0.06,Math.min(1,(r.need?r.cur/r.need:0)));
     return '<div class="tt-req"><span class="tt-req-nm'+(r.met?' met':'')+'">'+esc(r.name)+'</span><span class="tt-req-bar"><i style="width:'+Math.round(frac*100)+'%;background:'+col+'"></i></span><span class="tt-req-val">'+r.cur+'/'+r.need+(r.met?' \u2713':'')+'</span></div>';}).join('');
@@ -3170,7 +3182,7 @@ function titleCardHTML(cls,st){var col=TITLE_CV[cls.colour]||'#888';
   return '<div class="tt-cardwrap">'
     +'<button class="tt-card'+(unlocked?' unlocked':'')+(preLock?' pre-locked':'')+(open?' open':'')+'" style="--tc:'+col+'" onclick="titleToggle(&#39;'+cls.slug+'&#39;)" aria-expanded="'+(open?'true':'false')+'">'
     +'<span class="tt-rankpip" style="background:'+col+'"></span>'
-    +'<span class="tt-mid"><span class="tt-nm">'+esc(cls.name)+'</span><span class="tt-sub">'+sub+'</span></span>'
+    +'<span class="tt-mid"><span class="tt-nm">'+esc(cls.name)+'</span><span class="tt-sub"><span class="tt-status '+statusCls+'">'+status+'</span>'+esc(sub)+'</span></span>'
     +'<span class="tt-badge">'+(unlocked?'\u2605':(preLock?'\u{1F512}':'\u203a'))+'</span>'
     +'</button>'
     +(open?('<div class="tt-detail" style="--tc:'+col+'">'+preTxt+'<div class="tt-reqs">'+reqRows+'</div>'+addsTxt+'</div>'):'')
@@ -3264,56 +3276,42 @@ var PERSONAL_RATIOS={
 };
 function _liftMax(id){try{if(typeof VERIF!=='undefined'&&VERIF[id]!=null)return VERIF[id];if(typeof TESTS!=='undefined'&&TESTS[id]!=null)return TESTS[id];}catch(e){}return null;}
 function _loadStr(id,pct){var m=_liftMax(id);if(!m||!pct)return '@ a challenging but clean load';var kg=Math.round(m*pct/2.5)*2.5;return '@ '+kg+'kg (~'+Math.round(pct*100)+'% of your '+Math.round(m)+')';}
-function _pLib(id){try{return (typeof D!=='undefined'&&D.lib&&D.lib[id])||null;}catch(e){return null;}}
 // WEEK COHERENCE (Ash, 18 Sep): read the WHOLE week's class programme so Personal complements it instead of doubling up.
 function personalWeekLoad(){try{
   var w=(typeof cur!=='undefined'&&cur&&cur.w)||null;if(!w||!w.days)return null;
-  var load={focus:{},liftPat:{},gymPat:{},engineCount:0,days:0,emphasis:w.emphasis||'',intensity:w.intensity||''};
+  var load={focus:{},engineCount:0,days:0,emphasis:w.emphasis||'',intensity:w.intensity||''};
   Object.keys(w.days).forEach(function(k){var d=w.days[k];if(!d)return;load.days++;
     if(d.focus){load.focus[d.focus]=(load.focus[d.focus]||0)+1;}
-    var lp=d.lift&&_pLib(d.lift);if(lp&&lp.pattern)load.liftPat[lp.pattern]=(load.liftPat[lp.pattern]||0)+1;
-    var gp=d.gymnastics&&_pLib(d.gymnastics);if(gp&&gp.pattern)load.gymPat[gp.pattern]=(load.gymPat[gp.pattern]||0)+1;
     if(d.engine)load.engineCount++;});
   var heavy={};Object.keys(load.focus).forEach(function(f){(PERSONAL_FOCUS_LIFT[f]||[]).forEach(function(id){heavy[id]=1;});});
-  load.heavyLifts=heavy;   // lift ids whose pattern class already trains this week
+  load.heavyLifts=heavy;   // lift ids whose pattern class already trains this week (used only to soften LOAD, never to pick the lift)
   return load;
 }catch(e){return null;}}
-// lifting accessories keyed by movement pattern — used when no ratio is flagged, to fill a pattern the week UNDER-serves (Ash: "different muscle group or something more technical")
-var PERSONAL_LIFT_ACCESSORY={
-  push:{name:'Pressing accessory',rx:'4×8 close-grip bench or seated DB shoulder press + 3×12 triceps — controlled, own the lockout.'},
-  hinge:{name:'Posterior-chain accessory',rx:'3×8 Romanian deadlift + 3×12 hamstring curl / back extension — slow eccentric, hips honest.'},
-  squat:{name:'Leg accessory',rx:'3×10 tempo goblet or split squat + 3×15 walking lunge — full depth, no rushing.'},
-  pull:{name:'Pulling accessory',rx:'4×8 barbell row + 3×12 face pulls / band pull-aparts — squeeze, no swing.'},
-  olympic:{name:'Barbell speed & positions',rx:'5×2 tall / hang variations + 3×3 overhead squat — light & crisp, positions over load.'}
-};
-var _PAT_ORDER=['pull','hinge','push','squat','olympic'];   // rough default priority when the week under-serves several
 function _todayClassSkillLine(){try{var mv=((cur&&cur.d&&cur.d.movement)||'').toLowerCase();var hit=null;DEV_G.forEach(function(sk){if(mv.indexOf(sk.name.toLowerCase())>=0)hit=sk.id;});return hit;}catch(e){return null;}}
-// Always yields a lifting piece (D). Ranks flagged lifts weakest-first, but STEERS AWAY from patterns class already loads this week (C):
-// a heavy-this-week lift is either skipped for a non-heavy flagged one, reframed as light/technical, or replaced by an accessory for an under-served pattern.
+// STAT-DRIVEN (Ash 2026-09-18): the athlete's OWN lifts decide this — always target their weakest main lift by ratio-to-standard,
+// whether or not it's below the flag line. The week NEVER picks the lift; it only decides the LOAD (go light if class hammers that pattern this week).
 function personalStrengthExtra(focus,wk){wk=wk||(typeof personalWeekLoad==='function'?personalWeekLoad():null);
   var heavy=(wk&&wk.heavyLifts)||{};var todayEx=PERSONAL_FOCUS_LIFT[focus]||[];   // today's class lifts always excluded
   var bs=_liftMax('backsquat');
-  // rank every measurable lift by how far below its ratio band it sits (biggest gap = weakest)
-  var flagged=[];
-  if(bs){for(var id in PERSONAL_RATIOS){if(todayEx.indexOf(id)>=0)continue;var v=_liftMax(id);if(!v)continue;var band=PERSONAL_RATIOS[id];var ratio=v/bs;if(ratio>=band.lo)continue;flagged.push({id:id,gap:band.lo-ratio,ratio:ratio,band:band,heavy:!!heavy[id]});}
-    flagged.sort(function(a,b){return b.gap-a.gap;});}
-  // 1) a genuine weakness whose pattern the week is NOT already hammering — the ideal complement
-  var pick=flagged.filter(function(f){return !f.heavy;})[0];
-  if(pick){var b=pick.band;return {type:'Strength',ic:(ICO.dumbbell||ICO.target||''),title:b.name+' — positional work',
-    why:'your '+b.name.toLowerCase()+' is '+Math.round(pick.ratio*100)+'% of your squat (want '+Math.round(b.lo*100)+'%+) — that’s technique, not strength'+(wk?', and class isn’t loading it this week':''),
-    rx:b.rx.replace('{load}',_loadStr(pick.id,b.pct)),freq:'',sev:1.6+pick.gap*4};}
-  // 2) the weakness IS what class trains heavy this week — keep it, but light & technical so you're not doubling volume
-  var hv=flagged[0];
-  if(hv){var b2=hv.band;var lightPct=Math.max(0.5,(b2.pct||0.7)-0.12);
-    return {type:'Strength',ic:(ICO.dumbbell||ICO.target||''),title:b2.name+' — light technical',
-    why:'your '+b2.name.toLowerCase()+' is a weak point, but class already trains it hard this week — so keep this light & technical, don’t pile on volume',
-    rx:b2.rx.replace('{load}',_loadStr(hv.id,lightPct)).replace(/^/,'Light & crisp: '),freq:'',sev:1.3+hv.gap*3};}
-  // 3) nothing flagged (ratios healthy) — still give a lift (D): an accessory for a pattern the week UNDER-serves
-  var served=(wk&&wk.liftPat)||{};var pat=_PAT_ORDER.filter(function(p){return !served[p];})[0]||_PAT_ORDER.slice().sort(function(a,b){return (served[a]||0)-(served[b]||0);})[0];
-  var acc=PERSONAL_LIFT_ACCESSORY[pat]||PERSONAL_LIFT_ACCESSORY.pull;
-  return {type:'Strength',ic:(ICO.dumbbell||ICO.target||''),title:acc.name,
-    why:'your barbell ratios are balanced — so this tops up a pattern class is lighter on this week ('+pat+')',
-    rx:acc.rx,freq:'',sev:0.9};}
+  // rank the athlete's lifts by how they sit RELATIVE to their own target band (rel<1 = below standard). Lowest rel = their weakest lift.
+  var ranked=[];
+  if(bs){for(var id in PERSONAL_RATIOS){if(todayEx.indexOf(id)>=0)continue;var v=_liftMax(id);if(!v)continue;var band=PERSONAL_RATIOS[id];var ratio=v/bs;ranked.push({id:id,rel:ratio/band.lo,ratio:ratio,band:band,flagged:ratio<band.lo,heavy:!!heavy[id]});}
+    ranked.sort(function(a,b){return a.rel-b.rel;});}
+  if(!ranked.length){   // no comparable lifts logged yet — can't personalise until they log
+    return {type:'Strength',ic:(ICO.dumbbell||ICO.target||''),title:'Log your main lifts',
+      why:'log your squat, press, hinge & Olympic lifts and I’ll target your weakest one by name',
+      rx:'Pick your least-practised main lift today: 5×3 at a controlled, technical load — quality reps.',freq:'',sev:0.6};}
+  var pick=ranked[0];var b=pick.band;var pctTxt=Math.round(pick.ratio*100)+'% of your squat (aim '+Math.round(b.lo*100)+'%+)';
+  var why=pick.flagged
+    ?('your '+b.name.toLowerCase()+' is your weakest main lift — '+pctTxt+', that’s technique not strength')
+    :('your '+b.name.toLowerCase()+' is your least-developed main lift relative to standard ('+pctTxt+')');
+  var weakBonus=Math.max(0,(1-pick.rel))*3;   // further below their own target = stronger priority
+  if(pick.heavy){var lightPct=Math.max(0.5,(b.pct||0.7)-0.12);   // class already loads this pattern hard this week → keep it light, don't double volume
+    return {type:'Strength',ic:(ICO.dumbbell||ICO.target||''),title:b.name+' — light technical',
+      why:why+' — class trains it hard this week, so keep this light',
+      rx:'Light & crisp: '+b.rx.replace('{load}',_loadStr(pick.id,lightPct)),freq:'',sev:1.4+weakBonus};}
+  return {type:'Strength',ic:(ICO.dumbbell||ICO.target||''),title:b.name+' — positional work',
+    why:why,rx:b.rx.replace('{load}',_loadStr(pick.id,b.pct)),freq:'',sev:1.6+weakBonus};}
 // FOUNDATIONAL-FIRST (UX audit #5): don't route to the emptiest ladder (that sends a weak puller to Weighted Pull-Up 0/4 over Strict Pull-Up 3/7).
 // Prefer skills you can actually train now (readiness caps met — advanced variants gate out), then continue what you've started, then the most foundational (lowest progress).
 function _earliestSkillIn(list,excl){excl=excl||{};var best=null;
@@ -3339,17 +3337,25 @@ function personalSkillExtra(focus,wk){var excl=_weekSkillExcl(focus,wk);
   if(!pick){pick=_earliestSkillIn(DEV_G.filter(function(sk){return (CAP_FEEDS[sk.id]||'').indexOf('Skill')===0;}),excl);}
   if(!pick)return null;var n=pick.st.next;var rx=jrnPresc(n.name);
   return {type:'Skill',ic:(ICO.star||''),title:_skillTitle(pick.sk.name,n.name),why:(domUsed?esc(domUsed)+' is your weakest skill area — your '+pick.sk.name+' ladder is early':'Skill is a weak stat and your '+pick.sk.name+' ladder is early'),rx:(rx?rx.do:('Work toward '+n.name+' — clears at '+esc(n.std||'the next standard'))),freq:(rx?rx.freq:''),std:n.std,openId:pick.sk.id,sev:1+(1-pick.frac)*2};}
-// Always yields an engine piece (D). Modality shaped by the week (C): a hard/engine-heavy week gets easy Zone 2 (don't fry a fried athlete);
-// a strength-heavy week with little conditioning gets a threshold/interval piece to keep the engine honest.
+// STAT-DRIVEN (Ash 2026-09-18): the athlete's OWN engine scores decide the modality — which of their three engine subdomains
+// (anaerobic 400 / threshold 2k / aerobic 5k) is weakest. The week only softens a hard week; it never picks the piece or the reasoning.
 function personalEngineExtra(focus,wk){wk=wk||(typeof personalWeekLoad==='function'?personalWeekLoad():null);
+  function er(id){try{return (typeof isVerified==='function'&&isVerified(id))?(ratingOf(id)||0):null;}catch(e){return null;}}
+  var aero=er('run5k'),mid=er('row2k'),ana=er('sprint400');
+  var known=[['aero',aero],['mid',mid],['ana',ana]].filter(function(x){return x[1]!=null;});
+  var weak='aero';if(known.length){known.sort(function(a,b){return a[1]-b[1];});weak=known[0][0];}
   var hardWeek=wk&&(wk.intensity==='high'||(wk.engineCount||0)>=3);
-  var lightEngineWeek=wk&&(wk.engineCount||0)<=1&&wk.intensity!=='high';
-  if(lightEngineWeek){
+  var soften=hardWeek?' Keep it easy — it’s a hard training week.':'';
+  if(weak==='ana'){
+    return {type:'Engine',ic:(ICO.history||ICO.check||''),title:'Anaerobic repeats',
+      why:'your 400m / anaerobic power is your weakest engine score — this targets it.'+soften,
+      rx:'6–8 × 200–400m hard (RPE 8–9) / equal rest — hold the pace, don’t fade on the last one.',freq:'',sev:1.25};}
+  if(weak==='mid'){
     return {type:'Engine',ic:(ICO.history||ICO.check||''),title:'Threshold intervals',
-      why:'class is strength-led this week with little conditioning — this keeps your engine sharp',
-      rx:'5–6 × 3 min hard (RPE 7–8) / 90s easy — run, row or bike. Hold a repeatable pace, last one no slower than the first.',freq:'',sev:1.1};}
+      why:'your 2k / threshold is your weakest engine score — this lifts your sustainable pace.'+soften,
+      rx:'5–6 × 3 min hard (RPE 7–8) / 90s easy — run, row or bike. Repeatable, last one no slower than the first.',freq:'',sev:1.2};}
   return {type:'Engine',ic:(ICO.history||ICO.check||''),title:'Zone 2 aerobic',
-    why:hardWeek?'a hard week already — this is easy aerobic to build the base and aid recovery, not add stress':'steady aerobic base — cheap fitness that lifts everything else',
+    why:(known.length?'your 5k / aerobic base is your weakest engine score — this builds it':'log an engine test (row 2k, 5k run, 400m) and I’ll target your weakest — for now, build the aerobic base')+'.'+soften,
     rx:'20–30 min easy run / row / bike — RPE 3–4, nasal-breathing, hold a conversation. One machine throughout.',freq:'',sev:1};}
 function personalSpeedExtra(focus){return {type:'Speed',ic:(ICO.target||''),title:'Alactic power',why:'sharpen top-end speed & power',rx:'6–8 × 15–20m sprint (or 8×10s bike sprint) — full recovery, quality only.',freq:'',sev:0.8};}
 function personalCoreExtra(focus){return {type:'Core',ic:(ICO.check||''),title:'Midline & trunk',why:'a few minutes that protects every other lift',rx:'3 rounds: 45s hollow hold + 30s side plank each side + 10 slow hollow rocks. Brace, breathe, no sagging.',freq:'',sev:0.5};}
@@ -3417,18 +3423,18 @@ function _sessTrackBtn(t,primary,tag){return '<button class="ss-track'+(primary?
 var cardMode='form';   // 'form' (current) | 'legacy' (best-ever)
 var _holdToasts=false,_celebPayload=null;   // verify→handback→celebrate: suppress live toasts, then reveal on athlete tap
 /* New rated tests (2026-09-03): retire the V2 proxies — Weighted Pull-Up is the real Strength pull test,
-   20m Sprint the real acceleration test. Provisional expert bands (V1 model), sex-specific. Pushed at runtime
+   10m Sprint the real acceleration test. Provisional expert bands (V1 model), sex-specific. Pushed at runtime
    to avoid editing the embedded SCORING blob. unlockedBy:null = always loggable (Rating Confidence, not gates). */
 (function(){try{
  var wpu={id:'weightedpullup',name:'Weighted Pull-Up',stat:'STR',unit:'kg',dir:'hi',unlockedBy:null,bands:{
    m:[[100,100],[85,99],[75,98],[65,97],[55,96],[50,95],[45,93],[42.5,92],[40,90],[37.5,88],[35,86],[32.5,84],[30,82],[27.5,80],[25,77],[22.5,74],[20,71],[17.5,68],[15,64],[12.5,60],[10,55],[7.5,50],[5,45],[2.5,40],[0,35]],
    f:[[60,100],[50,99],[42.5,98],[37.5,97],[32.5,96],[30,95],[27.5,93],[25,90],[22.5,88],[20,85],[17.5,82],[15,78],[12.5,74],[10,70],[7.5,64],[5,57],[2.5,50],[0,40]]}};
- var s20={id:'sprint20m',name:'20m Sprint',stat:'SPD',unit:'sec',dir:'lo',unlockedBy:null,bands:{
-   m:[[2.8,100],[2.85,99],[2.9,98],[2.95,97],[3,95],[3.05,93],[3.1,91],[3.15,89],[3.2,86],[3.25,83],[3.3,80],[3.35,77],[3.4,74],[3.45,70],[3.5,66],[3.6,60],[3.7,54],[3.8,48],[3.9,42],[4,36],[4.2,28]],
-   f:[[3.1,100],[3.15,99],[3.2,98],[3.25,97],[3.3,95],[3.35,93],[3.4,91],[3.45,88],[3.5,85],[3.6,80],[3.7,74],[3.8,68],[3.9,62],[4,56],[4.1,50],[4.2,44],[4.4,36],[4.6,28]]}};
+ var s10={id:'sprint10m',name:'10m Sprint',stat:'SPD',unit:'sec',dir:'lo',unlockedBy:null,bands:{
+   m:[[1.62,100],[1.66,99],[1.70,98],[1.74,97],[1.78,95],[1.82,93],[1.86,91],[1.90,89],[1.95,86],[2.00,83],[2.05,80],[2.10,77],[2.15,74],[2.20,70],[2.28,66],[2.36,60],[2.46,54],[2.58,48],[2.72,42],[2.88,36],[3.05,28]],
+   f:[[1.82,100],[1.86,99],[1.90,98],[1.95,97],[2.00,95],[2.05,93],[2.10,91],[2.16,88],[2.22,85],[2.32,80],[2.42,74],[2.54,68],[2.66,62],[2.78,56],[2.90,50],[3.02,44],[3.18,36],[3.35,28]]}};
  var have={};SCORING.moves.forEach(function(m){have[m.id]=1;});
  if(!have.weightedpullup)SCORING.moves.push(wpu);
- if(!have.sprint20m)SCORING.moves.push(s20);
+ if(!have.sprint10m)SCORING.moves.push(s10);
  // Front Squat — tracked, OFF-CARD (feeds the Personal weak-point engine; never moves the five card stats).
  // Curve derived from Back Squat ×0.85 (a front squat ~85% of back squat at each level).
  if(!have.frontsquat){var bsq=SCORING.moves.filter(function(m){return m.id==='backsquat';})[0];
@@ -3513,7 +3519,7 @@ var RATING_V2=true;
 var V2_SUB={
  STR:[['Squat',['backsquat']],['Hinge',['deadlift']],['Press',['bench','strictpress']],['Pull',['weightedpullup']]],
  PWR:[['Jump',['broadjump','verticaljump']],['Loaded',['powerclean']],['Cyclical',['row100']]],
- SPD:[['Acceleration',['sprint20m']],['Sprint',['sprint100']],['Agility',['boxjumpovers']]],
+ SPD:[['Acceleration',['sprint10m']],['Sprint',['sprint100']],['Agility',['boxjumpovers']]],
  END:[['Anaerobic',['sprint400']],['Mid',['row2k']],['Aerobic',['run5k']]]
 };
 var V2_BONUS=[[75,0.2],[80,0.4],[85,0.8],[90,1.5],[95,3.0]];   // EXCELLENCE BONUS: per-covered-stat %, SUMMED, added to Overall. Rewards elite athletes; barely moves mid ones. Ashley 2026-09-03.
