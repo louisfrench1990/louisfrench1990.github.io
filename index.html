@@ -1216,6 +1216,20 @@ body.hasnav #foot{bottom:60px}
 .dev-tt-fq{font-size:.72rem;color:var(--dim)}
 .dev-objrx{margin-top:8px;font-size:.84rem;line-height:1.4;color:var(--txt);border-top:1px dashed var(--line);padding-top:8px}
 .dev-objfq{display:block;margin-top:4px;font-size:.72rem;color:var(--dim)}
+/* Next up strip (guided journey, merged into the tree) */
+.dev-nextup{margin:2px 0 16px;padding:13px 14px;border-radius:14px;background:linear-gradient(135deg,rgba(255,194,71,.14),rgba(255,194,71,.04));border:1px solid rgba(255,194,71,.4)}
+.dev-nextup.empty{background:var(--s1);border:1px dashed var(--line)}
+.dnu-l{font-size:.62rem;font-weight:800;letter-spacing:.1em;color:var(--acc);margin-bottom:5px}
+.dnu-hint,.dnu-done{font-size:.82rem;line-height:1.4;color:var(--dim)}
+.dnu-rung{font-size:1.05rem;font-weight:800;color:var(--txt);display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.dnu-std{font-size:.7rem;font-weight:700;color:var(--dim)}
+.dnu-do{margin-top:6px;font-size:.86rem;line-height:1.4;color:var(--txt)}
+.dnu-fq{display:block;margin-top:4px;font-size:.72rem;color:var(--dim)}
+.dnu-need{margin-top:7px;font-size:.76rem;color:var(--dim)}
+.dnu-open{margin-top:11px;width:100%;padding:11px;border-radius:10px;border:none;background:var(--acc);color:#10121a;font:inherit;font-weight:800;cursor:pointer}
+/* Chase-this (set a skill as a goal) */
+.dev-chase{display:inline-flex;align-items:center;gap:6px;margin:2px 0 12px;padding:9px 14px;border-radius:999px;border:1px solid rgba(255,194,71,.45);background:rgba(255,194,71,.06);color:var(--acc);font:inherit;font-weight:700;font-size:.82rem;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.dev-chase.on{background:var(--acc);color:#10121a;border-color:var(--acc)}
 /* ===== Journey (title guide) ===== */
 .tt-tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;-webkit-overflow-scrolling:touch}
 .tt-tab{flex:0 0 auto;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--s1);color:var(--dim);font:inherit;font-weight:700;font-size:.82rem;cursor:pointer}
@@ -2819,6 +2833,7 @@ function cap2List(){_devCat=null;var el=document.getElementById('devInner');if(!
     return '<button class="skcat skcat-'+(meta.key||'x')+(_cr?' skcat-route':'')+'" style="--ca:'+(meta.ca||'#888')+';--caBg:'+(meta.caBg||'rgba(255,255,255,.1)')+'" onclick="openDevCat(&#39;'+g+'&#39;)"><span class="skcat-ic">'+(meta.ic||'')+'</span><span class="skcat-mid"><span class="skcat-nm">'+esc(g)+'</span><span class="skcat-bar"><i style="width:'+pct+'%"></i></span></span><span class="skcat-meta">'+pct+'%</span>'+(_cr?'<span class="skcat-rpip">on route</span>':'')+'<span class="skcat-chev">&rsaquo;</span></button>';}).join('');
   el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="closeDev()">&lsaquo;</button><span class="ss-topttl">Skill Tree</span><button class="ss-close" onclick="closeDev()">Close</button></div>'
    +'<div class="ss-h">Skill Tree</div><p class="skt-intro">Open a discipline to track your skills and levels.</p>'
+   +devNextUpHTML()
    +'<div class="skcats">'+tiles+'</div>'+'<div class="skt-legend"><span class="skl-i"><span class="skl-dot skl-found"></span>Foundations</span><span class="skl-i"><span class="skl-dot skl-ready"></span>Readiness</span><span class="skl-i"><span class="skl-star">&#9733;</span>Achievement</span></div>';}
 function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);var _rr=jrnRouteInfo();_rr=_rr&&_rr[sk.id];
   var capsHTML='';
@@ -2834,7 +2849,7 @@ function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);var _rr=jrn
   var pendHint=st.pendingCount>0?'<div class="dev-pendhint">'+ICO.clock+' '+st.pendingCount+' marked \u2014 awaiting coach verification to count</div>':'';
   var _nrx=next?jrnPresc(next.name):null;
   var rxHTML=_nrx?('<div class="dev-trainthis"><span class="dev-tt-l">Train this \u2192 '+esc(next.name)+(next.std?' <em>(clears at '+esc(next.std)+')</em>':'')+'</span><span class="dev-tt-do">'+esc(_nrx.do)+'</span>'+(_nrx.freq?'<span class="dev-tt-fq">'+esc(_nrx.freq)+'</span>':'')+'</div>'):'';
-  return jrnRouteBanner(sk,_rr)+capsHTML+'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'+pendHint+rxHTML+'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'+markBtn+_unmarkBtn(sk);}
+  return jrnRouteBanner(sk,_rr)+capsHTML+'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'+pendHint+rxHTML+chaseBtn(sk,'cat')+'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'+markBtn+_unmarkBtn(sk);}
 function openDevCat(cat){_devCat=cat;var el=document.getElementById('devInner');if(!el)return;var meta=CAP_CATMETA[cat]||{};var _RM=jrnRouteInfo();
   var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===cat;});
   var rows=sks.map(function(sk){var st=devSkillState(sk);var pct=Math.round(st.done/st.total*100);var op=_devOpen[sk.id]?' open':'';
@@ -2869,6 +2884,7 @@ function cap2Skill(id){var el=document.getElementById('devInner');if(!el)return;
    +'<div class="ss-h">'+esc(sk.name)+'</div>'
    +'<div class="cn-status">'+(achieved?'<span class="cn-ach">&#9733; Achieved</span>':'<span class="cn-na">In progress</span>')+'<span class="cn-lvl">'+esc(st.level)+'</span></div>'
    +'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'
+   +chaseBtn(sk,'skill')
    +jrnRouteBanner(sk,_rr)+capsHTML+nextHTML
    +'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'
    +((markBtn||_unmarkBtn(sk))?'<div class="ss-sticky">'+markBtn+_unmarkBtn(sk)+'</div>':'');}
@@ -2996,7 +3012,6 @@ function progressChooserHTML(){return ''
   +'<div class="dsec">Your progress</div>'
   +'<button class="dev-launch" onclick="openDev()"><span class="dl-ic">'+(ICO.tree||'')+'</span><span class="dev-ll"><span class="dev-lk">Skill Tree</span><span class="dev-lsub">every skill &amp; level \u2014 with the programming to reach the next rung</span></span><span class="ss-chev">&rsaquo;</span></button>'
   +'<button class="dev-launch" onclick="openTitles()"><span class="dl-ic">'+(ICO.star||'')+'</span><span class="dev-ll"><span class="dev-lk">Journey</span><span class="dev-lsub">the titles you can unlock \u2014 what each one needs &amp; how close you are</span></span><span class="ss-chev">&rsaquo;</span></button>'
-  +'<button class="dev-launch" onclick="openTrainNow()"><span class="dl-ic">'+(ICO.target||'')+'</span><span class="dev-ll"><span class="dev-lk">Train now</span><span class="dev-lsub">pick a goal \u2014 I\u2019ll tell you the one thing to train next</span></span><span class="ss-chev">&rsaquo;</span></button>'
   +'<div class="dsec">Log &amp; unlock</div>'
   +'<button class="dcard trn-btn" onclick="goNav(&#39;submit&#39;)"><span class="dc-ic">'+(ICO.target||'')+'</span><span class="dc-t"><b>Log a score</b><span>enter a lift or benchmark \u2014 feeds your card</span></span><span class="dc-chev">&rsaquo;</span></button>'
   +'<button class="dcard trn-btn" onclick="openTrainPage(&#39;dev&#39;)"><span class="dc-ic">'+(ICO.check||'')+'</span><span class="dc-t"><b>Benchmark tests</b><span>conditioning &amp; skill benchmarks \u2014 unlock titles</span></span><span class="dc-chev">&rsaquo;</span></button>';}
@@ -3044,6 +3059,21 @@ function renderTitles(){var el=document.getElementById('titlesInner');if(!el)ret
 window.openTitles=function(){var m=document.getElementById('titlesMask');if(!m){m=document.createElement('div');m.id='titlesMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="titlesInner"></div>';document.body.appendChild(m);}if(!_titleTree){var ts=jrnTitleTrees();_titleTree=ts.length?ts[0].key:null;}renderTitles();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.closeTitles=function(){var m=document.getElementById('titlesMask');if(m)m.style.display='none';};
 function jrnPresc(name){return (typeof JRN_PRESC!=='undefined'&&JRN_PRESC[name])?JRN_PRESC[name]:null;}
+/* ===== Skill Tree is now the single system — goals + "next up" live inside it (2026-09-18) ===== */
+function isChasing(sid){return jrnGoals().indexOf(sid)>=0;}
+window.devChaseToggle=function(sid,view){var g=jrnGoals();var k=g.indexOf(sid);if(k>=0)g.splice(k,1);else g.push(sid);jrnSetGoals(g);
+  if(view==='skill'){cap2Skill(sid);}else{_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2List();}}};
+function chaseBtn(sk,view){var on=isChasing(sk.id);return '<button class="dev-chase'+(on?' on':'')+'" onclick="event.stopPropagation();devChaseToggle(&#39;'+sk.id+'&#39;,&#39;'+view+'&#39;)">'+(on?'★ Chasing this':'☆ Chase this')+'</button>';}
+function devNextUpHTML(){var goals=jrnGoals();
+  if(!goals.length)return '<div class="dev-nextup empty"><div class="dnu-l">NEXT UP</div><div class="dnu-hint">Star a skill ☆ to chase it — I’ll show the exact next thing to train, right here.</div></div>';
+  var route=jrnBuildRoute(goals);var nx=jrnFirstNext(route);
+  if(!nx)return '<div class="dev-nextup"><div class="dnu-l">NEXT UP</div><div class="dnu-done">Every goal on your route is done ★ — star another skill to keep climbing.</div></div>';
+  var g=nx.skill.stages[nx.idx];var rx=jrnPresc(g.name);var need=(typeof jrnNeed==='function')?jrnNeed(nx.skill):'';
+  return '<div class="dev-nextup"><div class="dnu-l">NEXT UP · ROUTE TO '+esc(nx.skill.name).toUpperCase()+'</div>'
+    +'<div class="dnu-rung">'+(g.star?'★ ':'')+esc(g.name)+'<span class="dnu-std">clears at '+esc(g.std||'—')+'</span></div>'
+    +(rx?'<div class="dnu-do">'+esc(rx.do)+(rx.freq?'<span class="dnu-fq">'+esc(rx.freq)+'</span>':'')+'</div>':'')
+    +(need?'<div class="dnu-need"><b>'+esc(nx.skill.name)+'</b> needs first: '+need+'</div>':'')
+    +'<button class="dnu-open" onclick="openDevSkill(&#39;'+nx.skill.id+'&#39;)">Open '+esc(nx.skill.name)+' →</button></div>';}
 window.pickSessTrack=function(t){sessTrack=t;renderSession();var m=document.getElementById('sessMask');if(m)m.scrollTop=0;};
 window.sessBack=function(){sessTrack=null;renderSession();};
 window.sessToggle=function(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');};
