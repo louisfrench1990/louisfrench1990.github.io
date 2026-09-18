@@ -126,6 +126,9 @@
 .dev-rdc{font-size:.75rem;color:var(--di)}
 .dev-sec-l{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--di);margin:22px 0 10px}
 .dev-path{display:flex;flex-direction:column;margin-left:11px}
+.dev-how{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px;padding:10px 12px;border-radius:11px;background:rgba(58,160,255,.07);border:1px solid rgba(58,160,255,.28)}
+.dev-how-t{flex:1;min-width:60%;font-size:.78rem;line-height:1.4;color:var(--txt)}
+.dev-how-log{flex:0 0 auto;min-height:40px;padding:7px 13px;border-radius:9px;border:1px solid rgba(58,160,255,.5);background:transparent;color:#7cc0ff;font:inherit;font-size:.76rem;font-weight:800;cursor:pointer}
 .dev-mlmore{align-self:flex-start;min-height:44px;display:inline-flex;align-items:center;margin:2px 0 2px 20px;padding:6px 12px;background:transparent;border:none;color:var(--dim);font:inherit;font-size:.76rem;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .dev-mlmore:active{color:var(--txt)}
 .cn-status{display:flex;align-items:center;gap:10px;margin:6px 0 2px}
@@ -1306,6 +1309,16 @@ body.hasnav #foot{bottom:60px}
 .pz-skip:active{color:var(--txt)}
 .pz-skiprow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 13px;margin-bottom:8px;border-radius:11px;background:var(--s1);border:1px solid var(--line);opacity:.7}
 .pz-skiptt{font-size:.78rem;color:var(--dim);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pz-skiptt b{color:var(--txt)}
+.pz-est{margin:0 0 12px;padding:9px 12px;border-radius:10px;background:rgba(255,194,71,.08);border:1px solid rgba(255,194,71,.28);font-size:.76rem;line-height:1.4;color:var(--dim)}.pz-est b{color:var(--acc)}
+.scores101{background:var(--s1);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.scores101>summary{list-style:none;display:flex;align-items:center;gap:9px;padding:12px 14px;cursor:pointer;font-size:.85rem;font-weight:700;color:var(--txt);min-height:44px}
+.scores101>summary::-webkit-details-marker{display:none}
+.s101-q{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--acc);color:#10121a;font-size:.72rem;font-weight:800;flex:0 0 auto}
+.s101-b{padding:2px 14px 14px;display:flex;flex-direction:column;gap:11px}
+.s101-row{display:flex;gap:10px;align-items:flex-start}
+.s101-k{flex:0 0 auto;width:96px;font-size:.66rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:4px 0}
+.s101-card{color:var(--acc)}.s101-rec{color:#7cc0ff}.s101-title{color:#38d66b}
+.s101-t{flex:1;font-size:.78rem;line-height:1.45;color:var(--dim)}.s101-t b{color:var(--txt)}
 .pz-undo{flex:0 0 auto;min-height:40px;padding:6px 13px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--txt);font:inherit;font-size:.74rem;font-weight:700;cursor:pointer}
 .pz-card.pz-done{opacity:.6}
 .pz-card.pz-done .pz-ic{color:var(--acc)}
@@ -2247,9 +2260,17 @@ var gymSkills=lsObj('unranked-gym');for(var _k in gymSkills){if(typeof gymSkills
 var GYMSKILLS=[['ringmu','Ring muscle-up'],['barmu','Bar muscle-up'],['c2b','Chest-to-bar'],['pullup','Pull-up'],['t2b','Toes-to-bar'],['hspu','Handstand push-up'],['rope','Rope climb']];
 // WOD gymnastics caps now come from the 40-test list where a matching test exists — no re-entering. Only the 3 non-test skills stay manual.
 var GYM2TEST={ringmu:'ringmu',barmu:'barmuscleup',pullup:'strictpullups',t2b:'t2b',c2b:'c2b1min'};
-var GYM_MANUAL=GYMSKILLS.filter(function(g){return !GYM2TEST[g[0]];});   // c2b, hspu, rope
+var GYM_MANUAL=GYMSKILLS.filter(function(g){return !GYM2TEST[g[0]];});   // hspu, rope (c2b IS mapped -> c2b1min)
 var GYMTHRESH=0.65;                                              // you must manage ~65% of a round's reps in a fresh minute
-function gcap(k){var v=gymSkills[k];if(typeof v==='number'&&v>0)return v;var tid=GYM2TEST[k];if(tid&&typeof TESTS!=='undefined'&&(TESTS[tid]||0)>0)return TESTS[tid];return 0;}
+// Capacity source priority (2026-09-18 fix): a coach-VERIFIED mapped test is authoritative and wins over a self-entered gym number,
+// so a stale WOD-scaling entry can no longer override a fresh verified test. Falls back to the self-entry, then an unverified raw test.
+function gcap(k){var tid=GYM2TEST[k];
+  // an ASSISTED progression (banded muscle-up, wall handstand) is NOT real capacity — its reps must not scale the movement or clear rungs (2026-09-18 fix)
+  var testOk=tid&&typeof TESTS!=='undefined'&&(TESTS[tid]||0)>0&&!(typeof progAssisted==='function'&&progAssisted(tid));
+  if(testOk&&typeof isVerified==='function'&&isVerified(tid))return TESTS[tid];
+  var v=gymSkills[k];if(typeof v==='number'&&v>0)return v;
+  if(testOk)return TESTS[tid];
+  return 0;}
 // WOD personalisation is active if the athlete has any manual gym cap OR any matching gymnastics test score entered.
 function gymActive(){if(Object.keys(gymSkills).length>0)return true;if(typeof TESTS==='undefined')return false;for(var k in GYM2TEST){if((TESTS[GYM2TEST[k]]||0)>0)return true;}return false;}
 function needReps(reps){return Math.max(1,Math.round(GYMTHRESH*reps));}
@@ -2618,11 +2639,12 @@ function prevPending(id){return PREV[id]!=null && PREVV[id]!==PREV[id];}   // lo
 // Fold logged previous bests into the verified store — called ONLY from the coach verify flow.
 function verifyPrevs(){var did=false;for(var id in PREV){if(PREV[id]!=null&&PREVV[id]!==PREV[id]){PREVV[id]=PREV[id];did=true;}}if(did)savePREVV();return did;}
 // BEST (Legacy card) is built ONLY from coach-verified sources: current verified tests + VERIFIED previous bests.
-function updateBest(){var changed=false;SCORING.moves.forEach(function(mv){var cands=[];
-    if(isVerified(mv.id))cands.push(TESTS[mv.id]);    // current verified
-    if(PREVV[mv.id]!=null)cands.push(PREVV[mv.id]);    // VERIFIED previous best
-    if(!cands.length)return;
-    var best=null,bs=-1;cands.forEach(function(v){var s=scoreOf(v,mv);if(s>bs){bs=s;best=v;}});
+function updateBest(){var changed=false;SCORING.moves.forEach(function(mv){
+    var best=null,bs=-1;
+    // score the current verified value under the variant it was VERIFIED at, not whatever variant is selected now (#7 fix)
+    if(isVerified(mv.id)){var s=scoreOf(TESTS[mv.id],mv,mv.type==='progression'?VPROG[mv.id]:undefined);if(s>bs){bs=s;best=TESTS[mv.id];}}
+    if(PREVV[mv.id]!=null){var s2=scoreOf(PREVV[mv.id],mv);if(s2>bs){bs=s2;best=PREVV[mv.id];}}   // previous bests carry no stored variant — scored under current
+    if(best==null)return;
     var curBest=BEST[mv.id]!=null?scoreOf(BEST[mv.id],mv):-1;
     if(bs>curBest){BEST[mv.id]=best;changed=true;}});
   if(changed)saveBEST();}
@@ -2958,6 +2980,22 @@ function _treeNudgeHTML(){try{var marks=0;DEV_G.forEach(function(sk){marks+=devS
 function _levelKeyHTML(){try{var lv=(typeof SKILL_LEVELS!=='undefined'&&SKILL_LEVELS)||['Foundation','Developing','Competent','Proficient','Advanced','Mastery'];
   return '<details class="skt-lvkey"><summary>What do the levels mean?</summary><div class="skt-lvkey-b">'+lv.map(function(n,i){return '<span class="lvk-i"><span class="lvk-n">'+(i+1)+'</span>'+esc(n)+'</span>';}).join('')+'<p class="lvk-note">Your level on a skill rises as you clear its milestones — from first Foundation reps up to full Mastery.</p></div></details>';
 }catch(e){return '';}}
+// HOW-TO-ADVANCE (2026-09-18): tell the athlete plainly how each skill progresses — log a named test, or mark steps —
+// so a score-backed rung with no field/button on the row no longer reads as "there's nowhere to log or tick this".
+function skillAdvanceLine(sk){try{
+  var tests={};
+  (sk.stages||[]).forEach(function(st){var s=st.seed;if(!s)return;
+    if(s.gcap){var tid=GYM2TEST[s.gcap];if(tid){var mv=scMove(tid);if(mv)tests[tid]=mv.name;}}
+    else if(s.test){if(!(typeof RETIRED!=='undefined'&&RETIRED[s.test])){var mv2=scMove(s.test);if(mv2)tests[s.test]=mv2.name;}}
+    else if(s.minScore!=null&&sk.rated){var mv3=scMove(sk.rated);if(mv3)tests[sk.rated]=mv3.name;}});
+  var ids=Object.keys(tests);var hasManual=(sk.stages||[]).some(function(st){return !st.seed;});
+  if(ids.length){
+    var tab=(typeof cardTest==='function'&&cardTest(ids[0]))?'card':'dev';
+    var line='Advances when you log '+ids.map(function(k){return '<b>'+esc(tests[k])+'</b>';}).join(' / ')+' — earlier steps fill in automatically'+(hasManual?', or mark the first steps done':'')+'.';
+    return '<div class="dev-how"><span class="dev-how-t">'+line+'</span><button class="dev-how-log" onclick="closeDev();openTrainPage(&#39;'+tab+'&#39;)">Log score →</button></div>';}
+  if(hasManual)return '<div class="dev-how"><span class="dev-how-t">Advances when you tap <b>Mark done</b> on each step — a coach can verify it later.</span></div>';
+  return '';
+}catch(e){return '';}}
 function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);var _rr=jrnRouteInfo();_rr=_rr&&_rr[sk.id];
   var capsHTML='';
   if(rd.total){var items=rd.items.map(function(it){var frac=it.met?1:((it.cur!=null&&it.target)?Math.max(0.12,Math.min(0.95,it.cur/it.target)):0.25);return {name:it.name,frac:frac,met:it.met};});
@@ -2980,7 +3018,7 @@ function devRowBody(sk){var st=devSkillState(sk);var rd=devReady(sk);var _rr=jrn
   var pendHint=st.pendingCount>0?'<div class="dev-pendhint">'+ICO.clock+' '+st.pendingCount+' marked \u2014 awaiting coach verification to count</div>':'';
   var _nrx=next?jrnPresc(next.name):null;
   var rxHTML=_nrx?('<div class="dev-trainthis"><span class="dev-tt-l">Train this \u2192 '+esc(next.name)+(next.std?' <em>(clears at '+esc(next.std)+')</em>':'')+'</span><span class="dev-tt-do">'+esc(_nrx.do)+'</span>'+(_nrx.freq?'<span class="dev-tt-fq">'+esc(_nrx.freq)+'</span>':'')+'</div>'):'';
-  return jrnRouteBanner(sk,_rr)+capsHTML+'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'+pendHint+rxHTML+chaseBtn(sk,'cat')+'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'+markBtn+_unmarkBtn(sk);}
+  return jrnRouteBanner(sk,_rr)+skillAdvanceLine(sk)+capsHTML+'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'+pendHint+rxHTML+chaseBtn(sk,'cat')+'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'+markBtn+_unmarkBtn(sk);}
 function openDevCat(cat){_devCat=cat;var el=document.getElementById('devInner');if(!el)return;var meta=CAP_CATMETA[cat]||{};var _RM=jrnRouteInfo();
   var sks=DEV_G.filter(function(s){return CAP_NAV[s.id]===cat;});
   var rows=sks.map(function(sk){var st=devSkillState(sk);var pct=Math.round(st.done/st.total*100);var op=_devOpen[sk.id]?' open':'';
@@ -3016,7 +3054,7 @@ function cap2Skill(id){var el=document.getElementById('devInner');if(!el)return;
    +'<div class="cn-status">'+(achieved?'<span class="cn-ach">&#9733; Achieved</span>':'<span class="cn-na">In progress</span>')+'<span class="cn-lvl">'+esc(st.level)+'</span></div>'
    +'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'
    +chaseBtn(sk,'skill')+_chaseNextLine(sk,next)
-   +jrnRouteBanner(sk,_rr)+capsHTML+nextHTML
+   +jrnRouteBanner(sk,_rr)+skillAdvanceLine(sk)+capsHTML+nextHTML
    +'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'
    +((markBtn||_unmarkBtn(sk))?'<div class="ss-sticky">'+markBtn+_unmarkBtn(sk)+'</div>':'');}
 window.devBackToList=function(){cap2List();try{window.scrollTo(0,0);}catch(e){}};
@@ -3153,8 +3191,15 @@ function progressChooserHTML(){return ''
   +'<button class="dev-launch" onclick="openDev()"><span class="dl-ic">'+(ICO.tree||'')+'</span><span class="dev-ll"><span class="dev-lk">Skill Tree</span><span class="dev-lsub">every skill &amp; level \u2014 with the programming to reach the next rung</span></span><span class="ss-chev">&rsaquo;</span></button>'
   +'<button class="dev-launch" onclick="openTitles()"><span class="dl-ic">'+(ICO.star||'')+'</span><span class="dev-ll"><span class="dev-lk">Journey</span><span class="dev-lsub">the titles you can unlock \u2014 what each one needs &amp; how close you are</span></span><span class="ss-chev">&rsaquo;</span></button>'
   +'<div class="dsec">Log &amp; unlock</div>'
+  +scores101HTML()
   +'<button class="dcard trn-btn" onclick="goNav(&#39;submit&#39;)"><span class="dc-ic">'+(ICO.target||'')+'</span><span class="dc-t"><b>Log a score</b><span>enter a lift or benchmark \u2014 feeds your card</span></span><span class="dc-chev">&rsaquo;</span></button>'
   +'<button class="dcard trn-btn" onclick="openTrainPage(&#39;dev&#39;)"><span class="dc-ic">'+(ICO.check||'')+'</span><span class="dc-t"><b>Benchmark tests</b><span>conditioning &amp; skill benchmarks \u2014 unlock titles</span></span><span class="dc-chev">&rsaquo;</span></button>';}
+// SCORES 101 (2026-09-18): one place that explains the three kinds of score so members know what counts, what needs a coach, and what's just for sizing workouts.
+function scores101HTML(){return '<details class="scores101"><summary><span class="s101-q">?</span>How scoring works</summary><div class="s101-b">'
+  +'<div class="s101-row"><span class="s101-k s101-card">Your card</span><span class="s101-t">Lifts &amp; benchmarks you log, then a <b>coach verifies</b>. Only verified scores move your five ratings &amp; Total Power.</span></div>'
+  +'<div class="s101-row"><span class="s101-k s101-rec">Recommendations</span><span class="s101-t">Your working maxes &amp; capacities in <b>WOD scaling</b>. These size your daily workout loads \u2014 <b>no coach needed</b>, they never touch your card.</span></div>'
+  +'<div class="s101-row"><span class="s101-k s101-title">Titles</span><span class="s101-t">Extra conditioning &amp; skill benchmarks. Once <b>verified</b>, they unlock class titles on your <b>Journey</b> \u2014 separate from your five ratings.</span></div>'
+  +'</div></details>';}
 
 /* ===== Train now (guided journey) \u2014 its own page off Progress (2026-09-17) ===== */
 window.openTrainNow=function(){var m=document.getElementById('trainNowMask');if(!m){m=document.createElement('div');m.id='trainNowMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="trainNowInner"></div>';document.body.appendChild(m);}renderTrainNow();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
@@ -3337,27 +3382,31 @@ function personalSkillExtra(focus,wk){var excl=_weekSkillExcl(focus,wk);
   if(!pick){pick=_earliestSkillIn(DEV_G.filter(function(sk){return (CAP_FEEDS[sk.id]||'').indexOf('Skill')===0;}),excl);}
   if(!pick)return null;var n=pick.st.next;var rx=jrnPresc(n.name);
   return {type:'Skill',ic:(ICO.star||''),title:_skillTitle(pick.sk.name,n.name),why:(domUsed?esc(domUsed)+' is your weakest skill area — your '+pick.sk.name+' ladder is early':'Skill is a weak stat and your '+pick.sk.name+' ladder is early'),rx:(rx?rx.do:('Work toward '+n.name+' — clears at '+esc(n.std||'the next standard'))),freq:(rx?rx.freq:''),std:n.std,openId:pick.sk.id,sev:1+(1-pick.frac)*2};}
-// STAT-DRIVEN (Ash 2026-09-18): the athlete's OWN engine scores decide the modality — which of their three engine subdomains
-// (anaerobic 400 / threshold 2k / aerobic 5k) is weakest. The week only softens a hard week; it never picks the piece or the reasoning.
+// ONE conditioning piece, stat-driven (Ash 2026-09-18): pick the SINGLE energy system the athlete most needs from their own scores —
+// alactic (10m) / anaerobic (400) / threshold (2k) / aerobic (5k). This merges the old separate "speed" card into this slot,
+// so you never get Zone 2 AND alactic sprints stacked on the same day. The week only softens a hard week; it never picks the piece.
 function personalEngineExtra(focus,wk){wk=wk||(typeof personalWeekLoad==='function'?personalWeekLoad():null);
   function er(id){try{return (typeof isVerified==='function'&&isVerified(id))?(ratingOf(id)||0):null;}catch(e){return null;}}
-  var aero=er('run5k'),mid=er('row2k'),ana=er('sprint400');
-  var known=[['aero',aero],['mid',mid],['ana',ana]].filter(function(x){return x[1]!=null;});
+  var alac=er('sprint10m'),ana=er('sprint400'),mid=er('row2k'),aero=er('run5k');
+  var known=[['alac',alac],['ana',ana],['mid',mid],['aero',aero]].filter(function(x){return x[1]!=null;});
   var weak='aero';if(known.length){known.sort(function(a,b){return a[1]-b[1];});weak=known[0][0];}
   var hardWeek=wk&&(wk.intensity==='high'||(wk.engineCount||0)>=3);
   var soften=hardWeek?' Keep it easy — it’s a hard training week.':'';
+  if(weak==='alac'){
+    return {type:'Conditioning',domainKind:'cond',ic:(ICO.target||''),title:'Alactic power',
+      why:'your 10m sprint / top-end speed is your weakest engine score — this sharpens it.'+soften,
+      rx:'6–8 × 10–20m sprint (or 8×10s bike sprint) — full recovery between, quality over quantity.',freq:'',sev:1.2};}
   if(weak==='ana'){
-    return {type:'Engine',ic:(ICO.history||ICO.check||''),title:'Anaerobic repeats',
+    return {type:'Conditioning',domainKind:'cond',ic:(ICO.history||ICO.check||''),title:'Anaerobic repeats',
       why:'your 400m / anaerobic power is your weakest engine score — this targets it.'+soften,
       rx:'6–8 × 200–400m hard (RPE 8–9) / equal rest — hold the pace, don’t fade on the last one.',freq:'',sev:1.25};}
   if(weak==='mid'){
-    return {type:'Engine',ic:(ICO.history||ICO.check||''),title:'Threshold intervals',
+    return {type:'Conditioning',domainKind:'cond',ic:(ICO.history||ICO.check||''),title:'Threshold intervals',
       why:'your 2k / threshold is your weakest engine score — this lifts your sustainable pace.'+soften,
       rx:'5–6 × 3 min hard (RPE 7–8) / 90s easy — run, row or bike. Repeatable, last one no slower than the first.',freq:'',sev:1.2};}
-  return {type:'Engine',ic:(ICO.history||ICO.check||''),title:'Zone 2 aerobic',
-    why:(known.length?'your 5k / aerobic base is your weakest engine score — this builds it':'log an engine test (row 2k, 5k run, 400m) and I’ll target your weakest — for now, build the aerobic base')+'.'+soften,
+  return {type:'Conditioning',domainKind:'cond',ic:(ICO.history||ICO.check||''),title:'Zone 2 aerobic',
+    why:(known.length?'your 5k / aerobic base is your weakest engine score — this builds it':'log an engine test (10m sprint, 400m, row 2k, 5k) and I’ll target your weakest — for now, build the aerobic base')+'.'+soften,
     rx:'20–30 min easy run / row / bike — RPE 3–4, nasal-breathing, hold a conversation. One machine throughout.',freq:'',sev:1};}
-function personalSpeedExtra(focus){return {type:'Speed',ic:(ICO.target||''),title:'Alactic power',why:'sharpen top-end speed & power',rx:'6–8 × 15–20m sprint (or 8×10s bike sprint) — full recovery, quality only.',freq:'',sev:0.8};}
 function personalCoreExtra(focus){return {type:'Core',ic:(ICO.check||''),title:'Midline & trunk',why:'a few minutes that protects every other lift',rx:'3 rounds: 45s hollow hold + 30s side plank each side + 10 slow hollow rocks. Brace, breathe, no sagging.',freq:'',sev:0.5};}
 // A MENU, not a single prescription: build every applicable option, rank by the athlete's weakest stats, show a priority + a few options.
 function computePersonal(){
@@ -3378,11 +3427,13 @@ function computePersonal(){
   function _prio(e){var sv=(e.statVal!=null)?e.statVal:mean;var weak=Math.max(0,(mean-sv))/(mean||1);return (e.sev||1)+weak*2;}
   trio.sort(function(a,b){return _prio(b)-_prio(a);});
   var picks=trio.slice();
-  // optional extra ONLY when speed/core is the single weakest stat overall and not already covered — keeps the menu tight
+  // Optional 4th ONLY a low-cost midline accent when PWR is the single weakest stat — never a second conditioning piece
+  // (speed now lives inside the one conditioning slot, so you can't get Zone 2 AND alactic sprints on the same day — Ash 2026-09-18).
   var weakest=['STR','PWR','SPD','END','SKL'].slice().sort(function(a,b){return (stats[a]||0)-(stats[b]||0);})[0];
-  if(weakest==='SPD'){var sp=tag(personalSpeedExtra(focus),'SPD');if(sp){sp.domain='speed';picks.push(sp);}}
-  else if(weakest==='PWR'){var co=tag(personalCoreExtra(focus),'PWR');if(co){co.domain='core';picks.push(co);}}
-  return {ready:true,focus:focus,week:wk,extras:picks};}
+  if(weakest==='PWR'){var co=tag(personalCoreExtra(focus),'PWR');if(co){co.domain='core';picks.push(co);}}
+  // HONESTY (audit #4): Personal unlocks on entered scores, but the ranking reads VERIFIED stats. Flag when it's leaning on unverified data.
+  var verified=cc.verified||0;var unverified=Math.max(0,(cc.entered||0)-verified);
+  return {ready:true,focus:focus,week:wk,extras:picks,verified:verified,unverified:unverified};}
 function _pDoneKey(){var d=new Date();return 'unranked-personal-done-'+d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
 function pDoneList(){try{var v=localStorage.getItem(_pDoneKey());return v?JSON.parse(v):[];}catch(e){return [];}}
 function pIsDone(t){return pDoneList().indexOf(t)>=0;}
@@ -3395,7 +3446,7 @@ window.pSkip=function(t){try{var l=pSkipList();var i=l.indexOf(t);if(i>=0)l.spli
 function personalHTML(){
   var r=computePersonal();
   if(!r.ready)return '<div class="pz-empty"><div class="pz-el">UNLOCK YOUR EXTRAS</div><div class="pz-eh">Log &amp; verify a few scores first</div><p>Personal builds your daily extras from your card. Log a handful of lifts and skills (you’re at '+(r.entered||0)+') and I’ll start prescribing what to work on — built around what class is already doing.</p><button class="pz-open" onclick="closeSession();goNav(&#39;submit&#39;)">Log a score →</button></div>';
-  var focusTxt=r.focus?('Class today is <b>'+esc(FOCUS_LABEL[r.focus]||r.focus)+'</b> — a skill, a lift and an engine piece that work around it and the rest of your week. Lead with the priority; add more if you’ve got time.'):'A skill, a lift and an engine piece for today — built around your week. Lead with the priority; add more if you’ve got time.';
+  var focusTxt=r.focus?('Class today is <b>'+esc(FOCUS_LABEL[r.focus]||r.focus)+'</b> — a skill, a lift and a conditioning piece that work around it and the rest of your week. Lead with the priority; add more if you’ve got time.'):'A skill, a lift and a conditioning piece for today — built around your week. Lead with the priority; add more if you’ve got time.';
   if(!r.extras.length)return '<div class="pz-lead">'+focusTxt+'</div><div class="pz-empty"><div class="pz-eh">You’re balanced right now</div><p>Nothing screaming for extra work today — hit class and log your scores to keep this sharp.</p></div>';
   function _q(t){return esc(t).replace(/'/g,"\\&#39;");}
   function card(e,prio){
@@ -3416,8 +3467,11 @@ function personalHTML(){
   if(active.length){var rest=active.slice(1);body=card(active[0],true)+(rest.length?('<div class="pz-optl">Also today — a piece from each area</div>'+rest.map(function(e){return card(e,false);}).join('')):'');}
   else{body='<div class="pz-empty"><div class="pz-eh">All set for today</div><p>You’ve ticked or skipped everything — nice work.</p></div>';}
   if(skipped.length)body+='<div class="pz-optl">Skipped today</div>'+skipped.map(skipRow).join('');
-  return '<div class="pz-lead">'+focusTxt+'</div><div class="pz-cards">'+body+'</div>'
-   +'<div class="pz-note">One gymnastics/skill, one lift and one engine piece each day — weakest area leads, and each is steered around what class already trains this week. Log &amp; verify your scores to keep it sharp.</div>';
+  var estBadge=((r.verified||0)===0)
+    ?'<div class="pz-est">Working from your <b>unverified</b> scores for now — get them signed off and this sharpens to your real numbers.</div>'
+    :((r.unverified||0)>0?'<div class="pz-est">Some scores aren’t verified yet — this sharpens as a coach signs them off.</div>':'');
+  return '<div class="pz-lead">'+focusTxt+'</div>'+estBadge+'<div class="pz-cards">'+body+'</div>'
+   +'<div class="pz-note">One gymnastics/skill, one lift and one conditioning piece each day — your weakest area leads, and each is steered around what class already trains this week. Log &amp; verify your scores to keep it sharp.</div>';
 }
 function _sessTrackBtn(t,primary,tag){return '<button class="ss-track'+(primary?' primary':'')+'" onclick="pickSessTrack(\''+t[0]+'\')"><span class="ss-tic">'+(_SESS_ICO[t[0]]||'')+'</span><span class="ss-tmid"><span class="ss-tnm">'+t[1]+'</span><span class="ss-td">'+t[2]+'</span>'+(tag?'<span class="ss-tag">'+tag+'</span>':'')+'</span><span class="ss-chev">&rsaquo;</span></button>';}
 var cardMode='form';   // 'form' (current) | 'legacy' (best-ever)
@@ -4477,8 +4531,13 @@ function showToast(msg){if(_holdToasts)return;var t=document.getElementById('toa
 window.stepVar=function(id,dir){var mv=scMove(id);if(!mv||!mv.variants||!mv.variants.length)return;var k=progVar(id);var idx=0;for(var i=0;i<mv.variants.length;i++){if(mv.variants[i].key===k){idx=i;break;}}idx=Math.max(0,Math.min(mv.variants.length-1,idx+dir));if(mv.variants[idx].key===k)return;PROG[id]=mv.variants[idx].key;saveTests();};
 window.saveTests=function(){
   [].forEach.call(document.querySelectorAll('#myLogMask .ts-psel, #testMask .ts-psel, #trainMask .ts-psel'),function(sel){var id=sel.getAttribute('data-id');if(sel.value){PROG[id]=sel.value;}});   // capture the chosen variant for progression tests before reading the perf
-  [].forEach.call(document.querySelectorAll('#myLogMask .ts-in, #testMask .ts-in, #trainMask .ts-in'),function(inp){var id=inp.getAttribute('data-id');var v=parsePerf(inp.value);if(v!=null&&v>0)TESTS[id]=v;else delete TESTS[id];});
-  saveTESTS();savePROG();openMyLog();render();refreshTrainPage();
+  [].forEach.call(document.querySelectorAll('#myLogMask .ts-in, #testMask .ts-in, #trainMask .ts-in'),function(inp){
+    if(inp.offsetParent===null)return;   // skip fields in a hidden mask — a stale empty input must not delete a saved score (#4 fix)
+    var id=inp.getAttribute('data-id');var v=parsePerf(inp.value);
+    if(v!=null&&v>0){TESTS[id]=v;}
+    else{delete TESTS[id];delete VERIF[id];delete VPROG[id];}   // clearing a score also drops its now-orphaned verification so stores can't drift (#2 fix)
+  });
+  saveTESTS();saveVERIF();savePROG();openMyLog();render();refreshTrainPage();
   var cc=computeCard();if(cc.pending>0)showToast('Saved — '+cc.pending+' score'+(cc.pending===1?'':'s')+' pending coach verification');else showToast('Scores saved');};
 window.closeTests=function(){var m=document.getElementById('testMask');if(m)m.classList.remove('on');};
 window.openTree=function(key){var m=document.getElementById('treeMask');if(!m)return;
@@ -5211,7 +5270,8 @@ function renderInner(){
     foot.style.display='flex';foot.innerHTML='<div class="footrow"><button class="nb" '+(step<=0?'disabled':'')+' onclick="stepBy(-1)">‹ Prev</button><div class="dots">'+dots+'</div><button class="nb" '+(step>=gs.length-1?'disabled':'')+' onclick="stepBy(1)">Next ›</button></div>';
     var _on=foot.querySelector('.dot.on');if(_on)try{_on.scrollIntoView({inline:'center',block:'nearest'});}catch(e){}
     return;}
-  const w=D.weeks.find(x=>x.week===info.week),d=w.days[info.wd];cur={w,d,wd:info.wd};
+  const w=D.weeks.find(x=>x.week===info.week),d=w&&w.days&&w.days[info.wd];cur={w,d,wd:info.wd};
+  if(!w||!d){document.getElementById('body').innerHTML='<div class="centre"><div class="bd">No session</div><div>Nothing scheduled for this day yet.</div></div>';foot.style.display='none';var _rp0=document.getElementById('rpe');if(_rp0)_rp0.style.display='none';return;}   // guard: non-contiguous week or missing weekday must not white-screen the app (#5 fix)
   const cal=D.cal[info.week]||{};
   document.getElementById('dayName').textContent=info.wd;
   document.getElementById('dateMeta').textContent='Week '+info.week+'  '+esc(w.block||'')+'  '+esc((cal.start||w.start||''));
