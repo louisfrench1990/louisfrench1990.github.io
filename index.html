@@ -1230,6 +1230,15 @@ body.hasnav #foot{bottom:60px}
 /* Chase-this (set a skill as a goal) */
 .dev-chase{display:inline-flex;align-items:center;gap:6px;margin:2px 0 12px;padding:9px 14px;border-radius:999px;border:1px solid rgba(255,194,71,.45);background:rgba(255,194,71,.06);color:var(--acc);font:inherit;font-weight:700;font-size:.82rem;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .dev-chase.on{background:var(--acc);color:#10121a;border-color:var(--acc)}
+.dev-chasenext{margin:2px 0 12px;padding:11px 13px;border-radius:12px;background:rgba(255,194,71,.08);border:1px solid rgba(255,194,71,.32)}
+.dcn-l{font-size:.58rem;font-weight:800;letter-spacing:.1em;color:var(--acc);margin-bottom:5px}
+.dcn-rung{font-size:.95rem;font-weight:700;color:var(--txt)}
+.dcn-std{font-size:.75rem;font-weight:600;color:var(--dim)}
+.dcn-do{margin-top:6px;font-size:.85rem;line-height:1.4;color:var(--txt)}
+.dcn-fq{display:block;margin-top:3px;font-size:.72rem;color:var(--dim)}
+.dnu-more{margin-top:10px;font-size:.72rem;color:var(--dim);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dnu-cycle{padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--txt);font:inherit;font-weight:700;font-size:.72rem;cursor:pointer}
+.dnu-norx{color:var(--dim);font-style:italic}
 /* Personal track */
 .ss-spec{margin-top:10px;border:1px solid var(--line);border-radius:12px;background:var(--s1);overflow:hidden}
 .ss-spec>summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:700;font-size:.85rem;color:var(--dim)}
@@ -2825,14 +2834,14 @@ function jrnBuildRoute(goals){var order=[],seen={};
   function add(skillId,uptoName){if(seen[skillId])return;seen[skillId]=1;(JRN_PREREQ[skillId]||[]).forEach(function(pr){add(pr[0],pr[1]);});var sk=jrnById(skillId);if(!sk)return;var up=uptoName?sk.stages.map(function(x){return x.name;}).indexOf(uptoName):jrnStarIdx(sk);if(up<0)up=jrnStarIdx(sk);order.push({skill:sk,upto:up});}
   goals.forEach(function(g){var sk=jrnById(g);if(sk)add(g,sk.stages[jrnStarIdx(sk)].name);});return order;}
 function jrnDone(st){return (typeof rungMarked==='function')?!!rungMarked(st):false;}
-function jrnFirstNext(route){for(var r=0;r<route.length;r++){var sk=route[r].skill;for(var i=0;i<=route[r].upto;i++){if(!jrnDone(sk.stages[i]))return {skill:sk,idx:i};}}return null;}
+function jrnFirstNext(route){for(var r=0;r<route.length;r++){var sk=route[r].skill;var pos=devSkillState(sk).mdone;if(pos<=route[r].upto)return {skill:sk,idx:pos};}return null;}   // CASCADE: your next rung = the tree's highest-achieved+1, so an advanced athlete is never sent back to a beginner rung they never manually ticked
 function jrnNeed(sk){var rd=(typeof devReady==='function')?devReady(sk):null;if(!rd||!rd.items.length)return '';return rd.items.filter(function(x){return !x.met;}).map(function(x){return esc(x.name);}).join(' · ');}
 function journeyGuideHTML(){
   var goals=jrnGoals();
   var chips=JRN_GOALS.map(function(id){var sk=jrnById(id);if(!sk)return '';var on=goals.indexOf(id)>=0;return '<button class="jrn-goal'+(on?' on':'')+'" onclick="jrnToggleGoal(&#39;'+id+'&#39;)">'+(on?'\u2713 ':'')+esc(sk.name)+'</button>';}).join('');
   var head='<div class="dsec">Guided journey</div><div class="jrn-pick">'+chips+'</div>';
   if(!goals.length)return head+'<div class="jrn-hint">Pick a goal above and I\u2019ll map the route from where you are \u2014 then tell you exactly what to train next.</div>';
-  var route=jrnBuildRoute(goals);var nx=jrnFirstNext(route);
+  var route=jrnBuildRoute(goals);var _pp=jrnPrimaryNext();var nx=_pp?_pp.nx:null;
   var goalNames=goals.map(function(id){return esc(jrnById(id).name);}).join(' & ');
   var now;
   if(nx){var g=nx.skill.stages[nx.idx];var rx=JRN_PRESC[g.name];var need=jrnNeed(nx.skill);
@@ -2843,8 +2852,8 @@ function journeyGuideHTML(){
       +(need?'<div class="jrn-need"><b>'+esc(nx.skill.name)+'</b> needs first: '+need+'</div>':'')
       +'<button class="jrn-cta" onclick="openDevSkill(&#39;'+nx.skill.id+'&#39;)">Open in Skill Tree \u2192</button></div>';
   } else now='<div class="jrn-now jrn-cmp"><div class="jrn-gl">JOURNEY COMPLETE \u2605</div><div class="jrn-h3">Every milestone on your route is done.</div><div class="jrn-do">Add another goal above to keep climbing.</div></div>';
-  var rows=route.map(function(r){var sk=r.skill;var total=r.upto+1;var d=0;for(var i=0;i<=r.upto;i++)if(jrnDone(sk.stages[i]))d++;
-    var rr=sk.stages.slice(0,r.upto+1).map(function(st,i){var isDone=jrnDone(st);var isNext=nx&&nx.skill.id===sk.id&&nx.idx===i;
+  var rows=route.map(function(r){var sk=r.skill;var total=r.upto+1;var pos=devSkillState(sk).mdone;var d=Math.min(pos,total);
+    var rr=sk.stages.slice(0,r.upto+1).map(function(st,i){var isDone=i<pos;var isNext=nx&&nx.skill.id===sk.id&&nx.idx===i;
       return '<div class="jrn-rung'+(isDone?' done':'')+(isNext?' next':'')+'"><span class="jrn-dot">'+(isDone?'\u2713':(isNext?'\u25b8':''))+'</span>'+esc(st.name)+(st.star?' <span class="jrn-st">\u2605</span>':'')+'</div>';}).join('');
     return '<div class="jrn-rk">'+esc(sk.name)+'<span class="jrn-pct">'+d+'/'+total+'</span></div>'+rr;}).join('');
   return head+now+'<details class="jrn-route"><summary>Your full route \u00b7 '+route.length+' skills</summary>'+rows+'</details>';
@@ -2911,7 +2920,7 @@ function cap2Skill(id){var el=document.getElementById('devInner');if(!el)return;
    +'<div class="ss-h">'+esc(sk.name)+'</div>'
    +'<div class="cn-status">'+(achieved?'<span class="cn-ach">&#9733; Achieved</span>':'<span class="cn-na">In progress</span>')+'<span class="cn-lvl">'+esc(st.level)+'</span></div>'
    +'<div class="cn-feed">Feeds: '+esc(CAP_FEEDS[sk.id]||'Skill')+'</div>'
-   +chaseBtn(sk,'skill')
+   +chaseBtn(sk,'skill')+_chaseNextLine(sk,next)
    +jrnRouteBanner(sk,_rr)+capsHTML+nextHTML
    +'<div class="dev-sec-l">Milestones</div><div class="dev-path">'+pathHTML+'</div>'
    +((markBtn||_unmarkBtn(sk))?'<div class="ss-sticky">'+markBtn+_unmarkBtn(sk)+'</div>':'');}
@@ -3091,16 +3100,23 @@ function isChasing(sid){return jrnGoals().indexOf(sid)>=0;}
 window.devChaseToggle=function(sid,view){var g=jrnGoals();var k=g.indexOf(sid);if(k>=0)g.splice(k,1);else g.push(sid);jrnSetGoals(g);
   if(view==='skill'){cap2Skill(sid);}else{_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2List();}}};
 function chaseBtn(sk,view){var on=isChasing(sk.id);return '<button class="dev-chase'+(on?' on':'')+'" onclick="event.stopPropagation();devChaseToggle(&#39;'+sk.id+'&#39;,&#39;'+view+'&#39;)">'+(on?'★ Chasing this':'☆ Chase this')+'</button>';}
+function _chaseNextLine(sk,next){if(!isChasing(sk.id))return '';if(!next)return '<div class="dev-chasenext">★ Chasing this — you’ve achieved it. Nice.</div>';var rx=jrnPresc(next.name);return '<div class="dev-chasenext"><div class="dcn-l">★ CHASING — THIS DRIVES YOUR “NEXT UP”</div><div class="dcn-rung">Next: <b>'+esc(next.name)+'</b>'+(next.std?' <span class="dcn-std">('+esc(next.std)+')</span>':'')+'</div>'+(rx?'<div class="dcn-do">'+esc(rx.do)+(rx.freq?'<span class="dcn-fq">'+esc(rx.freq)+'</span>':'')+'</div>':'')+'</div>';}
+function jrnPrimaryNext(){var goals=jrnGoals();if(!goals.length)return null;   // the MOST RECENTLY chased goal drives "Next up" (fall back through older goals if it's already achieved)
+  for(var i=goals.length-1;i>=0;i--){var nx=jrnFirstNext(jrnBuildRoute([goals[i]]));if(nx)return {nx:nx,goalId:goals[i]};}
+  return null;}
 function devNextUpHTML(){var goals=jrnGoals();
   if(!goals.length)return '<div class="dev-nextup empty"><div class="dnu-l">NEXT UP</div><div class="dnu-hint">Star a skill ☆ to chase it — I’ll show the exact next thing to train, right here.</div></div>';
-  var route=jrnBuildRoute(goals);var nx=jrnFirstNext(route);
-  if(!nx)return '<div class="dev-nextup"><div class="dnu-l">NEXT UP</div><div class="dnu-done">Every goal on your route is done ★ — star another skill to keep climbing.</div></div>';
+  var p=jrnPrimaryNext();
+  if(!p)return '<div class="dev-nextup"><div class="dnu-l">NEXT UP</div><div class="dnu-done">Every goal you’re chasing is done ★ — star another skill to keep climbing.</div></div>';
+  var nx=p.nx;var goalName=(jrnById(p.goalId)||{}).name||nx.skill.name;var via=(nx.skill.id!==p.goalId)?(' · via '+esc(nx.skill.name)):'';
   var g=nx.skill.stages[nx.idx];var rx=jrnPresc(g.name);var need=(typeof jrnNeed==='function')?jrnNeed(nx.skill):'';
-  return '<div class="dev-nextup"><div class="dnu-l">NEXT UP · ROUTE TO '+esc(nx.skill.name).toUpperCase()+'</div>'
+  var more=goals.length>1?'<div class="dnu-more">Chasing '+goals.length+' skills — showing your most recent. <button class="dnu-cycle" onclick="jrnCyclePrimary()">Switch ↻</button></div>':'';
+  return '<div class="dev-nextup"><div class="dnu-l">NEXT UP · ROUTE TO '+esc(goalName).toUpperCase()+via+'</div>'
     +'<div class="dnu-rung">'+(g.star?'★ ':'')+esc(g.name)+'<span class="dnu-std">clears at '+esc(g.std||'—')+'</span></div>'
-    +(rx?'<div class="dnu-do">'+esc(rx.do)+(rx.freq?'<span class="dnu-fq">'+esc(rx.freq)+'</span>':'')+'</div>':'')
+    +(rx?'<div class="dnu-do">'+esc(rx.do)+(rx.freq?'<span class="dnu-fq">'+esc(rx.freq)+'</span>':'')+'</div>':'<div class="dnu-do dnu-norx">No programming written for this rung yet — aim for the standard above.</div>')
     +(need?'<div class="dnu-need"><b>'+esc(nx.skill.name)+'</b> needs first: '+need+'</div>':'')
-    +'<button class="dnu-open" onclick="openDevSkill(&#39;'+nx.skill.id+'&#39;)">Open '+esc(nx.skill.name)+' →</button></div>';}
+    +'<button class="dnu-open" onclick="openDevSkill(&#39;'+nx.skill.id+'&#39;)">Open '+esc(nx.skill.name)+' →</button>'+more+'</div>';}
+window.jrnCyclePrimary=function(){var g=jrnGoals();if(g.length<2)return;g.push(g.shift());jrnSetGoals(g);if(_devCat){openDevCat(_devCat);}else{cap2List();}};   // rotate which chased goal is "primary"
 window.pickSessTrack=function(t){sessTrack=t;renderSession();var m=document.getElementById('sessMask');if(m)m.scrollTop=0;};
 window.sessBack=function(){sessTrack=null;renderSession();};
 window.sessToggle=function(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');};
@@ -3134,20 +3150,21 @@ function renderSession(){var el=document.getElementById('sessInner');if(!el)retu
 var FOCUS_LABEL={squat:'squats',press:'pressing',hinge:'deadlifts & hinge',olympic:'the Olympic lifts',skill:'a skill',engine:'engine work'};
 var PERSONAL_FOCUS_LIFT={squat:['backsquat','frontsquat'],hinge:['deadlift'],press:['strictpress','bench'],olympic:['snatch','cleanjerk','powerclean']};
 var PERSONAL_RATIOS={
-  deadlift:{name:'Deadlift',lo:1.15,rx:'Posterior-chain strength — 3×5 Romanian deadlift or 4×3 pause deadlift @ ~70%, controlled.'},
-  frontsquat:{name:'Front Squat',lo:0.82,rx:'Front-rack & upright torso — 4×3 front squat @ ~70% + 3 min rack / t-spine mobility. Feeds your cleans.'},
-  cleanjerk:{name:'Clean & Jerk',lo:0.76,rx:'Turnover & jerk technique — 5×2 tall / hang cleans + jerk footwork drills, light.'},
-  powerclean:{name:'Power Clean',lo:0.62,rx:'Pull speed — 5×2 hang power cleans + 3×3 high pulls, snappy not heavy.'},
-  snatch:{name:'Snatch',lo:0.60,rx:'Snatch positions — 3×3 overhead squat + 3×3 snatch balance + 5×1 tall / hang snatch, light & crisp.'},
-  bench:{name:'Bench Press',lo:0.90,rx:'Horizontal press — 4×6 bench + 3×8 dips.'},
-  strictpress:{name:'Strict Press',lo:0.45,rx:'Overhead press — 5×5 strict press + 3×8 push-press, own the lockout.'}
+  deadlift:{name:'Deadlift',lo:1.15,pct:0.65,rx:'Posterior-chain strength — 3×5 Romanian deadlift {load} or 4×3 pause deadlift, controlled.'},
+  frontsquat:{name:'Front Squat',lo:0.82,pct:0.72,rx:'Front-rack & upright torso — 4×3 front squat {load} + 3 min rack / t-spine mobility. Feeds your cleans.'},
+  cleanjerk:{name:'Clean & Jerk',lo:0.76,pct:0.70,rx:'Turnover & jerk technique — 5×2 tall / hang cleans {load} + jerk footwork drills, crisp.'},
+  powerclean:{name:'Power Clean',lo:0.62,pct:0.70,rx:'Pull speed — 5×2 hang power cleans {load} + 3×3 high pulls, snappy not heavy.'},
+  snatch:{name:'Snatch',lo:0.60,pct:0.65,rx:'Snatch positions — 3×3 overhead squat + 3×3 snatch balance + 5×1 tall / hang snatch {load}, light & crisp.'},
+  bench:{name:'Bench Press',lo:0.90,pct:0.72,rx:'Horizontal press — 4×6 bench {load} + 3×8 dips (bodyweight, add load if easy).'},
+  strictpress:{name:'Strict Press',lo:0.45,pct:0.75,rx:'Overhead press — 5×5 strict press {load} + 3×8 push-press, own the lockout.'}
 };
 function _liftMax(id){try{if(typeof VERIF!=='undefined'&&VERIF[id]!=null)return VERIF[id];if(typeof TESTS!=='undefined'&&TESTS[id]!=null)return TESTS[id];}catch(e){}return null;}
+function _loadStr(id,pct){var m=_liftMax(id);if(!m||!pct)return '@ a challenging but clean load';var kg=Math.round(m*pct/2.5)*2.5;return '@ '+kg+'kg (~'+Math.round(pct*100)+'% of your '+Math.round(m)+')';}
 function _todayClassSkillLine(){try{var mv=((cur&&cur.d&&cur.d.movement)||'').toLowerCase();var hit=null;DEV_G.forEach(function(sk){if(mv.indexOf(sk.name.toLowerCase())>=0)hit=sk.id;});return hit;}catch(e){return null;}}
 function personalStrengthExtra(focus){var bs=_liftMax('backsquat');if(!bs)return null;var ex=PERSONAL_FOCUS_LIFT[focus]||[];var worst=null;
   for(var id in PERSONAL_RATIOS){if(ex.indexOf(id)>=0)continue;var v=_liftMax(id);if(!v)continue;var band=PERSONAL_RATIOS[id];var ratio=v/bs;if(ratio>=band.lo)continue;var gap=band.lo-ratio;if(!worst||gap>worst.gap)worst={id:id,gap:gap,ratio:ratio,band:band};}
-  if(!worst)return null;var b=worst.band;
-  return {type:'Strength',ic:(ICO.dumbbell||ICO.target||''),title:b.name+' — positional work',why:'your '+b.name.toLowerCase()+' is '+Math.round(worst.ratio*100)+'% of your squat (want '+Math.round(b.lo*100)+'%+) — that’s technique, not strength',rx:b.rx,freq:'',sev:1.5+worst.gap*4};}
+  if(!worst)return null;var b=worst.band;var rx=b.rx.replace('{load}',_loadStr(worst.id,b.pct));
+  return {type:'Strength',ic:(ICO.dumbbell||ICO.target||''),title:b.name+' — positional work',why:'your '+b.name.toLowerCase()+' is '+Math.round(worst.ratio*100)+'% of your squat (want '+Math.round(b.lo*100)+'%+) — that’s technique, not strength',rx:rx,freq:'',sev:1.5+worst.gap*4};}
 function _earliestSkillIn(list,todaySkill){var best=null;list.forEach(function(sk){if(sk.id===todaySkill)return;var st=devSkillState(sk);if(!st.next)return;var frac=st.total?st.done/st.total:0;if(!best||frac<best.frac)best={sk:sk,st:st,frac:frac};});return best;}
 function personalSkillExtra(focus){var todaySkill=(focus==='skill')?_todayClassSkillLine():null;
   // DOMAIN-ROUTED: find the weakest SKILL sub-domain (the app's own per-domain score), then the earliest ladder inside it
@@ -3160,7 +3177,7 @@ function personalSkillExtra(focus){var todaySkill=(focus==='skill')?_todayClassS
   if(!pick)return null;var n=pick.st.next;var rx=jrnPresc(n.name);
   return {type:'Skill',ic:(ICO.star||''),title:pick.sk.name+' — '+n.name,why:(domUsed?esc(domUsed)+' is your weakest skill area — your '+pick.sk.name+' ladder is early':'Skill is a weak stat and your '+pick.sk.name+' ladder is early'),rx:(rx?rx.do:('Work toward '+n.name+' — clears at '+esc(n.std||'the next standard'))),freq:(rx?rx.freq:''),std:n.std,openId:pick.sk.id,sev:1+(1-pick.frac)*2};}
 function personalEngineExtra(focus){if(focus==='engine')return null;
-  return {type:'Engine',ic:(ICO.history||ICO.check||''),title:'Zone 2 aerobic',why:'Endurance is a weak stat and it’s not in class today',rx:'20–30 min easy run / row / bike — nose-breathing, conversational pace. One machine throughout.',freq:'',sev:1};}
+  return {type:'Engine',ic:(ICO.history||ICO.check||''),title:'Zone 2 aerobic',why:'Endurance is a weak stat and it’s not in class today',rx:'20–30 min easy run / row / bike — RPE 3–4, nasal-breathing, hold a conversation. One machine throughout.',freq:'',sev:1};}
 function personalSpeedExtra(focus){return {type:'Speed',ic:(ICO.target||''),title:'Alactic power',why:'Speed / power is a weak stat',rx:'6–8 × 15–20m sprint (or 8×10s bike sprint) — full recovery, quality only.',freq:'',sev:0.8};}
 function computePersonal(){
   var cc=(typeof computeCard==='function')?computeCard():null;var stats=cc?cc.stats:null;
