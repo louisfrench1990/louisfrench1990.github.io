@@ -3282,8 +3282,9 @@ window.sessBack=function(){sessTrack=null;renderSession();};
 window.sessToggle=function(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');};
 window.sessLog=function(){try{setTrack(sessTrack);}catch(e){}closeSession();try{openLog();}catch(e){}};
 function renderSession(){var el=document.getElementById('sessInner');if(!el)return;var day=sessDay();
+ var sunPiece=(day&&day.sunday&&typeof piece==='function'&&piece(day.sunday))?day.sunday:null;   // Sunday sessions live in day.sunday, not day.tracks — expose them as the Class session too (2026-09-20)
  if(!sessTrack){
-  var hasClass=day&&day.tracks&&day.tracks.class&&day.tracks.class.length;
+  var hasClass=(day&&day.tracks&&day.tracks.class&&day.tracks.class.length)||sunPiece;
   var spec=_SESS_TRK.filter(function(t){return t[0]!=='class'&&day&&day.tracks&&day.tracks[t[0]]&&day.tracks[t[0]].length;});
   var classBtn=hasClass?_sessTrackBtn(['class','Class','The daily class session, coach-led'],true,'Your usual'):'';
   var personalBtn='<button class="ss-track primary" onclick="pickSessTrack(\'personal\')"><span class="ss-tic">'+(_SESS_ICO['personal']||ICO.target||'')+'</span><span class="ss-tmid"><span class="ss-tnm">Personal</span><span class="ss-td">your tailored extras for today, built around class</span><span class="ss-tag">Auto</span></span><span class="ss-chev">&rsaquo;</span></button>';
@@ -3297,7 +3298,7 @@ function renderSession(){var el=document.getElementById('sessInner');if(!el)retu
    +'<div class="ss-h">Personal</div><div class="ss-sub">'+esc(sessDateStr())+'</div>'+personalHTML();
   return;}
  var tName=(_SESS_TRK.filter(function(x){return x[0]===sessTrack;})[0]||[0,sessTrack])[1];
- var ids=(day&&day.tracks&&day.tracks[sessTrack])||[];var n=0;
+ var ids=(day&&day.tracks&&day.tracks[sessTrack])||((sessTrack==='class'&&sunPiece)?[sunPiece]:[]);var n=0;   // Sunday: the class session is the single sunday piece
  var blocks=ids.map(function(id){var p=piece(id);if(!p||p.type==='header')return '';n++;
    return '<div class="ss-sec'+(n===1?' open':'')+'" id="ssx-'+esc(id)+'"><button class="ss-sh" onclick="sessToggle(\'ssx-'+esc(id)+'\')"><span class="ss-idx">'+n+'</span><span class="ss-smid"><span class="ss-slab">'+esc(labelFor(p))+'</span><span class="ss-snm">'+esc(clean(boardTitle(p)))+'</span></span><span class="ss-chev">&rsaquo;</span></button><div class="ss-sb" id="ssb-'+esc(id)+'">'+sessBodyHTML(p,id)+'</div></div>';}).join('');
  el.innerHTML='<div class="ss-top"><button class="ss-back" onclick="sessBack()">&lsaquo;</button><span class="ss-topttl">'+esc(tName)+' &middot; today</span><button class="ss-close" onclick="closeSession()">Close</button></div>'
