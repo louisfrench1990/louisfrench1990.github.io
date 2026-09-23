@@ -2891,7 +2891,9 @@ function renderDevSkill(id){var el=document.getElementById('devInner');if(!el)re
    +((markBtn||_unmarkBtn(sk))?'<div class="ss-sticky">'+markBtn+_unmarkBtn(sk)+'</div>':'');}
 window.openDev=function(){var m=document.getElementById('devMask');if(!m){m=document.createElement('div');m.id='devMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="devInner"></div>';document.body.appendChild(m);}cap2List();m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 window.closeDev=function(){var m=document.getElementById('devMask');if(m)m.style.display='none';};
-window.openDevSkill=function(id){var m=document.getElementById('devMask');if(!m)return;var cat=CAP_NAV[id];_devOpen[id]=true;if(cat){openDevCat(cat);}else{cap2Skill(id);}m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
+window.openDevSkill=function(id){var m=document.getElementById('devMask');
+  if(!m){m=document.createElement('div');m.id='devMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="devInner"></div>';document.body.appendChild(m);}   // FIX 2026-09-23: build the tree modal if it doesn't exist yet, so links from Personal / Next-up / Journey don't fall through to Home
+  var cat=CAP_NAV[id];_devOpen[id]=true;if(cat){openDevCat(cat);}else{cap2Skill(id);}m.style.display='block';try{window.scrollTo(0,0);}catch(e){}};
 
 /* ===== Skill Tree — capability presentation over the tree data (nav groups, feeds label, readiness/limiter) ===== */
 var CAP_NAV={'s.strict-pullup':'RIG','s.c2b':'RIG','s.ttb':'RIG','s.bmu':'RIG','s.dip':'RIG','s.rmu':'RINGS','s.rope-climb':'RINGS','s.handstand':'HAND BALANCE / INVERSION','s.strict-hspu':'HAND BALANCE / INVERSION','s.hsw':'HAND BALANCE / INVERSION','s.lsit':'CORE','s.front-lever':'CORE','s.pistol':'LOWER BODY','s.du':'COORDINATION'};
@@ -3157,9 +3159,11 @@ window.devMarkNext=function(sid){var sk=devSkill(sid);if(!sk)return;var st=devSk
 var _markArmed=null,_markT=null;
 function _devMarkReRender(sid){if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}}
 window.devMarkArm=function(sid){if(_markArmed===sid){_markArmed=null;clearTimeout(_markT);devMarkNext(sid);return;}_markArmed=sid;clearTimeout(_markT);_markT=setTimeout(function(){if(_markArmed===sid){_markArmed=null;_devMarkReRender(sid);}},4000);_devMarkReRender(sid);};
-window.devUnmarkLast=function(sid){var sk=devSkill(sid);if(!sk)return;for(var i=sk.stages.length-1;i>=0;i--){var st=sk.stages[i];var d=DEVP[st.id];if(d&&d.done&&!d.verified&&d.src==='manual'){delete DEVP[st.id];devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}return;}}};
-function _unmarkBtn(sk){var lm=null;for(var i=sk.stages.length-1;i>=0;i--){var d=DEVP[sk.stages[i].id];if(d&&d.done&&!d.verified&&d.src==='manual'){lm=sk.stages[i];break;}}return lm?'<button class="btn2 dev-unmark" onclick="devUnmarkLast(&#39;'+sk.id+'&#39;)">Undo &ldquo;'+esc(lm.name)+'&rdquo;</button>':'';}
-function _rungManual(st){var d=DEVP[st.id];return !!(d&&d.done&&!d.verified&&d.src==='manual');}   // manually self-marked, not yet coach-verified -> safe for the athlete to un-mark
+window.devUnmarkLast=function(sid){var sk=devSkill(sid);if(!sk)return;for(var i=sk.stages.length-1;i>=0;i--){var st=sk.stages[i];if(_rungManual(st)){delete DEVP[st.id];devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}return;}}};
+function _unmarkBtn(sk){var lm=null;for(var i=sk.stages.length-1;i>=0;i--){if(_rungManual(sk.stages[i])){lm=sk.stages[i];break;}}return lm?'<button class="btn2 dev-unmark" onclick="devUnmarkLast(&#39;'+sk.id+'&#39;)">Undo &ldquo;'+esc(lm.name)+'&rdquo;</button>':'';}
+// A rung the athlete SELF-MARKED is always reversible — even after coach-verification (2026-09-23: an accidental "I can do 20s L-sit" must be walkable back).
+// A real TEST-driven rung (gcap/score seed) is NOT undone here — that reverses by editing the underlying score.
+function _rungManual(st){var d=DEVP[st.id];return !!(d&&d.done&&d.src==='manual');}
 window.devUnmarkStage=function(sid,stid){var sk=devSkill(sid);if(!sk)return;var hit=false;for(var i=0;i<sk.stages.length;i++){var st=sk.stages[i];if(st.id===stid)hit=true;if(hit&&_rungManual(st))delete DEVP[st.id];}devSave();_devOpen[sid]=true;if(_devCat){openDevCat(_devCat);}else{cap2Skill(sid);}};   // un-mark THIS rung and any self-marked rungs above it (the ladder is sequential) — verified/auto rungs are left alone
 function _rungUndo(sk,st){return _rungManual(st)?'<button class="dev-rung-undo" onclick="event.stopPropagation();devUnmarkStage(&#39;'+sk.id+'&#39;,&#39;'+st.id+'&#39;)" title="Un-mark this" aria-label="Un-mark this">&#10005;</button>':'';}
 function pendingRungs(){var out=[];DEV_G.forEach(function(sk){sk.stages.forEach(function(st){if(DEVP[st.id]&&DEVP[st.id].verified)return;var pend=(DEVP[st.id]&&DEVP[st.id].done)||(st.seed&&st.seed.gcap&&devSeedMet(st.seed));if(pend)out.push({sk:sk,st:st});});});return out;}
