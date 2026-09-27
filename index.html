@@ -610,6 +610,44 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 #clogMask{z-index:9998;background:#08080d}
 .cal-c.fut{opacity:.35}
 .lg-styp{font-weight:700;font-size:.66rem;color:var(--acc);letter-spacing:.04em;text-transform:uppercase;margin-left:6px;vertical-align:1px}
+.lg-cx{display:flex;align-items:center;gap:8px}
+.lg-cx .lg-cxn{flex:1;min-width:0;text-align:center;font-weight:800;font-size:1.05rem}
+.lg-cx .lg-cxsep{font-weight:800;color:var(--dim);font-size:1.1rem;flex:none}
+.lg-repeat{display:inline-block;margin-top:8px;background:none;border:1px dashed rgba(255,255,255,.28);color:var(--dim);border-radius:8px;padding:7px 11px;font-weight:700;font-size:.82rem;cursor:pointer}
+.pgc-wrap{display:flex;flex-direction:column;gap:10px;margin:2px 0 8px}
+.pgc{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px 13px 9px}
+.pgc-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px}
+.pgc-t{font-weight:800;font-size:.92rem}
+.pgc-m{font-weight:700;font-size:.8rem;color:var(--txt)}.pgc-m em{color:var(--dim);font-style:normal;font-weight:600}
+.pgc .spk{width:100%;height:56px;display:block}
+.spk-line{stroke:var(--acc);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.spk-dot{fill:rgba(255,255,255,.35)}
+.spk-last{fill:var(--acc)}
+.pgc-sub{font-size:.68rem;color:var(--dim);margin-top:3px}
+.pgm-blk{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+.pgm-hd{font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.pgm-row{margin-bottom:10px}
+.pgm-h{display:flex;align-items:baseline;gap:7px;margin-bottom:2px}
+.pgm-tag{font-size:.6rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--acc);flex:none}
+.pgm-nm{font-weight:800;font-size:.92rem}
+.pgm-body{font-size:.82rem;color:var(--txt);line-height:1.5;white-space:normal;opacity:.9}
+.maxwarn{display:flex;align-items:center;gap:11px;width:100%;text-align:left;margin:2px 0 12px;padding:11px 13px;background:rgba(255,209,102,.08);border:1px solid rgba(255,209,102,.45);border-radius:11px;cursor:pointer;color:var(--txt)}
+.maxwarn .mw-i{font-size:1.3rem;flex:none}
+.maxwarn .mw-t{display:flex;flex-direction:column;gap:1px;min-width:0}
+.maxwarn .mw-t b{font-size:.86rem;font-weight:800}
+.maxwarn .mw-t span{font-size:.74rem;color:var(--dim)}
+.fxmask{z-index:10080;background:rgba(6,6,12,.88);display:none;align-items:center;justify-content:center}
+.fxmask.on{display:flex}
+.fxcard{text-align:center;padding:34px 26px;max-width:340px;animation:fxpop .42s cubic-bezier(.2,1.3,.4,1)}
+.fxemoji{font-size:4.4rem;line-height:1;filter:drop-shadow(0 5px 16px rgba(255,209,102,.55))}
+.fxttl{font-weight:900;font-size:1.5rem;margin:14px 0 4px;letter-spacing:-.01em;color:var(--txt)}
+.fxsub{color:var(--dim);font-size:.92rem;margin-bottom:22px}
+.fxbtn{background:var(--acc);color:#0a0a11;border:0;border-radius:11px;padding:13px 24px;font-weight:800;font-size:1rem;cursor:pointer}
+@keyframes fxpop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+.hstreak{display:inline-flex;align-items:center;gap:5px;font-weight:800;font-size:.82rem;color:var(--gold,#ffd166);background:rgba(255,209,102,.12);border:1px solid rgba(255,209,102,.34);border-radius:999px;padding:4px 11px}
+.hstreak b{font-size:.98rem}
+.hstreak svg{width:13px;height:13px}
+.th-top{display:flex;align-items:center;gap:8px}
 .ml-pr{display:inline-block;font-weight:800;font-size:.62rem;color:#0a0a11;background:var(--acc);border-radius:5px;padding:1px 5px;margin-left:5px;letter-spacing:.03em;vertical-align:1px}
 .ml-stats{display:flex;gap:10px;margin:4px 0 8px}
 .ml-stat{flex:1;text-align:center;border:1px solid var(--line);border-radius:12px;padding:12px 6px;background:var(--bg)}
@@ -2464,13 +2502,14 @@ function parseRes(s){s=String(s||'');var lm=s.match(/(\d+(?:\.\d+)?)\s*kg/i);if(
 function logDates(){return Object.keys(LOG).filter(function(d){var e=LOG[d];return e&&e.pieces&&Object.keys(e.pieces).length;});}
 function lastTimeFor(lk,beforeDs){if(!lk)return null;var ds=logDates().filter(function(d){return d<beforeDs;}).sort().reverse();for(var i=0;i<ds.length;i++){var pcs=LOG[ds[i]].pieces;for(var pid in pcs){if(pcs[pid].lift===lk&&pcs[pid].result)return {date:ds[i],result:pcs[pid].result};}}return null;}
 function prFor(lk){if(!lk)return null;var best=null;logDates().forEach(function(d){var pcs=LOG[d].pieces;for(var pid in pcs){if(pcs[pid].lift===lk){var pr=parseRes(pcs[pid].result);if(pr&&(!best||pr.e1rm>best.e1rm))best={e1rm:pr.e1rm,load:pr.load,reps:pr.reps,date:d};}}});return best;}
-function statStreak(ds){var set={};ds.forEach(function(d){set[d]=1;});var d=new Date();var streak=0,guard=0,today=dstr(d);
-  while(guard++<500){var k=dstr(d),dow=d.getDay();
-    if(set[k]){streak++;d.setDate(d.getDate()-1);continue;}   // a logged day counts, any day of the week (weekend sessions included)
-    if(k===today){d.setDate(d.getDate()-1);continue;}         // today not yet logged doesn't break the streak
-    if(dow===0||dow===6){d.setDate(d.getDate()-1);continue;}  // an UNLOGGED weekend is a neutral rest day — doesn't extend, doesn't break
-    break;}                                                    // only an unlogged weekday ends the streak
-  return streak;}
+var STREAK_MAXGAP=3;   // training-aware: up to 2 rest days between sessions is fine (recovery is correct behaviour, not a broken streak). Only a 3rd consecutive rest day ends it.
+function statStreak(ds){var set={};ds.forEach(function(d){set[d]=1;});var d=new Date();var today=dstr(d);var streak=0,gap=0,guard=0;
+  while(guard++<800){var k=dstr(d);
+    if(set[k]){streak++;gap=0;}                     // a logged session (any day) extends the streak and clears the rest-gap
+    else if(k===today){/* today not logged yet — grace, neither extends nor breaks */}
+    else{gap++;if(gap>=STREAK_MAXGAP)break;}         // rest days tolerated up to the gap; a long absence ends it
+    d.setDate(d.getDate()-1);}
+  return streak;}   // = sessions in the current unbroken run (rest-day tolerant)
 function statTotals(){var ds=logDates();var now=new Date();var off=(now.getDay()+6)%7;var mon=new Date(now);mon.setDate(now.getDate()-off);mon.setHours(0,0,0,0);var wk=0;ds.forEach(function(d){if(new Date(d+'T00:00:00')>=mon)wk++;});return {total:ds.length,week:wk,streak:statStreak(ds)};}
 // training level (beta) — a consistency metric from logging volume, NOT the ranked Overall (which comes from Ash's verified test engine).
 // triangular curve: level L is reached at cumulative (L-1)*L/2 logged sessions (each level costs one more session than the last).
@@ -3755,7 +3794,7 @@ function scoreType(p,e){if(e&&e.stype)return e.stype;if(!p)return 'session';if(p
   if(/\bemom\b|every \d+\s*min|for quality/.test(s)||p.engineOk||p.timeDomain==='30-plus'||p.format==='partner')return 'session';
   return 'time';}   // most metcons are for time
 function normKey(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
-function hkeyFor(p,e){if(e&&e.custom)return 'c:'+normKey(e.title||'');if(!p)return '';if(p.type==='strength'){var lk=liftKeyOf(p);return lk?('l:'+lk):('p:'+p.id);}return 'p:'+p.id;}
+function hkeyFor(p,e){if(e&&e.custom)return 'c:'+normKey(e.title||'');if(!p)return '';if(p.benchmark)return 'b:'+normKey(p.title||p.id);if(p.type==='strength'){var lk=liftKeyOf(p);return lk?('l:'+lk):('p:'+p.id);}return 'p:'+p.id;}   // named benchmarks key by name so re-tests compare no matter which slot/id they're scheduled under
 function _secs(str){var m=String(str).match(/(?:(\d+):)?(\d{1,2}):(\d{2})(?!\d)/);if(m)return (m[1]?+m[1]:0)*3600+(+m[2])*60+(+m[3]);return null;}
 function scoreVal(stype,str){str=String(str||'');
   if(stype==='time'){var t=_secs(str);return t!=null?{v:t,lower:true}:null;}
@@ -3768,6 +3807,29 @@ function priorEntries(hkey,beforeDs){var out=[];if(!hkey)return out;logDates().f
 function lastByKey(hkey,beforeDs){var ps=priorEntries(hkey,beforeDs);ps.sort(function(a,b){return a.date<b.date?1:-1;});return ps[0]||null;}
 function bestByKey(hkey,stype,beforeDs){var best=null;priorEntries(hkey,beforeDs).forEach(function(x){var sv=scoreVal(stype,x.e.result);if(!sv)return;if(!best||(sv.lower?sv.v<best.v:sv.v>best.v))best={v:sv.v,lower:sv.lower,date:x.date,result:x.e.result};});return best;}
 function isPRnow(hkey,stype,res,ds){var sv=scoreVal(stype,res);if(!sv)return false;var best=bestByKey(hkey,stype,ds);if(!best)return false;return sv.lower?sv.v<best.v:sv.v>best.v;}   // PR only when a prior best is beaten (first-ever result is a baseline, not a PR)
+// ── type-aware result inputs: composite fields (mm:ss / rounds+reps / kg×reps) writing into a hidden canonical .lg-res, so saveLog is unchanged ──
+function _pT(v){var m=String(v).match(/(\d+):(\d{2})/);return m?{a:m[1],b:m[2]}:{a:'',b:''};}
+function _pA(v){var r=String(v).match(/(\d+)\s*(?:rounds?|rds?|r\b)/i)||String(v).match(/^\s*(\d+)/);var x=String(v).match(/\+\s*(\d+)/);return {a:r?r[1]:'',b:x?x[1]:''};}
+function _pL(v){var k=String(v).match(/(\d+(?:\.\d+)?)\s*kg/i);var r=String(v).match(/[x×]\s*(\d+)/i)||String(v).match(/(\d+)\s*reps?/i);return {a:k?k[1]:'',b:r?r[1]:''};}
+function resultInputHTML(st,val,last){val=val||'';
+  var rep=(last&&last.e&&last.e.result)?'<button type="button" class="lg-repeat" onclick="lgRepeat(this)">↩ Repeat '+esc(last.e.result)+'</button>':'';
+  function cx(kind,pa,pb,sep,a,b,imA,imB){return '<div class="lg-cx" data-cx="'+kind+'">'
+    +'<input class="lg-cxn" inputmode="'+imA+'" placeholder="'+pa+'" value="'+esc(a)+'" oninput="lgCompose(this)">'
+    +'<span class="lg-cxsep">'+sep+'</span>'
+    +'<input class="lg-cxn" inputmode="'+imB+'" placeholder="'+pb+'" value="'+esc(b)+'" oninput="lgCompose(this)">'
+    +'<input type="hidden" class="lg-res" value="'+esc(val)+'"></div>'+rep;}
+  if(st==='time'){var t=_pT(val);return cx('time','min','sec',':',t.a,t.b,'numeric','numeric');}
+  if(st==='amrap'){var a=_pA(val);return cx('amrap','rounds','+reps','+',a.a,a.b,'numeric','numeric');}
+  if(st==='load'){var l=_pL(val);return cx('load','kg','reps','×',l.a,l.b,'decimal','numeric');}
+  return '<input class="lg-res" inputmode="'+(st==='reps'||st==='dist'?'numeric':'text')+'" placeholder="'+esc(_stypePH(st))+'" value="'+esc(val)+'">'+rep;}
+window.lgCompose=function(el){var box=el.closest('.lg-cx');if(!box)return;var ns=box.querySelectorAll('.lg-cxn');var a=((ns[0]&&ns[0].value)||'').trim(),b=((ns[1]&&ns[1].value)||'').trim();var t=box.getAttribute('data-cx'),res='';
+  if(t==='time'){if(a||b){var ss=b||'0';if(ss.length<2)ss=('0'+ss).slice(-2);res=(a||'0')+':'+ss;}}
+  else if(t==='amrap'){if(a)res=a+' rounds'+(b?(' + '+b):'');}
+  else if(t==='load'){if(a)res=a+'kg'+(b?(' × '+b):'');}
+  var h=box.querySelector('.lg-res');if(h)h.value=res;};
+window.lgRepeat=function(btn){var card=btn.closest('.lg-card');if(!card)return;var val=card.getAttribute('data-last')||'';var res=card.querySelector('.lg-res');if(res)res.value=val;
+  var box=card.querySelector('.lg-cx');if(box){var t=box.getAttribute('data-cx');var p=(t==='time')?_pT(val):(t==='amrap')?_pA(val):(t==='load')?_pL(val):{a:'',b:''};var ns=box.querySelectorAll('.lg-cxn');if(ns[0])ns[0].value=p.a;if(ns[1])ns[1].value=p.b;}
+  card.classList.add('open');};
 window.openLog=function(ds){var m=document.getElementById('logMask');if(!m)return;
   _logDate=(ds&&ds!==todayStr())?ds:null;var dsK=logDateStr();var isToday=(dsK===todayStr());
   var ent=(LOG[dsK]&&LOG[dsK].pieces)||{};
@@ -3794,14 +3856,14 @@ window.openLog=function(ds){var m=document.getElementById('logMask');if(!m)retur
     var delBtn=custom?'<button type="button" class="lg-del" onclick="delCustomLog(&#39;'+esc(pid)+'&#39;)">Remove this entry</button>':'';
     var lastLn=last?('<div class="lg-last">Last time: <b>'+esc(last.e.result)+'</b>'+((best&&STYPE_LBL[st]&&st!=='session')?' · best <b>'+esc(best.result)+'</b>':'')+'</div>'):'';
     var stypLbl=(STYPE_LBL[st]&&st!=='session')?'<span class="lg-styp">'+STYPE_LBL[st]+'</span>':'';
-    return '<div class="lg-card'+(logged?' logged':'')+(open?' open':'')+(custom?' custom':'')+'" data-pid="'+esc(pid)+'"'+(lk?' data-lift="'+esc(lk)+'"':'')+' data-stype="'+esc(st)+'"'+(custom?' data-custom="1" data-title="'+esc(title)+'" data-tag="'+esc(kind)+'"':'')+'>'
+    return '<div class="lg-card'+(logged?' logged':'')+(open?' open':'')+(custom?' custom':'')+'" data-pid="'+esc(pid)+'"'+(lk?' data-lift="'+esc(lk)+'"':'')+' data-stype="'+esc(st)+'"'+((last&&last.e&&last.e.result)?' data-last="'+esc(last.e.result)+'"':'')+(custom?' data-custom="1" data-title="'+esc(title)+'" data-tag="'+esc(kind)+'"':'')+'>'
       +'<button type="button" class="lg-head" onclick="logToggle(this)"><span class="lg-tick">'+(logged?'✓':'')+'</span>'
       +'<span class="lg-hmid"><span class="lg-kind">'+esc(kind)+'</span><span class="lg-nm">'+esc(title)+'</span><span class="lg-sum">'+sum+'</span></span>'
       +'<span class="lg-chev">›</span></button>'
       +'<div class="lg-body">'
       +lastLn
       +(bandBtns?'<div class="lg-flab">How did you scale it?</div><div class="lg-bands">'+bandBtns+'</div>':'')
-      +'<div class="lg-flab">Result '+stypLbl+'</div><input class="lg-res" placeholder="'+esc(ph)+'" value="'+esc(e.result||'')+'">'
+      +'<div class="lg-flab">Result '+stypLbl+'</div>'+resultInputHTML(st,e.result||'',last)
       +'<div class="lg-opts"><button type="button" class="lg-opt'+(e.rpe?' on':'')+'" onclick="logOpt(this)">+ How hard?</button><button type="button" class="lg-opt'+(e.note?' on':'')+'" onclick="logOpt(this)">+ Note</button></div>'
       +'<div class="lg-optp'+(e.rpe?' show':'')+'"><div class="lg-flab">Effort (optional)</div><div class="lg-rpes">'+rpeBtns+'</div></div>'
       +'<div class="lg-optp'+(e.note?' show':'')+'"><input class="lg-note" placeholder="Note (optional)" value="'+esc(e.note||'')+'"></div>'
@@ -3842,12 +3904,13 @@ window.saveCustomLog=function(){var m=document.getElementById('clogMask');if(!m)
   var ds=logDateStr();var pieces=(LOG[ds]&&LOG[ds].pieces)||{};var id='custom-'+Date.now();
   var TAG={session:'Session',time:'For Time',amrap:'AMRAP',load:'Load',reps:'Reps',dist:'Distance'};
   var ttl=name||'Custom session';var hk='c:'+normKey(ttl);var pr=isPRnow(hk,stype,res,ds);
+  var _bs=curStreak();
   pieces[id]={custom:true,stype:stype,hkey:hk,pr:pr,title:ttl,tag:TAG[stype]||'Session',band:band,result:res,rpe:rpe,note:note,detail:'',ts:Date.now()};
   LOG[ds]={pieces:pieces,ts:Date.now()};
   try{grantXP('logday',ds,XP_AMT.logday,true);}catch(e){}
-  if(pr){try{showToast('⚡ New PR — '+ttl+'!');}catch(e){}}
   saveLOG();closeCustomLog();try{openLog(_logDate);}catch(e){}try{render();}catch(e){}
-  try{var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();}catch(e){}};
+  try{var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();}catch(e){}
+  logMoment(pr?[ttl]:[],_bs);};
 window.delCustomLog=function(pid){var ds=logDateStr();if(LOG[ds]&&LOG[ds].pieces){delete LOG[ds].pieces[pid];if(!Object.keys(LOG[ds].pieces).length)delete LOG[ds];saveLOG();}try{openLog(_logDate);}catch(e){}try{render();}catch(e){}try{var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();}catch(e){}};
 window.logToggle=function(el){var c=el.closest('.lg-card');if(c)c.classList.toggle('open');};
 window.logOpt=function(el){var opts=el.parentNode;var idx=[].indexOf.call(opts.children,el);var panels=opts.parentNode.querySelectorAll('.lg-optp');if(panels[idx]){panels[idx].classList.toggle('show');el.classList.toggle('on');}};
@@ -3871,7 +3934,7 @@ function logEntryHTML(pid,e){e=e||{};var pc=piece(pid);
   var noteLn=(e.note&&(e.result||e.rpe))?('<div class="ml-note">'+esc(e.note)+'</div>'):'';
   var prB=e.pr?' <span class="ml-pr">⚡ PR</span>':'';
   return '<div class="ml-line"><span class="ml-nm">'+esc(title)+(tag?' <em class="ml-tag">'+esc(tag)+'</em>':'')+prB+'</span><span class="ml-res">'+res+'</span></div>'+det+noteLn;}
-window.saveLog=function(){var ds=logDateStr();var pieces=(LOG[ds]&&LOG[ds].pieces)||{};var _prs=[];
+window.saveLog=function(){var ds=logDateStr();var pieces=(LOG[ds]&&LOG[ds].pieces)||{};var _prs=[];var _bs=curStreak();
   [].forEach.call(document.querySelectorAll('#logMask .lg-card'),function(c){var pid=c.getAttribute('data-pid');var lift=c.getAttribute('data-lift')||null;var isCustom=c.getAttribute('data-custom')==='1';
     var bEl=c.querySelector('.lg-band.on');var band=bEl?bEl.getAttribute('data-band'):'';
     var res=(c.querySelector('.lg-res')||{}).value||'';var rEl=c.querySelector('.lg-rpe.on');var rpe=rEl?parseInt(rEl.getAttribute('data-rpe'),10):0;var note=(c.querySelector('.lg-note')||{}).value||'';
@@ -3882,14 +3945,27 @@ window.saveLog=function(){var ds=logDateStr();var pieces=(LOG[ds]&&LOG[ds].piece
       else{var pst=scoreType(pc,null);var phk=hkeyFor(pc,null);var ppr=isPRnow(phk,pst,res.trim(),ds);
         pieces[pid]={stype:pst,hkey:phk,pr:ppr,band:band,result:res.trim(),rpe:rpe,note:note.trim(),lift:lift,ts:Date.now(),
         title:clean(boardTitle(pc)),tag:labelFor(pc),detail:logSummary(pc,band||'rx')||(prev.detail||'')};if(ppr)_prs.push(clean(boardTitle(pc)));}}else{delete pieces[pid];}});
-  if(_prs.length){try{showToast(_prs.length===1?('⚡ New PR — '+_prs[0]+'!'):('⚡ '+_prs.length+' new PRs!'));}catch(e){}}
   if(Object.keys(pieces).length)LOG[ds]={pieces:pieces,ts:Date.now()};else delete LOG[ds];
   if(Object.keys(pieces).length)grantXP('logday',ds,XP_AMT.logday,true);   // XP for logging a session (engagement, daily-capped)
   // Close the loop — logged RX/RX+ gymnastic results raise capacity -> Development tree + scaling (never the card).
   try{var _xall=[];Object.keys(pieces).forEach(function(pid){var lp=pieces[pid];if(!lp||(lp.band!=='rx'&&lp.band!=='rxPlus'))return;var gk=gymKeyForPiece(piece(pid));if(!gk)return;var r=devIngest(gk,1,{source:'workout',silent:true});if(r&&r.crossed.length)_xall.push({sk:r.skill,crossed:r.crossed});});
     if(_xall.length)devCelebrate(_xall[0].sk,_xall[0].crossed);}catch(e){}
-  saveLOG();closeLog();render();try{var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();}catch(e){}};
+  saveLOG();closeLog();render();try{var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();}catch(e){}
+  logMoment(_prs,_bs);};
 window.closeLog=function(){var m=document.getElementById('logMask');if(m)m.classList.remove('on');_logDate=null;};
+// full-screen celebration moment (PRs + streak milestones) — a real moment, not a toast
+var STREAK_MILESTONES=[3,7,14,21,30,50,75,100,150,200,365];
+window.fxCelebrate=function(emoji,title,sub){var m=document.getElementById('fxMask');
+  if(!m){m=document.createElement('div');m.className='mask fxmask';m.id='fxMask';m.innerHTML='<div class="fxcard"><div class="fxemoji" id="fxE"></div><div class="fxttl" id="fxT"></div><div class="fxsub" id="fxS"></div><button class="fxbtn" onclick="fxClose()">Let’s go →</button></div>';document.body.appendChild(m);}
+  document.getElementById('fxE').textContent=emoji||'🎉';document.getElementById('fxT').textContent=title||'';document.getElementById('fxS').textContent=sub||'';
+  m.classList.add('on');try{beepGo();}catch(e){}};
+window.fxClose=function(){var m=document.getElementById('fxMask');if(m)m.classList.remove('on');};
+// decide the moment after a save: streak milestone wins, else PRs, else a quiet toast
+function logMoment(prNames,beforeStreak){var after=0;try{after=curStreak();}catch(e){}
+  var milestone=(after>(beforeStreak||0)&&STREAK_MILESTONES.indexOf(after)>=0)?after:0;
+  if(milestone){fxCelebrate('🔥',milestone+'-session streak!',(prNames&&prNames.length)?('+ '+(prNames.length===1?'a new PR: '+prNames[0]:prNames.length+' new PRs')):'Recovery counts — keep it rolling');return;}
+  if(prNames&&prNames.length){fxCelebrate('⚡',prNames.length===1?'New PR!':prNames.length+' new PRs!',prNames.join(' · '));return;}
+  try{showToast('✓ Logged');}catch(e){}}
 /* ===== THE VAULT — Moments · Achievements · Trophies + the Level/Credits strip ===== */
 function levelTitle(L){return L>=50?'Prestige':L>=40?'Elite':L>=30?'Veteran':L>=20?'Seasoned':L>=10?'Committed':L>=5?'Rising':'Rookie';}
 function curStreak(){try{return statTotals().streak;}catch(e){return 0;}}
@@ -3934,8 +4010,37 @@ var _prBlock='';   // personal-records block, surfaced at the top of the History
 window.setVaultTab=function(t){if(t==='moments')return;vaultTab=t;var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();try{var b=document.querySelector('#myLogMask .mlbody');if(b)b.scrollTop=0;}catch(e){}};
 // ---- History calendar (Vault → History tab): month grid over your logged sessions; tap a highlighted day to see it ----
 var calOffset=0, calSel='';
-window.calNav=function(d){calOffset+=d;if(calOffset<0)calOffset=0;calSel='';var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();};
+window.calNav=function(d){calOffset+=d;if(calOffset<-3)calOffset=-3;if(calOffset>36)calOffset=36;calSel='';var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();};   // forward nav (calOffset<0) reaches upcoming weeks so you can preview the programme
 window.calPick=function(ds){calSel=(calSel===ds)?'':ds;var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();};
+// ── the programme scheduled for ANY date (whether or not you logged) — like BTWB, tap a day to see what was on ──
+function dayForDate(ds){try{if(!ds||typeof D==='undefined'||!D.weeks)return null;var t=new Date(ds+'T00:00:00');var WDX=['SUN','MON','TUE','WED','THU','FRI','SAT'];var wd=WDX[t.getDay()];
+  for(var i=0;i<D.weeks.length;i++){var wk=D.weeks[i];if(!wk.start)continue;var s=new Date(wk.start+'T00:00:00');var e=new Date(s);e.setDate(s.getDate()+7);
+    if(t>=s&&t<e)return {week:wk,wd:wd,day:wk.days&&wk.days[wd]};}
+  }catch(x){}return null;}
+function programmeDayHTML(ds){var info=dayForDate(ds);if(!info||!info.day)return '';var day=info.day;
+  var ids;if(day.sunday)ids=[day.sunday];else if(day.tracks&&day.tracks.class)ids=day.tracks.class.slice();else return '';
+  var rows=ids.map(function(id){var p=piece(id);if(!p)return '';var tp=p.type;
+    if(!(tp==='strength'||tp==='wod'||tp==='skill'||clsFor(p)==='wod'))return '';   // show the meat: strength / WOD / skill — skip warm-up & flush
+    var Vv=(p.type==='wod'||clsFor(p)==='wod')?p.variants:vb(p);var bb=(Vv&&(Vv.rx||Vv.rxPlus||Vv.intermediate||Vv.scaled))||{};
+    var pres=bb.prescription?applyRM(wodMain(bb.prescription)):'';
+    var body=pres?'<div class="pgm-body">'+esc(clean(pres)).replace(/\n/g,'<br>')+'</div>':'';
+    return '<div class="pgm-row"><div class="pgm-h"><span class="pgm-tag">'+esc(labelFor(p))+'</span><span class="pgm-nm">'+esc(clean(boardTitle(p)))+'</span></div>'+body+'</div>';}).join('');
+  if(!rows)return '';
+  return '<div class="pgm-blk"><div class="pgm-hd">On the programme</div>'+rows+'</div>';}
+// ── progress trends: one normalised sparkline per workout logged 3+ times (up = improvement, regardless of scoring direction) ──
+function _logSeries(){var byKey={};logDates().sort().forEach(function(d){var pcs=LOG[d].pieces;for(var pid in pcs){var e=pcs[pid];var hk=e.hkey||'';var st=e.stype||'';if(!hk||!e.result)continue;var sv=scoreVal(st,e.result);if(!sv)continue;var s=byKey[hk]||(byKey[hk]={key:hk,title:e.title||hk,stype:st,pts:[]});s.title=e.title||s.title;s.stype=st;s.pts.push({d:d,v:sv.v,raw:e.result,lower:!!sv.lower});}});
+  var arr=[];for(var k in byKey)if(byKey[k].pts.length>=3)arr.push(byKey[k]);
+  arr.sort(function(a,b){return a.pts[a.pts.length-1].d<b.pts[b.pts.length-1].d?1:-1;});return arr;}
+function _sparkSVG(pts){var vals=pts.map(function(p){return p.v;});var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);var lower=pts[0].lower;var n=pts.length,W=280,H=56,pad=7;
+  function nx(i){return pad+(W-2*pad)*(n===1?0.5:i/(n-1));}
+  function ny(v){var t=(mx===mn)?0.5:(v-mn)/(mx-mn);if(lower)t=1-t;return H-pad-(H-2*pad)*t;}
+  var path='';pts.forEach(function(p,i){path+=(i?'L':'M')+nx(i).toFixed(1)+' '+ny(p.v).toFixed(1)+' ';});
+  var dots=pts.map(function(p,i){var last=i===n-1;return '<circle cx="'+nx(i).toFixed(1)+'" cy="'+ny(p.v).toFixed(1)+'" r="'+(last?3.4:2)+'" class="'+(last?'spk-last':'spk-dot')+'"/>';}).join('');
+  return '<svg class="spk" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true"><path d="'+path+'" class="spk-line" fill="none"/>'+dots+'</svg>';}
+function progressChartsHTML(){var s=_logSeries();if(!s.length)return '';
+  var cards=s.slice(0,6).map(function(x){var vals=x.pts.map(function(p){return p.v;});var lower=x.pts[0].lower;var bestV=lower?Math.min.apply(null,vals):Math.max.apply(null,vals);var bestRaw='';for(var i=0;i<x.pts.length;i++)if(x.pts[i].v===bestV){bestRaw=x.pts[i].raw;break;}var last=x.pts[x.pts.length-1];
+    return '<div class="pgc"><div class="pgc-h"><span class="pgc-t">'+esc(x.title)+'</span><span class="pgc-m">'+esc(last.raw)+' <em>· best '+esc(bestRaw)+'</em></span></div>'+_sparkSVG(x.pts)+'<div class="pgc-sub">'+x.pts.length+' logged</div></div>';}).join('');
+  return '<div class="rmhdr">Progress</div><div class="pgc-wrap">'+cards+'</div>';}
 function buildCalendarHTML(){
   function p2(n){return (n<10?'0':'')+n;}
   var now=new Date();var base=new Date(now.getFullYear(),now.getMonth()-calOffset,1);
@@ -3945,24 +4050,28 @@ function buildCalendarHTML(){
   var logged={};logDates().forEach(function(d){logged[d]=1;});
   var tstr=dstr(now);
   var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var head='<div class="cal-head"><button class="cal-nav" onclick="calNav(1)" aria-label="Previous month">‹</button><span>'+MON[mo]+' '+y+'</span><button class="cal-nav" onclick="calNav(-1)" aria-label="Next month"'+(calOffset<=0?' disabled':'')+'>›</button></div>';
+  var head='<div class="cal-head"><button class="cal-nav" onclick="calNav(1)" aria-label="Previous month"'+(calOffset>=36?' disabled':'')+'>‹</button><span>'+MON[mo]+' '+y+'</span><button class="cal-nav" onclick="calNav(-1)" aria-label="Next month"'+(calOffset<=-3?' disabled':'')+'>›</button></div>';
   var dow='<div class="cal-dow">'+['M','T','W','T','F','S','S'].map(function(x){return '<span>'+x+'</span>';}).join('')+'</div>';
   var cells='';for(var i=0;i<startCol;i++)cells+='<span class="cal-c empty"></span>';
   for(var d=1;d<=ndays;d++){var ds=y+'-'+p2(mo+1)+'-'+p2(d);var future=ds>tstr;
     var cls='cal-c'+(logged[ds]?' has':(readyHist[ds]?' rdy':''))+(ds===tstr?' today':'')+(ds===calSel?' sel':'')+(future?' fut':'');
-    cells+='<button class="'+cls+'"'+(future?' disabled':' onclick="calPick(&#39;'+ds+'&#39;)"')+'>'+d+(logged[ds]?'<i></i>':(readyHist[ds]?'<i class="rdydot"></i>':''))+'</button>';}   // past & today tappable (retrospective logging); future disabled
+    cells+='<button class="'+cls+'" onclick="calPick(&#39;'+ds+'&#39;)">'+d+(logged[ds]?'<i></i>':(readyHist[ds]?'<i class="rdydot"></i>':''))+'</button>';}   // every day tappable — logged or not, past or upcoming: shows the programme + your log
   var grid='<div class="cal-grid">'+cells+'</div>';
   var monthCount=0;for(var dm=1;dm<=ndays;dm++){if(logged[y+'-'+p2(mo+1)+'-'+p2(dm)])monthCount++;}   // sessions in the visible month → makes back-navigation meaningful
   var sum='<div class="cal-sum">'+(monthCount?('<b>'+monthCount+'</b> session'+(monthCount===1?'':'s')+' logged in '+MON[mo]):('No sessions logged in '+MON[mo]))+'</div>';
   var detail='';
   var rdyLine=(calSel&&readyHist[calSel])?('<div class="cal-rdy">Felt <b>'+readyHist[calSel]+'/10</b> that day</div>'):'';
-  if(calSel&&calSel<=tstr){var pcs=(LOG[calSel]&&LOG[calSel].pieces)||{};
-    var lines=Object.keys(pcs).map(function(pid){return logEntryHTML(pid,pcs[pid]);}).join('')||'<p class="rmnote" style="margin:2px 0 0">Nothing logged this day yet.</p>';
-    var addLbl=(calSel===tstr)?'＋ Log / edit today':'＋ Add / edit this day';
-    var addBtn='<button class="lg-add" onclick="openLog(&#39;'+calSel+'&#39;)">'+addLbl+'</button>';
-    detail='<div class="ml-day"><div class="ml-date">'+esc(fmtDate(calSel))+'</div>'+rdyLine+lines+addBtn+'</div>';
+  if(calSel){var prog=programmeDayHTML(calSel);
+    if(calSel<=tstr){var pcs=(LOG[calSel]&&LOG[calSel].pieces)||{};
+      var lines=Object.keys(pcs).map(function(pid){return logEntryHTML(pid,pcs[pid]);}).join('')||'<p class="rmnote" style="margin:2px 0 0">Nothing logged this day yet.</p>';
+      var addLbl=(calSel===tstr)?'＋ Log / edit today':'＋ Add / edit this day';
+      var addBtn='<button class="lg-add" onclick="openLog(&#39;'+calSel+'&#39;)">'+addLbl+'</button>';
+      detail='<div class="ml-day"><div class="ml-date">'+esc(fmtDate(calSel))+'</div>'+rdyLine+lines+addBtn+prog+'</div>';
+    } else {
+      detail='<div class="ml-day"><div class="ml-date">'+esc(fmtDate(calSel))+' <em class="ml-tag">upcoming</em></div>'+(prog||'<p class="rmnote" style="margin:2px 0 0">Nothing programmed this day.</p>')+'</div>';
+    }
   } else { var n=Object.keys(logged).length;
-    detail='<p class="vnote">'+(n?'Tap a highlighted day to see what you logged. You have <b>'+n+'</b> logged session'+(n===1?'':'s')+'.':'No sessions logged yet — tap “Log this” on a training day and your history fills in here.')+'</p>';}
+    detail='<p class="vnote">'+(n?'Tap any day to see what was on the programme — and what you logged. You have <b>'+n+'</b> logged session'+(n===1?'':'s')+'.':'Tap any day to see what’s on the programme. Log a session and your history fills in here.')+'</p>';}
   return '<div class="cal-wrap">'+head+dow+grid+sum+'</div>'+detail;
 }
 var _mintTarget=null;
@@ -4001,7 +4110,7 @@ function buildVaultHTML(hist,allDlen){
       var ic;if(a.g==='Tiers'){var tk=a.slug.replace('t_','');var src=ASSET.tiers&&ASSET.tiers[tk];ic=src?'<img class="vach-shield" src="'+src+'" alt="">':(got?ICO.check:ICO.star);}else{ic=(got?ICO.check:ACH_ICO[a.g]||ICO.star);}
       return '<div class="vach'+(got?' got':'')+'"><span class="vach-ic'+(a.g==='Tiers'?' vach-ic-sh':'')+'">'+ic+'</span><div class="vach-t"><b>'+esc(a.name)+'</b><span>'+esc(a.sub)+'</span></div></div>';}).join('');}).join('');
   } else if(vaultTab==='history'){
-    body=(_prBlock||'')+buildCalendarHTML();
+    body=progressChartsHTML()+(_prBlock||'')+buildCalendarHTML();
   } else {
     body='<div class="vtroph"><div class="vgh">Competition — unlocks when Compete goes live</div>'
       +TROPHIES.map(function(t){return '<div class="vach locked"><span class="vach-ic">'+ICO.compete+'</span><div class="vach-t"><b>'+esc(t.name)+'</b><span>'+esc(t.sub)+'</span></div><span class="vach-lock">'+ICO.lock+'</span></div>';}).join('')+'</div>';
@@ -4153,7 +4262,8 @@ function todayHomeHTML(){var info=todayInfo();var d=new Date();var DY=['SUN','MO
       var mv=day&&(day.movement||day.focus);ttl=mv?clean(String(mv)):'Today\'s session';
       sub='Week '+(info.week||'')+(day&&day.stimulus?' · '+capWord(day.stimulus)+' focus':'');}}
   var action=rest?'':'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>';
-  return '<div class="dsec">Today</div><div class="th-card"><div class="th-top"><span class="th-day">'+dn+'</span><span class="th-badge'+(rest?'':' on')+'">'+(rest?'Recovery':'Training day')+'</span></div>'
+  var stk=0;try{stk=curStreak();}catch(e){}var stkChip=stk>0?'<span class="hstreak" title="Sessions in a row — rest days don\'t break it">'+_FLAME+'<b>'+stk+'</b></span>':'';
+  return '<div class="dsec">Today</div><div class="th-card"><div class="th-top"><span class="th-day">'+dn+'</span>'+stkChip+'<span class="th-badge'+(rest?'':' on')+'">'+(rest?'Recovery':'Training day')+'</span></div>'
     +'<div class="th-ttl">'+esc(ttl)+'</div><div class="th-sub">'+esc(sub)+'</div>'+action+(rest?'':questCompactHTML())+'</div>';}
 // Daily quest — ONE small optional athletic action chosen from the programme context. Reward = credits (cosmetic), NEVER rating.
 var QUEST_XP=10;var QUEST_CREDITS=5;
@@ -4968,6 +5078,12 @@ function applyRM(text){return String(text||'').split('\n').map(function(ln){
     var key=oflift?matchLift(oflift):matchLift(ln);var rm=key&&oneRM[key];
     if(!rm)return m;var tm=rm*TM_FRAC;var kg=Math.round((tm*pct/100*readinessFactor())/2.5)*2.5;return '@ '+kg+'kg';});
 }).join('\n');}
+function _liftLabel(k){for(var i=0;i<WODLIFTS.length;i++)if(WODLIFTS[i][0]===k)return WODLIFTS[i][1];return k;}
+// which barbell 1RMs does this strength group's "@NN%" work reference that the member hasn't entered yet? → drives the "add your maxes" prompt so % actually resolves to kg
+function missingMaxLifts(g){var need={};(g||[]).forEach(function(id){var p=piece(id);if(!p||p.type!=='strength')return;var v=pv(p);var src=(v&&v.prescription)||'';String(src).split('\n').forEach(function(ln){if(!/@ ?\d+%/.test(ln))return;var key=matchLift(ln);if(key&&!(typeof oneRM!=='undefined'&&oneRM[key]))need[key]=1;});});return Object.keys(need);}
+function maxPromptHTML(g){if(coachMode()||boardMode)return '';var miss=missingMaxLifts(g);if(!miss.length)return '';
+  var names=miss.map(_liftLabel).join(', ');
+  return '<button class="maxwarn" onclick="openRM()"><span class="mw-i">⚖</span><span class="mw-t"><b>Add your 1RM'+(miss.length>1?'s':'')+' to see your exact kg</b><span>'+esc(names)+' — tap to set →</span></span></button>';}
 // ---- WOD personalisation: load = category% of the member's 1RM, capped at the class Rx (sex), floor empty bar; benchmarks + Rx+ stay fixed ----
 function catPct(c){var M={'aerobic-base':.28,'aerobic-power':.35,threshold:.45,mixed:.5,anaerobic:.55,power:.55,'strength-endurance':.65,vo2:.4,'max-strength':.8};return M[c]||.5;}
 function matchMove(s){s=s.toLowerCase();
@@ -5158,7 +5274,8 @@ function renderSectionStep(g,gs){var blocks=stepBlocks(g,gs);var t=stepType(g);v
   var pn=0;var grid='<div class="bkgrid">'+blocks.map(function(b,i){var nn;if(b.kind==='phase'&&!b._lab){pn++;nn=pn;}return bh(b,i,false,nn);}).join('')+'</div>';   // number the phase parts 1,2,… sequentially
   var it=(t==='strength'||t==='skill')?shortIntent(p):'';
   var ctrl=coachMode()?editCtrl(p.id,'sec',false,overrides[p.id+'|sec']!=null):'';
-  return '<div class="sec">'+title+grid+it+ctrl+equipHtml(p)+'</div>';}
+  var maxw=(t==='strength')?maxPromptHTML(g):'';
+  return '<div class="sec">'+title+maxw+grid+it+ctrl+equipHtml(p)+'</div>';}
 function bandPieceOf(g){var wid=g.find(function(id){return clsFor(piece(id))==='wod';})||g[0];return piece(wid);}
 function vb(p){return (p&&p.variantsFull&&track!=='class')?p.variantsFull:p.variants;}   // athlete tracks see the full skill session; class/board see the in-class block (A+B)
 function isBandStep(g){if(!g||!g.length)return false;return g.some(function(id){return clsFor(piece(id))==='wod';});}   // only the WOD is a full-screen band view; skill now paginates by part (A/B) like strength
