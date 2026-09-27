@@ -604,6 +604,13 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 #logMask .lg-rpe.on{background:var(--mag);border-color:var(--mag);color:#fff}
 #logMask .lg-opt{flex:none;background:none;border:1px dashed rgba(255,255,255,.20);color:var(--di);box-shadow:none;border-radius:8px;font-weight:600}
 #logMask .lg-opt.on{border-style:solid;color:var(--txt)}
+#logMask .lg-add,#clogMask .lg-add,.ml-day .lg-add{display:block;width:100%;margin:14px 0 2px;padding:12px;background:none;border:1px dashed rgba(255,255,255,.28);color:var(--acc);border-radius:10px;font-weight:800;font-size:.9rem;cursor:pointer}
+.lg-card.custom .lg-kind{color:var(--acc)}
+.lg-del{margin-top:10px;background:none;border:0;color:var(--mag);font-weight:700;font-size:.8rem;padding:4px 0;cursor:pointer}
+#clogMask{z-index:9998;background:#08080d}
+.cal-c.fut{opacity:.35}
+.lg-styp{font-weight:700;font-size:.66rem;color:var(--acc);letter-spacing:.04em;text-transform:uppercase;margin-left:6px;vertical-align:1px}
+.ml-pr{display:inline-block;font-weight:800;font-size:.62rem;color:#0a0a11;background:var(--acc);border-radius:5px;padding:1px 5px;margin-left:5px;letter-spacing:.03em;vertical-align:1px}
 .ml-stats{display:flex;gap:10px;margin:4px 0 8px}
 .ml-stat{flex:1;text-align:center;border:1px solid var(--line);border-radius:12px;padding:12px 6px;background:var(--bg)}
 .ml-stat b{display:block;font-family:var(--disp);font-size:30px;font-weight:800;color:var(--acc2);line-height:1}
@@ -2431,7 +2438,8 @@ function sanitizeLog(raw){var out={};if(!raw||typeof raw!=='object')return out;
       pcs[pid]={band:typeof v.band==='string'?v.band:'',result:typeof v.result==='string'?v.result:'',
                 rpe:(typeof v.rpe==='number'&&v.rpe>0)?v.rpe:0,note:typeof v.note==='string'?v.note:'',
                 lift:typeof v.lift==='string'?v.lift:null,ts:(typeof v.ts==='number')?v.ts:0,
-                title:typeof v.title==='string'?v.title:'',tag:typeof v.tag==='string'?v.tag:'',detail:typeof v.detail==='string'?v.detail:''};any=true;}   // keep the permanent history snapshot (title/tag/detail) so past days still render after a movement rotates out of the library
+                title:typeof v.title==='string'?v.title:'',tag:typeof v.tag==='string'?v.tag:'',detail:typeof v.detail==='string'?v.detail:'',
+                custom:v.custom===true,stype:typeof v.stype==='string'?v.stype:'',hkey:typeof v.hkey==='string'?v.hkey:'',pr:v.pr===true};any=true;}   // keep the permanent history snapshot (title/tag/detail) + score-type/history-key/PR so past days render and benchmark history survives a reload
     if(any)out[d]={pieces:pcs,ts:(typeof e.ts==='number')?e.ts:0};}
   return out;}
 function saveLOG(){try{localStorage.setItem('unranked-log',JSON.stringify(LOG));}catch(e){}try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(_){}}
@@ -2450,7 +2458,7 @@ function logBtnHTML(){if(boardMode||viewMode!=='day'||!canLog())return '';
   var done=items.filter(function(p){return ent[p.id];}).length,all=done>=items.length;
   var lbl=all?(ICO.check+' Session logged — tap to edit'):(done>0?(ICO.check+' Logged '+done+' of '+items.length+' — tap to finish'):(ICO.check+' Log this session'));
   return '<div class="logbar"><button class="logbtn'+(all?' done':'')+'" onclick="openLog()">'+lbl+'</button></div>';}
-function logLoggable(){var d=cur&&cur.d;if(!d||!d.tracks)return [];var out=[];var seen={};(d.tracks[track]||d.tracks.class||[]).forEach(function(id){if(seen[id])return;seen[id]=1;var p=piece(id);if(p&&(p.type==='strength'||p.type==='wod'||clsFor(p)==='wod'||p.type==='skill'))out.push(p);});return out;}   // follows the CURRENT track (class/athlete/lifting/gymnastics/engine), not just class — p.type==='wod' also catches engine conditioning pieces (which clsFor doesn't tag as 'wod'), so athlete-programme, lifter, gymnast & engine work is all loggable
+function logLoggable(){var d=cur&&cur.d;if(!d)return [];var out=[];var seen={};var ids=(d.tracks&&(d.tracks[track]||d.tracks.class))||(d.sunday?[d.sunday]:[]);ids.forEach(function(id){if(seen[id])return;seen[id]=1;var p=piece(id);if(p&&(p.type==='strength'||p.type==='wod'||clsFor(p)==='wod'||p.type==='skill'))out.push(p);});return out;}   // follows the CURRENT track (class/athlete/lifting/gymnastics/engine), not just class — p.type==='wod' also catches engine conditioning pieces (which clsFor doesn't tag as 'wod'). FIX 2026-09-27: Sunday/override sessions live in d.sunday (no d.tracks), like renderSession's sunPiece fallback — expose them so the shown session is actually loggable
 function liftKeyOf(p){if(!p||p.type!=='strength')return null;var m=(p.id||'').match(/^lift-([a-z0-9_]+)-/i);return m?m[1].replace(/_/g,' '):String(p.title||'').split('—')[0].trim().toLowerCase();}
 function parseRes(s){s=String(s||'');var lm=s.match(/(\d+(?:\.\d+)?)\s*kg/i);if(!lm)return null;var rm=s.match(/[x×]\s*(\d+)/i)||s.match(/(\d+)\s*reps?/i);var load=parseFloat(lm[1]);var reps=rm?parseInt(rm[1],10):1;return {load:load,reps:reps,e1rm:Math.round(load*(1+reps/30))};}
 function logDates(){return Object.keys(LOG).filter(function(d){var e=LOG[d];return e&&e.pieces&&Object.keys(e.pieces).length;});}
@@ -3732,31 +3740,115 @@ function currentClass(){var st=classStates();var pick=null,pickScore=-1,pickTree
   if(typeof noviceAllVerified==='function'&&noviceAllVerified())return {name:'Apprentice',colour:'white'};   // all 8 Novice tests verified, no tree class yet
   return {name:'Novice',colour:'white'};}
 var LBANDS=['rxPlus','rx','intermediate','scaled'];
-window.openLog=function(){var m=document.getElementById('logMask');if(!m)return;var ds=todayStr();var ent=(LOG[ds]&&LOG[ds].pieces)||{};var items=logLoggable();
-  if(!items.length){m.querySelector('.logbody').innerHTML='<p class="rmnote">Nothing to log on this day.</p>';m.classList.add('on');return;}
+var _logDate=null;   // date the log sheet is bound to (null = today) — enables retrospective logging
+function logDateStr(){return _logDate||todayStr();}
+function _stypePH(t){return t==='time'?'e.g. 12:40':t==='amrap'?'e.g. 8 rounds + 12':t==='load'?'e.g. 100kg × 5':t==='reps'?'e.g. 85 reps':t==='dist'?'e.g. 5 km / 2000m':'e.g. 12:40, 5 rounds, done';}
+var STYPE_LBL={time:'For Time',amrap:'AMRAP',load:'Load',reps:'Reps',dist:'Distance',session:'Session'};
+// ── P3: score-type + benchmark history/PR ──
+// scoreType(p,e): custom entries carry e.stype; programmed pieces get an authored p.score or an inference from format/prescription.
+function scoreType(p,e){if(e&&e.stype)return e.stype;if(!p)return 'session';if(p.score)return p.score;if(p.type==='strength')return 'load';
+  var pr='';try{var V=(clsFor(p)==='wod')?p.variants:vb(p);var b=V&&(V.rx||V.rxPlus||V.intermediate||V.scaled);pr=(b&&b.prescription)||'';}catch(x){}
+  var s=((p.format||'')+' '+(p.title||'')+' '+pr).toLowerCase();
+  if(/amrap|as many rounds|max rounds/.test(s))return 'amrap';
+  if(/for time|rounds for time|\brft\b|\bft\b/.test(s))return 'time';
+  if(/max (cal|calorie|rep)/.test(s))return 'reps';
+  if(/\bemom\b|every \d+\s*min|for quality/.test(s)||p.engineOk||p.timeDomain==='30-plus'||p.format==='partner')return 'session';
+  return 'time';}   // most metcons are for time
+function normKey(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
+function hkeyFor(p,e){if(e&&e.custom)return 'c:'+normKey(e.title||'');if(!p)return '';if(p.type==='strength'){var lk=liftKeyOf(p);return lk?('l:'+lk):('p:'+p.id);}return 'p:'+p.id;}
+function _secs(str){var m=String(str).match(/(?:(\d+):)?(\d{1,2}):(\d{2})(?!\d)/);if(m)return (m[1]?+m[1]:0)*3600+(+m[2])*60+(+m[3]);return null;}
+function scoreVal(stype,str){str=String(str||'');
+  if(stype==='time'){var t=_secs(str);return t!=null?{v:t,lower:true}:null;}
+  if(stype==='amrap'){var rm=str.match(/(\d+)\s*(?:rounds?|rds?|r\b)/i)||str.match(/^\s*(\d+)/);if(!rm)return null;var pl=str.match(/\+\s*(\d+)/);return {v:(+rm[1])*1000+(pl?+pl[1]:0),lower:false};}
+  if(stype==='load'){var p=parseRes(str);return p?{v:p.e1rm,lower:false}:null;}
+  if(stype==='reps'){var r=str.match(/(\d+)/);return r?{v:+r[1],lower:false}:null;}
+  if(stype==='dist'){var km=str.match(/(\d+(?:\.\d+)?)\s*k/i);var mm=str.match(/(\d+)\s*m/i);var v=km?parseFloat(km[1])*1000:(mm?+mm[1]:null);return v!=null?{v:v,lower:false}:null;}
+  return null;}
+function priorEntries(hkey,beforeDs){var out=[];if(!hkey)return out;logDates().forEach(function(d){if(beforeDs&&d>=beforeDs)return;var pcs=LOG[d].pieces;for(var pid in pcs){var e=pcs[pid];if((e.hkey||'')===hkey&&e.result)out.push({date:d,e:e});}});return out;}
+function lastByKey(hkey,beforeDs){var ps=priorEntries(hkey,beforeDs);ps.sort(function(a,b){return a.date<b.date?1:-1;});return ps[0]||null;}
+function bestByKey(hkey,stype,beforeDs){var best=null;priorEntries(hkey,beforeDs).forEach(function(x){var sv=scoreVal(stype,x.e.result);if(!sv)return;if(!best||(sv.lower?sv.v<best.v:sv.v>best.v))best={v:sv.v,lower:sv.lower,date:x.date,result:x.e.result};});return best;}
+function isPRnow(hkey,stype,res,ds){var sv=scoreVal(stype,res);if(!sv)return false;var best=bestByKey(hkey,stype,ds);if(!best)return false;return sv.lower?sv.v<best.v:sv.v>best.v;}   // PR only when a prior best is beaten (first-ever result is a baseline, not a PR)
+window.openLog=function(ds){var m=document.getElementById('logMask');if(!m)return;
+  _logDate=(ds&&ds!==todayStr())?ds:null;var dsK=logDateStr();var isToday=(dsK===todayStr());
+  var ent=(LOG[dsK]&&LOG[dsK].pieces)||{};
+  var items=isToday?logLoggable():[];   // programmed pieces only make sense for today's live day; past dates log free/custom
+  try{var h=m.querySelector('.fp-ttl');if(h)h.textContent=isToday?'Log Today':'Log Session';var h3=m.querySelector('h3');if(h3)h3.textContent=isToday?'Log today':('Log — '+fmtDate(dsK));}catch(e){}
+  var order=items.map(function(p){return p.id;});
+  Object.keys(ent).forEach(function(pid){if(order.indexOf(pid)<0)order.push(pid);});   // include already-logged/custom entries so they're editable
   var anyOpen=false;
-  var html=items.map(function(p){var e=ent[p.id]||{};var lk=liftKeyOf(p);var last=lk?lastTimeFor(lk,ds):null;var isW=clsFor(p)==='wod';
+  var html=order.map(function(pid){var p=null;for(var i=0;i<items.length;i++){if(items[i].id===pid){p=items[i];break;}}if(!p)p=piece(pid);
+    var e=ent[pid]||{};var custom=!p;
+    var isW=p?(clsFor(p)==='wod'):false;var lk=p?liftKeyOf(p):null;
+    var st=scoreType(p,e);var hk=hkeyFor(p,e);var last=hk?lastByKey(hk,dsK):null;var best=hk?bestByKey(hk,st,dsK):null;
     var logged=!!(e.result&&(''+e.result).trim());
-    var ph=isW?'e.g. 24:30, or 8 rounds + 12':(p.type==='strength'?'e.g. 100kg × 5':'e.g. done / felt strong');
+    var ph=_stypePH(st);
     var cb=e.band||(isW?recBand(p):null)||'rx';
-    var bandBtns=LBANDS.filter(function(b){return isW?(p.variants&&p.variants[b]):(vb(p)&&vb(p)[b]);}).map(function(b){return '<button type="button" class="lg-band'+(b===cb?' on':'')+'" data-band="'+b+'" onclick="logPick(this)">'+VL[b]+'</button>';}).join('');
+    var bandSrc=custom?LBANDS:LBANDS.filter(function(b){return isW?(p.variants&&p.variants[b]):(vb(p)&&vb(p)[b]);});
+    var bandBtns=bandSrc.map(function(b){return '<button type="button" class="lg-band'+(b===cb?' on':'')+'" data-band="'+b+'" onclick="logPick(this)">'+VL[b]+'</button>';}).join('');
     var RPE=[[4,'Easy'],[6,'Solid'],[8,'Hard'],[10,'Max']];
     var rpeBtns=RPE.map(function(r){return '<button type="button" class="lg-rpe'+(r[0]===e.rpe?' on':'')+'" data-rpe="'+r[0]+'" onclick="logPick(this)">'+r[1]+'</button>';}).join('');
     var open=!logged && !anyOpen; if(open)anyOpen=true;   // auto-open the first piece still to log
+    var title=custom?(e.title||'Custom session'):clean(boardTitle(p));
+    var kind=custom?(e.tag||'Your session'):labelFor(p);
     var sum=logged?(esc(VL[e.band||'rx'])+' · '+esc(e.result)):'Tap to log';
-    return '<div class="lg-card'+(logged?' logged':'')+(open?' open':'')+'" data-pid="'+esc(p.id)+'"'+(lk?' data-lift="'+esc(lk)+'"':'')+'>'
+    var delBtn=custom?'<button type="button" class="lg-del" onclick="delCustomLog(&#39;'+esc(pid)+'&#39;)">Remove this entry</button>':'';
+    var lastLn=last?('<div class="lg-last">Last time: <b>'+esc(last.e.result)+'</b>'+((best&&STYPE_LBL[st]&&st!=='session')?' · best <b>'+esc(best.result)+'</b>':'')+'</div>'):'';
+    var stypLbl=(STYPE_LBL[st]&&st!=='session')?'<span class="lg-styp">'+STYPE_LBL[st]+'</span>':'';
+    return '<div class="lg-card'+(logged?' logged':'')+(open?' open':'')+(custom?' custom':'')+'" data-pid="'+esc(pid)+'"'+(lk?' data-lift="'+esc(lk)+'"':'')+' data-stype="'+esc(st)+'"'+(custom?' data-custom="1" data-title="'+esc(title)+'" data-tag="'+esc(kind)+'"':'')+'>'
       +'<button type="button" class="lg-head" onclick="logToggle(this)"><span class="lg-tick">'+(logged?'✓':'')+'</span>'
-      +'<span class="lg-hmid"><span class="lg-kind">'+esc(labelFor(p))+'</span><span class="lg-nm">'+esc(clean(boardTitle(p)))+'</span><span class="lg-sum">'+sum+'</span></span>'
+      +'<span class="lg-hmid"><span class="lg-kind">'+esc(kind)+'</span><span class="lg-nm">'+esc(title)+'</span><span class="lg-sum">'+sum+'</span></span>'
       +'<span class="lg-chev">›</span></button>'
       +'<div class="lg-body">'
-      +(last?'<div class="lg-last">Last time: <b>'+esc(last.result)+'</b></div>':'')
+      +lastLn
       +(bandBtns?'<div class="lg-flab">How did you scale it?</div><div class="lg-bands">'+bandBtns+'</div>':'')
-      +'<div class="lg-flab">Result</div><input class="lg-res" placeholder="'+esc(ph)+'" value="'+esc(e.result||'')+'">'
+      +'<div class="lg-flab">Result '+stypLbl+'</div><input class="lg-res" placeholder="'+esc(ph)+'" value="'+esc(e.result||'')+'">'
       +'<div class="lg-opts"><button type="button" class="lg-opt'+(e.rpe?' on':'')+'" onclick="logOpt(this)">+ How hard?</button><button type="button" class="lg-opt'+(e.note?' on':'')+'" onclick="logOpt(this)">+ Note</button></div>'
       +'<div class="lg-optp'+(e.rpe?' show':'')+'"><div class="lg-flab">Effort (optional)</div><div class="lg-rpes">'+rpeBtns+'</div></div>'
       +'<div class="lg-optp'+(e.note?' show':'')+'"><input class="lg-note" placeholder="Note (optional)" value="'+esc(e.note||'')+'"></div>'
+      +delBtn
       +'</div></div>';}).join('');
-  m.querySelector('.logbody').innerHTML=html;m.classList.add('on');};
+  var addBtn='<button type="button" class="lg-add" onclick="addCustomLog()">＋ Log something else</button>';
+  if(!order.length)html='<p class="rmnote">'+(isToday?'Nothing programmed to log today — add your own session below.':'No session logged for this day yet — add one below.')+'</p>';
+  m.querySelector('.logbody').innerHTML=html+addBtn;m.classList.add('on');};
+// ── Custom / off-programme logging (P1) + retrospective add (P2) ──
+window.addCustomLog=function(ds){if(ds)_logDate=(ds!==todayStr())?ds:null;
+  var m=document.getElementById('clogMask');
+  if(!m){m=document.createElement('div');m.className='mask fullpage';m.id='clogMask';
+    m.innerHTML='<div class="card"><div class="fp-head"><button class="fp-back" onclick="closeCustomLog()" aria-label="Back"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></svg></span></button><span class="fp-ttl">Add Session</span></div><h3>Log your own session</h3><p class="rmnote">Anything you did — a benchmark, your own lift, a class we changed on the day. Saved to your private log.</p><div class="logbody" id="clogBody"></div><div class="row"><button onclick="saveCustomLog()">Save</button><button class="ghost" onclick="closeCustomLog()">Cancel</button></div></div>';
+    document.body.appendChild(m);}
+  var types=[['session','Session'],['time','For Time'],['amrap','AMRAP'],['load','Load'],['reps','Reps'],['dist','Distance']];
+  var typeBtns=types.map(function(t){return '<button type="button" class="lg-band'+(t[0]==='session'?' on':'')+'" data-stype="'+t[0]+'" onclick="clogType(this)">'+t[1]+'</button>';}).join('');
+  var bandBtns=LBANDS.map(function(b){return '<button type="button" class="lg-band clog-band" data-band="'+b+'" onclick="logPick(this)">'+VL[b]+'</button>';}).join('');
+  var rpeBtns=[[4,'Easy'],[6,'Solid'],[8,'Hard'],[10,'Max']].map(function(r){return '<button type="button" class="lg-rpe clog-rpe" data-rpe="'+r[0]+'" onclick="logPick(this)">'+r[1]+'</button>';}).join('');
+  var dsK=logDateStr();var dateLine=(dsK!==todayStr())?('<div class="lg-last">Logging for <b>'+esc(fmtDate(dsK))+'</b></div>'):'';
+  document.getElementById('clogBody').innerHTML=dateLine
+    +'<div class="lg-flab">What did you do?</div><input class="lg-res clog-name" placeholder="e.g. Fran, Zone 2 row, heavy back squat">'
+    +'<div class="lg-flab">How is it scored?</div><div class="lg-bands clog-types">'+typeBtns+'</div>'
+    +'<div class="lg-flab">Result</div><input class="lg-res clog-res" placeholder="e.g. done / felt strong">'
+    +'<div class="lg-flab">Scale (optional)</div><div class="lg-bands">'+bandBtns+'</div>'
+    +'<div class="lg-flab">Effort (optional)</div><div class="lg-rpes">'+rpeBtns+'</div>'
+    +'<div class="lg-flab">Note (optional)</div><input class="lg-note clog-note" placeholder="Anything to remember">';
+  m.classList.add('on');};
+window.clogType=function(el){logPick(el);var ph=_stypePH(el.getAttribute('data-stype'));var r=document.querySelector('#clogMask .clog-res');if(r&&!r.value)r.setAttribute('placeholder',ph);};
+window.closeCustomLog=function(){var m=document.getElementById('clogMask');if(m)m.classList.remove('on');};
+window.saveCustomLog=function(){var m=document.getElementById('clogMask');if(!m)return;
+  var name=((m.querySelector('.clog-name')||{}).value||'').trim();
+  var tEl=m.querySelector('.clog-types .lg-band.on');var stype=tEl?tEl.getAttribute('data-stype'):'session';
+  var res=((m.querySelector('.clog-res')||{}).value||'').trim();
+  var bEl=m.querySelector('.clog-band.on');var band=bEl?bEl.getAttribute('data-band'):'';
+  var rEl=m.querySelector('.clog-rpe.on');var rpe=rEl?parseInt(rEl.getAttribute('data-rpe'),10):0;
+  var note=((m.querySelector('.clog-note')||{}).value||'').trim();
+  if(!(res||name||note)){try{showToast('Add a name or result first');}catch(e){}return;}
+  var ds=logDateStr();var pieces=(LOG[ds]&&LOG[ds].pieces)||{};var id='custom-'+Date.now();
+  var TAG={session:'Session',time:'For Time',amrap:'AMRAP',load:'Load',reps:'Reps',dist:'Distance'};
+  var ttl=name||'Custom session';var hk='c:'+normKey(ttl);var pr=isPRnow(hk,stype,res,ds);
+  pieces[id]={custom:true,stype:stype,hkey:hk,pr:pr,title:ttl,tag:TAG[stype]||'Session',band:band,result:res,rpe:rpe,note:note,detail:'',ts:Date.now()};
+  LOG[ds]={pieces:pieces,ts:Date.now()};
+  try{grantXP('logday',ds,XP_AMT.logday,true);}catch(e){}
+  if(pr){try{showToast('⚡ New PR — '+ttl+'!');}catch(e){}}
+  saveLOG();closeCustomLog();try{openLog(_logDate);}catch(e){}try{render();}catch(e){}
+  try{var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();}catch(e){}};
+window.delCustomLog=function(pid){var ds=logDateStr();if(LOG[ds]&&LOG[ds].pieces){delete LOG[ds].pieces[pid];if(!Object.keys(LOG[ds].pieces).length)delete LOG[ds];saveLOG();}try{openLog(_logDate);}catch(e){}try{render();}catch(e){}try{var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();}catch(e){}};
 window.logToggle=function(el){var c=el.closest('.lg-card');if(c)c.classList.toggle('open');};
 window.logOpt=function(el){var opts=el.parentNode;var idx=[].indexOf.call(opts.children,el);var panels=opts.parentNode.querySelectorAll('.lg-optp');if(panels[idx]){panels[idx].classList.toggle('show');el.classList.toggle('on');}};
 window.logPick=function(el){var w=el.parentNode;[].forEach.call(w.children,function(c){c.classList.remove('on');});el.classList.add('on');};
@@ -3777,20 +3869,27 @@ function logEntryHTML(pid,e){e=e||{};var pc=piece(pid);
   var res=meta.join(' · ')||(e.note?esc(e.note):'\u2713');
   var det=detail?('<div class="ml-detail">'+esc(detail).replace(/\n/g,'<br>')+'</div>'):'';
   var noteLn=(e.note&&(e.result||e.rpe))?('<div class="ml-note">'+esc(e.note)+'</div>'):'';
-  return '<div class="ml-line"><span class="ml-nm">'+esc(title)+(tag?' <em class="ml-tag">'+esc(tag)+'</em>':'')+'</span><span class="ml-res">'+res+'</span></div>'+det+noteLn;}
-window.saveLog=function(){var ds=todayStr();var pieces=(LOG[ds]&&LOG[ds].pieces)||{};
-  [].forEach.call(document.querySelectorAll('#logMask .lg-card'),function(c){var pid=c.getAttribute('data-pid');var lift=c.getAttribute('data-lift')||null;
+  var prB=e.pr?' <span class="ml-pr">⚡ PR</span>':'';
+  return '<div class="ml-line"><span class="ml-nm">'+esc(title)+(tag?' <em class="ml-tag">'+esc(tag)+'</em>':'')+prB+'</span><span class="ml-res">'+res+'</span></div>'+det+noteLn;}
+window.saveLog=function(){var ds=logDateStr();var pieces=(LOG[ds]&&LOG[ds].pieces)||{};var _prs=[];
+  [].forEach.call(document.querySelectorAll('#logMask .lg-card'),function(c){var pid=c.getAttribute('data-pid');var lift=c.getAttribute('data-lift')||null;var isCustom=c.getAttribute('data-custom')==='1';
     var bEl=c.querySelector('.lg-band.on');var band=bEl?bEl.getAttribute('data-band'):'';
     var res=(c.querySelector('.lg-res')||{}).value||'';var rEl=c.querySelector('.lg-rpe.on');var rpe=rEl?parseInt(rEl.getAttribute('data-rpe'),10):0;var note=(c.querySelector('.lg-note')||{}).value||'';
-    if(res.trim()||note.trim()||rpe){var pc=piece(pid);pieces[pid]={band:band,result:res.trim(),rpe:rpe,note:note.trim(),lift:lift,ts:Date.now(),
-      title:pc?clean(boardTitle(pc)):(pieces[pid]&&pieces[pid].title)||'',tag:pc?labelFor(pc):(pieces[pid]&&pieces[pid].tag)||'',detail:logSummary(pc,band||'rx')||((pieces[pid]&&pieces[pid].detail)||'')};}else{delete pieces[pid];}});
+    if(res.trim()||note.trim()||rpe){var pc=piece(pid);var prev=pieces[pid]||{};
+      if(isCustom||!pc){var cst=c.getAttribute('data-stype')||prev.stype||'session';var ct=c.getAttribute('data-title')||prev.title||'Custom session';var chk='c:'+normKey(ct);var cpr=isPRnow(chk,cst,res.trim(),ds);
+        pieces[pid]={custom:true,stype:cst,hkey:chk,pr:cpr,band:band,result:res.trim(),rpe:rpe,note:note.trim(),lift:null,ts:Date.now(),
+        title:ct,tag:c.getAttribute('data-tag')||prev.tag||'Session',detail:prev.detail||''};if(cpr)_prs.push(ct);}
+      else{var pst=scoreType(pc,null);var phk=hkeyFor(pc,null);var ppr=isPRnow(phk,pst,res.trim(),ds);
+        pieces[pid]={stype:pst,hkey:phk,pr:ppr,band:band,result:res.trim(),rpe:rpe,note:note.trim(),lift:lift,ts:Date.now(),
+        title:clean(boardTitle(pc)),tag:labelFor(pc),detail:logSummary(pc,band||'rx')||(prev.detail||'')};if(ppr)_prs.push(clean(boardTitle(pc)));}}else{delete pieces[pid];}});
+  if(_prs.length){try{showToast(_prs.length===1?('⚡ New PR — '+_prs[0]+'!'):('⚡ '+_prs.length+' new PRs!'));}catch(e){}}
   if(Object.keys(pieces).length)LOG[ds]={pieces:pieces,ts:Date.now()};else delete LOG[ds];
   if(Object.keys(pieces).length)grantXP('logday',ds,XP_AMT.logday,true);   // XP for logging a session (engagement, daily-capped)
   // Close the loop — logged RX/RX+ gymnastic results raise capacity -> Development tree + scaling (never the card).
   try{var _xall=[];Object.keys(pieces).forEach(function(pid){var lp=pieces[pid];if(!lp||(lp.band!=='rx'&&lp.band!=='rxPlus'))return;var gk=gymKeyForPiece(piece(pid));if(!gk)return;var r=devIngest(gk,1,{source:'workout',silent:true});if(r&&r.crossed.length)_xall.push({sk:r.skill,crossed:r.crossed});});
     if(_xall.length)devCelebrate(_xall[0].sk,_xall[0].crossed);}catch(e){}
-  saveLOG();closeLog();render();};
-window.closeLog=function(){var m=document.getElementById('logMask');if(m)m.classList.remove('on');};
+  saveLOG();closeLog();render();try{var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();}catch(e){}};
+window.closeLog=function(){var m=document.getElementById('logMask');if(m)m.classList.remove('on');_logDate=null;};
 /* ===== THE VAULT — Moments · Achievements · Trophies + the Level/Credits strip ===== */
 function levelTitle(L){return L>=50?'Prestige':L>=40?'Elite':L>=30?'Veteran':L>=20?'Seasoned':L>=10?'Committed':L>=5?'Rising':'Rookie';}
 function curStreak(){try{return statTotals().streak;}catch(e){return 0;}}
@@ -3831,6 +3930,7 @@ var TROPHIES=[
  {name:'Benchmark Title',sub:'Win a benchmark event'}
 ];
 var vaultTab='';   // closed beta: Vault opens on History; other tabs are locked
+var _prBlock='';   // personal-records block, surfaced at the top of the History tab (set by openMyLog)
 window.setVaultTab=function(t){if(t==='moments')return;vaultTab=t;var mp=document.getElementById('myLogMask');if(mp&&mp.classList.contains('on'))openMyLog();try{var b=document.querySelector('#myLogMask .mlbody');if(b)b.scrollTop=0;}catch(e){}};
 // ---- History calendar (Vault → History tab): month grid over your logged sessions; tap a highlighted day to see it ----
 var calOffset=0, calSel='';
@@ -3848,17 +3948,19 @@ function buildCalendarHTML(){
   var head='<div class="cal-head"><button class="cal-nav" onclick="calNav(1)" aria-label="Previous month">‹</button><span>'+MON[mo]+' '+y+'</span><button class="cal-nav" onclick="calNav(-1)" aria-label="Next month"'+(calOffset<=0?' disabled':'')+'>›</button></div>';
   var dow='<div class="cal-dow">'+['M','T','W','T','F','S','S'].map(function(x){return '<span>'+x+'</span>';}).join('')+'</div>';
   var cells='';for(var i=0;i<startCol;i++)cells+='<span class="cal-c empty"></span>';
-  for(var d=1;d<=ndays;d++){var ds=y+'-'+p2(mo+1)+'-'+p2(d);var hasData=logged[ds]||readyHist[ds];
-    var cls='cal-c'+(logged[ds]?' has':(readyHist[ds]?' rdy':''))+(ds===tstr?' today':'')+(ds===calSel?' sel':'');
-    cells+='<button class="'+cls+'"'+(hasData?' onclick="calPick(&#39;'+ds+'&#39;)"':' disabled')+'>'+d+(logged[ds]?'<i></i>':(readyHist[ds]?'<i class="rdydot"></i>':''))+'</button>';}
+  for(var d=1;d<=ndays;d++){var ds=y+'-'+p2(mo+1)+'-'+p2(d);var future=ds>tstr;
+    var cls='cal-c'+(logged[ds]?' has':(readyHist[ds]?' rdy':''))+(ds===tstr?' today':'')+(ds===calSel?' sel':'')+(future?' fut':'');
+    cells+='<button class="'+cls+'"'+(future?' disabled':' onclick="calPick(&#39;'+ds+'&#39;)"')+'>'+d+(logged[ds]?'<i></i>':(readyHist[ds]?'<i class="rdydot"></i>':''))+'</button>';}   // past & today tappable (retrospective logging); future disabled
   var grid='<div class="cal-grid">'+cells+'</div>';
   var monthCount=0;for(var dm=1;dm<=ndays;dm++){if(logged[y+'-'+p2(mo+1)+'-'+p2(dm)])monthCount++;}   // sessions in the visible month → makes back-navigation meaningful
   var sum='<div class="cal-sum">'+(monthCount?('<b>'+monthCount+'</b> session'+(monthCount===1?'':'s')+' logged in '+MON[mo]):('No sessions logged in '+MON[mo]))+'</div>';
   var detail='';
   var rdyLine=(calSel&&readyHist[calSel])?('<div class="cal-rdy">Felt <b>'+readyHist[calSel]+'/10</b> that day</div>'):'';
-  if(calSel&&((LOG[calSel]&&LOG[calSel].pieces)||readyHist[calSel])){var pcs=(LOG[calSel]&&LOG[calSel].pieces)||{};
-    var lines=Object.keys(pcs).map(function(pid){return logEntryHTML(pid,pcs[pid]);}).join('')||'<p class="rmnote" style="margin:2px 0 0">No session logged this day.</p>';
-    detail='<div class="ml-day"><div class="ml-date">'+esc(fmtDate(calSel))+'</div>'+rdyLine+lines+'</div>';
+  if(calSel&&calSel<=tstr){var pcs=(LOG[calSel]&&LOG[calSel].pieces)||{};
+    var lines=Object.keys(pcs).map(function(pid){return logEntryHTML(pid,pcs[pid]);}).join('')||'<p class="rmnote" style="margin:2px 0 0">Nothing logged this day yet.</p>';
+    var addLbl=(calSel===tstr)?'＋ Log / edit today':'＋ Add / edit this day';
+    var addBtn='<button class="lg-add" onclick="openLog(&#39;'+calSel+'&#39;)">'+addLbl+'</button>';
+    detail='<div class="ml-day"><div class="ml-date">'+esc(fmtDate(calSel))+'</div>'+rdyLine+lines+addBtn+'</div>';
   } else { var n=Object.keys(logged).length;
     detail='<p class="vnote">'+(n?'Tap a highlighted day to see what you logged. You have <b>'+n+'</b> logged session'+(n===1?'':'s')+'.':'No sessions logged yet — tap “Log this” on a training day and your history fills in here.')+'</p>';}
   return '<div class="cal-wrap">'+head+dow+grid+sum+'</div>'+detail;
@@ -3899,7 +4001,7 @@ function buildVaultHTML(hist,allDlen){
       var ic;if(a.g==='Tiers'){var tk=a.slug.replace('t_','');var src=ASSET.tiers&&ASSET.tiers[tk];ic=src?'<img class="vach-shield" src="'+src+'" alt="">':(got?ICO.check:ICO.star);}else{ic=(got?ICO.check:ACH_ICO[a.g]||ICO.star);}
       return '<div class="vach'+(got?' got':'')+'"><span class="vach-ic'+(a.g==='Tiers'?' vach-ic-sh':'')+'">'+ic+'</span><div class="vach-t"><b>'+esc(a.name)+'</b><span>'+esc(a.sub)+'</span></div></div>';}).join('');}).join('');
   } else if(vaultTab==='history'){
-    body=buildCalendarHTML();
+    body=(_prBlock||'')+buildCalendarHTML();
   } else {
     body='<div class="vtroph"><div class="vgh">Competition — unlocks when Compete goes live</div>'
       +TROPHIES.map(function(t){return '<div class="vach locked"><span class="vach-ic">'+ICO.compete+'</span><div class="vach-t"><b>'+esc(t.name)+'</b><span>'+esc(t.sub)+'</span></div><span class="vach-lock">'+ICO.lock+'</span></div>';}).join('')+'</div>';
@@ -4306,7 +4408,11 @@ function athleteCardHTML(opts){opts=opts||{};
 
 window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)return;var s=statTotals();
   var seen={},prs=[];logDates().forEach(function(d){var pcs=LOG[d].pieces;for(var pid in pcs){var lk=pcs[pid].lift;if(lk&&!seen[lk]){seen[lk]=1;var pr=prFor(lk);if(pr)prs.push({lift:lk,pr:pr});}}});
-  var prHtml=prs.length?('<div class="rmhdr">Personal records</div>'+prs.map(function(x){return '<div class="ml-line"><span>'+esc(capWord(x.lift))+'</span><span class="ml-res">'+x.pr.load+'kg × '+x.pr.reps+' · ~'+x.pr.e1rm+'kg</span></div>';}).join('')):'';
+  // benchmark bests — best result for any repeated scored workout (WOD / custom), keyed by history identity, excluding the lift PRs above
+  var bseen={},bench=[];logDates().forEach(function(d){var pcs=LOG[d].pieces;for(var pid in pcs){var e=pcs[pid];var hk=e.hkey||'';var st=e.stype||'';if(!hk||hk.charAt(0)==='l'||st==='session'||st==='load'||bseen[hk])continue;bseen[hk]=1;var b=bestByKey(hk,st,null);if(b&&priorEntries(hk,null).length>1)bench.push({name:e.title||hk,result:b.result,stype:st});}});
+  var prHtml=(prs.length||bench.length)?('<div class="rmhdr">Personal records</div>'
+    +prs.map(function(x){return '<div class="ml-line"><span>'+esc(capWord(x.lift))+'</span><span class="ml-res">'+x.pr.load+'kg × '+x.pr.reps+' · ~'+x.pr.e1rm+'kg</span></div>';}).join('')
+    +bench.map(function(x){return '<div class="ml-line"><span>'+esc(x.name)+' <em class="ml-tag">'+esc(STYPE_LBL[x.stype]||'')+'</em></span><span class="ml-res">'+esc(x.result)+'</span></div>';}).join('')):'';
   var allD=logDates().sort().reverse();
   var hist=allD.map(function(d){var pcs=LOG[d].pieces;var lines=Object.keys(pcs).map(function(pid){return logEntryHTML(pid,pcs[pid]);}).join('');return '<div class="ml-day"><div class="ml-date">'+esc(fmtDate(d))+'</div>'+lines+'</div>';}).join('')||'<p class="rmnote">No sessions logged yet — tap “Log” on a training day to start.</p>';
   // ---- athlete card: live once tests are entered, else the UNRANKED shell ----
@@ -4332,7 +4438,8 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
       +'<div class="pprow"><button class="ghost" onclick="openBetaTerms()">Private Beta Terms</button><button class="ghost" onclick="openPrivacy()">Privacy Notice</button></div>'
       +'<div class="pprow"><button class="ghost" onclick="reportProblem()">Report a problem</button><button class="ghost" onclick="requestDeletion()">Request data deletion</button></div></div>';
   var hint=(cc.entered===0)?'<div class="pphint"><b>Welcome!</b> Tap <b>“Enter your first score”</b> on your card below. As a coach verifies your scores, your card, stats and class light up.</div>':(cc.pending>0?'<div class="pphint">⏳ You have <b>'+cc.pending+'</b> score'+(cc.pending===1?'':'s')+' waiting for coach verification — ask a coach to verify to update your card.</div>':'');
-  var histLog=prHtml+hist;   // personal records + every session (folds into the Vault's collapsible log)
+  _prBlock=prHtml;   // surfaced at the top of the History tab (visible), not buried in the collapsible log
+  var histLog=hist;   // the collapsible "Session log & backup" holds the full per-session history
   // render the active page only (bottom-nav drives which); coach never gets here
   var titles={home:'Home',tree:'Progress',train:'Train',submit:'Log a score',vault:'The Vault',compete:'In Development',explore:'In Development',fantasy:'In Development'};
   var tt=document.getElementById('ppTitle');if(tt)tt.innerHTML=(titles[profilePage]||'Home')+' <span class="betap">beta</span>';
