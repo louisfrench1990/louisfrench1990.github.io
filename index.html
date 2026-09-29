@@ -13,7 +13,7 @@
  /* ===== Unranked design tokens (mockup-aligned) ===== */
  --bg:#0A0A11;                       /* app background */
  --s1:#15151D; --s2:#1F1F29; --s3:#2A2A36;   /* elevated surface levels */
- --txt:#F4F5F7; --dim:#A1A7B3; --line:rgba(255,255,255,.10);
+ --txt:#F4F5F7; --dim:#A1A7B3; --di:#A1A7B3; --line:rgba(255,255,255,.10);   /* --di was used 35× (esp. the session surface) but never defined → dim text rendered at full brightness; alias it to --dim */
  /* brand + semantic colour (magenta=action, gold=reward, green=verified, purple/blue=categories) */
  --mag:#FF2D8A; --mag2:#FF6BAE; --gold:#FFC247; --green:#22C55E; --purple:#8B5CF6; --int:#3C8CFA; --grey:#A1A7B3; --crimson:#E4323A;
  /* typography */
@@ -44,7 +44,7 @@
 .cb-launch{margin-left:auto;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;border-radius:8px;padding:5px 11px;font-size:.72rem;font-weight:600;cursor:pointer;white-space:nowrap}.cboard-mask{display:none;position:fixed;inset:0;z-index:9999;background:#08080d;flex-direction:column}.cboard-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.1);color:#f5f5f7;font-size:.95rem}.cboard-bar button{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;border-radius:8px;padding:7px 13px;font-size:.82rem;cursor:pointer}
 .cc-mask{display:none;position:fixed;inset:0;z-index:9998;background:#0B0B12;flex-direction:column;overflow:auto}.cc-wrap{max-width:520px;margin:0 auto;width:100%;padding:28px 20px 40px}.cc-top{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:22px}.cc-kick{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#8b8b95;font-weight:700}.cc-title{font-size:1.9rem;font-weight:800;line-height:1}.cc-exit{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:9px;padding:9px 14px;font-size:.8rem;font-weight:600;cursor:pointer;white-space:nowrap}.cc-tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}.cc-tile{display:flex;flex-direction:column;gap:5px;align-items:flex-start;text-align:left;background:#14141C;border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:18px 16px;cursor:pointer;color:#f5f5f7;font:inherit}.cc-tile:hover{border-color:rgba(255,255,255,.22)}.cc-tile .cc-ic{color:var(--acc);display:block;margin-bottom:2px}.cc-tile .cc-ic svg{width:26px;height:26px}.cc-tile b{font-size:1.05rem}.cc-tile span{font-size:.72rem;color:#8b8b95}.cc-tile.stub{opacity:.6}.cc-note{margin-top:18px;font-size:.76rem;color:#8b8b95;line-height:1.5;background:#14141C;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px}.cboard-if{flex:1;width:100%;border:0;background:#0B0B12}
 .btn2{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;padding:16px 18px;font-family:inherit;font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:filter .12s}
-.btn2--primary{background:var(--acc);color:#fff}.btn2--primary:hover{filter:brightness(1.08)}
+.btn2--primary{background:linear-gradient(180deg,#ff3d97,#ec2079);color:#fff}.btn2--primary:hover{filter:brightness(1.08)}
 .sess-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:calc(71px + env(safe-area-inset-bottom,0px));z-index:9997;background:#08080d;overflow:auto}
 .sess-inner{max-width:440px;margin:0 auto;padding:0 18px calc(40px + env(safe-area-inset-bottom,0px));position:relative}
 .ss-top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;margin:0 -18px 18px;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px 13px;background:#08080d;border-bottom:1px solid var(--line)}
@@ -65,7 +65,7 @@
 .ss-tag{font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--acc);margin-top:5px}
 .ss-chev{color:var(--di);font-size:1.3rem}
 .ss-sess{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.ss-sec{background:var(--s1);border:1px solid rgba(255,255,255,.07);border-radius:13px;overflow:hidden}
+.ss-sec{background:var(--s1);border:1px solid rgba(255,255,255,.07);border-radius:var(--r-lg);overflow:hidden}
 .ss-sec.open{border-color:rgba(255,255,255,.14)}
 .ss-sh{display:flex;align-items:center;gap:14px;width:100%;background:none;border:0;color:var(--txt);font:inherit;text-align:left;padding:16px 17px;cursor:pointer}
 .ss-idx{font-family:var(--disp);font-size:1.1rem;color:var(--di);width:16px;flex-shrink:0}.ss-sec.open .ss-idx{color:var(--acc)}
@@ -94,7 +94,7 @@
 .tt-wk-ic{color:#8b8b95;display:flex;flex:none}
 .tt-wk-l{flex:1}
 .tt-week .arw{color:var(--di)}
-.dev-launch{width:100%;display:flex;align-items:center;gap:10px;background:var(--s1);border:1px solid var(--line);border-radius:13px;padding:15px 16px;margin:0 0 14px;cursor:pointer;color:var(--txt);font:inherit;text-align:left}
+.dev-launch{width:100%;display:flex;align-items:center;gap:10px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r-md);padding:15px 16px;margin:0 0 14px;cursor:pointer;color:var(--txt);font:inherit;text-align:left}
 .dev-launch:hover{background:#1c1c26}
 .vault-back{background:none;border:0;color:var(--di);font:inherit;font-weight:700;font-size:.85rem;cursor:pointer;padding:2px 0 14px;display:inline-flex;align-items:center;gap:5px}
 .vault-back:hover{color:var(--txt)}
@@ -273,7 +273,6 @@
 .hstale-go{flex:0 0 auto;font-family:var(--ui);font-weight:800;font-size:12px;color:var(--txt);background:var(--s2);border:1px solid var(--line);border-radius:var(--r-pill);padding:8px 14px;cursor:pointer;min-height:36px}
 .pc-tierpill{cursor:pointer}
 .th-card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 15px}
-.th-card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 15px}
 .th-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .th-day{font-family:var(--disp);font-size:16px;letter-spacing:.08em;color:var(--dim)}
 .th-badge{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:20px;padding:3px 10px}
@@ -370,7 +369,6 @@
 .seg-b{flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;border:0!important;background:none!important;color:var(--dim)!important;font-family:var(--ui);font-weight:700;font-size:13px;padding:9px 10px;border-radius:var(--r-pill);cursor:pointer;letter-spacing:.02em;transition:background .14s,color .14s}   /* min 44px touch target */
 .seg-b.on{background:var(--mag)!important;color:#fff!important;box-shadow:0 2px 10px -4px rgba(255,45,138,.6)}
 .cardseg{margin:0 0 12px}
-.tt-card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px}
 .tt-meta{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
 .tt-date{font-family:var(--disp);letter-spacing:.05em;font-size:24px;line-height:1;color:var(--txt)}
 .tt-prog{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--dim)}
@@ -531,7 +529,7 @@ button{transition:transform .12s cubic-bezier(.2,.8,.2,1),border-color .12s,back
 .rmrow input{width:110px;padding:9px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--txt);font-size:16px;text-align:right}
 .card .sexb{flex:none;padding:6px 15px;margin-left:6px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--txt);font-weight:800;cursor:pointer}.card .sexb.on{background:var(--mag);border-color:var(--mag);color:#fff}
 .centre .bd{font-size:clamp(30px,8vw,64px)!important;word-break:break-word;line-height:1.06}
-.rmhdr{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--mag);margin:16px 0 6px}
+.rmhdr{font-family:var(--disp);font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);margin:16px 0 6px}   /* unified with .dsec — section headers were magenta Inter here, grey Bebas elsewhere */
 .verstamp{font-size:10px;color:var(--dim);opacity:.6;letter-spacing:.03em;align-self:center;margin-left:6px;white-space:nowrap;display:none}
 body.coachview .verstamp{display:inline}   /* dev build stamp: coaches only, hidden from members */
 body.boardmode .verstamp{display:none}
@@ -604,7 +602,7 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 #logMask .lg-rpe.on{background:var(--mag);border-color:var(--mag);color:#fff}
 #logMask .lg-opt{flex:none;background:none;border:1px dashed rgba(255,255,255,.20);color:var(--di);box-shadow:none;border-radius:8px;font-weight:600}
 #logMask .lg-opt.on{border-style:solid;color:var(--txt)}
-#logMask .lg-add,#clogMask .lg-add,.ml-day .lg-add{display:block;width:100%;margin:14px 0 2px;padding:12px;background:none;border:1px dashed rgba(255,255,255,.28);color:var(--acc);border-radius:10px;font-weight:800;font-size:.9rem;cursor:pointer}
+#logMask .lg-add,#clogMask .lg-add,.ml-day .lg-add{display:block;width:100%;margin:14px 0 2px;padding:12px;background:none;border:1px dashed rgba(255,45,138,.45);color:var(--mag2);border-radius:var(--r-md);font-weight:800;font-size:.9rem;cursor:pointer}
 .lg-card.custom .lg-kind{color:var(--acc)}
 .lg-del{margin-top:10px;background:none;border:0;color:var(--mag);font-weight:700;font-size:.8rem;padding:4px 0;cursor:pointer}
 #clogMask{z-index:9998;background:#08080d}
@@ -615,7 +613,7 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 .lg-cx .lg-cxsep{font-weight:800;color:var(--dim);font-size:1.1rem;flex:none}
 .lg-repeat{display:inline-block;margin-top:8px;background:none;border:1px dashed rgba(255,255,255,.28);color:var(--dim);border-radius:8px;padding:7px 11px;font-weight:700;font-size:.82rem;cursor:pointer}
 .pgc-wrap{display:flex;flex-direction:column;gap:10px;margin:2px 0 8px}
-.pgc{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px 13px 9px}
+.pgc{background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:11px 13px 9px}
 .pgc-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px}
 .pgc-t{font-weight:800;font-size:.92rem}
 .pgc-m{font-weight:700;font-size:.8rem;color:var(--txt)}.pgc-m em{color:var(--dim);font-style:normal;font-weight:600}
@@ -670,7 +668,7 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 .cal-c.rdy{background:rgba(139,92,246,.14)!important;color:var(--txt);cursor:pointer}
 .cal-c.rdy i.rdydot{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--purple)}
 .cal-rdy{font-size:12px;color:var(--purple);margin:0 0 6px;font-weight:700}.cal-rdy b{color:var(--txt)}
-.ml-day{border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:8px 0;background:var(--bg)}
+.ml-day{border:1px solid var(--line);border-radius:var(--r-md);padding:8px 10px;margin:8px 0;background:var(--s1)}
 .ml-date{font-size:11px;font-weight:800;color:var(--mag);letter-spacing:.06em;margin-bottom:4px}
 .ml-line{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0 2px}
 .ml-line span:first-child{color:var(--txt)}.ml-res{color:var(--dim);text-align:right;flex-shrink:0}
@@ -825,7 +823,7 @@ body.hasnav #foot{bottom:60px}
 .lvlbadge.xp{background:var(--acc);color:#0a0a11}
 .lvlbar.xp i{background:linear-gradient(90deg,var(--acc),#ffe08a)}
 .lvlsub{font-size:11px;color:var(--dim);margin-top:4px}
-.minibtn{float:right;font-size:11px;font-weight:800;padding:3px 10px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--acc2);cursor:pointer;letter-spacing:.04em;text-transform:none}
+.minibtn{float:right;font-size:11px;font-weight:800;padding:3px 10px;border-radius:var(--r-sm);border:1px solid var(--line);background:var(--bg);color:var(--txt);cursor:pointer;letter-spacing:.04em;text-transform:none}
 .rmsub{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin:8px 0 2px}
 .ladder{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:6px 0}
 .rung{font-size:11px;font-weight:700;padding:4px 8px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--dim)}
@@ -1385,7 +1383,7 @@ body.hasnav #foot{bottom:60px}
 .pz-el{font-size:.62rem;font-weight:800;letter-spacing:.12em;color:var(--acc);margin-bottom:6px}
 .pz-eh{font-size:1.05rem;font-weight:800;margin-bottom:8px}
 .pz-empty p{font-size:.86rem;line-height:1.5;color:var(--dim);margin:0 0 14px}
-.pz-open{padding:11px 18px;border-radius:10px;border:none;background:var(--acc);color:#10121a;font:inherit;font-weight:800;cursor:pointer}
+.pz-open{padding:11px 18px;border-radius:var(--r-md);border:none;background:linear-gradient(180deg,#ff3d97,#ec2079);color:#fff;font:inherit;font-weight:800;cursor:pointer}
 /* ===== Journey (title guide) ===== */
 .tt-tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;-webkit-overflow-scrolling:touch}
 .tt-tab{flex:0 0 auto;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--s1);color:var(--dim);font:inherit;font-weight:700;font-size:.82rem;cursor:pointer}
@@ -1975,7 +1973,7 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
 .jrn-freq{font:600 11px/1.3 var(--ui);color:var(--mag2);margin-top:5px}
 .jrn-need{font:500 12px/1.4 var(--ui);color:var(--dim);background:rgba(255,255,255,.04);border-radius:6px;padding:8px 10px;margin-top:9px}
 .jrn-need b{color:var(--txt)}
-.jrn-cta{margin-top:11px;width:100%;font:700 12px/1 var(--ui);letter-spacing:.03em;color:#0A0A11;background:var(--gold);border:0;border-radius:var(--r-sm);padding:11px;cursor:pointer}
+.jrn-cta{margin-top:11px;width:100%;font:700 12px/1 var(--ui);letter-spacing:.03em;color:#fff;background:linear-gradient(180deg,#ff3d97,#ec2079);border:0;border-radius:var(--r-sm);padding:11px;cursor:pointer}
 .jrn-route{margin-bottom:12px;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
 .jrn-route>summary{font:600 12px/1 var(--ui);color:var(--dim);padding:11px 12px;cursor:pointer;list-style:none;background:var(--s1)}
 .jrn-route>summary::-webkit-details-marker{display:none}
@@ -2009,9 +2007,9 @@ body.boardmode .escLog{display:none!important}   /* the board is a shared displa
 <div class="anav" id="anav" style="display:none">
   <button class="anav-b" data-nav="home" onclick="goNav('home')"><span class="ai" id="ni-home"></span>Home</button>
   <button class="anav-b" data-nav="train" onclick="goNav('train')"><span class="ai" id="ni-train"></span>Train</button>
-  <button class="anav-b lockednav" data-nav="compete" onclick="navSoon()" aria-label="Locked — coming soon"><span class="ai" id="ni-compete"></span><span class="navlbl">&nbsp;</span></button>
-  <button class="anav-b lockednav" data-nav="explore" onclick="navSoon()" aria-label="Locked — coming soon"><span class="ai" id="ni-explore"></span><span class="navlbl">&nbsp;</span></button>
-  <button class="anav-b lockednav" data-nav="fantasy" onclick="navSoon()" aria-label="Locked — coming soon"><span class="ai" id="ni-fantasy"></span><span class="navlbl">&nbsp;</span></button>
+  <button class="anav-b" data-nav="tree" onclick="goNav('tree')"><span class="ai" id="ni-tree"></span>Progress</button>
+  <button class="anav-b" data-nav="vault" onclick="goNav('vault')"><span class="ai" id="ni-vault"></span>History</button>
+  <button class="anav-b lockednav" data-nav="compete" onclick="navSoon()" aria-label="Compete — coming soon"><span class="ai" id="ni-compete"></span><span class="navlbl">Compete</span></button>
 </div>
 <div class="wrap">
   <div class="top">
@@ -2123,7 +2121,7 @@ var NAV_SUBMIT='';
   function nav(key,fallback){return (ASSET.nav&&ASSET.nav[key])?'<img class="navico" src="'+ASSET.nav[key]+'" alt="">':fallback;}
   function pimg(a){return '<img class="ppgic" src="'+a+'" alt="">';}
   // Closed beta: the three unreleased tabs show a neutral padlock (no distinctive icon or label) so testers can't tell what they'll be.
-  var m={'ni-home':nav('home',ICO.home),'ni-train':nav('train',ICO.program),'ni-compete':ICO.lock,'ni-explore':ICO.lock,'ni-fantasy':ICO.lock,'ni-gear':ICO.gear,'ni-logout':ICO.logout};
+  var m={'ni-home':nav('home',ICO.home),'ni-train':nav('train',ICO.program),'ni-tree':nav('tree',ICO.tree),'ni-vault':nav('vault',ICO.history),'ni-compete':ICO.compete,'ni-gear':ICO.gear,'ni-logout':ICO.logout};
   for(var k in m){var el=document.getElementById(k);if(el)el.innerHTML=m[k];}})();
 var STAT_ICO={STR:'strength',PWR:'power',SPD:'speed',END:'endurance',SKL:'skill',CAP:'capacity'};
 var ENC=null, ENCB=null;   // member/coach season blobs — fetched from data-a.json / data-b.json only on unlock (keeps first load ~800KB instead of 5MB)
@@ -4398,7 +4396,7 @@ function buildTrainHTML(){
     ?('<button class="tt-ready on" onclick="openReadiness()">Feeling '+readiness.score+'/10 · weights ~'+Math.round(readinessPct(readiness.score))+'% lighter today <span class="arw">›</span></button>')
     :('<button class="tt-ready" onclick="openReadiness()">How are you feeling today? <span class="arw">›</span></button>');
   var today='<div class="dsec">Today\'s Training</div>'
-    +'<div class="tt-card"><div class="tt-meta"><span class="tt-date">'+dstr.toUpperCase()+'</span>'
+    +'<div class="th-card tt-hero"><div class="tt-meta"><span class="tt-date">'+dstr.toUpperCase()+'</span>'
       +'<span class="tt-prog"><span class="tt-ic">'+ICO.program+'</span>Unranked Program</span></div>'
     +rdy
     +'<button class="btn-primary th-go" onclick="openSession()">Start session <span class="arw">→</span></button>'+questCompactHTML()+'<button class="tt-week" onclick="openWeek()"><span class="tt-wk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg></span><span class="tt-wk-l">Week ahead</span><span class="arw">›</span></button></div>';
@@ -4553,7 +4551,7 @@ window.openMyLog=function(){var m=document.getElementById('myLogMask');if(!m)ret
   // render the active page only (bottom-nav drives which); coach never gets here
   var titles={home:'Home',tree:'Progress',train:'Train',submit:'Log a score',vault:'The Vault',compete:'In Development',explore:'In Development',fantasy:'In Development'};
   var tt=document.getElementById('ppTitle');if(tt)tt.innerHTML=(titles[profilePage]||'Home')+' <span class="betap">beta</span>';
-  var bk=document.getElementById('ni-back');if(bk)bk.style.display=(profilePage==='tree'||profilePage==='vault'||profilePage==='submit')?'':'none';   // sub-pages reached from Home/Train links get a back affordance; top-level tabs don't
+  var bk=document.getElementById('ni-back');if(bk)bk.style.display=(profilePage==='submit')?'':'none';   // tree/vault are now top-level tabs (no back arrow); only submit is a sub-page reached from a link
   var pageHtml;
   if(profilePage==='tree'){ pageHtml=progressChooserHTML(); }
   else if(profilePage==='vault'){ pageHtml=buildVaultHTML(histLog,allD.length)+settings; }
@@ -5027,7 +5025,7 @@ function applyNav(){var nav=document.getElementById('anav');var isMember=(access
   document.body.classList.toggle('hasnav',isMember);if(nav)nav.style.display=isMember?'flex':'none';}
 function updateNav(active){[].forEach.call(document.querySelectorAll('.anav-b'),function(b){b.classList.toggle('on',b.getAttribute('data-nav')===active);});}
 window.navSoon=function(){try{showToast('Coming soon');}catch(e){}};   // locked tabs give feedback without navigating to a dead page, revealing feature names, or stealing the active state
-function navFor(pp){return (pp==='vault'||pp==='tree')?'home':(pp==='submit')?'train':pp;}   // vault/tree live under Home; submit under Train
+function navFor(pp){return (pp==='submit')?'train':pp;}   // Progress (tree) and History (vault) are now their own bottom-nav tabs; submit still lives under Train
 window.goNav=function(page){
   try{closeSession();}catch(e){} try{closeLog();}catch(e){} try{closeWeek();}catch(e){} try{closeDev();}catch(e){} try{closeTrainPage();}catch(e){} try{closeRM();}catch(e){} try{closeVerify();}catch(e){} try{closeShop();}catch(e){} try{closeTests();}catch(e){} try{closeTree();}catch(e){} try{closeTiers();}catch(e){} try{closePursuit();}catch(e){}
   if((page==='train'||page==='submit')&&!coachMode()&&!hasConsent()&&!(athleteSex||Object.keys(TESTS).length)){openOnboard();return;}
@@ -5035,6 +5033,7 @@ window.goNav=function(page){
   if(page==='submit'){updateNav(navFor('home'));openTrainPage('card');try{window.scrollTo(0,0);}catch(e){}return;}   // FIX 2026-09-10: score entry lives in openTrainPage('card'); the old submit page (buildTrainHTML) no longer renders it, so route Log-a-score straight to the working entry
   var valid={home:1,tree:1,vault:1,train:1,submit:1,compete:1,explore:1,fantasy:1};
   profilePage=valid[page]?page:'home';
+  if(profilePage==='vault'){try{vaultTab='history';}catch(e){}}   // the History tab lands on the calendar/log directly, not the Vault chooser
   updateNav(navFor(profilePage));openMyLog();try{document.querySelector('#myLogMask .mlbody').scrollTop=0;}catch(e){}
   /* Journey page shows the chooser (Log a score / Journey / Skill Tree); no longer auto-opens the tree — 2026-09-09 */
 };
