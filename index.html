@@ -40,7 +40,7 @@
 .hubtile .hubs{font-size:.6rem;color:#8b8b95;line-height:1.25}
 .ht-prog .hubl{color:#5CC7FF}.ht-vault .hubl{color:#B98CFF}.ht-shop .hubl{color:#F3B73A}
 .sh-title-sel{width:100%;background:var(--s1)!important;border:1px solid rgba(255,255,255,.15);color:#f5f5f7;border-radius:10px;padding:11px 12px;font:inherit;font-size:.9rem}
-.sh-sec{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#8b8b95;margin-bottom:7px}
+.sh-sec{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--dim);margin-bottom:7px}
 .cb-launch{margin-left:auto;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;border-radius:8px;padding:5px 11px;font-size:.72rem;font-weight:600;cursor:pointer;white-space:nowrap}.cboard-mask{display:none;position:fixed;inset:0;z-index:9999;background:#08080d;flex-direction:column}.cboard-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.1);color:#f5f5f7;font-size:.95rem}.cboard-bar button{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;border-radius:8px;padding:7px 13px;font-size:.82rem;cursor:pointer}
 .cc-mask{display:none;position:fixed;inset:0;z-index:9998;background:#0B0B12;flex-direction:column;overflow:auto}.cc-wrap{max-width:520px;margin:0 auto;width:100%;padding:28px 20px 40px}.cc-top{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:22px}.cc-kick{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#8b8b95;font-weight:700}.cc-title{font-size:1.9rem;font-weight:800;line-height:1}.cc-exit{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:9px;padding:9px 14px;font-size:.8rem;font-weight:600;cursor:pointer;white-space:nowrap}.cc-tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}.cc-tile{display:flex;flex-direction:column;gap:5px;align-items:flex-start;text-align:left;background:#14141C;border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:18px 16px;cursor:pointer;color:#f5f5f7;font:inherit}.cc-tile:hover{border-color:rgba(255,255,255,.22)}.cc-tile .cc-ic{color:var(--acc);display:block;margin-bottom:2px}.cc-tile .cc-ic svg{width:26px;height:26px}.cc-tile b{font-size:1.05rem}.cc-tile span{font-size:.72rem;color:#8b8b95}.cc-tile.stub{opacity:.6}.cc-note{margin-top:18px;font-size:.76rem;color:#8b8b95;line-height:1.5;background:#14141C;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px}.cboard-if{flex:1;width:100%;border:0;background:#0B0B12}
 .btn2{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;padding:16px 18px;font-family:inherit;font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:filter .12s}
@@ -57,7 +57,7 @@
 .ss-back{background:var(--s1);border:1px solid rgba(255,255,255,.14);color:var(--txt);width:44px;height:44px;border-radius:11px;font-size:1.3rem;cursor:pointer;flex-shrink:0}
 .ss-picker{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.07);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.07)}
 .ss-track{display:flex;align-items:center;gap:15px;background:var(--s1);border:0;border-left:2px solid transparent;padding:17px;cursor:pointer;text-align:left;color:var(--txt);font:inherit;width:100%}
-.ss-track:hover{background:#1c1c26}.ss-track.primary{border-left-color:var(--acc)}
+.ss-track:hover{background:#1c1c26}.ss-track.primary{border-left-color:var(--mag)}
 .ss-tic{width:25px;height:25px;color:#8b8b95;flex-shrink:0}.ss-tic svg{width:25px;height:25px}.ss-track.primary .ss-tic{color:var(--txt)}
 .ss-tmid{flex:1;min-width:0;display:flex;flex-direction:column}
 .ss-tnm{font-family:var(--disp);font-size:1.45rem;letter-spacing:.03em;line-height:1}
@@ -77,7 +77,7 @@
 .ss-txt{white-space:pre-line;font-size:.85rem;color:var(--txt);line-height:1.6}
 .ss-divs{display:flex;gap:6px;margin-bottom:12px}
 .ss-div{flex:1;font-size:.68rem;font-weight:800;letter-spacing:.03em;padding:8px 0;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--di);cursor:pointer}
-.ss-div.on{background:var(--acc);border-color:var(--acc);color:#1a1200}
+.ss-div.on{background:var(--mag);border-color:var(--mag);color:#fff}
 .ss-div{position:relative}
 .ss-div.sug:not(.on){border-color:rgba(255,194,71,.45)}
 .ss-div.sug:not(.on)::after{content:"";position:absolute;top:5px;right:6px;width:5px;height:5px;border-radius:50%;background:var(--acc)}
@@ -565,7 +565,7 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 .lg-last{font-size:12px;color:var(--acc2);margin-bottom:8px}.lg-last b{color:var(--txt)}
 .lg-bands{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
 .card .lg-band{flex:none;font-size:13px;font-weight:800;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--dim);cursor:pointer}
-.card .lg-band.on{background:var(--acc);border-color:var(--acc);color:#0a0a11}
+.card .lg-band.on{background:var(--mag);border-color:var(--mag);color:#fff}
 .lg-res,.lg-note{width:100%;box-sizing:border-box;padding:10px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--txt);font-size:16px;margin-bottom:8px}
 .lg-card{background:var(--s1);border:1px solid var(--line);border-radius:13px;margin-bottom:10px;overflow:hidden;padding:0}
 .lg-card.open{border-color:rgba(255,255,255,.16)}
@@ -597,7 +597,7 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 /* Log overlay: neutralise the blanket ".card button" magenta-gradient so log cards render as designed (dark surfaces, subtle accents) */
 #logMask .lg-head{background:none;border:0;box-shadow:none;width:100%;border-radius:0}
 #logMask .lg-band{flex:none;background:var(--panel2);border:1px solid var(--line);color:var(--dim);box-shadow:none;border-radius:8px;font-weight:800}
-#logMask .lg-band.on{background:var(--acc);border-color:var(--acc);color:#0a0a11}
+#logMask .lg-band.on{background:var(--mag);border-color:var(--mag);color:#fff}
 #logMask .lg-rpe{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--dim);box-shadow:none;border-radius:7px;font-weight:800}
 #logMask .lg-rpe.on{background:var(--mag);border-color:var(--mag);color:#fff}
 #logMask .lg-opt{flex:none;background:none;border:1px dashed rgba(255,255,255,.20);color:var(--di);box-shadow:none;border-radius:8px;font-weight:600}
@@ -4305,11 +4305,9 @@ function buildHomeHTML(hint,cardToggle,card,tree){
   function hubBtn(asset,onclick,label,sub,ico){
     return '<button class="dcard" onclick="'+onclick+'" aria-label="'+esc(label)+'"><span class="dc-ic">'+ico+'</span><span class="dc-t"><b>'+esc(label)+'</b><span>'+esc(sub)+'</span></span><span class="dc-chev">›</span></button>';
   }
-  var bighub='<div class="homehub">'
-    +'<button class="hubtile ht-prog" onclick="goNav(&#39;tree&#39;)"><span class="hubic">'+ICO.tree+'</span><span class="hubl">Progress</span></button>'
-    +'<button class="hubtile ht-vault" onclick="goNav(&#39;vault&#39;)"><span class="hubic">'+ICO.vault+'</span><span class="hubl">Vault</span></button>'
-    +'<button class="hubtile ht-shop" onclick="openShop()"><span class="hubic">'+ICO.shop+'</span><span class="hubl">Shop</span></button>'
-    +'</div>';
+  // Progress and History (Vault) now live in the bottom nav, so Home no longer duplicates them as tiles.
+  // Shop isn't a nav tab, so it stays here as a single clean row (also reachable via the Credits chip).
+  var bighub='<button class="dcard" onclick="openShop()"><span class="dc-ic">'+ICO.shop+'</span><span class="dc-t"><b>Shop</b><span>Spend credits on cosmetics &amp; titles</span></span><span class="dc-chev">&rsaquo;</span></button>';
   // Home order: CARD → LEVEL → TODAY → DAILY QUEST → CURRENT PURSUIT + CLOSEST TO NEXT POINT (grouped — similar "what to do next" jobs) → CLASS TREE/VAULT/SHOP.
   // De-dupe: if the Pursuit card's "Closest" prerequisite is the same movement the next-point card would pick, exclude it there so Home doesn't show the same test twice.
   var _pn=(typeof nearestClass==='function')?nearestClass():null,_pex=null;
