@@ -2812,16 +2812,16 @@ function sessSuggestDiv(p){try{
        if(typeof gcap==='function'&&gcap(k)>0)return order[i];}
      return 'scaled';}
   }catch(e){}return 'rx';}
-function sessResolvePres(p,pres){var t=pres;try{if(clsFor(p)==='wod'&&typeof personalizeWod==='function')t=personalizeWod(t,p.category,p.bench);}catch(e){}try{t=personalizeGym(t);}catch(e){}return t;}
-function sessBodyHTML(p,pid){var divs=sessDivs(p);
-  if(divs.length<2){return '<div class="ss-txt">'+esc(sessResolvePres(p,divs.length?divs[0].pres:sessPres(p)))+'</div>';}
+function sessResolvePres(p,pres){var t=pres;try{if(clsFor(p)==='wod'&&typeof personalizeWod==='function')t=personalizeWod(t,p.category,p.bench);}catch(e){}try{t=personalizeGym(t);}catch(e){}try{if(typeof applyRM==='function')t=applyRM(t);}catch(e){}return t;}   // FIX 2026-09-29: the Start-session view must resolve strength %s to kg too (it previously skipped applyRM, so "@87%" never became a weight here)
+function sessBodyHTML(p,pid){var divs=sessDivs(p);var maxw=(p&&p.type==='strength'&&typeof maxPromptHTML==='function')?maxPromptHTML([pid]):'';
+  if(divs.length<2){return maxw+'<div class="ss-txt">'+esc(sessResolvePres(p,divs.length?divs[0].pres:sessPres(p)))+'</div>';}
   var sug=sessSuggestDiv(p);var cur=sessDivFor(pid,sug);
   if(!divs.some(function(d){return d.key===cur;}))cur=(divs.filter(function(d){return d.key==='rx';})[0]||divs[divs.length-1]).key;
   var tabs=divs.map(function(d){return '<button class="ss-div'+(d.key===cur?' on':'')+(d.key===sug?' sug':'')+'" onclick="sessSetDiv(&#39;'+pid+'&#39;,&#39;'+d.key+'&#39;)">'+d.label+'</button>';}).join('');
   var chosen=(divs.filter(function(d){return d.key===cur;})[0]||divs[0]);
   var why='';try{if(cur===sug&&clsFor(p)==='wod'&&typeof recWhy==='function')why=recWhy(p);}catch(e){}
   var hint=(cur===sug)?('<div class="ss-sughint">Suggested for you'+(why?' &mdash; '+esc(why):'')+'</div>'):'';
-  return '<div class="ss-divs">'+tabs+'</div>'+hint+'<div class="ss-txt">'+esc(sessResolvePres(p,chosen.pres))+'</div>';}
+  return maxw+'<div class="ss-divs">'+tabs+'</div>'+hint+'<div class="ss-txt">'+esc(sessResolvePres(p,chosen.pres))+'</div>';}
 window.sessSetDiv=function(pid,div){SESSDIV_PIECE[pid]=div;var b=document.getElementById('ssb-'+pid);if(b){var p=piece(pid);if(p)b.innerHTML=sessBodyHTML(p,pid);}};
 function sessDateStr(){try{return new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});}catch(e){return '';}}
 window.openSession=function(){var m=document.getElementById('sessMask');if(!m){m=document.createElement('div');m.id='sessMask';m.className='sess-mask';m.innerHTML='<div class="sess-inner" id="sessInner"></div>';document.body.appendChild(m);}sessTrack=null;renderSession();m.style.display='block';m.scrollTop=0;};
@@ -5074,13 +5074,14 @@ function matchLift(s){s=String(s).toLowerCase();
   return null;}
 var TM_FRAC=0.90;   // strength %s are computed off a TRAINING MAX (90% of the entered 1RM) so the loads are accurate & repeatable, not off a one-rep grind. WOD loads (personalizeWod) stay off the true 1RM.
 function applyRM(text){return String(text||'').split('\n').map(function(ln){
-  return ln.replace(/@ ?(\d+)%( of ([a-z'-]+(?: [a-z'-]+)*))?/gi,function(m,pct,ofg,oflift){
+  return ln.replace(/@ ?(\d+)(?:\s*[-–]\s*(\d+))?%( of ([a-z'-]+(?: [a-z'-]+)*))?/gi,function(m,pct,pct2,ofg,oflift){
     var key=oflift?matchLift(oflift):matchLift(ln);var rm=key&&oneRM[key];
-    if(!rm)return m;var tm=rm*TM_FRAC;var kg=Math.round((tm*pct/100*readinessFactor())/2.5)*2.5;return '@ '+kg+'kg';});
+    if(!rm)return m;var tm=rm*TM_FRAC;function kgOf(p){return Math.round((tm*p/100*readinessFactor())/2.5)*2.5;}
+    var lo=kgOf(pct);if(pct2){return '@ '+lo+'-'+kgOf(pct2)+'kg';}return '@ '+lo+'kg';});   // handles single % and ranges (@70-80%)
 }).join('\n');}
 function _liftLabel(k){for(var i=0;i<WODLIFTS.length;i++)if(WODLIFTS[i][0]===k)return WODLIFTS[i][1];return k;}
 // which barbell 1RMs does this strength group's "@NN%" work reference that the member hasn't entered yet? → drives the "add your maxes" prompt so % actually resolves to kg
-function missingMaxLifts(g){var need={};(g||[]).forEach(function(id){var p=piece(id);if(!p||p.type!=='strength')return;var v=pv(p);var src=(v&&v.prescription)||'';String(src).split('\n').forEach(function(ln){if(!/@ ?\d+%/.test(ln))return;var key=matchLift(ln);if(key&&!(typeof oneRM!=='undefined'&&oneRM[key]))need[key]=1;});});return Object.keys(need);}
+function missingMaxLifts(g){var need={};(g||[]).forEach(function(id){var p=piece(id);if(!p||p.type!=='strength')return;var v=pv(p);var src=(v&&v.prescription)||'';String(src).split('\n').forEach(function(ln){if(!/@ ?\d+(?:\s*[-–]\s*\d+)?%/.test(ln))return;var key=matchLift(ln);if(key&&!(typeof oneRM!=='undefined'&&oneRM[key]))need[key]=1;});});return Object.keys(need);}
 function maxPromptHTML(g){if(coachMode()||boardMode)return '';var miss=missingMaxLifts(g);if(!miss.length)return '';
   var names=miss.map(_liftLabel).join(', ');
   return '<button class="maxwarn" onclick="openRM()"><span class="mw-i">⚖</span><span class="mw-t"><b>Add your 1RM'+(miss.length>1?'s':'')+' to see your exact kg</b><span>'+esc(names)+' — tap to set →</span></span></button>';}
