@@ -613,6 +613,15 @@ body.focusmode .escbtn,body.boardmode .escbtn{display:inline-flex}
 .lg-cx .lg-cxn{flex:1;min-width:0;text-align:center;font-weight:800;font-size:1.05rem}
 .lg-cx .lg-cxsep{font-weight:800;color:var(--dim);font-size:1.1rem;flex:none}
 .lg-repeat{display:inline-block;margin-top:8px;background:none;border:1px dashed rgba(255,255,255,.28);color:var(--dim);border-radius:8px;padding:7px 11px;font-weight:700;font-size:.82rem;cursor:pointer}
+.lg-subn{font-weight:600;font-size:.72rem;color:var(--dim);margin-left:4px;letter-spacing:0}
+.lg-did{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--txt);padding:9px 10px;font:inherit;font-size:.9rem;line-height:1.35;resize:vertical;min-height:84px}
+.lg-grid{display:flex;flex-direction:column;gap:6px;margin:2px 0 2px}
+.lg-grow{display:grid;grid-template-columns:34px 1fr 1fr;align-items:center;gap:8px}
+.lg-ghead{font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.lg-ghead span{padding:0 2px}
+.lg-gset{text-align:center;font-weight:800;color:var(--dim);font-size:.9rem}
+.lg-gr,.lg-gw{width:100%;min-width:0;text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--txt);font:inherit;font-weight:800;font-size:1rem;padding:9px 6px}
+.lg-gadd{align-self:flex-start;margin-top:2px;background:none;border:1px dashed rgba(255,255,255,.28);color:var(--dim);border-radius:8px;padding:7px 11px;font-weight:700;font-size:.82rem;cursor:pointer}
 .pgc-wrap{display:flex;flex-direction:column;gap:10px;margin:2px 0 8px}
 .pgc{background:var(--s1);border:1px solid var(--line);border-radius:var(--r-lg);padding:11px 13px 9px}
 .pgc-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px}
@@ -3841,6 +3850,33 @@ function isPRnow(hkey,stype,res,ds){var sv=scoreVal(stype,res);if(!sv)return fal
 function _pT(v){var m=String(v).match(/(\d+):(\d{2})/);return m?{a:m[1],b:m[2]}:{a:'',b:''};}
 function _pA(v){var r=String(v).match(/(\d+)\s*(?:rounds?|rds?|r\b)/i)||String(v).match(/^\s*(\d+)/);var x=String(v).match(/\+\s*(\d+)/);return {a:r?r[1]:'',b:x?x[1]:''};}
 function _pL(v){var k=String(v).match(/(\d+(?:\.\d+)?)\s*kg/i);var r=String(v).match(/[x×]\s*(\d+)/i)||String(v).match(/(\d+)\s*reps?/i);return {a:k?k[1]:'',b:r?r[1]:''};}
+// ── Retrospective "recognise the day" logging (2026-10-09) ───────────────────────────────
+// Strength grid: parse the programmed main lift into Set / Reps / Weight rows, resolving @NN% to kg
+// through the existing applyRM (training-max) path. Graceful fallback to blank rows when it can't parse.
+function _strMainLine(pres){var t=String(pres||'');var am=t.match(/A\)([\s\S]*?)(?:\n\s*B\)|\n\n|$)/);var line=am?am[1]:(t.split('\n').filter(function(l){return l.trim();})[0]||'');return line.replace(/\s+/g,' ').trim();}
+function _strName(line){var nm=String(line||'').replace(/^\s*A\)\s*/,'').split(/—|\s-\s|:| \d|\(/)[0].trim();return nm||'Strength';}
+function _strSetsFrom(line){var sets=[];var resolved=(typeof applyRM==='function')?applyRM(String(line||'')):String(line||'');var t=resolved.replace(/×/g,'x');
+  var re=/(?:(\d+)\s*x\s*)?(\d+)\s*(?:reps?\b)?\s*@\s*(\d+(?:\.\d+)?\s*kg|\d+\s*%)/gi,m;
+  while((m=re.exec(t))){var n=m[1]?parseInt(m[1],10):1;if(n>12)continue;var reps=parseInt(m[2],10);var w=m[3];var km=w.match(/(\d+(?:\.\d+)?)\s*kg/i);var kg=km?km[1]:'';var hint=km?'':w.replace(/\s+/g,'');for(var i=0;i<n;i++)sets.push({reps:reps,kg:kg,hint:hint});}
+  if(!sets.length){var re2=/(\d+)\s*x\s*(\d+)(?!\s*(?:s\b|sec|min))/gi;while((m=re2.exec(t))){var n2=parseInt(m[1],10),r2=parseInt(m[2],10);if(n2>12||r2>50)continue;for(var j=0;j<n2;j++)sets.push({reps:r2,kg:'',hint:''});}}
+  return sets;}
+function _parseStoredSets(res){var out=[];String(res||'').split(/,|\n/).forEach(function(seg){var m=seg.match(/(\d+(?:\.\d+)?)\s*kg\s*[x×]\s*(\d+)/i)||seg.match(/(\d+(?:\.\d+)?)\s*[x×]\s*(\d+)/i);if(m)out.push({kg:m[1],reps:m[2],hint:''});});return out;}
+function _strRows(sets){return sets.map(function(s,i){return '<div class="lg-grow"><span class="lg-gset">'+(i+1)+'</span>'
+  +'<input class="lg-gr" inputmode="numeric" placeholder="reps" value="'+esc(s.reps||'')+'" oninput="lgGridCompose(this)">'
+  +'<input class="lg-gw" inputmode="decimal" placeholder="'+esc(s.hint||'kg')+'" value="'+esc(s.kg||'')+'" oninput="lgGridCompose(this)"></div>';}).join('');}
+function strGridHTML(p,band,e){var line=_strMainLine((vb(p)&&(vb(p)[band]||vb(p).rx||vb(p).intermediate||vb(p).scaled||vb(p).rxPlus)||{}).prescription);
+  var nm=_strName(line);var sets=(e&&e.result)?_parseStoredSets(e.result):_strSetsFrom(line);if(!sets.length)sets=[{reps:'',kg:'',hint:'kg'},{reps:'',kg:'',hint:'kg'},{reps:'',kg:'',hint:'kg'}];
+  var comp=sets.filter(function(s){return s.kg||s.reps;}).map(function(s){return (s.kg||'?')+'kg × '+(s.reps||'?');}).join(', ');
+  return '<div class="lg-flab">'+esc(nm)+' — your sets</div><div class="lg-grid" data-grid="str">'
+    +'<div class="lg-grow lg-ghead"><span>Set</span><span>Reps</span><span>Weight</span></div>'+_strRows(sets)
+    +'<button type="button" class="lg-gadd" onclick="lgGridAdd(this)">＋ add a set</button>'
+    +'<input type="hidden" class="lg-res" value="'+esc(comp)+'"></div>';}
+window.lgGridCompose=function(el){var g=el.closest('.lg-grid');if(!g)return;var out=[];[].forEach.call(g.querySelectorAll('.lg-grow:not(.lg-ghead)'),function(row){var r=(row.querySelector('.lg-gr')||{}).value||'';var w=(row.querySelector('.lg-gw')||{}).value||'';if(r||w)out.push((w||'?')+'kg × '+(r||'?'));});var h=g.querySelector('.lg-res');if(h)h.value=out.join(', ');};
+window.lgGridAdd=function(btn){var g=btn.closest('.lg-grid');if(!g)return;var rows=g.querySelectorAll('.lg-grow:not(.lg-ghead)');var n=rows.length+1;var div=document.createElement('div');div.className='lg-grow';div.innerHTML='<span class="lg-gset">'+n+'</span><input class="lg-gr" inputmode="numeric" placeholder="reps" oninput="lgGridCompose(this)"><input class="lg-gw" inputmode="decimal" placeholder="kg" oninput="lgGridCompose(this)">';g.insertBefore(div,btn);};
+// WOD: a "what you did" editable block, pre-filled from the chosen band's movements — edit a movement/weight to what you actually did.
+function wodDidHTML(p,band){var V=p.variants||{};var bb=V[band]||V.rx||V.rxPlus||V.intermediate||V.scaled||{};var txt=bb.prescription?clean((typeof applyRM==='function'?applyRM(wodMain(bb.prescription)):wodMain(bb.prescription))):'';
+  return '<div class="lg-flab">What you did <span class="lg-subn">edit a movement or weight if you changed it</span></div><textarea class="lg-did" rows="4" oninput="this.dataset.dirty=1">'+esc(txt)+'</textarea>';}
+window.logBandWod=function(el){logPick(el);var card=el.closest('.lg-card');if(!card)return;var ta=card.querySelector('.lg-did');if(!ta||ta.dataset.dirty)return;var p=piece(card.getAttribute('data-pid'));if(!p)return;var V=p.variants||{};var bb=V[el.getAttribute('data-band')]||{};if(bb.prescription)ta.value=clean((typeof applyRM==='function'?applyRM(wodMain(bb.prescription)):wodMain(bb.prescription)));};
 function resultInputHTML(st,val,last){val=val||'';
   var rep=(last&&last.e&&last.e.result)?'<button type="button" class="lg-repeat" onclick="lgRepeat(this)">↩ Repeat '+esc(last.e.result)+'</button>':'';
   function cx(kind,pa,pb,sep,a,b,imA,imB){return '<div class="lg-cx" data-cx="'+kind+'">'
@@ -3860,23 +3896,28 @@ window.lgCompose=function(el){var box=el.closest('.lg-cx');if(!box)return;var ns
 window.lgRepeat=function(btn){var card=btn.closest('.lg-card');if(!card)return;var val=card.getAttribute('data-last')||'';var res=card.querySelector('.lg-res');if(res)res.value=val;
   var box=card.querySelector('.lg-cx');if(box){var t=box.getAttribute('data-cx');var p=(t==='time')?_pT(val):(t==='amrap')?_pA(val):(t==='load')?_pL(val):{a:'',b:''};var ns=box.querySelectorAll('.lg-cxn');if(ns[0])ns[0].value=p.a;if(ns[1])ns[1].value=p.b;}
   card.classList.add('open');};
+// the programmed loggable pieces for ANY date (not just today) — so going back to a past day auto-recognises that day's strength / WOD / skill (2026-10-09)
+function logLoggableForDate(ds){try{if(!ds||ds===todayStr())return logLoggable();var info=(typeof dayForDate==='function')?dayForDate(ds):null;var d=info&&info.day;if(!d)return [];
+  var out=[],seen={};var ids=(d.tracks&&(d.tracks[track]||d.tracks.class))||(d.sunday?[d.sunday]:[]);
+  ids.forEach(function(id){if(seen[id])return;seen[id]=1;var p=piece(id);if(p&&(p.type==='strength'||p.type==='wod'||clsFor(p)==='wod'||p.type==='skill'))out.push(p);});
+  return out;}catch(e){return [];}}
 window.openLog=function(ds){var m=document.getElementById('logMask');if(!m)return;
   _logDate=(ds&&ds!==todayStr())?ds:null;var dsK=logDateStr();var isToday=(dsK===todayStr());
   var ent=(LOG[dsK]&&LOG[dsK].pieces)||{};
-  var items=isToday?logLoggable():[];   // programmed pieces only make sense for today's live day; past dates log free/custom
+  var items=isToday?logLoggable():logLoggableForDate(dsK);   // auto-recognise that day's programme (strength / WOD / skill) for past dates too — band-switch & score still apply
   try{var h=m.querySelector('.fp-ttl');if(h)h.textContent=isToday?'Log Today':'Log Session';var h3=m.querySelector('h3');if(h3)h3.textContent=isToday?'Log today':('Log — '+fmtDate(dsK));}catch(e){}
   var order=items.map(function(p){return p.id;});
   Object.keys(ent).forEach(function(pid){if(order.indexOf(pid)<0)order.push(pid);});   // include already-logged/custom entries so they're editable
   var anyOpen=false;
   var html=order.map(function(pid){var p=null;for(var i=0;i<items.length;i++){if(items[i].id===pid){p=items[i];break;}}if(!p)p=piece(pid);
     var e=ent[pid]||{};var custom=!p;
-    var isW=p?(clsFor(p)==='wod'):false;var lk=p?liftKeyOf(p):null;
+    var isW=p?(clsFor(p)==='wod'):false;var isStr=p?(p.type==='strength'):false;var lk=p?liftKeyOf(p):null;
     var st=scoreType(p,e);var hk=hkeyFor(p,e);var last=hk?lastByKey(hk,dsK):null;var best=hk?bestByKey(hk,st,dsK):null;
     var logged=!!(e.result&&(''+e.result).trim());
     var ph=_stypePH(st);
     var cb=e.band||(isW?recBand(p):null)||'rx';
     var bandSrc=custom?LBANDS:LBANDS.filter(function(b){return isW?(p.variants&&p.variants[b]):(vb(p)&&vb(p)[b]);});
-    var bandBtns=bandSrc.map(function(b){return '<button type="button" class="lg-band'+(b===cb?' on':'')+'" data-band="'+b+'" onclick="logPick(this)">'+VL[b]+'</button>';}).join('');
+    var bandBtns=bandSrc.map(function(b){return '<button type="button" class="lg-band'+(b===cb?' on':'')+'" data-band="'+b+'" onclick="'+(isW?'logBandWod':'logPick')+'(this)">'+VL[b]+'</button>';}).join('');
     var RPE=[[4,'Easy'],[6,'Solid'],[8,'Hard'],[10,'Max']];
     var rpeBtns=RPE.map(function(r){return '<button type="button" class="lg-rpe'+(r[0]===e.rpe?' on':'')+'" data-rpe="'+r[0]+'" onclick="logPick(this)">'+r[1]+'</button>';}).join('');
     var open=!logged && !anyOpen; if(open)anyOpen=true;   // auto-open the first piece still to log
@@ -3893,7 +3934,7 @@ window.openLog=function(ds){var m=document.getElementById('logMask');if(!m)retur
       +'<div class="lg-body">'
       +lastLn
       +(bandBtns?'<div class="lg-flab">How did you scale it?</div><div class="lg-bands">'+bandBtns+'</div>':'')
-      +'<div class="lg-flab">Result '+stypLbl+'</div>'+resultInputHTML(st,e.result||'',last)
+      +(isStr?strGridHTML(p,cb,e):((isW?wodDidHTML(p,cb):'')+'<div class="lg-flab">Result '+stypLbl+'</div>'+resultInputHTML(st,e.result||'',last)))
       +'<div class="lg-opts"><button type="button" class="lg-opt'+(e.rpe?' on':'')+'" onclick="logOpt(this)">+ How hard?</button><button type="button" class="lg-opt'+(e.note?' on':'')+'" onclick="logOpt(this)">+ Note</button></div>'
       +'<div class="lg-optp'+(e.rpe?' show':'')+'"><div class="lg-flab">Effort (optional)</div><div class="lg-rpes">'+rpeBtns+'</div></div>'
       +'<div class="lg-optp'+(e.note?' show':'')+'"><input class="lg-note" placeholder="Note (optional)" value="'+esc(e.note||'')+'"></div>'
@@ -3968,13 +4009,14 @@ window.saveLog=function(){var ds=logDateStr();var pieces=(LOG[ds]&&LOG[ds].piece
   [].forEach.call(document.querySelectorAll('#logMask .lg-card'),function(c){var pid=c.getAttribute('data-pid');var lift=c.getAttribute('data-lift')||null;var isCustom=c.getAttribute('data-custom')==='1';
     var bEl=c.querySelector('.lg-band.on');var band=bEl?bEl.getAttribute('data-band'):'';
     var res=(c.querySelector('.lg-res')||{}).value||'';var rEl=c.querySelector('.lg-rpe.on');var rpe=rEl?parseInt(rEl.getAttribute('data-rpe'),10):0;var note=(c.querySelector('.lg-note')||{}).value||'';
+    var _didEl=c.querySelector('.lg-did');var didV=_didEl?((_didEl.value||'').trim()):'';   // WOD: the athlete's edited movements/weights override the auto snapshot
     if(res.trim()||note.trim()||rpe){var pc=piece(pid);var prev=pieces[pid]||{};
       if(isCustom||!pc){var cst=c.getAttribute('data-stype')||prev.stype||'session';var ct=c.getAttribute('data-title')||prev.title||'Custom session';var chk='c:'+normKey(ct);var cpr=isPRnow(chk,cst,res.trim(),ds);
         pieces[pid]={custom:true,stype:cst,hkey:chk,pr:cpr,band:band,result:res.trim(),rpe:rpe,note:note.trim(),lift:null,ts:Date.now(),
         title:ct,tag:c.getAttribute('data-tag')||prev.tag||'Session',detail:prev.detail||''};if(cpr)_prs.push(ct);}
       else{var pst=scoreType(pc,null);var phk=hkeyFor(pc,null);var ppr=isPRnow(phk,pst,res.trim(),ds);
         pieces[pid]={stype:pst,hkey:phk,pr:ppr,band:band,result:res.trim(),rpe:rpe,note:note.trim(),lift:lift,ts:Date.now(),
-        title:clean(boardTitle(pc)),tag:labelFor(pc),detail:logSummary(pc,band||'rx')||(prev.detail||'')};if(ppr)_prs.push(clean(boardTitle(pc)));}}else{delete pieces[pid];}});
+        title:clean(boardTitle(pc)),tag:labelFor(pc),detail:(didV||logSummary(pc,band||'rx')||prev.detail||'')};if(ppr)_prs.push(clean(boardTitle(pc)));}}else{delete pieces[pid];}});
   if(Object.keys(pieces).length)LOG[ds]={pieces:pieces,ts:Date.now()};else delete LOG[ds];
   if(Object.keys(pieces).length)grantXP('logday',ds,XP_AMT.logday,true);   // XP for logging a session (engagement, daily-capped)
   // Close the loop — logged RX/RX+ gymnastic results raise capacity -> Development tree + scaling (never the card).
