@@ -5368,7 +5368,7 @@ function wodBandOrder(p){var V=vb(p);return ['rxPlus','rx','intermediate','scale
 function bandBody(p,b){var bv=vb(p)[b]||{};var src=overrides[p.id+'|'+b]!=null?overrides[p.id+'|'+b]:(bv.prescription||'');
   var raw=wodMain(src);
   var personal=!boardMode&&!coachMode();   // only a member viewing their OWN day sees scaled loads / gym subs / masters volume; the shared board & coach see the authored Rx (no profile leak)
-  if(personal&&p.type==='wod'&&b!=='rxPlus'){raw=personalizeWod(raw,p.category,p.benchmark);if(!p.benchmark){raw=subGym(raw);raw=mastersVol(raw);}}
+  if(personal&&p.type==='wod'&&b!=='rxPlus'){if(!p.fixedLoads)raw=personalizeWod(raw,p.category,p.benchmark);if(!p.benchmark){raw=subGym(raw);raw=mastersVol(raw);}}   // fixedLoads: the coach prescribed a set load (e.g. a Grace-style 30 C&J 70/50) — don't auto-scale it to the athlete's 1RM; show the band's authored weight
   var cleaned=clean(personal?applyRM(raw):raw);
   var html=cleaned.split('\n').map(function(ln){if(!ln.trim())return '';return '<div class="wodln">'+qtyPrefix(esc(ln.replace(/\s+$/,'')))+'</div>';}).join('');
   return html.replace(/«sf:([^»]*)»/g,'<span class="subnote">scaled from $1</span>').replace(/«pl:([^»]*)»/g,'<span class="loadnote">← scaled to your 1RM · class Rx $1kg</span>');}
