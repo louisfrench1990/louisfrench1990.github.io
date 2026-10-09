@@ -2821,7 +2821,7 @@ function sessSuggestDiv(p){try{
        if(typeof gcap==='function'&&gcap(k)>0)return order[i];}
      return 'scaled';}
   }catch(e){}return 'rx';}
-function sessResolvePres(p,pres){var t=pres;try{if(clsFor(p)==='wod'&&typeof personalizeWod==='function')t=personalizeWod(t,p.category,p.bench);}catch(e){}try{t=personalizeGym(t);}catch(e){}try{if(typeof applyRM==='function')t=applyRM(t);}catch(e){}return t;}   // FIX 2026-09-29: the Start-session view must resolve strength %s to kg too (it previously skipped applyRM, so "@87%" never became a weight here)
+function sessResolvePres(p,pres){var t=pres;try{if(clsFor(p)==='wod'&&!(p&&p.fixedLoads)&&typeof personalizeWod==='function')t=personalizeWod(t,p.category,p.benchmark);}catch(e){}try{t=personalizeGym(t);}catch(e){}try{if(typeof applyRM==='function')t=applyRM(t);}catch(e){}return t;}   // FIX 2026-09-29: the Start-session view must resolve strength %s to kg too (it previously skipped applyRM). 2026-10-09: honour fixedLoads (don't auto-scale a coach-set weight like a Grace-style 30 C&J 70/50), and fixed p.bench→p.benchmark so benchmark loads aren't rescaled here either
 function sessBodyHTML(p,pid){var divs=sessDivs(p);var maxw=(p&&p.type==='strength'&&typeof maxPromptHTML==='function')?maxPromptHTML([pid]):'';
   if(divs.length<2){return maxw+'<div class="ss-txt">'+esc(sessResolvePres(p,divs.length?divs[0].pres:sessPres(p)))+'</div>';}
   var sug=sessSuggestDiv(p);var cur=sessDivFor(pid,sug);
