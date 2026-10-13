@@ -1,7 +1,8 @@
-// Unranked BETA service worker — network-first with offline cache fallback.
-// Rebuilt 2026-08-26 (original lost in a workspace reset). Network-first guarantees users always get the
-// latest index.html/data on deploy, and still works offline after the first online visit.
-const CACHE = 'unranked-20261013b';
+// Unranked BETA service worker — stale-while-revalidate.
+// Serves cached responses instantly (fast repeat loads) and refreshes the cache in the background,
+// so returning members open the app immediately. On a new deploy the SW self-updates (skipWaiting +
+// clients.claim); the page reloads once when the new worker takes control, so content stays fresh.
+const CACHE = 'unranked-20261013c';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => {
   e.waitUntil(
@@ -12,12 +13,16 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  // Never cache the SW script itself — let the browser's update check reach the network.
+  if (e.request.url.endsWith('/sw.js')) return;
   e.respondWith(
-    fetch(e.request)
-      .then(r => {
-        try { const cp = r.clone(); caches.open(CACHE).then(c => c.put(e.request, cp)).catch(() => {}); } catch (x) {}
-        return r;
+    caches.open(CACHE).then(cache =>
+      cache.match(e.request).then(cached => {
+        const network = fetch(e.request)
+          .then(r => { try { cache.put(e.request, r.clone()); } catch (x) {} return r; })
+          .catch(() => cached);
+        return cached || network;   // cached instantly if present; else wait for network
       })
-      .catch(() => caches.match(e.request))
+    )
   );
 });
