@@ -2,7 +2,7 @@
 // Serves cached responses instantly (fast repeat loads) and refreshes the cache in the background,
 // so returning members open the app immediately. On a new deploy the SW self-updates (skipWaiting +
 // clients.claim); the page reloads once when the new worker takes control, so content stays fresh.
-const CACHE = 'unranked-20261018a';
+const CACHE = 'unranked-20261021a';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => {
   e.waitUntil(
