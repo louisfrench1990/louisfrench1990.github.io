@@ -5606,11 +5606,10 @@ function renderInner(){
   document.getElementById('trackName').textContent=unlocked?TL[track]:'';
   // weekend
   if(info.wd==='SAT'){document.getElementById('body').innerHTML='<div class="centre"><div class="bd">Saturday</div><div>Coach\'s choice — set on the day.</div></div>';foot.style.display='none';document.getElementById('rpe').style.display='none';return;}
-  if(info.wd==='SUN'){document.getElementById('rpe').style.display='none';foot.style.display='none';
-    var su=piece(d.sunday);
-    if(su){document.getElementById('body').innerHTML=sec(d.sunday);}   // full Sunday session (sec renders its own title); coach gets the ✎ Edit control via sec()
-    else{document.getElementById('body').innerHTML='<div class="centre"><div class="bd">Sunday</div><div>Zone-2 + accessory / rest</div></div>';}
-    return;}
+  if(info.wd==='SUN'){var su=piece(d.sunday);
+    if(su){document.getElementById('rpe').style.display='none';foot.style.display='none';document.getElementById('body').innerHTML=sec(d.sunday);return;}   // single-card Sunday session (sec renders its own title); coach gets the ✎ Edit control via sec()
+    if(!(d.tracks&&(d.tracks[track]||d.tracks.class))){document.getElementById('rpe').style.display='none';foot.style.display='none';document.getElementById('body').innerHTML='<div class="centre"><div class="bd">Sunday</div><div>Zone-2 + accessory / rest</div></div>';return;}
+    /* a tracks-based Sunday (no single d.sunday piece) falls through to the normal stepped render below */}
   const gs=groups();if(step>=gs.length)step=gs.length-1;if(step<0)step=0;
   const _isWodStep=gs[step]&&gs[step].some(id=>clsFor(piece(id))==='wod');
   const rp=document.getElementById('rpe');if(d.rpeNote&&_isWodStep){rp.style.display='inline-block';rp.textContent=clean(d.rpeNote);}else rp.style.display='none';   // the RPE target describes the WOD — only show it on the WOD step
