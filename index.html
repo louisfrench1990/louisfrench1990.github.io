@@ -5149,14 +5149,14 @@ function matchLift(s){s=String(s).toLowerCase();
   return null;}
 var TM_FRAC=0.90;   // strength %s are computed off a TRAINING MAX (90% of the entered 1RM) so the loads are accurate & repeatable, not off a one-rep grind. WOD loads (personalizeWod) stay off the true 1RM.
 function applyRM(text){return String(text||'').split('\n').map(function(ln){
-  return ln.replace(/@ ?(\d+)(?:\s*[-–]\s*(\d+))?%( of ([a-z'-]+(?: [a-z'-]+)*))?/gi,function(m,pct,pct2,ofg,oflift){
+  return ln.replace(/@ ?(\d+(?:\.\d+)?)(?:\s*[-–]\s*(\d+(?:\.\d+)?))?%( of ([a-z'-]+(?: [a-z'-]+)*))?/gi,function(m,pct,pct2,ofg,oflift){
     var key=oflift?matchLift(oflift):matchLift(ln);var rm=key&&oneRM[key];
     if(!rm)return m;var tm=rm*TM_FRAC;function kgOf(p){return Math.round((tm*p/100*readinessFactor())/2.5)*2.5;}
     var lo=kgOf(pct);if(pct2){return '@ '+lo+'-'+kgOf(pct2)+'kg';}return '@ '+lo+'kg';});   // handles single % and ranges (@70-80%)
 }).join('\n');}
 function _liftLabel(k){for(var i=0;i<WODLIFTS.length;i++)if(WODLIFTS[i][0]===k)return WODLIFTS[i][1];return k;}
 // which barbell 1RMs does this strength group's "@NN%" work reference that the member hasn't entered yet? → drives the "add your maxes" prompt so % actually resolves to kg
-function missingMaxLifts(g){var need={};(g||[]).forEach(function(id){var p=piece(id);if(!p||p.type!=='strength')return;var v=pv(p);var src=(v&&v.prescription)||'';String(src).split('\n').forEach(function(ln){if(!/@ ?\d+(?:\s*[-–]\s*\d+)?%/.test(ln))return;var key=matchLift(ln);if(key&&!(typeof oneRM!=='undefined'&&oneRM[key]))need[key]=1;});});return Object.keys(need);}
+function missingMaxLifts(g){var need={};(g||[]).forEach(function(id){var p=piece(id);if(!p||p.type!=='strength')return;var v=pv(p);var src=(v&&v.prescription)||'';String(src).split('\n').forEach(function(ln){if(!/@ ?\d+(?:\.\d+)?(?:\s*[-–]\s*\d+(?:\.\d+)?)?%/.test(ln))return;var key=matchLift(ln);if(key&&!(typeof oneRM!=='undefined'&&oneRM[key]))need[key]=1;});});return Object.keys(need);}
 function maxPromptHTML(g){if(coachMode()||boardMode)return '';var miss=missingMaxLifts(g);if(!miss.length)return '';
   var names=miss.map(_liftLabel).join(', ');
   return '<button class="maxwarn" onclick="openRM()"><span class="mw-i">⚖</span><span class="mw-t"><b>Add your 1RM'+(miss.length>1?'s':'')+' to see your exact kg</b><span>'+esc(names)+' — tap to set →</span></span></button>';}
